@@ -116,9 +116,9 @@ repositories {
 }
 
 dependencies {
-    // NOTE: 2859's userdev jar is 404 on Forge maven (verified); 2847 compiles
-    // and the jar runs on 2859 clients. Do NOT bump without re-verifying.
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2847'
+    // FG3 requires the userdev3 artifact: only 2859 publishes it (2847 has
+    // userdev only, which FG3 cannot use). Verified via maven probes.
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
 
     compileOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}:api") // JEI
     //runtimeOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}") // JEI
