@@ -139,7 +139,7 @@ public class TileEntityHosePulley extends TileEntityKinetic {
         buf.writeBoolean(this.tank.getFluidAmount() > 0);
         if (this.tank.getFluidAmount() > 0) {
             FluidStack f = this.tank.getFluid();
-            buf.writeInt(FluidRegistry.getId(f.getFluid()));
+            buf.writeUTF(FluidRegistry.getFluidName(f));
             buf.writeInt(f.amount);
         }
     }
@@ -149,7 +149,7 @@ public class TileEntityHosePulley extends TileEntityKinetic {
         super.readPacket(buf);
         this.hoseLength = buf.readFloat();
         if (buf.readBoolean()) {
-            Fluid fluid = FluidRegistry.getFluid(buf.readInt());
+            Fluid fluid = FluidRegistry.getFluid(buf.readUTF());
             int amount = buf.readInt();
             this.tank.setFluid(fluid == null ? null : new FluidStack(fluid, amount));
         } else {

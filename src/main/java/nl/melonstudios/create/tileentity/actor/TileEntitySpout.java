@@ -173,7 +173,7 @@ public class TileEntitySpout extends TileEntityKinetic implements IHaltBeltConte
         buf.writeBoolean(this.tank.getFluidAmount() > 0);
         if (this.tank.getFluidAmount() > 0) {
             FluidStack f = this.tank.getFluid();
-            buf.writeInt(net.minecraftforge.fluids.FluidRegistry.getId(f.getFluid()));
+            buf.writeUTF(net.minecraftforge.fluids.FluidRegistry.getFluidName(f));
             buf.writeInt(f.amount);
         }
         buf.writeInt(this.fillTimer);
@@ -184,7 +184,7 @@ public class TileEntitySpout extends TileEntityKinetic implements IHaltBeltConte
         super.readPacket(buf);
         if (buf.readBoolean()) {
             net.minecraftforge.fluids.Fluid fluid =
-                    net.minecraftforge.fluids.FluidRegistry.getFluid(buf.readInt());
+                    net.minecraftforge.fluids.FluidRegistry.getFluid(buf.readUTF());
             int amount = buf.readInt();
             this.tank.setFluid(fluid == null ? null : new FluidStack(fluid, amount));
         } else {

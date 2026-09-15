@@ -6,6 +6,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -36,6 +37,16 @@ public class BlockHosePulley extends BlockKineticBase implements ITileEntityProv
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public EnumFacing.Axis getRotationAxis(IBlockState state) {
+        return EnumFacing.Axis.Y;
+    }
+
+    @Override
+    public boolean hasShaftTowards(World world, BlockPos pos, IBlockState state, EnumFacing side) {
+        return side == EnumFacing.UP;
     }
 
     @Override

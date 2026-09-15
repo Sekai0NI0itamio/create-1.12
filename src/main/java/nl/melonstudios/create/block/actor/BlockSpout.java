@@ -42,6 +42,16 @@ public class BlockSpout extends BlockKineticBase implements ITileEntityProvider 
     }
 
     @Override
+    public EnumFacing.Axis getRotationAxis(IBlockState state) {
+        return EnumFacing.Axis.Y;
+    }
+
+    @Override
+    public boolean hasShaftTowards(World world, BlockPos pos, IBlockState state, EnumFacing side) {
+        return side == EnumFacing.UP;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof TileEntitySpout) {
