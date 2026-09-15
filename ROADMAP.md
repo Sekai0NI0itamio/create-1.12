@@ -21,7 +21,7 @@ Fix logic bugs found, keep upstream syncable (small diffs, no rewrites).
 
 ## Phase 2 — Missing features (dependency order)
 
-1. Crushing wheels + crushing recipes (needs: basin, JEI category).
+1. Crushing wheels + crushing recipes (needs: basin, JEI category). DONE (build 34965877956; verify checklist above).
 2. Encased fan + haunting/washing/smoking/bulk recipes.
 3. Spouts, hose pulley, item drain, portable fluid interface.
 4. Steam boiler (heat providers, boiler heaters) + steam engine.
@@ -35,6 +35,22 @@ Fix logic bugs found, keep upstream syncable (small diffs, no rewrites).
 12. Worldgen audit (zinc/asurine/etc.), full recipe parity, advancements.
 
 Each item: implement → CI green → in-game verify checklist → release.
+
+## Verify: crushing wheels (do this in game now)
+
+1. Creative: find Crushing Wheel in the Create tab (en_us: "Crushing Wheel").
+2. Place two wheels side by side on the same axis with 1 gap? No — adjacent
+   (official: vertically one apart means controller gap; here wheels sit
+   adjacent along their axis, controller logic internal).
+3. Power both with opposite directions (gearbox + shafts, or two hand cranks
+   turned opposite). Only the lower-coordinate wheel runs the logic.
+4. Drop cobblestone above the gap → gravel pops out below. Drop iron ore →
+   crushed iron ore (+bonus rolls). Drop wheat → flour.
+5. JEI: "Crushing" category lists all 30 recipes, wheel as catalyst.
+6. Goggles show 8.0 SU stress per wheel; overstress stops both.
+7. Push a pig between running wheels → damage (official: mobs crushed).
+8. Wheel spins in-world (TESR, official plates/insert textures), item model
+   in hand/inventory correct, no missing-texture purple.
 
 ## Phase 3 — Texture + polish
 
