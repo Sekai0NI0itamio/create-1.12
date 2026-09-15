@@ -33,7 +33,9 @@ jobs:
             ${{ runner.os }}-fg3-
 
       - name: Build with Gradle wrapper
-        run: ./gradlew build --no-daemon --stacktrace
+        run: |
+          chmod +x gradlew
+          ./gradlew build --no-daemon --stacktrace
 
       - name: Upload built jar
         if: success()
