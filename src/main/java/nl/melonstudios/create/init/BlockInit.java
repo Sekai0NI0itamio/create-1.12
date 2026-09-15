@@ -159,6 +159,22 @@ public final class BlockInit {
             registerBlockWithItem(new BlockEncasedFan()
             .setRegistryName("encased_fan").setUnlocalizedName("create.encased_fan"));
 
+    public static final BlockFluidTank FLUID_TANK = (BlockFluidTank)
+            registerBlockWithItem(new BlockFluidTank()
+            .setRegistryName("fluid_tank").setUnlocalizedName("create.fluid_tank"));
+
+    public static final BlockSpout SPOUT = (BlockSpout)
+            registerBlockWithItem(new BlockSpout()
+            .setRegistryName("spout").setUnlocalizedName("create.spout"));
+
+    public static final BlockHosePulley HOSE_PULLEY = (BlockHosePulley)
+            registerBlockWithItem(new BlockHosePulley()
+            .setRegistryName("hose_pulley").setUnlocalizedName("create.hose_pulley"));
+
+    public static final BlockPortableFluidInterface PORTABLE_FLUID_INTERFACE = (BlockPortableFluidInterface)
+            registerBlockWithItem(new BlockPortableFluidInterface()
+            .setRegistryName("portable_fluid_interface").setUnlocalizedName("create.portable_fluid_interface"));
+
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()
             .setRegistryName("crafter").setUnlocalizedName("create.crafter"));

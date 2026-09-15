@@ -132,6 +132,10 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(BlockInit.MILLSTONE);
         CreateLegacy.proxy.setItemModel(BlockInit.CRUSHING_WHEEL);
         CreateLegacy.proxy.setItemModel(BlockInit.ENCASED_FAN);
+        CreateLegacy.proxy.setItemModel(BlockInit.FLUID_TANK);
+        CreateLegacy.proxy.setItemModel(BlockInit.SPOUT);
+        CreateLegacy.proxy.setItemModel(BlockInit.HOSE_PULLEY);
+        CreateLegacy.proxy.setItemModel(BlockInit.PORTABLE_FLUID_INTERFACE);
         CreateLegacy.proxy.setItemModel(BlockInit.CRAFTER);
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 0, "blaze_burner_empty");
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 1, "blaze_burner");

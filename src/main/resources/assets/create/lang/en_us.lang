@@ -54,6 +54,10 @@ tile.create.interface_fluid.name=Portable Fluid Interface
 tile.create.millstone.name=Millstone
 tile.create.crushing_wheel.name=Crushing Wheel
 tile.create.encased_fan.name=Encased Fan
+tile.create.fluid_tank.name=Fluid Tank
+tile.create.spout.name=Spout
+tile.create.hose_pulley.name=Hose Pulley
+tile.create.portable_fluid_interface.name=Portable Fluid Interface
 tile.create.crafter.name=Mechanical Crafter
 
 tile.create.blaze_burner_empty.name=Empty Blaze Burner
