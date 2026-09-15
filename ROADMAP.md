@@ -22,7 +22,7 @@ Fix logic bugs found, keep upstream syncable (small diffs, no rewrites).
 ## Phase 2 — Missing features (dependency order)
 
 1. Crushing wheels + crushing recipes (needs: basin, JEI category). DONE (build 34965877956; verify checklist above).
-2. Encased fan + haunting/washing/smoking/bulk recipes.
+2. Encased fan + haunting/washing/smoking/bulk recipes. DONE (build 34970315794): push/pull air current (official RPM range table), washing table, haunting, smoking/blasting via furnace/smoker fallback, soul-fire via soul-sand-under-fire, blaze-burner heat levels, 2 SU stress, official fan textures, spinning propeller TESR.
 3. Spouts, hose pulley, item drain, portable fluid interface.
 4. Steam boiler (heat providers, boiler heaters) + steam engine.
 5. Mechanical crafter + sequenced assembly recipes.
