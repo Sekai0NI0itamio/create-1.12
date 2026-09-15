@@ -37,7 +37,7 @@ public class BlockCrushingWheel extends BlockKineticHorizontalAxisBase implement
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return BlockProperties.SIXTEENTH;
+        return FULL_BLOCK_AABB;
     }
 
     @Override
