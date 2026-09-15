@@ -82,6 +82,7 @@ public class CommonProxy {
         this.registerTE(TileEntityStorageInterface.class, "storage_interface");
         this.registerTE(TileEntityMillstone.class, "millstone");
         this.registerTE(TileEntityCrushingWheel.class, "crushing_wheel");
+        this.registerTE(TileEntityEncasedFan.class, "encased_fan");
         this.registerTE(TileEntityCrafter.class, "crafter");
         this.registerTE(TileEntityBlazeBurner.class, "blaze_burner");
         this.registerTE(TileEntityDepot.class, "depot");
@@ -123,6 +124,10 @@ public class CommonProxy {
     public void registerRecipeTypes() {
         RecipeRegistry.registerServer("create:pressing", PressingRecipes.instance);
         RecipeRegistry.registerServer("create:crushing", CrushingRecipes.instance);
+        RecipeRegistry.registerServer("create:splashing", SplashingRecipes.instance);
+        RecipeRegistry.registerServer("create:haunting", HauntingRecipes.instance);
+        RecipeRegistry.registerServer("create:smoking", SmokingRecipes.instance);
+        RecipeRegistry.registerServer("create:blasting", BlastingRecipes.instance);
         RecipeRegistry.registerServer("create:cutting", CuttingRecipes.instance);
         RecipeRegistry.registerServer("create:mixing", MixingRecipes.instance);
         RecipeRegistry.registerServer("create:deploying", DeployerRecipes.instance);

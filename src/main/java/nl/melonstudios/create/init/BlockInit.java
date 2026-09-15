@@ -155,6 +155,10 @@ public final class BlockInit {
             registerBlockWithItem(new BlockCrushingWheel(MapColor.STONE, SoundType.STONE)
             .setRegistryName("crushing_wheel").setUnlocalizedName("create.crushing_wheel"));
 
+    public static final BlockEncasedFan ENCASED_FAN = (BlockEncasedFan)
+            registerBlockWithItem(new BlockEncasedFan()
+            .setRegistryName("encased_fan").setUnlocalizedName("create.encased_fan"));
+
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()
             .setRegistryName("crafter").setUnlocalizedName("create.crafter"));

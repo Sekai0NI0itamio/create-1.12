@@ -234,6 +234,9 @@
     "render_part=crushing_wheel_z": {
       "model": "create:render/crushing_wheel",
       "y": 90
+    },
+    "render_part=fan_propeller": {
+      "model": "create:render/fan_propeller"
     }
   }
 }

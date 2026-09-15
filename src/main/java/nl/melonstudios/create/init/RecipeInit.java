@@ -75,6 +75,8 @@ public final class RecipeInit {
         sequences();
         milling();
         crushing();
+        splashing();
+        haunting();
     }
 
     private static void pressing() {
@@ -893,6 +895,61 @@ public final class RecipeInit {
         recipes.addRecipe("create:wheat", Ingredient.of(new ItemStack(Items.WHEAT), false),
                 new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 0), 1.0F),
                 new Tuple<>(new ItemStack(Items.WHEAT_SEEDS, 1), 0.25F));
+    }
+
+    /**
+     * Bulk washing (fan + water) from the official Encased Fan wiki table.
+     * Crushed ores wash to 10 nuggets + 5 chanced; red sand/soul sand/gravel
+     * give their listed bonus rolls.
+     */
+    private static void splashing() {
+        SplashingRecipes recipes = SplashingRecipes.instance;
+
+        recipes.addRecipe("create:crushed_iron", Ingredient.of("crushedIron"),
+                new Tuple<>(new ItemStack(Items.IRON_NUGGET, 10), 1.0F),
+                new Tuple<>(new ItemStack(Items.IRON_NUGGET, 5), 0.5F));
+        recipes.addRecipe("create:crushed_gold", Ingredient.of("crushedGold"),
+                new Tuple<>(new ItemStack(Items.GOLD_NUGGET, 10), 1.0F),
+                new Tuple<>(new ItemStack(Items.GOLD_NUGGET, 5), 0.5F));
+        recipes.addRecipe("create:crushed_copper", Ingredient.of("crushedCopper"),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 10, 19), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 5, 19), 0.5F));
+        recipes.addRecipe("create:crushed_zinc", Ingredient.of("crushedZinc"),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 10, 20), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 5, 20), 0.5F));
+        recipes.addRecipe("create:gravel", Ingredient.of(new ItemStack(Blocks.GRAVEL), false),
+                new Tuple<>(new ItemStack(Items.FLINT), 0.25F),
+                new Tuple<>(new ItemStack(Items.IRON_NUGGET, 1), 0.125F));
+        recipes.addRecipe("create:red_sand", Ingredient.of(new ItemStack(Blocks.SAND, 1, 1), false),
+                new Tuple<>(new ItemStack(Items.GOLD_NUGGET, 3), 0.125F),
+                new Tuple<>(new ItemStack(Blocks.DEADBUSH), 0.05F));
+        recipes.addRecipe("create:sand", Ingredient.of(new ItemStack(Blocks.SAND, 1, 0), false),
+                new Tuple<>(new ItemStack(Items.CLAY_BALL), 0.25F));
+        recipes.addRecipe("create:soul_sand", Ingredient.of(new ItemStack(Blocks.SOUL_SAND), false),
+                new Tuple<>(new ItemStack(Items.QUARTZ, 4), 0.125F),
+                new Tuple<>(new ItemStack(Items.GOLD_NUGGET), 0.02F));
+        recipes.addRecipe("create:flour", Ingredient.of(new ItemStack(ItemInit.INGREDIENT, 1, 0), false),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 1), 1.0F));
+        recipes.addRecipe("create:ice", Ingredient.of(new ItemStack(Blocks.ICE), false),
+                new Tuple<>(new ItemStack(Blocks.PACKED_ICE), 1.0F));
+        recipes.addRecipe("create:magma", Ingredient.of(new ItemStack(Blocks.MAGMA), false),
+                new Tuple<>(new ItemStack(Blocks.OBSIDIAN), 1.0F));
+    }
+
+    /**
+     * Bulk haunting (fan + soul fire). Official core: soul sand-adjacent
+     * transforms; backport covers netherrack->orestone variant + sand->soul
+     * sand + end-adjacent swaps used by progression.
+     */
+    private static void haunting() {
+        HauntingRecipes recipes = HauntingRecipes.instance;
+
+        recipes.addRecipe("create:sand", Ingredient.of(new ItemStack(Blocks.SAND), false),
+                new Tuple<>(new ItemStack(Blocks.SOUL_SAND), 1.0F));
+        recipes.addRecipe("create:gravel", Ingredient.of(new ItemStack(Blocks.GRAVEL), false),
+                new Tuple<>(new ItemStack(Blocks.SOUL_SAND), 1.0F));
+        recipes.addRecipe("create:clay", Ingredient.of(new ItemStack(Blocks.CLAY), false),
+                new Tuple<>(new ItemStack(Blocks.SOUL_SAND), 1.0F));
     }
 
     private static Item getOrestone(int id) {

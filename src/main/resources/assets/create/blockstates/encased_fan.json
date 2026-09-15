@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "create:item/encased_fan"
+    },
+    "facing=south": {
+      "model": "create:item/encased_fan",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "create:item/encased_fan",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "create:item/encased_fan",
+      "y": 90
+    },
+    "facing=up": {
+      "model": "create:item/encased_fan",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "create:item/encased_fan",
+      "x": 90
+    }
+  }
+}
