@@ -20,6 +20,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.melonstudios.create.block.actor.BlockEncasedFan;
 import nl.melonstudios.create.recipe.PulverizationRecipe;
 import nl.melonstudios.create.recipe.server.BlastingRecipes;
@@ -277,7 +279,7 @@ public class TileEntityEncasedFan extends TileEntityKinetic {
         return MathHelper.clamp((int) Math.abs(this.getSpeed() / 8.0F), 1, 512);
     }
 
-    @SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     private void spawnAirParticles(EnumFacing facing, int travel, EnumFanProcess process) {
         // Particles handled by TESR airflow; keep TE lean.
     }
