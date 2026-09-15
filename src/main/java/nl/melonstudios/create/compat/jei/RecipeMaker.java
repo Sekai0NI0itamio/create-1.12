@@ -6,7 +6,9 @@ import mezz.jei.api.recipe.IStackHelper;
 import net.minecraft.item.ItemStack;
 import nl.melonstudios.create.recipe.CuttingRecipe;
 import nl.melonstudios.create.recipe.PressingRecipe;
+import nl.melonstudios.create.recipe.PulverizationRecipe;
 import nl.melonstudios.create.recipe.SandingRecipes;
+import nl.melonstudios.create.recipe.client.CrushingRecipesClient;
 import nl.melonstudios.create.recipe.client.CuttingRecipesClient;
 import nl.melonstudios.create.recipe.server.PressingRecipes;
 
@@ -23,6 +25,17 @@ public class RecipeMaker {
 
         for (PressingRecipe recipe : recipes) {
             recipeList.add(new JEIPressingRecipe(recipe.input, recipe.result));
+        }
+
+        return recipeList;
+    }
+
+    public static List<JEICrushingRecipe> getCrushingRecipes(IJeiHelpers helpers) {
+        List<PulverizationRecipe> recipes = new ArrayList<>(CrushingRecipesClient.instance.getRecipeMap().values());
+        List<JEICrushingRecipe> recipeList = new ArrayList<>(recipes.size());
+
+        for (PulverizationRecipe recipe : recipes) {
+            recipeList.add(new JEICrushingRecipe(recipe));
         }
 
         return recipeList;

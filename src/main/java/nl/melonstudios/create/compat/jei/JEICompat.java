@@ -26,6 +26,7 @@ public final class JEICompat implements IModPlugin {
         final IGuiHelper gui = helpers.getGuiHelper();
 
         registry.addRecipeCategories(new PressingRecipeCategory(gui));
+        registry.addRecipeCategories(new CrushingRecipeCategory(gui));
         registry.addRecipeCategories(new SandingRecipeCategory(gui));
         registry.addRecipeCategories(new CuttingRecipeCategory(gui));
         registry.addRecipeCategories(new DeployerRecipeCategory(gui));
@@ -40,6 +41,9 @@ public final class JEICompat implements IModPlugin {
 
         registry.addRecipes(RecipeMaker.getPressingRecipes(jeiHelpers), "create.pressing");
         registry.addRecipeCatalyst(new ItemStack(BlockInit.PRESS), "create.pressing");
+
+        registry.addRecipes(RecipeMaker.getCrushingRecipes(jeiHelpers), "create.crushing");
+        registry.addRecipeCatalyst(new ItemStack(BlockInit.CRUSHING_WHEEL), "create.crushing");
 
         registry.addRecipes(RecipeMaker.getSandingRecipes(jeiHelpers), "create.sanding");
         registry.addRecipeCatalyst(new ItemStack(ItemInit.SANDPAPER), "create.sanding");

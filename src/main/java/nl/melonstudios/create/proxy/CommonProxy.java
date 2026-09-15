@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import nl.melonstudios.create.recipe.sequence.SequencedRecipes;
+import nl.melonstudios.create.recipe.server.CrushingRecipes;
 import nl.melonstudios.create.recipe.server.CuttingRecipes;
 import nl.melonstudios.create.recipe.server.DeployerRecipes;
 import nl.melonstudios.create.recipe.server.MixingRecipes;
@@ -80,6 +81,7 @@ public class CommonProxy {
         this.registerTE(TileEntityHarvester.class, "harvester");
         this.registerTE(TileEntityStorageInterface.class, "storage_interface");
         this.registerTE(TileEntityMillstone.class, "millstone");
+        this.registerTE(TileEntityCrushingWheel.class, "crushing_wheel");
         this.registerTE(TileEntityCrafter.class, "crafter");
         this.registerTE(TileEntityBlazeBurner.class, "blaze_burner");
         this.registerTE(TileEntityDepot.class, "depot");
@@ -120,6 +122,7 @@ public class CommonProxy {
 
     public void registerRecipeTypes() {
         RecipeRegistry.registerServer("create:pressing", PressingRecipes.instance);
+        RecipeRegistry.registerServer("create:crushing", CrushingRecipes.instance);
         RecipeRegistry.registerServer("create:cutting", CuttingRecipes.instance);
         RecipeRegistry.registerServer("create:mixing", MixingRecipes.instance);
         RecipeRegistry.registerServer("create:deploying", DeployerRecipes.instance);

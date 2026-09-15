@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "create:item/crushing_wheel"
+    },
+    "axis=z": {
+      "model": "create:item/crushing_wheel",
+      "y": 90
+    }
+  }
+}

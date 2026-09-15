@@ -1,0 +1,63 @@
+{
+	"texture_size": [32, 32],
+	"textures": {
+		"plates": "create:block/crushing_wheel_plates",
+		"insert": "create:block/crushing_wheel_insert",
+		"particle": "create:block/crushing_wheel_plates"
+	},
+	"elements": [
+		{
+			"name": "PlateA",
+			"from": [0, 0, 6.5],
+			"to": [16, 16, 9.5],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#plates"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#plates"},
+				"east": {"uv": [6.5, 0, 9.5, 16], "texture": "#plates"},
+				"west": {"uv": [6.5, 0, 9.5, 16], "texture": "#plates"},
+				"up": {"uv": [0, 6.5, 16, 9.5], "texture": "#plates"},
+				"down": {"uv": [0, 6.5, 16, 9.5], "texture": "#plates"}
+			}
+		},
+		{
+			"name": "PlateB",
+			"from": [0, 0, 6.5],
+			"to": [16, 16, 9.5],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#plates"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#plates"},
+				"east": {"uv": [6.5, 0, 9.5, 16], "texture": "#plates"},
+				"west": {"uv": [6.5, 0, 9.5, 16], "texture": "#plates"},
+				"up": {"uv": [0, 6.5, 16, 9.5], "texture": "#plates"},
+				"down": {"uv": [0, 6.5, 16, 9.5], "texture": "#plates"}
+			}
+		},
+		{
+			"name": "Insert",
+			"from": [5, 5, 5],
+			"to": [11, 11, 11],
+			"faces": {
+				"north": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"south": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"east": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"west": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"down": {"uv": [5, 5, 11, 11], "texture": "#insert"}
+			}
+		},
+		{
+			"name": "Axis",
+			"from": [6.5, 6.5, 0],
+			"to": [9.5, 9.5, 16],
+			"faces": {
+				"north": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#insert"},
+				"south": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#insert"},
+				"east": {"uv": [0, 6.5, 16, 9.5], "texture": "#insert"},
+				"west": {"uv": [0, 6.5, 16, 9.5], "texture": "#insert"},
+				"up": {"uv": [6.5, 0, 9.5, 16], "texture": "#insert"},
+				"down": {"uv": [6.5, 0, 9.5, 16], "texture": "#insert"}
+			}
+		}
+	]
+}

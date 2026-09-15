@@ -52,6 +52,7 @@ tile.create.harvester.name=Harvester
 tile.create.interface_storage.name=Portable Storage Interface
 tile.create.interface_fluid.name=Portable Fluid Interface
 tile.create.millstone.name=Millstone
+tile.create.crushing_wheel.name=Crushing Wheel
 tile.create.crafter.name=Mechanical Crafter
 
 tile.create.blaze_burner_empty.name=Empty Blaze Burner
@@ -233,6 +234,7 @@ itemGroup.create.decorations=Create's Decorations
 
 ## JUST ENOUGH ITEMS ##
 create.pressing=Pressing
+create.crushing=Crushing
 create.cutting=Saw Cutting
 create.sanding=Sandpaper Polishing
 

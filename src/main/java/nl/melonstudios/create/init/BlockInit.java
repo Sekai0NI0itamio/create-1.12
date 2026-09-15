@@ -151,6 +151,10 @@ public final class BlockInit {
             registerBlockWithItem(new BlockMillstone(Material.ROCK, MapColor.STONE)
             .setRegistryName("millstone").setUnlocalizedName("create.millstone"));
 
+    public static final BlockCrushingWheel CRUSHING_WHEEL = (BlockCrushingWheel)
+            registerBlockWithItem(new BlockCrushingWheel(MapColor.STONE, SoundType.STONE)
+            .setRegistryName("crushing_wheel").setUnlocalizedName("create.crushing_wheel"));
+
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()
             .setRegistryName("crafter").setUnlocalizedName("create.crafter"));

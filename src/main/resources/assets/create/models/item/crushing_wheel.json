@@ -1,0 +1,63 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"plates": "create:block/crushing_wheel_plates",
+		"insert": "create:block/crushing_wheel_insert",
+		"particle": "create:block/crushing_wheel_plates"
+	},
+	"elements": [
+		{
+			"name": "Plate",
+			"from": [1, 1, 6.5],
+			"to": [15, 15, 9.5],
+			"faces": {
+				"north": {"uv": [1, 1, 15, 15], "texture": "#plates"},
+				"south": {"uv": [1, 1, 15, 15], "texture": "#plates"},
+				"east": {"uv": [6.5, 1, 9.5, 15], "texture": "#plates"},
+				"west": {"uv": [6.5, 1, 9.5, 15], "texture": "#plates"},
+				"up": {"uv": [1, 6.5, 15, 9.5], "texture": "#plates"},
+				"down": {"uv": [1, 6.5, 15, 9.5], "texture": "#plates"}
+			}
+		},
+		{
+			"name": "Insert",
+			"from": [5, 5, 5],
+			"to": [11, 11, 11],
+			"faces": {
+				"north": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"south": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"east": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"west": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#insert"},
+				"down": {"uv": [5, 5, 11, 11], "texture": "#insert"}
+			}
+		},
+		{
+			"name": "Axis",
+			"from": [6.5, 6.5, 0],
+			"to": [9.5, 9.5, 16],
+			"faces": {
+				"north": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#insert"},
+				"south": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#insert"},
+				"east": {"uv": [0, 6.5, 16, 9.5], "texture": "#insert"},
+				"west": {"uv": [0, 6.5, 16, 9.5], "texture": "#insert"},
+				"up": {"uv": [6.5, 0, 9.5, 16], "texture": "#insert"},
+				"down": {"uv": [6.5, 0, 9.5, 16], "texture": "#insert"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

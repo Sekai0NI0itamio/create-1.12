@@ -170,6 +170,7 @@ public class CreateLegacyEventHandler {
         event.registerStress(BlockInit.SAW, 4.0F);
         event.registerStress(BlockInit.DEPLOYER, 4.0F);
         event.registerStress(BlockInit.MILLSTONE, 4.0F);
+        event.registerStress(BlockInit.CRUSHING_WHEEL, 8.0F);
     }
 
     private static final ItemStack goggles = new ItemStack(ItemInit.GOGGLES);

@@ -74,6 +74,7 @@ public final class RecipeInit {
         deploying();
         sequences();
         milling();
+        crushing();
     }
 
     private static void pressing() {
@@ -780,6 +781,118 @@ public final class RecipeInit {
         recipes.addRecipe("create:wool", Ingredient.of("wool"),
                 new Tuple<>(new ItemStack(Items.STRING), 1.0F)
         );
+    }
+
+    /**
+     * Crushing-wheel recipes, mirrored from the official Create wiki
+     * (Crushing Wheels page). Shared-with-millstone entries match milling;
+     * asterisk entries (ores, blocks, gravel, horse armor...) are crushing-only.
+     * Dye metadata follows 1.12 values (see milling() above for the mapping).
+     */
+    private static void crushing() {
+        CrushingRecipes recipes = CrushingRecipes.instance;
+
+        recipes.addRecipe("create:andesite", Ingredient.of("stoneAndesite"),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 1.0F));
+        recipes.addRecipe("create:blaze_rod", Ingredient.of(new ItemStack(Items.BLAZE_ROD), false),
+                new Tuple<>(new ItemStack(Items.BLAZE_POWDER, 3), 1.0F),
+                new Tuple<>(new ItemStack(Items.BLAZE_POWDER, 3), 0.25F));
+        recipes.addRecipe("create:bone", Ingredient.of(new ItemStack(Items.BONE), false),
+                new Tuple<>(new ItemStack(Items.DYE, 3, 15), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 3, 15), 0.25F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 7), 0.25F));
+        recipes.addRecipe("create:bone_meal", Ingredient.of(new ItemStack(Items.DYE, 1, 15), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 7), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 7), 0.1F));
+        recipes.addRecipe("create:cactus", Ingredient.of(new ItemStack(Blocks.CACTUS), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 2), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 2), 0.1F));
+        recipes.addRecipe("create:charcoal", Ingredient.of(new ItemStack(Items.COAL, 1, 1), false),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 8), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 7), 0.1F));
+        recipes.addRecipe("create:clay", Ingredient.of(new ItemStack(Blocks.CLAY), false),
+                new Tuple<>(new ItemStack(Items.CLAY_BALL, 3), 1.0F),
+                new Tuple<>(new ItemStack(Items.CLAY_BALL, 1), 0.5F));
+        recipes.addRecipe("create:coal", Ingredient.of(new ItemStack(Items.COAL, 1, 0), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 8), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 8), 0.1F));
+        recipes.addRecipe("create:coal_ore", Ingredient.of("oreCoal"),
+                new Tuple<>(new ItemStack(Items.COAL, 1), 1.0F),
+                new Tuple<>(new ItemStack(Items.COAL, 2), 0.3F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:cobblestone", Ingredient.of(new ItemStack(Blocks.COBBLESTONE), false),
+                new Tuple<>(new ItemStack(Blocks.GRAVEL), 1.0F));
+        recipes.addRecipe("create:cocoa", Ingredient.of(new ItemStack(Items.DYE, 1, 3), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 3), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 3), 0.1F));
+        recipes.addRecipe("create:diamond_ore", Ingredient.of("oreDiamond"),
+                new Tuple<>(new ItemStack(Items.DIAMOND, 2), 1.0F),
+                new Tuple<>(new ItemStack(Items.DIAMOND, 1), 0.25F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:diorite", Ingredient.of("stoneDiorite"),
+                new Tuple<>(new ItemStack(Blocks.SAND, 1, 0), 1.0F));
+        recipes.addRecipe("create:emerald_ore", Ingredient.of("oreEmerald"),
+                new Tuple<>(new ItemStack(Items.EMERALD, 2), 1.0F),
+                new Tuple<>(new ItemStack(Items.EMERALD, 1), 0.25F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:glowstone", Ingredient.of(new ItemStack(Blocks.GLOWSTONE), false),
+                new Tuple<>(new ItemStack(Items.GLOWSTONE_DUST, 3), 1.0F),
+                new Tuple<>(new ItemStack(Items.GLOWSTONE_DUST, 1), 0.5F));
+        recipes.addRecipe("create:gold_ore", Ingredient.of("oreGold"),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 28), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 28), 0.3F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:granite", Ingredient.of("stoneGranite"),
+                new Tuple<>(new ItemStack(Blocks.SAND, 1, 1), 1.0F));
+        recipes.addRecipe("create:gravel", Ingredient.of(new ItemStack(Blocks.GRAVEL), false),
+                new Tuple<>(new ItemStack(Blocks.SAND), 1.0F),
+                new Tuple<>(new ItemStack(Items.FLINT), 0.1F),
+                new Tuple<>(new ItemStack(Items.CLAY_BALL), 0.05F));
+        recipes.addRecipe("create:grass", Ingredient.of(new ItemStack(Blocks.TALLGRASS, 1, 1), false),
+                new Tuple<>(new ItemStack(Items.WHEAT_SEEDS), 0.25F));
+        recipes.addRecipe("create:ink_sac", Ingredient.of(new ItemStack(Items.DYE, 1, 0), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 8), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 8), 0.1F));
+        recipes.addRecipe("create:iron_ore", Ingredient.of("oreIron"),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 26), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 26), 0.3F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:lapis", Ingredient.of(new ItemStack(Items.DYE, 1, 4), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 4), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 4), 0.1F));
+        recipes.addRecipe("create:lapis_ore", Ingredient.of("oreLapis"),
+                new Tuple<>(new ItemStack(Items.DYE, 12, 4), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 8, 4), 0.25F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:netherrack", Ingredient.of(new ItemStack(Blocks.NETHERRACK), false),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 2), 1.0F));
+        recipes.addRecipe("create:obsidian", Ingredient.of(new ItemStack(Blocks.OBSIDIAN), false),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 5), 1.0F));
+        recipes.addRecipe("create:quartz_ore", Ingredient.of("oreQuartz"),
+                new Tuple<>(new ItemStack(Items.QUARTZ, 2), 1.0F),
+                new Tuple<>(new ItemStack(Items.QUARTZ, 1), 0.25F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:red_sand", Ingredient.of(new ItemStack(Blocks.SAND, 1, 1), false),
+                new Tuple<>(new ItemStack(Items.GOLD_NUGGET, 1), 0.1F));
+        recipes.addRecipe("create:redstone_ore", Ingredient.of("oreRedstone"),
+                new Tuple<>(new ItemStack(Items.REDSTONE, 6), 1.0F),
+                new Tuple<>(new ItemStack(Items.REDSTONE, 3), 0.25F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:sand", Ingredient.of(new ItemStack(Blocks.SAND, 1, 0), false),
+                new Tuple<>(new ItemStack(Items.CLAY_BALL, 1), 0.25F));
+        // Backport-only metals (no copper/zinc in vanilla 1.12): ore -> crushed.
+        recipes.addRecipe("create:copper_ore", Ingredient.of("oreCopper"),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 27), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 27), 0.3F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:zinc_ore", Ingredient.of("oreZinc"),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 28), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 28), 0.3F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        // Shared milling-style entries also work here (official parity).
+        recipes.addRecipe("create:wheat", Ingredient.of(new ItemStack(Items.WHEAT), false),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 0), 1.0F),
+                new Tuple<>(new ItemStack(Items.WHEAT_SEEDS, 1), 0.25F));
     }
 
     private static Item getOrestone(int id) {

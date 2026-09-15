@@ -100,6 +100,7 @@ public class ClientProxy extends CommonProxy {
         this.registerTESR(TileEntityHarvester.class, "harvester", new TESRHarvester());
         this.registerTESR(TileEntityStorageInterface.class, "storage_interface", new TESRContraptionInterface<>());
         this.registerTESR(TileEntityMillstone.class, "millstone", new TESRMillstone());
+        this.registerTESR(TileEntityCrushingWheel.class, "crushing_wheel", new TESRCrushingWheel());
         this.registerTESR(TileEntityCrafter.class, "crafter", new TESRCrafter());
         this.registerTESR(TileEntityBlazeBurner.class, "blaze_burner", new TESRBlazeBurner());
         this.registerTESR(TileEntityDepot.class, "depot", new TESRDepot());
@@ -220,6 +221,7 @@ public class ClientProxy extends CommonProxy {
     public void registerRecipeTypes() {
         super.registerRecipeTypes();
         RecipeRegistry.registerClient("create:pressing", PressingRecipesClient.instance);
+        RecipeRegistry.registerClient("create:crushing", CrushingRecipesClient.instance);
         RecipeRegistry.registerClient("create:cutting", CuttingRecipesClient.instance);
         RecipeRegistry.registerClient("create:mixing", MixingRecipesClient.instance);
         RecipeRegistry.registerClient("create:deploying", DeployingRecipesClient.instance);

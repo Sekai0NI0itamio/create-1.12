@@ -227,6 +227,13 @@
     },
     "render_part=millstone": {
       "model": "create:render/millstone"
+    },
+    "render_part=crushing_wheel_x": {
+      "model": "create:render/crushing_wheel"
+    },
+    "render_part=crushing_wheel_z": {
+      "model": "create:render/crushing_wheel",
+      "y": 90
     }
   }
 }
