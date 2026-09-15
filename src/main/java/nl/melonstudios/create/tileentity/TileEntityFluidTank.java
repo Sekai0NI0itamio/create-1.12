@@ -1,19 +1,19 @@
 package nl.melonstudios.create.tileentity;
 
 import com.melonstudios.melonlib.misc.AABB;
-import com.melonstudios.melonlib.network.TrackedByteBuf;
-import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import nl.melonstudios.create.block.BlockFluidTank;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
 
 /**
  * Fluid tank TE. Tanks stack: the bottom-most tank block in a vertical column
@@ -27,6 +27,14 @@ public class TileEntityFluidTank extends TileEntityOptimizedBase {
             TileEntityFluidTank.this.sync();
         }
     };
+
+    @Override
+    public void tick() {
+    }
+
+    @Override
+    public void tickLazy() {
+    }
 
     public boolean isBottom() {
         if (this.world == null) return true;
@@ -93,29 +101,34 @@ public class TileEntityFluidTank extends TileEntityOptimizedBase {
     }
 
     @Override
-    public void writePacket(TrackedByteBuf buf) throws IOException {
-        super.writePacket(buf);
+    public NBTTagCompound writePacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
         FluidStack f = this.getFluid();
-        buf.writeBoolean(f != null);
-        if (f != null) {
-            buf.writeInt(net.minecraftforge.fluids.FluidRegistry.getId(f.getFluid()));
-            buf.writeInt(f.amount);
-        }
-        buf.writeInt(this.getCapacity());
+        if (f != null) nbt.setTag("Fluid", f.writeToNBT(new NBTTagCompound()));
+        nbt.setInteger("Capacity", this.getCapacity());
+        return nbt;
     }
 
     @Override
-    public void readPacket(ByteBuf buf) throws IOException {
-        super.readPacket(buf);
-        if (buf.readBoolean()) {
-            int id = buf.readInt();
-            int amount = buf.readInt();
-            net.minecraftforge.fluids.Fluid fluid = net.minecraftforge.fluids.FluidRegistry.getFluid(id);
-            this.tank.setFluid(fluid == null ? null : new FluidStack(fluid, amount));
+    public void readPacket(NBTTagCompound nbt) {
+        if (nbt.hasKey("Fluid", 10)) {
+            this.tank.setFluid(FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag("Fluid")));
         } else {
             this.tank.setFluid(null);
         }
-        this.tank.setCapacity(buf.readInt());
+        this.tank.setCapacity(nbt.getInteger("Capacity"));
+    }
+
+    @Override
+    public void writePacket(com.melonstudios.melonlib.network.TrackedByteBuf buf) throws java.io.IOException {
+        io.netty.buffer.ByteBuf temp = Unpooled.buffer();
+        ByteBufUtils.writeTag(temp, this.writePacket());
+        buf.writeBytes(temp);
+    }
+
+    @Override
+    public void readPacket(io.netty.buffer.ByteBuf buf) throws java.io.IOException {
+        this.readPacket(ByteBufUtils.readTag(buf));
     }
 
     @Override
