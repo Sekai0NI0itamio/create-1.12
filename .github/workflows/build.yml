@@ -57,6 +57,86 @@ jobs:
           name: create-112-jar
           path: build/libs/*.jar
 
+      - name: Install headless display deps
+        if: success()
+        run: |
+          sudo apt-get update
+          (sudo apt-get install -y xvfb mesa-utils libgl1-mesa-dri || sudo apt-get install -y xvfb mesa-utils || true)
+          which Xvfb || true
+          which xvfb-run || true
+
+      - name: Dedicated server smoke (registry crash catcher)
+        if: success()
+        run: |
+          set +e
+          mkdir -p run/mods
+          for j in dist/deps/*.jar; do
+            case "$j" in *create-1.12.2.jar*) echo "skip $j (dev classes already on classpath)";; *) cp -n "$j" run/mods/ && echo "mod $j";; esac
+          done
+          ls -la run/mods/ || true
+          echo "eula=true" > run/eula.txt
+          timeout 300 ./gradlew runServer --no-daemon --stacktrace > server-smoke.log 2>&1
+          CODE=$?
+          echo "server exit code: $CODE"
+          tail -n 80 server-smoke.log || true
+          echo "--- server marker scan ---"
+          grep -E -i "Done \(|Dedicated Server has started|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Caused by:" server-smoke.log | tail -n 40 || true
+          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" server-smoke.log; then
+            echo "SERVER SMOKE FAILED: crash marker found"
+            exit 1
+          fi
+          if grep -q -E "Done \(" server-smoke.log; then
+            echo "SERVER SMOKE PASSED: dedicated server reached Done"
+            exit 0
+          fi
+          if [ "$CODE" -eq 124 ]; then
+            echo "SERVER SMOKE FAILED: timed out before Done (see server-smoke.log)"
+            exit 1
+          fi
+          echo "SERVER SMOKE FAILED: exit $CODE without Done marker"
+          exit 1
+
+      - name: Headless client smoke (title screen or timeout)
+        if: success()
+        run: |
+          set +e
+          mkdir -p run/mods
+          for j in dist/deps/*.jar; do
+            case "$j" in *create-1.12.2.jar*) echo "skip $j";; *) cp -n "$j" run/mods/ && echo "mod $j";; esac
+          done
+          timeout 420 xvfb-run -a ./gradlew runClient --no-daemon --stacktrace > client-smoke.log 2>&1
+          CODE=$?
+          echo "client exit code: $CODE"
+          tail -n 100 client-smoke.log || true
+          echo "--- client marker scan ---"
+          grep -E -i "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library|SoundSystem|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Caused by:" client-smoke.log | tail -n 60 || true
+          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" client-smoke.log; then
+            echo "CLIENT SMOKE FAILED: crash marker found"
+            exit 1
+          fi
+          if grep -q -E "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library" client-smoke.log; then
+            echo "CLIENT SMOKE PASSED: reached title-screen neighbourhood (timeout $CODE is expected, client idles)"
+            exit 0
+          fi
+          if [ "$CODE" -eq 124 ]; then
+            echo "CLIENT SMOKE FAILED: timed out without title-screen marker (see client-smoke.log)"
+            exit 1
+          fi
+          echo "CLIENT SMOKE FAILED: exit $CODE without success marker"
+          exit 1
+
+      - name: Upload smoke logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-logs
+          path: |
+            server-smoke.log
+            client-smoke.log
+            run/logs/
+            run/crash-reports/
+          if-no-files-found: warn
+
       - name: Stage stable jar name
         if: success() && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         run: |

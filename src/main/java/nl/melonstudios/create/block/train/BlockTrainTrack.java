@@ -19,7 +19,6 @@ public class BlockTrainTrack extends BlockRailBase {
     public BlockTrainTrack() {
         super(false);
         this.blockSoundType = SoundType.METAL;
-        this.setRegistryName("train_track");
         this.setUnlocalizedName("create.train_track");
         this.setDefaultState(this.blockState.getBaseState().withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH));
     }
