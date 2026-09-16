@@ -1,0 +1,35 @@
+{
+ "parent": "create:brass",
+ "display": {
+  "icon": {
+   "item": "create:elevator_pulley"
+  },
+  "title": {
+   "translate": "advancement.create.elevator_pulley"
+  },
+  "description": {
+   "translate": "advancement.create.elevator_pulley.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:elevator_pulley"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

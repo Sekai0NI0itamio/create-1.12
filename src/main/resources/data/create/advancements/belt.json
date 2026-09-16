@@ -1,0 +1,35 @@
+{
+ "parent": "create:mechanical_press",
+ "display": {
+  "icon": {
+   "item": "create:belt"
+  },
+  "title": {
+   "translate": "advancement.create.belt"
+  },
+  "description": {
+   "translate": "advancement.create.belt.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:belt"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

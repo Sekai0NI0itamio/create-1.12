@@ -1,0 +1,35 @@
+{
+ "parent": "create:brass",
+ "display": {
+  "icon": {
+   "item": "create:sequenced_gearshift"
+  },
+  "title": {
+   "translate": "advancement.create.sequenced_gearshift"
+  },
+  "description": {
+   "translate": "advancement.create.sequenced_gearshift.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:sequenced_gearshift"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

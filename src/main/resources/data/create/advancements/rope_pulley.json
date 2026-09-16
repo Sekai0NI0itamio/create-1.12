@@ -1,0 +1,35 @@
+{
+ "parent": "create:elevator_pulley",
+ "display": {
+  "icon": {
+   "item": "create:rope_pulley"
+  },
+  "title": {
+   "translate": "advancement.create.rope_pulley"
+  },
+  "description": {
+   "translate": "advancement.create.rope_pulley.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:rope_pulley"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

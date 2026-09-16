@@ -1,0 +1,35 @@
+{
+ "parent": "create:belt",
+ "display": {
+  "icon": {
+   "item": "create:funnel"
+  },
+  "title": {
+   "translate": "advancement.create.funnel"
+  },
+  "description": {
+   "translate": "advancement.create.funnel.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:funnel"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

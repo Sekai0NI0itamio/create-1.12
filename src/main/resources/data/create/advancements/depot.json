@@ -1,0 +1,35 @@
+{
+ "parent": "create:belt",
+ "display": {
+  "icon": {
+   "item": "create:depot"
+  },
+  "title": {
+   "translate": "advancement.create.depot"
+  },
+  "description": {
+   "translate": "advancement.create.depot.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:depot"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

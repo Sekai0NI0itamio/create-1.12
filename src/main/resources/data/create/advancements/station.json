@@ -1,0 +1,35 @@
+{
+ "parent": "create:brass",
+ "display": {
+  "icon": {
+   "item": "create:station"
+  },
+  "title": {
+   "translate": "advancement.create.station"
+  },
+  "description": {
+   "translate": "advancement.create.station.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:station"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

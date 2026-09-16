@@ -1,0 +1,35 @@
+{
+ "parent": "create:brass",
+ "display": {
+  "icon": {
+   "item": "create:gantry_carriage"
+  },
+  "title": {
+   "translate": "advancement.create.gantry_carriage"
+  },
+  "description": {
+   "translate": "advancement.create.gantry_carriage.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:gantry_carriage"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}

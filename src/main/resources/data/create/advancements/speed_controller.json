@@ -1,0 +1,35 @@
+{
+ "parent": "create:precision_mechanism",
+ "display": {
+  "icon": {
+   "item": "create:speed_controller"
+  },
+  "title": {
+   "translate": "advancement.create.speed_controller"
+  },
+  "description": {
+   "translate": "advancement.create.speed_controller.desc"
+  },
+  "frame": "task",
+  "show_toast": true,
+  "announce_to_chat": false,
+  "hidden": false
+ },
+ "criteria": {
+  "0": {
+   "trigger": "minecraft:inventory_changed",
+   "conditions": {
+    "items": [
+     {
+      "item": "create:speed_controller"
+     }
+    ]
+   }
+  }
+ },
+ "requirements": [
+  [
+   "0"
+  ]
+ ]
+}
