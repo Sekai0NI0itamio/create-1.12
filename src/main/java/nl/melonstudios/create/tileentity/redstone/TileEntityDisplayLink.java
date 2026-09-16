@@ -127,28 +127,34 @@ public class TileEntityDisplayLink extends TileEntityOptimizedBase {
         this.line = nbt.getString("line");
     }
 
+    @Override
+    public NBTTagCompound writePacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setInteger("mode", this.mode);
+        nbt.setBoolean("label", this.showLabel);
+        nbt.setString("line", this.line);
+        return nbt;
+    }
+
+    @Override
+    public void readPacket(NBTTagCompound nbt) {
+        this.mode = nbt.getInteger("mode") % MODENAMES.length;
+        this.showLabel = nbt.getBoolean("label");
+        this.line = nbt.getString("line");
+    }
+
     @OverridingMethodsMustInvokeSuper
     @Override
     public void writePacket(TrackedByteBuf buf) throws IOException {
-        super.writePacket(buf);
-        buf.writeByte(this.mode);
-        buf.writeBoolean(this.showLabel);
-        byte[] b = this.line.getBytes(java.nio.charset.StandardCharsets.UTF_8);
-        buf.writeInt(b.length);
-        buf.writeBytes(b);
+        io.netty.buffer.ByteBuf temp = io.netty.buffer.Unpooled.buffer();
+        net.minecraftforge.fml.common.network.ByteBufUtils.writeTag(temp, this.writePacket());
+        buf.writeBytes(temp);
     }
 
     @OverridingMethodsMustInvokeSuper
     @Override
     public void readPacket(ByteBuf buf) throws IOException {
-        super.readPacket(buf);
-        this.mode = buf.readUnsignedByte() % MODENAMES.length;
-        this.showLabel = buf.readBoolean();
-        int n = buf.readInt();
-        byte[] b = new byte[Math.min(n, 256)];
-        buf.readBytes(b);
-        if (n > 256) buf.skipBytes(n - 256);
-        this.line = new String(b, java.nio.charset.StandardCharsets.UTF_8);
+        this.readPacket(net.minecraftforge.fml.common.network.ByteBufUtils.readTag(buf));
     }
 
     @Override
