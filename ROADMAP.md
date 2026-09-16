@@ -28,7 +28,7 @@ Fix logic bugs found, keep upstream syncable (small diffs, no rewrites).
 5. Mechanical crafter + sequenced assembly recipes. ALREADY UPSTREAM (verified): 3x3 groups, covers, deployer/press/saw steps, precision mechanism chain, 178 recipe registrations.
 6. Rotation speed controller, sequenced gearshift, adjustable chain drive. DONE (build 35040585195): RSC (settable +-256 RPM ladder, needs cog input, official model+texture), sequenced gearshift (pulse programs 90/180/360 with clutch-hold, official idle model+texture). Chain drive deferred to belt-connect phase.
 7. Displays, redstone links, pulse/toggle latches, stock ticker basics. DONE (build 35041659379): display link (6 sources: speed/stress/items/fluid/boiler/redstone, right-click cycles, sneak toggles label), nixie tube + display board with official textures, floating-text TESR. Links/latches already upstream.
-8. Packager + logistics (stock ticker requests, package routing, factory gauges).
+8. Packager + logistics (stock ticker requests, package routing, factory gauges). DONE (build 35042606854): packager (9 requests, pulls from inventory below, emits NBT packages with address), package item (sneak-unpack, official cardboard texture), stock ticker (chat browse + sneak order into adjacent packager). Full station network deferred (needs trains).
 9. Elevators, gantry carriages, rope/pulley contraptions.
 10. Schematics + schematicannon + clipboard/blueprints.
 11. Trains: tracks, bogeys, carriages, stations, signals, schedules.
