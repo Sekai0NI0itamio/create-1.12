@@ -66,9 +66,14 @@ def http_json(url):
         return json.load(r)
 
 
-def fetch(url, dest, min_size=1024, attempts=3, unzip_to=None):
-    """Download url to dest with retries; optionally extract a jar/zip into unzip_to."""
-    if os.path.isfile(dest) and os.path.getsize(dest) >= min_size:
+def fetch(url, dest, min_size=1024, attempts=3, unzip_to=None, expect_jar=False, file_hint=None, extra_search_dirs=()):
+    """Download url to dest with retries; optionally extract a jar/zip into unzip_to.
+
+    Mojang replaced some retired binaries with 22-byte empty zips served as HTTP 200,
+    so jar downloads are validated as non-empty zips. When the network fails, fall back
+    to jars already on disk (the ForgeGradle cache in CI already holds LWJGL).
+    """
+    if usable(dest, min_size, expect_jar):
         return dest
     os.makedirs(os.path.dirname(dest) or ".", exist_ok=True)
     last = None
@@ -78,8 +83,8 @@ def fetch(url, dest, min_size=1024, attempts=3, unzip_to=None):
             tmp = dest + ".part"
             with urllib.request.urlopen(req, timeout=180) as r, open(tmp, "wb") as f:
                 shutil.copyfileobj(r, f)
-            if os.path.getsize(tmp) < min_size:
-                raise RuntimeError(f"too small: {os.path.getsize(tmp)}b")
+            if not usable(tmp, min_size, expect_jar):
+                raise RuntimeError(f"unusable download: {os.path.getsize(tmp)}b")
             os.replace(tmp, dest)
             if unzip_to:
                 os.makedirs(unzip_to, exist_ok=True)
@@ -90,7 +95,43 @@ def fetch(url, dest, min_size=1024, attempts=3, unzip_to=None):
             last = e
             log(f"download attempt {n}/{attempts} failed for {url}: {e}")
             time.sleep(5 * n)
+    salvaged = salvage(file_hint or os.path.basename(dest), min_size, expect_jar, extra_search_dirs)
+    if salvaged:
+        log(f"using on-disk copy {salvaged} for {dest}")
+        shutil.copyfile(salvaged, dest)
+        if unzip_to:
+            os.makedirs(unzip_to, exist_ok=True)
+            with zipfile.ZipFile(dest) as z:
+                z.extractall(unzip_to)
+        return dest
     raise RuntimeError(f"could not download {url}: {last}")
+
+
+def usable(path, min_size, expect_jar):
+    if not (os.path.isfile(path) and os.path.getsize(path) >= min_size):
+        return False
+    if expect_jar:
+        try:
+            with zipfile.ZipFile(path) as z:
+                return len(z.namelist()) > 0
+        except zipfile.BadZipFile:
+            return False
+    return True
+
+
+def salvage(filename, min_size, expect_jar, extra_search_dirs):
+    """Find a usable copy of filename under the given roots (ForgeGradle cache first)."""
+    home = os.path.expanduser("~")
+    roots = [os.path.join(home, ".gradle")] + list(extra_search_dirs)
+    for root in roots:
+        if not os.path.isdir(root):
+            continue
+        for dirpath, _dirnames, filenames in os.walk(root):
+            if filename in filenames:
+                cand = os.path.join(dirpath, filename)
+                if usable(cand, min_size, expect_jar):
+                    return cand
+    return None
 
 
 def vanilla_version_json(cache):
@@ -108,13 +149,13 @@ def vanilla_version_json(cache):
 def vanilla_client_jar(cache, vjson):
     url = vjson["downloads"]["client"]["url"]
     dest = os.path.join(cache, f"client-{MC_VERSION}.jar")
-    return fetch(url, dest, min_size=5_000_000)
+    return fetch(url, dest, min_size=5_000_000, expect_jar=True)
 
 
 def install_forge(mc_dir, cache):
     """Run the official Forge installer for the client; return the generated version json."""
     installer = os.path.join(cache, f"forge-{FORGE_VERSION}-installer.jar")
-    fetch(FORGE_INSTALLER.format(v=FORGE_VERSION), installer, min_size=500_000)
+    fetch(FORGE_INSTALLER.format(v=FORGE_VERSION), installer, min_size=500_000, expect_jar=True)
     profiles = os.path.join(mc_dir, "launcher_profiles.json")
     if not os.path.isfile(profiles):
         os.makedirs(mc_dir, exist_ok=True)
@@ -209,13 +250,13 @@ def resolve_libraries(merged, mc_dir, cache, dry_run):
             dest = os.path.join(libs_dir, rel)
             if not dry_run:
                 if url:
-                    fetch(url, dest, min_size=512)
+                    fetch(url, dest, min_size=512, expect_jar=True, extra_search_dirs=[installed_dir])
                 elif os.path.isfile(installed):
                     dest = installed
                 else:
                     fallback = "https://maven.minecraftforge.net/" + maven_path(lib["name"])
                     log(f"no url for {lib['name']}, trying {fallback}")
-                    fetch(fallback, dest, min_size=512)
+                    fetch(fallback, dest, min_size=512, expect_jar=True, extra_search_dirs=[installed_dir])
             elif os.path.isfile(installed):
                 dest = installed
             classpath.append(os.path.abspath(dest))
@@ -224,7 +265,8 @@ def resolve_libraries(merged, mc_dir, cache, dry_run):
             rel = native.get("path") or maven_path(lib["name"])
             dest = os.path.join(libs_dir, rel)
             if not dry_run:
-                fetch(native["url"], dest, min_size=512, unzip_to=natives_dir)
+                fetch(native["url"], dest, min_size=512, unzip_to=natives_dir, expect_jar=True,
+                      extra_search_dirs=[installed_dir])
             natives.append(dest)
     return classpath, natives_dir
 
