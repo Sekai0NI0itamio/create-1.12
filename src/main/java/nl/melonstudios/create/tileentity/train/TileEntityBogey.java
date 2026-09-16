@@ -3,7 +3,6 @@ package nl.melonstudios.create.tileentity.train;
 import com.melonstudios.melonlib.misc.AABB;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
-import nl.melonstudios.create.tileentity.TileEntityKineticBase;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 
 /**
