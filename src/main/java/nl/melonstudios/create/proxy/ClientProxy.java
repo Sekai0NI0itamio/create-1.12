@@ -230,5 +230,9 @@ public class ClientProxy extends CommonProxy {
         RecipeRegistry.registerClient("create:mixing", MixingRecipesClient.instance);
         RecipeRegistry.registerClient("create:deploying", DeployingRecipesClient.instance);
         RecipeRegistry.registerClient("create:sequence", SequencedRecipesClient.instance);
+        RecipeRegistry.registerClient("create:splashing", SplashingRecipesClient.instance);
+        RecipeRegistry.registerClient("create:haunting", HauntingRecipesClient.instance);
+        RecipeRegistry.registerClient("create:smoking", SmokingRecipesClient.instance);
+        RecipeRegistry.registerClient("create:blasting", BlastingRecipesClient.instance);
     }
 }
