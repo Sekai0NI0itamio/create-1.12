@@ -1,14 +1,14 @@
 [
 {
   "modid": "create",
-  "name": "Create Legacy",
-  "description": "Backport of the Create mod for 1.12.2",
+  "name": "Create 1.12",
+  "description": "Ongoing unofficial backport bringing every Create feature to 1.12.2 (kinetics, contraptions, processing, fluids, steam, trains...). Work in progress.",
   "version": "26w19b",
   "mcversion": "1.12.2",
-  "url": "",
+  "url": "https://github.com/Sekai0NI0itamio/create-1.12",
   "updateUrl": "",
-  "authorList": ["Siepert"],
-  "credits": "The Create Team for 'creating' such an amazing mod",
+  "authorList": ["Siepert et al. (Create Legacy foundation)", "Create 1.12 contributors"],
+  "credits": "Create by simibubi/Creators-of-Create (MIT). Foundation: Create Legacy by Siepert (MIT). Deps: MixinBooter (Rongmario, LGPL-2.1), MelonLib (Siepert, MIT), CTM (tterrag1098, GPL-3.0), JEI (mezz, MIT). Unofficial; report bugs on our tracker, not upstream.",
   "logoFile": "assets/create/logo.png",
   "screenshots": [],
   "dependencies": ["melonlib", "ctm", "mixinbooter"]

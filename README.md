@@ -1,15 +1,20 @@
 <img width="756" height="260" alt="header" src="https://github.com/Siepert123/create-legacy/blob/rewrite/images/header.png" />
 
-# Create 1.12 (full backport fork)
+# Create 1.12 — ongoing work to fully port Create to 1.12.2 Forge
 
-Cloud-built continuation of Create Legacy (`rewrite`, MIT) targeting **every
-Create feature on 1.12.2**: kinetics, contraptions, crushing, fans, fluids,
-steam, speed control, displays, logistics, elevators, schematics, trains,
-worldgen, advancements. See `ROADMAP.md` for per-feature status.
+> **Status: active work in progress.** This is an ongoing effort to bring
+> **every Create feature** to Minecraft 1.12.2 (Forge): kinetics,
+> contraptions, crushing, fans, fluids, steam, speed control, displays,
+> logistics, elevators, schematics, trains, worldgen, advancements.
+> Finished systems are playable; the rest lands feature by feature.
+> See [`ROADMAP.md`](ROADMAP.md) for exactly what's done and what's next.
+>
+> Unofficial backport — not affiliated with the Create team. Please report
+> bugs [here](https://github.com/Sekai0NI0itamio/create-1.12/issues), never
+> on official Create channels.
 
 **Download (no building needed):** every green `main` push publishes
-to the [latest release](https://github.com/Sekai0NI0itamio/create-1.12/releases/latest)
-(private repo — sign in to download).
+to the [latest release](https://github.com/Sekai0NI0itamio/create-1.12/releases/latest).
 
 - `create-112-mods.zip` — **easiest**: unzip into `.minecraft/`, everything lands in `mods/`
 - `create-112-prism.mrpack` — Prism Launcher: Add Instance → Import → select the file
@@ -19,11 +24,13 @@ Requires Minecraft 1.12.2 + Forge 14.23.5.2859. Bundle pins: MixinBooter
 11.17, MelonLib 1.12.2-1.11.3, CTM 1.0.2.31, JEI 4.16.5.1030 (see
 `create-112-manifest.json` for URLs + sha1).
 
-## Credits
+## Credits (full details + license compliance in [`CREDITS.md`](CREDITS.md))
 
-- **[Create](https://github.com/Creators-of-Create/Create) by simibubi and contributors (MIT on ported branches)** — all designs, textures (synced from official assets), and mechanics originate here. Unofficial backport, not affiliated.
-- **[Create Legacy](https://github.com/Siepert123/create-legacy) by Siepert et al. (MIT)** — the 1.12.2 foundation this fork continues (imported with history, `upstream` remote kept).
-- **This fork** — continued backport work: crushing wheels, fan, fluids, steam, speed control, displays, logistics, elevators, schematics, trains, advancements.
+- **[Create](https://github.com/Creators-of-Create/Create) by simibubi and contributors (MIT)** — the original mod: all designs, mechanics, and reference textures. Not affiliated; bugs go here, not upstream.
+- **[Create Legacy](https://github.com/Siepert123/create-legacy) by Siepert et al. (MIT)** — the 1.12.2 foundation (imported with history, `upstream` kept).
+- **This fork** — crushing wheels, fan, fluids, steam, speed control, displays, logistics, elevators, schematics, trains, advancements, install bundles.
+- **Runtime deps** (own licenses, not shipped in our jar): [MixinBooter](https://github.com/CleanroomMC/MixinBooter) by Rongmario/CleanroomMC (LGPL-2.1) · [MelonLib](https://modrinth.com/mod/melonlib) by Siepert123 (MIT) · [CTM](https://www.curseforge.com/minecraft/mc-mods/ctm) by tterrag1098 (GPL-3.0, fetched at pack time, never vendored) · [JEI](https://modrinth.com/mod/jei) by mezz (MIT, optional).
+- **MinecraftForge** (LGPL-2.1) loads everything; **Mojang** owns all game assets — we ship code + backport art only.
 
 ---
 
