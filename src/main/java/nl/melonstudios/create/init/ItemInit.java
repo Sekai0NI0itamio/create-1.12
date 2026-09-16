@@ -53,6 +53,9 @@ public final class ItemInit {
     public static final ItemArmorCardboard BOOTS_CARDBOARD = registerItem(new ItemArmorCardboard(EntityEquipmentSlot.FEET, "boots"));
     public static final ItemAssembly ASSEMBLY = registerItem(new ItemAssembly());
     public static final ItemSceneWand SCENE_WAND = registerItem(new ItemSceneWand());
+    public static final ItemSchematic SCHEMATIC = (ItemSchematic)
+            registerItem(new ItemSchematic()
+            .setRegistryName("schematic").setUnlocalizedName("create.schematic").setCreativeTab(TAB_CREATE));
     public static final ItemPackage PACKAGE = (ItemPackage)
             registerItem(new ItemPackage()
             .setRegistryName("package").setUnlocalizedName("create.package").setCreativeTab(TAB_CREATE));
@@ -83,6 +86,7 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(LEGGINGS_CARDBOARD);
         CreateLegacy.proxy.setItemModel(BOOTS_CARDBOARD);
         CreateLegacy.proxy.setItemModel(SCENE_WAND);
+        CreateLegacy.proxy.setItemModel(SCHEMATIC);
         CreateLegacy.proxy.setItemModel(PACKAGE);
         CreateLegacy.proxy.setItemModel(ASSEMBLY, 0, "assembly/" + ItemAssembly.NAME_LOOKUP[0]);
         CreateLegacy.proxy.setItemModel(ASSEMBLY, 1, "assembly/" + ItemAssembly.NAME_LOOKUP[1]);
@@ -152,6 +156,7 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(BlockInit.ELEVATOR_CONTACT);
         CreateLegacy.proxy.setItemModel(BlockInit.GANTRY_CARRIAGE);
         CreateLegacy.proxy.setItemModel(BlockInit.ROPE_PULLEY);
+        CreateLegacy.proxy.setItemModel(BlockInit.SCHEMATICANNON);
         CreateLegacy.proxy.setItemModel(BlockInit.CRAFTER);
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 0, "blaze_burner_empty");
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 1, "blaze_burner");

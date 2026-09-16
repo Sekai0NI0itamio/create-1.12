@@ -102,6 +102,7 @@ public class CommonProxy {
         this.registerTE(TileEntityElevatorPulley.class, "elevator_pulley");
         this.registerTE(TileEntityElevatorContact.class, "elevator_contact");
         this.registerTE(TileEntityGantryCarriage.class, "gantry_carriage");
+        this.registerTE(TileEntitySchematicannon.class, "schematicannon");
         this.registerTE(TileEntityCrafter.class, "crafter");
         this.registerTE(TileEntityBlazeBurner.class, "blaze_burner");
         this.registerTE(TileEntityDepot.class, "depot");

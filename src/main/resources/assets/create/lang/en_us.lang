@@ -70,6 +70,8 @@ tile.create.elevator_pulley.name=Elevator Pulley
 tile.create.elevator_contact.name=Elevator Contact
 tile.create.gantry_carriage.name=Gantry Carriage
 tile.create.rope_pulley.name=Rope Pulley
+tile.create.schematicannon.name=Schematicannon
+item.create.schematic.name=Schematic
 tile.create.crafter.name=Mechanical Crafter
 
 tile.create.blaze_burner_empty.name=Empty Blaze Burner

@@ -21,6 +21,7 @@ import nl.melonstudios.create.block.actor.BlockElevatorContact;
 import nl.melonstudios.create.block.actor.BlockElevatorPulley;
 import nl.melonstudios.create.block.actor.BlockGantryCarriage;
 import nl.melonstudios.create.block.actor.BlockRopePulley;
+import nl.melonstudios.create.block.actor.BlockSchematicannon;
 import nl.melonstudios.create.block.redstone.BlockDisplayBoard;
 import nl.melonstudios.create.block.redstone.BlockDisplayLink;
 import nl.melonstudios.create.block.redstone.BlockNixieTube;
@@ -231,6 +232,10 @@ public final class BlockInit {
     public static final BlockRopePulley ROPE_PULLEY = (BlockRopePulley)
             registerBlockWithItem(new BlockRopePulley()
             .setRegistryName("rope_pulley").setUnlocalizedName("create.rope_pulley"));
+
+    public static final BlockSchematicannon SCHEMATICANNON = (BlockSchematicannon)
+            registerBlockWithItem(new BlockSchematicannon()
+            .setRegistryName("schematicannon").setUnlocalizedName("create.schematicannon"));
 
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()
