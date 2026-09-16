@@ -75,8 +75,30 @@ jobs:
           done
           ls -la run/mods/ || true
           echo "eula=true" > run/eula.txt
-          timeout 300 ./gradlew runServer --no-daemon --stacktrace > server-smoke.log 2>&1
-          CODE=$?
+          rm -f server-smoke.log server-attempt.log
+          ATTEMPT=0
+          CODE=0
+          while [ "$ATTEMPT" -lt 3 ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "=== server attempt $ATTEMPT/3 ===" | tee -a server-smoke.log
+            timeout 300 ./gradlew runServer --no-daemon --stacktrace > server-attempt.log 2>&1
+            CODE=$?
+            echo "attempt $ATTEMPT exit code: $CODE" | tee -a server-smoke.log
+            cat server-attempt.log >> server-smoke.log
+            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" server-attempt.log; then
+              echo "crash marker found, no retry" | tee -a server-smoke.log
+              break
+            fi
+            if grep -q -E "Done \(" server-attempt.log; then
+              break
+            fi
+            if grep -q -E "downloadAssets FAILED|Failed to get asset|Could not resolve|Could not GET" server-attempt.log; then
+              echo "transient download failure, retrying in 10s..." | tee -a server-smoke.log
+              sleep 10
+              continue
+            fi
+            break
+          done
           echo "server exit code: $CODE"
           tail -n 80 server-smoke.log || true
           echo "--- server marker scan ---"
@@ -104,8 +126,30 @@ jobs:
           for j in dist/deps/*.jar; do
             case "$j" in *create-1.12.2.jar*) echo "skip $j";; *) cp -n "$j" run/mods/ && echo "mod $j";; esac
           done
-          timeout 420 xvfb-run -a ./gradlew runClient --no-daemon --stacktrace > client-smoke.log 2>&1
-          CODE=$?
+          rm -f client-smoke.log client-attempt.log
+          ATTEMPT=0
+          CODE=0
+          while [ "$ATTEMPT" -lt 3 ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "=== client attempt $ATTEMPT/3 ===" | tee -a client-smoke.log
+            timeout 420 xvfb-run -a ./gradlew runClient --no-daemon --stacktrace > client-attempt.log 2>&1
+            CODE=$?
+            echo "attempt $ATTEMPT exit code: $CODE" | tee -a client-smoke.log
+            cat client-attempt.log >> client-smoke.log
+            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" client-attempt.log; then
+              echo "crash marker found, no retry" | tee -a client-smoke.log
+              break
+            fi
+            if grep -q -E "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library" client-attempt.log; then
+              break
+            fi
+            if grep -q -E "downloadAssets FAILED|Failed to get asset|Could not resolve|Could not GET" client-attempt.log; then
+              echo "transient download failure, retrying in 10s..." | tee -a client-smoke.log
+              sleep 10
+              continue
+            fi
+            break
+          done
           echo "client exit code: $CODE"
           tail -n 100 client-smoke.log || true
           echo "--- client marker scan ---"
