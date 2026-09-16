@@ -64,6 +64,8 @@ tile.create.sequenced_gearshift.name=Sequenced Gearshift
 tile.create.display_link.name=Display Link
 tile.create.nixie_tube.name=Nixie Tube
 tile.create.display_board.name=Display Board
+tile.create.packager.name=Packager
+tile.create.stock_ticker.name=Stock Ticker
 tile.create.crafter.name=Mechanical Crafter
 
 tile.create.blaze_burner_empty.name=Empty Blaze Burner
@@ -173,6 +175,8 @@ tile.create.pillar_veridium.name=Cut Veridium Pillar
 
 ## Create ##
 item.create.wrench.name=Wrench
+
+item.create.package.name=Package
 
 item.create.wheat_flour.name=Wheat Flour
 item.create.dough.name=Dough

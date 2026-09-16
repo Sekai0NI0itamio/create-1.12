@@ -53,6 +53,9 @@ public final class ItemInit {
     public static final ItemArmorCardboard BOOTS_CARDBOARD = registerItem(new ItemArmorCardboard(EntityEquipmentSlot.FEET, "boots"));
     public static final ItemAssembly ASSEMBLY = registerItem(new ItemAssembly());
     public static final ItemSceneWand SCENE_WAND = registerItem(new ItemSceneWand());
+    public static final ItemPackage PACKAGE = (ItemPackage)
+            registerItem(new ItemPackage()
+            .setRegistryName("package").setUnlocalizedName("create.package").setCreativeTab(TAB_CREATE));
 
     public static final ItemBlockFunnel FUNNEL_ANDESITE = registerItem(new ItemBlockFunnel("andesite"));
     public static final ItemBlockFunnel FUNNEL_BRASS = registerItem(new ItemBlockFunnel("brass"));
@@ -80,6 +83,7 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(LEGGINGS_CARDBOARD);
         CreateLegacy.proxy.setItemModel(BOOTS_CARDBOARD);
         CreateLegacy.proxy.setItemModel(SCENE_WAND);
+        CreateLegacy.proxy.setItemModel(PACKAGE);
         CreateLegacy.proxy.setItemModel(ASSEMBLY, 0, "assembly/" + ItemAssembly.NAME_LOOKUP[0]);
         CreateLegacy.proxy.setItemModel(ASSEMBLY, 1, "assembly/" + ItemAssembly.NAME_LOOKUP[1]);
         CreateLegacy.proxy.setItemModel(FUNNEL_ANDESITE);
@@ -142,6 +146,8 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(BlockInit.DISPLAY_LINK);
         CreateLegacy.proxy.setItemModel(BlockInit.NIXIE_TUBE);
         CreateLegacy.proxy.setItemModel(BlockInit.DISPLAY_BOARD);
+        CreateLegacy.proxy.setItemModel(BlockInit.PACKAGER);
+        CreateLegacy.proxy.setItemModel(BlockInit.STOCK_TICKER);
         CreateLegacy.proxy.setItemModel(BlockInit.CRAFTER);
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 0, "blaze_burner_empty");
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 1, "blaze_burner");

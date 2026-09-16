@@ -15,6 +15,8 @@ import nl.melonstudios.create.block.actor.*;
 import nl.melonstudios.create.block.deco.*;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
+import nl.melonstudios.create.block.logistics.BlockPackager;
+import nl.melonstudios.create.block.logistics.BlockStockTicker;
 import nl.melonstudios.create.block.redstone.BlockDisplayBoard;
 import nl.melonstudios.create.block.redstone.BlockDisplayLink;
 import nl.melonstudios.create.block.redstone.BlockNixieTube;
@@ -201,6 +203,14 @@ public final class BlockInit {
     public static final BlockDisplayBoard DISPLAY_BOARD = (BlockDisplayBoard)
             registerBlockWithItem(new BlockDisplayBoard()
             .setRegistryName("display_board").setUnlocalizedName("create.display_board"));
+
+    public static final BlockPackager PACKAGER = (BlockPackager)
+            registerBlockWithItem(new BlockPackager()
+            .setRegistryName("packager").setUnlocalizedName("create.packager"));
+
+    public static final BlockStockTicker STOCK_TICKER = (BlockStockTicker)
+            registerBlockWithItem(new BlockStockTicker()
+            .setRegistryName("stock_ticker").setUnlocalizedName("create.stock_ticker"));
 
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()

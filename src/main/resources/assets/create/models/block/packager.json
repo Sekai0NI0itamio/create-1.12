@@ -1,0 +1,129 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "iris": "create:block/packager_iris_open",
+  "particle": "create:block/packager_iris_closed"
+ },
+ "elements": [
+  {
+   "name": "Box",
+   "from": [
+    1,
+    0,
+    1
+   ],
+   "to": [
+    15,
+    12,
+    15
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      1,
+      0,
+      15,
+      12
+     ],
+     "texture": "#iris"
+    },
+    "south": {
+     "uv": [
+      1,
+      0,
+      15,
+      12
+     ],
+     "texture": "#iris"
+    },
+    "east": {
+     "uv": [
+      1,
+      0,
+      15,
+      12
+     ],
+     "texture": "#iris"
+    },
+    "west": {
+     "uv": [
+      1,
+      0,
+      15,
+      12
+     ],
+     "texture": "#iris"
+    }
+   }
+  },
+  {
+   "name": "Lid",
+   "from": [
+    0,
+    12,
+    0
+   ],
+   "to": [
+    16,
+    14,
+    16
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#iris"
+    },
+    "south": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#iris"
+    },
+    "east": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#iris"
+    },
+    "west": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#iris"
+    },
+    "up": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#iris"
+    },
+    "down": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#iris"
+    }
+   }
+  }
+ ]
+}

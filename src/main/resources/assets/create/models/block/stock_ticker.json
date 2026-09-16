@@ -1,0 +1,69 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "face": "create:block/stock_ticker",
+  "particle": "create:block/stock_ticker"
+ },
+ "elements": [
+  {
+   "name": "Ticker",
+   "from": [
+    2,
+    0,
+    2
+   ],
+   "to": [
+    14,
+    14,
+    14
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      2,
+      0,
+      14,
+      14
+     ],
+     "texture": "#face"
+    },
+    "south": {
+     "uv": [
+      2,
+      0,
+      14,
+      14
+     ],
+     "texture": "#face"
+    },
+    "east": {
+     "uv": [
+      2,
+      0,
+      14,
+      14
+     ],
+     "texture": "#face"
+    },
+    "west": {
+     "uv": [
+      2,
+      0,
+      14,
+      14
+     ],
+     "texture": "#face"
+    },
+    "up": {
+     "uv": [
+      2,
+      0,
+      14,
+      14
+     ],
+     "texture": "#face"
+    }
+   }
+  }
+ ]
+}
