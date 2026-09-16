@@ -37,6 +37,17 @@ jobs:
           chmod +x gradlew
           ./gradlew build --no-daemon --stacktrace
 
+      - name: Diagnose which Side.class the dev game sees (temp debug)
+        if: success()
+        run: |
+          for j in $(find ~/.gradle/caches/forge_gradle -name "*.jar" 2>/dev/null | grep -v -e sources -e javadoc); do
+            if unzip -l "$j" 2>/dev/null | grep -q "net/minecraftforge/fml/relauncher/Side.class"; then
+              echo "=== $j"
+              javap -cp "$j" net.minecraftforge.fml.relauncher.Side 2>&1 | grep -E "CLIENT|SERVER|BUKKIT|enum class" | head -n 8 || true
+            fi
+          done
+          echo done
+
       - name: Set up Python for packager
         uses: actions/setup-python@v5
         with:
