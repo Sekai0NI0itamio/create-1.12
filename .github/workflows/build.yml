@@ -40,12 +40,16 @@ jobs:
       - name: Diagnose which Side.class the dev game sees (temp debug)
         if: success()
         run: |
-          for j in $(find ~/.gradle/caches/forge_gradle -name "*.jar" 2>/dev/null | grep -v -e sources -e javadoc); do
-            if unzip -l "$j" 2>/dev/null | grep -q "net/minecraftforge/fml/relauncher/Side.class"; then
-              echo "=== $j"
-              javap -cp "$j" net.minecraftforge.fml.relauncher.Side 2>&1 | grep -E "CLIENT|SERVER|BUKKIT|enum class" | head -n 8 || true
-            fi
-          done
+          J=$(find ~/.gradle/caches/forge_gradle -name "forge-1.12.2-14.23.5.2859*mapped*.jar" | head -n 1)
+          echo "=== runtime jar: $J"
+          javap -c -p -cp "$J" net.minecraftforge.fml.common.network.NetworkRegistry > /tmp/nr2.txt 2>&1 || true
+          python3 - <<'PYEOF' || true
+          txt = open('/tmp/nr2.txt', errors='replace').read()
+          i = txt.find('NetworkRegistry();')
+          print('--- constructor ---')
+          print(txt[i:i+2200] if i >= 0 else 'constructor not found')
+          PYEOF
+          javap -p -cp "$J" net.minecraftforge.fml.relauncher.Side 2>&1 | head -n 12 || true
           echo done
 
       - name: Set up Python for packager
