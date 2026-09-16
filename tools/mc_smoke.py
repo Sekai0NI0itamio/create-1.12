@@ -254,15 +254,18 @@ def resolve_libraries(merged, mc_dir, cache, dry_run):
             url = artifact.get("url") or ""
             installed = os.path.join(installed_dir, rel)
             dest = os.path.join(libs_dir, rel)
+            declared = artifact.get("size") or 0
+            need = min(512, declared) if declared else 512
+            expect = declared > 1024
             if not dry_run:
                 if url:
-                    fetch(url, dest, min_size=512, expect_jar=True, extra_search_dirs=[installed_dir])
+                    fetch(url, dest, min_size=need, expect_jar=expect, extra_search_dirs=[installed_dir])
                 elif os.path.isfile(installed):
                     dest = installed
                 else:
                     fallback = "https://maven.minecraftforge.net/" + maven_path(lib["name"])
                     log(f"no url for {lib['name']}, trying {fallback}")
-                    fetch(fallback, dest, min_size=512, expect_jar=True, extra_search_dirs=[installed_dir])
+                    fetch(fallback, dest, min_size=need, expect_jar=expect, extra_search_dirs=[installed_dir])
             elif os.path.isfile(installed):
                 dest = installed
             classpath.append(os.path.abspath(dest))
@@ -270,9 +273,11 @@ def resolve_libraries(merged, mc_dir, cache, dry_run):
         if native and native.get("url"):
             rel = native.get("path") or maven_path(lib["name"])
             dest = os.path.join(libs_dir, rel)
+            declared = native.get("size") or 0
+            need = min(512, declared) if declared else 512
             if not dry_run:
-                fetch(native["url"], dest, min_size=512, unzip_to=natives_dir, expect_jar=True,
-                      extra_search_dirs=[installed_dir])
+                fetch(native["url"], dest, min_size=need, expect_jar=True,
+                      unzip_to=natives_dir, extra_search_dirs=[installed_dir])
             natives.append(dest)
     return classpath, natives_dir
 
