@@ -31,7 +31,7 @@ Fix logic bugs found, keep upstream syncable (small diffs, no rewrites).
 8. Packager + logistics (stock ticker requests, package routing, factory gauges). DONE (build 35042606854): packager (9 requests, pulls from inventory below, emits NBT packages with address), package item (sneak-unpack, official cardboard texture), stock ticker (chat browse + sneak order into adjacent packager). Full station network deferred (needs trains).
 9. Elevators, gantry carriages, rope/pulley contraptions. DONE (build 35044207099): elevator pulley (call up/down, contact stops, carries riders, official texture), elevator contact (redstone when docked), gantry carriage (slides on axis, reverses at ends, carries riders), rope pulley (hose mechanics). Full contraption re-assembly per stop deferred (entity-ride approximation).
 10. Schematics + schematicannon + clipboard/blueprints. DONE (build 35045194358): schematic item (sneak-capture 2 corners, 48 cap, TE NBT), cannon (gunpowder 1/8 blocks, adjacent-inventory materials, 4/tick, statuses), sneak-load with anchor, material-list clipboard text, official cannon+schematic textures.
-11. Trains: tracks, bogeys, carriages, stations, signals, schedules.
+11. Trains: tracks, bogeys, carriages, stations, signals, schedules. DONE (build 35055673286): rail-compatible track, bogeys, station assemble/disassemble (frames stored/restored), schedule-loop train entity with dwell stops, official bogey/station textures. Bezier curves + signals deferred (vanilla rail shapes carry curves).
 12. Worldgen audit (zinc/asurine/etc.), full recipe parity, advancements.
 
 Each item: implement → CI green → in-game verify checklist → release.
