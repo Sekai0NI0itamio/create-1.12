@@ -37,32 +37,6 @@ jobs:
           chmod +x gradlew
           ./gradlew build --no-daemon --stacktrace
 
-      - name: Diagnose Forge NetworkRegistry line 207 (temp debug)
-        if: success()
-        run: |
-          FORGEJAR=$(find ~/.gradle -name "forge-1.12.2-14.23.5.2859_mapped*.jar" | head -n 1)
-          echo "Forge jar: $FORGEJAR"
-          javap -c -l -p -cp "$FORGEJAR" net.minecraftforge.fml.common.network.NetworkRegistry > /tmp/nr.txt 2>&1 || true
-          python3 - <<'EOF' || true
-          txt = open('/tmp/nr.txt', errors='replace').read()
-          i = txt.find('newChannel(net.minecraftforge.fml.common.ModContainer')
-          print(txt[i:i+6000])
-          EOF
-          echo "--- jars containing duplicate Side.class ---"
-          for j in $(find ~/.gradle -name "*.jar" 2>/dev/null | grep -v -e sources -e javadoc); do
-            if unzip -l "$j" 2>/dev/null | grep -q "net/minecraftforge/fml/relauncher/Side.class"; then
-              echo "HAS Side.class: $j"
-            fi
-          done
-          echo "--- run/mods jars containing Side.class ---"
-          for j in run/mods/*.jar dist/deps/*.jar; do
-            [ -f "$j" ] || continue
-            if unzip -l "$j" 2>/dev/null | grep -q "net/minecraftforge/fml/relauncher/Side.class"; then
-              echo "HAS Side.class: $j"
-            fi
-          done
-          echo done
-
       - name: Set up Python for packager
         uses: actions/setup-python@v5
         with:
@@ -91,49 +65,48 @@ jobs:
           which Xvfb || true
           which xvfb-run || true
 
-      - name: Dedicated server smoke (registry crash catcher)
+      - name: Real dedicated server smoke (registry crash catcher)
         if: success()
         run: |
           set +e
-          mkdir -p run/mods
+          rm -rf smokeserver && mkdir -p smokeserver/mods
+          # Real pack contents (CTM is client-only, excluded like a real server)
           for j in dist/deps/*.jar; do
             case "$j" in
-              *create-1.12.2.jar*) echo "skip $j (dev classes already on classpath)";;
-              *mixinbooter*) echo "skip $j (mixinbooter already on FG classpath via build.gradle)";; 
-              *) cp -n "$j" run/mods/ && echo "mod $j";;
+              *CTM-*) echo "skip $j (client-only)";;
+              *) cp "$j" smokeserver/mods/ && echo "mod $j";;
             esac
           done
-          ls -la run/mods/ || true
-          echo "eula=true" > run/eula.txt
-          rm -f server-smoke.log server-attempt.log
+          ls -la smokeserver/mods/
           ATTEMPT=0
-          CODE=0
+          INSTALLED=0
           while [ "$ATTEMPT" -lt 3 ]; do
             ATTEMPT=$((ATTEMPT + 1))
-            echo "=== server attempt $ATTEMPT/3 ===" | tee -a server-smoke.log
-            timeout 300 ./gradlew runServer --no-daemon --stacktrace > server-attempt.log 2>&1
+            echo "=== forge server install attempt $ATTEMPT/3 ==="
+            rm -f forge-installer.jar
+            curl -L --retry 2 -o forge-installer.jar "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2859/forge-1.12.2-14.23.5.2859-installer.jar" && \
+            (cd smokeserver && java -jar ../forge-installer.jar --installServer > ../forge-install.log 2>&1)
             CODE=$?
-            echo "attempt $ATTEMPT exit code: $CODE" | tee -a server-smoke.log
-            cat server-attempt.log >> server-smoke.log
-            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod|Duplicate Mods" server-attempt.log; then
-              echo "crash marker found, no retry" | tee -a server-smoke.log
+            tail -n 15 forge-install.log || true
+            if [ "$CODE" -eq 0 ] && ls smokeserver/forge-1.12.2-14.23.5.2859.jar >/dev/null 2>&1; then
+              INSTALLED=1
               break
             fi
-            if grep -q -E "Done \(" server-attempt.log; then
-              break
-            fi
-            if grep -q -E "downloadAssets FAILED|Failed to get asset|Could not resolve|Could not GET" server-attempt.log; then
-              echo "transient download failure, retrying in 10s..." | tee -a server-smoke.log
-              sleep 10
-              continue
-            fi
-            break
+            echo "install attempt $ATTEMPT failed (exit $CODE), retrying in 10s..."
+            sleep 10
           done
+          if [ "$INSTALLED" -ne 1 ]; then
+            echo "SERVER SMOKE FAILED: could not install Forge server after 3 attempts"
+            exit 1
+          fi
+          echo "eula=true" > smokeserver/eula.txt
+          (cd smokeserver && timeout 300 java -Xmx3G -jar forge-1.12.2-14.23.5.2859.jar nogui > ../server-smoke.log 2>&1)
+          CODE=$?
           echo "server exit code: $CODE"
           tail -n 80 server-smoke.log || true
           echo "--- server marker scan ---"
-          grep -E -i "Done \(|Dedicated Server has started|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Found a duplicate mod|Caused by:" server-smoke.log | tail -n 40 || true
-          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod" server-smoke.log; then
+          grep -E -i "Done \(|Dedicated Server|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Found a duplicate mod|Caught exception from|LoaderException|Caused by:" server-smoke.log | tail -n 40 || true
+          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod|Caught exception from" server-smoke.log; then
             echo "SERVER SMOKE FAILED: crash marker found"
             exit 1
           fi
@@ -210,7 +183,10 @@ jobs:
           name: smoke-logs
           path: |
             server-smoke.log
+            forge-install.log
             client-smoke.log
+            smokeserver/logs/
+            smokeserver/crash-reports/
             run/logs/
             run/crash-reports/
           if-no-files-found: warn
