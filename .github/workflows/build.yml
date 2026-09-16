@@ -71,7 +71,11 @@ jobs:
           set +e
           mkdir -p run/mods
           for j in dist/deps/*.jar; do
-            case "$j" in *create-1.12.2.jar*) echo "skip $j (dev classes already on classpath)";; *) cp -n "$j" run/mods/ && echo "mod $j";; esac
+            case "$j" in
+              *create-1.12.2.jar*) echo "skip $j (dev classes already on classpath)";;
+              *mixinbooter*) echo "skip $j (mixinbooter already on FG classpath via build.gradle)";; 
+              *) cp -n "$j" run/mods/ && echo "mod $j";;
+            esac
           done
           ls -la run/mods/ || true
           echo "eula=true" > run/eula.txt
@@ -85,7 +89,7 @@ jobs:
             CODE=$?
             echo "attempt $ATTEMPT exit code: $CODE" | tee -a server-smoke.log
             cat server-attempt.log >> server-smoke.log
-            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" server-attempt.log; then
+            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod|Duplicate Mods" server-attempt.log; then
               echo "crash marker found, no retry" | tee -a server-smoke.log
               break
             fi
@@ -102,8 +106,8 @@ jobs:
           echo "server exit code: $CODE"
           tail -n 80 server-smoke.log || true
           echo "--- server marker scan ---"
-          grep -E -i "Done \(|Dedicated Server has started|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Caused by:" server-smoke.log | tail -n 40 || true
-          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" server-smoke.log; then
+          grep -E -i "Done \(|Dedicated Server has started|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Found a duplicate mod|Caused by:" server-smoke.log | tail -n 40 || true
+          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod" server-smoke.log; then
             echo "SERVER SMOKE FAILED: crash marker found"
             exit 1
           fi
@@ -124,7 +128,11 @@ jobs:
           set +e
           mkdir -p run/mods
           for j in dist/deps/*.jar; do
-            case "$j" in *create-1.12.2.jar*) echo "skip $j";; *) cp -n "$j" run/mods/ && echo "mod $j";; esac
+            case "$j" in
+              *create-1.12.2.jar*) echo "skip $j (dev classes already on classpath)";;
+              *mixinbooter*) echo "skip $j (mixinbooter already on FG classpath via build.gradle)";;
+              *) cp -n "$j" run/mods/ && echo "mod $j";;
+            esac
           done
           rm -f client-smoke.log client-attempt.log
           ATTEMPT=0
@@ -136,7 +144,7 @@ jobs:
             CODE=$?
             echo "attempt $ATTEMPT exit code: $CODE" | tee -a client-smoke.log
             cat client-attempt.log >> client-smoke.log
-            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" client-attempt.log; then
+            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod|Duplicate Mods" client-attempt.log; then
               echo "crash marker found, no retry" | tee -a client-smoke.log
               break
             fi
@@ -153,8 +161,8 @@ jobs:
           echo "client exit code: $CODE"
           tail -n 100 client-smoke.log || true
           echo "--- client marker scan ---"
-          grep -E -i "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library|SoundSystem|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Caused by:" client-smoke.log | tail -n 60 || true
-          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name" client-smoke.log; then
+          grep -E -i "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library|SoundSystem|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Found a duplicate mod|Caused by:" client-smoke.log | tail -n 60 || true
+          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod" client-smoke.log; then
             echo "CLIENT SMOKE FAILED: crash marker found"
             exit 1
           fi
