@@ -54,8 +54,8 @@ public class TileEntityGantryCarriage extends TileEntityKinetic {
         List<Entity> riders = this.world.getEntitiesWithinAABB(Entity.class, cab,
                 e -> e != null && e.isEntityAlive() && !(e instanceof net.minecraft.entity.item.EntityItem));
         for (Entity e : riders) {
-            if (axis == EnumFacing.Axis.X) e.moveEntity(speed, 0, 0);
-            else e.moveEntity(0, 0, speed);
+            if (axis == EnumFacing.Axis.X) e.move(net.minecraft.entity.MoverType.SELF, speed, 0, 0);
+            else e.move(net.minecraft.entity.MoverType.SELF, 0, 0, speed);
             e.fallDistance = 0;
         }
         this.markDirty();

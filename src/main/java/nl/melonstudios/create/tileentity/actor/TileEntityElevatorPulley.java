@@ -53,7 +53,7 @@ public class TileEntityElevatorPulley extends TileEntityKinetic {
         List<Entity> riders = this.world.getEntitiesWithinAABB(Entity.class, cab,
                 e -> e != null && e.isEntityAlive() && !(e instanceof net.minecraft.entity.item.EntityItem));
         for (Entity e : riders) {
-            e.moveEntity(0, step, 0);
+            e.move(net.minecraft.entity.MoverType.SELF, 0, step, 0);
             e.fallDistance = 0;
         }
         this.markDirty();
