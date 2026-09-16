@@ -157,6 +157,9 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(BlockInit.GANTRY_CARRIAGE);
         CreateLegacy.proxy.setItemModel(BlockInit.ROPE_PULLEY);
         CreateLegacy.proxy.setItemModel(BlockInit.SCHEMATICANNON);
+        CreateLegacy.proxy.setItemModel(BlockInit.TRAIN_TRACK);
+        CreateLegacy.proxy.setItemModel(BlockInit.BOGEY);
+        CreateLegacy.proxy.setItemModel(BlockInit.STATION);
         CreateLegacy.proxy.setItemModel(BlockInit.CRAFTER);
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 0, "blaze_burner_empty");
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 1, "blaze_burner");

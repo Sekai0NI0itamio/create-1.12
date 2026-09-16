@@ -22,6 +22,9 @@ import nl.melonstudios.create.block.actor.BlockElevatorPulley;
 import nl.melonstudios.create.block.actor.BlockGantryCarriage;
 import nl.melonstudios.create.block.actor.BlockRopePulley;
 import nl.melonstudios.create.block.actor.BlockSchematicannon;
+import nl.melonstudios.create.block.train.BlockBogey;
+import nl.melonstudios.create.block.train.BlockStation;
+import nl.melonstudios.create.block.train.BlockTrainTrack;
 import nl.melonstudios.create.block.redstone.BlockDisplayBoard;
 import nl.melonstudios.create.block.redstone.BlockDisplayLink;
 import nl.melonstudios.create.block.redstone.BlockNixieTube;
@@ -236,6 +239,18 @@ public final class BlockInit {
     public static final BlockSchematicannon SCHEMATICANNON = (BlockSchematicannon)
             registerBlockWithItem(new BlockSchematicannon()
             .setRegistryName("schematicannon").setUnlocalizedName("create.schematicannon"));
+
+    public static final BlockTrainTrack TRAIN_TRACK = (BlockTrainTrack)
+            registerBlockWithItem(new BlockTrainTrack()
+            .setRegistryName("train_track").setUnlocalizedName("create.train_track"));
+
+    public static final BlockBogey BOGEY = (BlockBogey)
+            registerBlockWithItem(new BlockBogey()
+            .setRegistryName("bogey").setUnlocalizedName("create.bogey"));
+
+    public static final BlockStation STATION = (BlockStation)
+            registerBlockWithItem(new BlockStation()
+            .setRegistryName("station").setUnlocalizedName("create.station"));
 
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()

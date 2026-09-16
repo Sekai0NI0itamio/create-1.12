@@ -28,8 +28,9 @@ import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWallAdvanced;
 import nl.melonstudios.create.tileentity.generator.*;
 import nl.melonstudios.create.tileentity.logistics.TileEntityPackager;
 import nl.melonstudios.create.tileentity.redstone.TileEntityDisplayLink;
-import nl.melonstudios.create.tileentity.redstone.TileEntityDisplayLink;
 import nl.melonstudios.create.tileentity.redstone.TileEntityRedstoneLinker;
+import nl.melonstudios.create.tileentity.train.TileEntityBogey;
+import nl.melonstudios.create.tileentity.train.TileEntityStation;
 
 public class CommonProxy {
     public Side getSide() {
@@ -103,6 +104,8 @@ public class CommonProxy {
         this.registerTE(TileEntityElevatorContact.class, "elevator_contact");
         this.registerTE(TileEntityGantryCarriage.class, "gantry_carriage");
         this.registerTE(TileEntitySchematicannon.class, "schematicannon");
+        this.registerTE(TileEntityBogey.class, "bogey");
+        this.registerTE(TileEntityStation.class, "station");
         this.registerTE(TileEntityCrafter.class, "crafter");
         this.registerTE(TileEntityBlazeBurner.class, "blaze_burner");
         this.registerTE(TileEntityDepot.class, "depot");

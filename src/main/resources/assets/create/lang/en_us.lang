@@ -71,6 +71,9 @@ tile.create.elevator_contact.name=Elevator Contact
 tile.create.gantry_carriage.name=Gantry Carriage
 tile.create.rope_pulley.name=Rope Pulley
 tile.create.schematicannon.name=Schematicannon
+tile.create.train_track.name=Train Track
+tile.create.bogey.name=Train Bogey
+tile.create.station.name=Train Station
 item.create.schematic.name=Schematic
 tile.create.crafter.name=Mechanical Crafter
 

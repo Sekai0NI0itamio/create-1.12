@@ -49,6 +49,7 @@ public class CreateLegacy {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.clientPreInit(event);
+        EntityInit.init(this);
 
         CreateLegacyPacketManager.bus = NetworkRegistry.INSTANCE.newEventDrivenChannel(CreateLegacyPacketManager.CHANNEL);
         CreateLegacyPacketManager.bus.register(new CreateLegacyPacketManager());
