@@ -175,6 +175,10 @@ public final class BlockInit {
             registerBlockWithItem(new BlockPortableFluidInterface()
             .setRegistryName("portable_fluid_interface").setUnlocalizedName("create.portable_fluid_interface"));
 
+    public static final BlockSteamEngine STEAM_ENGINE = (BlockSteamEngine)
+            registerBlockWithItem(new BlockSteamEngine()
+            .setRegistryName("steam_engine").setUnlocalizedName("create.steam_engine"));
+
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()
             .setRegistryName("crafter").setUnlocalizedName("create.crafter"));

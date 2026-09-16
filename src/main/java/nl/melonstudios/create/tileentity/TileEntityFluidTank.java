@@ -30,10 +30,69 @@ public class TileEntityFluidTank extends TileEntityOptimizedBase {
 
     @Override
     public void tick() {
+        this.sampleBoiler();
     }
 
     @Override
     public void tickLazy() {
+    }
+
+    // ---- Steam boiler (official rules) ----
+    // A tank column adjacent to heat (burner/fire/lava/magma below or beside)
+    // with water inside is a boiler. Level = min(heat, size/4, water/10).
+    public int boilerHeat;
+    public int boilerSize;
+    public int boilerWater;
+    private int sampleCooldown;
+
+    public void sampleBoiler() {
+        if (this.world == null || this.world.isRemote) return;
+        if (!this.isBottom()) return;
+        if (--this.sampleCooldown > 0) return;
+        this.sampleCooldown = 20;
+        int size = this.height();
+        int heat = 0;
+        for (int y = 0; y < size; y++) {
+            net.minecraft.util.math.BlockPos p = this.pos.up(y);
+            for (net.minecraft.util.EnumFacing f : new net.minecraft.util.EnumFacing[]{
+                    net.minecraft.util.EnumFacing.DOWN, net.minecraft.util.EnumFacing.NORTH,
+                    net.minecraft.util.EnumFacing.SOUTH, net.minecraft.util.EnumFacing.WEST,
+                    net.minecraft.util.EnumFacing.EAST}) {
+                net.minecraft.block.state.IBlockState s = this.world.getBlockState(p.offset(f));
+                if (s.getBlock() instanceof nl.melonstudios.create.util.interfaces.IHeatProvider) {
+                    heat = Math.max(heat, ((nl.melonstudios.create.util.interfaces.IHeatProvider) s.getBlock())
+                            .getHeat(this.world, p.offset(f), s));
+                } else if (s.getBlock() == net.minecraft.init.Blocks.FIRE
+                        || s.getBlock() == net.minecraft.init.Blocks.LAVA
+                        || s.getBlock() == net.minecraft.init.Blocks.FLOWING_LAVA
+                        || s.getBlock() == net.minecraft.init.Blocks.MAGMA) {
+                    heat = Math.max(heat, 1);
+                }
+            }
+        }
+        net.minecraftforge.fluids.FluidStack f = this.tank.getFluid();
+        int water = 0;
+        if (f != null && f.getFluid() == net.minecraftforge.fluids.FluidRegistry.WATER) {
+            water = f.amount / 10;
+        }
+        int sizeHeat = Math.min(18, size / 4);
+        int waterHeat = Math.min(18, water / 10);
+        this.boilerHeat = heat;
+        this.boilerSize = size;
+        this.boilerWater = water;
+        this.boilerLevel = Math.min(heat, Math.min(sizeHeat, waterHeat));
+        this.boilerActive = heat > 0 && sizeHeat > 0 && waterHeat > 0;
+    }
+
+    public int boilerLevel;
+    public boolean boilerActive;
+
+    public int getBoilerLevel() {
+        return this.bottom().boilerLevel;
+    }
+
+    public boolean isBoilerActive() {
+        return this.bottom().boilerActive;
     }
 
     public boolean isBottom() {

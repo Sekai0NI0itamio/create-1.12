@@ -58,6 +58,7 @@ tile.create.fluid_tank.name=Fluid Tank
 tile.create.spout.name=Spout
 tile.create.hose_pulley.name=Hose Pulley
 tile.create.portable_fluid_interface.name=Portable Fluid Interface
+tile.create.steam_engine.name=Steam Engine
 tile.create.crafter.name=Mechanical Crafter
 
 tile.create.blaze_burner_empty.name=Empty Blaze Burner
