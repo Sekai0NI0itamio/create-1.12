@@ -43,7 +43,7 @@ public class EntityTrain extends EntityMinecartEmpty {
 
     public void halt() {
         this.running = false;
-        this.setMotion(0, this.motionY, 0);
+        this.motionX = 0; this.motionZ = 0;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class EntityTrain extends EntityMinecartEmpty {
         double dist = Math.sqrt(dx * dx + dz * dz);
         if (dist < 2.0) {
             // Dwell at station.
-            this.setMotion(this.motionX * 0.8, this.motionY, this.motionZ * 0.8);
+            this.motionX *= 0.8; this.motionZ *= 0.8;
             if (--this.dwellTicks <= 0) {
                 this.stopIndex++;
                 this.dwellTicks = 100;
@@ -69,11 +69,11 @@ public class EntityTrain extends EntityMinecartEmpty {
         double sp = Math.sqrt(mx * mx + mz * mz);
         if (sp < 0.01) {
             // Nudge toward the target.
-            this.setMotion(dx / dist * 0.05, this.motionY, dz / dist * 0.05);
+            this.motionX = dx / dist * 0.05; this.motionZ = dz / dist * 0.05;
         } else if (sp > this.cruiseSpeed) {
-            this.setMotion(mx / sp * this.cruiseSpeed, this.motionY, mz / sp * this.cruiseSpeed);
+            this.motionX = mx / sp * this.cruiseSpeed; this.motionZ = mz / sp * this.cruiseSpeed;
         } else {
-            this.setMotion(mx / sp * Math.min(this.cruiseSpeed, sp + 0.01), this.motionY, mz / sp * Math.min(this.cruiseSpeed, sp + 0.01));
+            double ns = Math.min(this.cruiseSpeed, sp + 0.01); this.motionX = mx / sp * ns; this.motionZ = mz / sp * ns;
         }
     }
 
