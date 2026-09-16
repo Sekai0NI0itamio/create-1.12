@@ -66,6 +66,10 @@ tile.create.nixie_tube.name=Nixie Tube
 tile.create.display_board.name=Display Board
 tile.create.packager.name=Packager
 tile.create.stock_ticker.name=Stock Ticker
+tile.create.elevator_pulley.name=Elevator Pulley
+tile.create.elevator_contact.name=Elevator Contact
+tile.create.gantry_carriage.name=Gantry Carriage
+tile.create.rope_pulley.name=Rope Pulley
 tile.create.crafter.name=Mechanical Crafter
 
 tile.create.blaze_burner_empty.name=Empty Blaze Burner

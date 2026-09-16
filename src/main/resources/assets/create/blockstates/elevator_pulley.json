@@ -1,0 +1,7 @@
+{
+ "variants": {
+  "normal": {
+   "model": "create:block/elevator_pulley"
+  }
+ }
+}

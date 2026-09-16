@@ -17,6 +17,10 @@ import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
 import nl.melonstudios.create.block.logistics.BlockPackager;
 import nl.melonstudios.create.block.logistics.BlockStockTicker;
+import nl.melonstudios.create.block.actor.BlockElevatorContact;
+import nl.melonstudios.create.block.actor.BlockElevatorPulley;
+import nl.melonstudios.create.block.actor.BlockGantryCarriage;
+import nl.melonstudios.create.block.actor.BlockRopePulley;
 import nl.melonstudios.create.block.redstone.BlockDisplayBoard;
 import nl.melonstudios.create.block.redstone.BlockDisplayLink;
 import nl.melonstudios.create.block.redstone.BlockNixieTube;
@@ -211,6 +215,22 @@ public final class BlockInit {
     public static final BlockStockTicker STOCK_TICKER = (BlockStockTicker)
             registerBlockWithItem(new BlockStockTicker()
             .setRegistryName("stock_ticker").setUnlocalizedName("create.stock_ticker"));
+
+    public static final BlockElevatorPulley ELEVATOR_PULLEY = (BlockElevatorPulley)
+            registerBlockWithItem(new BlockElevatorPulley()
+            .setRegistryName("elevator_pulley").setUnlocalizedName("create.elevator_pulley"));
+
+    public static final BlockElevatorContact ELEVATOR_CONTACT = (BlockElevatorContact)
+            registerBlockWithItem(new BlockElevatorContact()
+            .setRegistryName("elevator_contact").setUnlocalizedName("create.elevator_contact"));
+
+    public static final BlockGantryCarriage GANTRY_CARRIAGE = (BlockGantryCarriage)
+            registerBlockWithItem(new BlockGantryCarriage()
+            .setRegistryName("gantry_carriage").setUnlocalizedName("create.gantry_carriage"));
+
+    public static final BlockRopePulley ROPE_PULLEY = (BlockRopePulley)
+            registerBlockWithItem(new BlockRopePulley()
+            .setRegistryName("rope_pulley").setUnlocalizedName("create.rope_pulley"));
 
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()
