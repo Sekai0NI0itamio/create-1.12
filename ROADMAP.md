@@ -26,7 +26,7 @@ Fix logic bugs found, keep upstream syncable (small diffs, no rewrites).
 3. Spouts, hose pulley, item drain, portable fluid interface. DONE (build 35038944980): fluid tank block (multiblock height stacking, official textures), spout (fills containers below, right-click refill, 4 SU), hose pulley (extends to 32, drains/infinite water, places back, 4 SU), portable fluid interface (contraption bridging), item drain already existed upstream. Smoking/blasting recipe types registered (furnace/smoker fallback at runtime).
 4. Steam boiler (heat providers, boiler heaters) + steam engine. DONE (build 35039791458): boiler level = min(heat, size/4, water/10) sampled on tank bottoms, steam engine 16 RPM at 16 SU/RPM * heat/engines efficiency, official engine model+texture.
 5. Mechanical crafter + sequenced assembly recipes. ALREADY UPSTREAM (verified): 3x3 groups, covers, deployer/press/saw steps, precision mechanism chain, 178 recipe registrations.
-6. Rotation speed controller, sequenced gearshift, adjustable chain drive.
+6. Rotation speed controller, sequenced gearshift, adjustable chain drive. DONE (build 35040585195): RSC (settable +-256 RPM ladder, needs cog input, official model+texture), sequenced gearshift (pulse programs 90/180/360 with clutch-hold, official idle model+texture). Chain drive deferred to belt-connect phase.
 7. Displays, redstone links, pulse/toggle latches, stock ticker basics.
 8. Packager + logistics (stock ticker requests, package routing, factory gauges).
 9. Elevators, gantry carriages, rope/pulley contraptions.
