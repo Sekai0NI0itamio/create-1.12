@@ -37,6 +37,28 @@ jobs:
           chmod +x gradlew
           ./gradlew build --no-daemon --stacktrace
 
+      - name: Diagnose Forge NetworkRegistry line 207 (temp debug)
+        if: success()
+        run: |
+          FORGEJAR=$(find ~/.gradle -name "forge-1.12.2-14.23.5.2859_mapped*.jar" | head -n 1)
+          echo "Forge jar: $FORGEJAR"
+          javap -c -l -p -cp "$FORGEJAR" net.minecraftforge.fml.common.network.NetworkRegistry > /tmp/nr.txt 2>&1 || true
+          awk '/newChannel\(net.minecraftforge.fml.common.ModContainer/,/^$/' /tmp/nr.txt | grep -E "line 20[0-9]|line 21[0-9]|public|private" | head -n 30 || true
+          echo "--- jars containing duplicate Side.class ---"
+          for j in $(find ~/.gradle -name "*.jar" 2>/dev/null | grep -v -e sources -e javadoc); do
+            if unzip -l "$j" 2>/dev/null | grep -q "net/minecraftforge/fml/relauncher/Side.class"; then
+              echo "HAS Side.class: $j"
+            fi
+          done
+          echo "--- run/mods jars containing Side.class ---"
+          for j in run/mods/*.jar dist/deps/*.jar; do
+            [ -f "$j" ] || continue
+            if unzip -l "$j" 2>/dev/null | grep -q "net/minecraftforge/fml/relauncher/Side.class"; then
+              echo "HAS Side.class: $j"
+            fi
+          done
+          echo done
+
       - name: Set up Python for packager
         uses: actions/setup-python@v5
         with:
