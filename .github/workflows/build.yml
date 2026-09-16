@@ -61,7 +61,7 @@ jobs:
         if: success()
         run: |
           sudo apt-get update
-          (sudo apt-get install -y xvfb mesa-utils libgl1-mesa-dri || sudo apt-get install -y xvfb mesa-utils || true)
+          (sudo apt-get install -y xvfb mesa-utils libgl1-mesa-dri x11-xserver-utils xserver-xorg-video-dummy || sudo apt-get install -y xvfb mesa-utils || true)
           which Xvfb || true
           which xvfb-run || true
 
@@ -139,9 +139,37 @@ jobs:
           while [ "$ATTEMPT" -lt 3 ]; do
             ATTEMPT=$((ATTEMPT + 1))
             echo "=== client attempt $ATTEMPT/3 ===" | tee -a client-smoke.log
-            (Xvfb :99 -screen 0 1280x1024x24 +extension GLX +extension RANDR +extension RENDER > xvfb.log 2>&1 &) || true
-            sleep 3
+            cat > /tmp/xdummy.conf <<'XEOF'
+            Section "ServerFlags"
+                Option "DontVTSwitch" "true"
+                Option "AllowMouseOpenFail" "true"
+            EndSection
+            Section "Device"
+                Identifier "DummyDevice"
+                Driver "dummy"
+                VideoRam 256000
+            EndSection
+            Section "Monitor"
+                Identifier "DummyMonitor"
+                HorizSync 5.0-1000.0
+                VertRefresh 5.0-200.0
+                Modeline "1280x1024" 108.0 1280 1328 1440 1688 1024 1025 1028 1066
+            EndSection
+            Section "Screen"
+                Identifier "DummyScreen"
+                Device "DummyDevice"
+                Monitor "DummyMonitor"
+                DefaultDepth 24
+                SubSection "Display"
+                    Depth 24
+                    Modes "1280x1024"
+                EndSubSection
+            EndSection
+            XEOF
+            (sudo Xorg :99 -ac -config /tmp/xdummy.conf -logfile /tmp/xorg.log > /tmp/xorg.out 2>&1 &) || true
+            sleep 5
             (DISPLAY=:99 xrandr || true) | tee -a client-smoke.log
+            (DISPLAY=:99 xdpyinfo -ext RANDR 2>/dev/null | head -n 30 || true) | tee -a client-smoke.log
             DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 timeout 420 ./gradlew runClient --no-daemon --stacktrace > client-attempt.log 2>&1
             CODE=$?
             echo "attempt $ATTEMPT exit code: $CODE" | tee -a client-smoke.log
@@ -161,6 +189,7 @@ jobs:
             break
           done
           echo "client exit code: $CODE"
+          (cp /tmp/xorg.log ./xorg.log 2>/dev/null || true)
           tail -n 100 client-smoke.log || true
           echo "--- client marker scan ---"
           grep -E -i "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library|SoundSystem|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Found a duplicate mod|Caused by:" client-smoke.log | tail -n 60 || true
@@ -178,7 +207,6 @@ jobs:
           fi
           echo "CLIENT SMOKE FAILED: exit $CODE without success marker"
           exit 1
-
       - name: Upload smoke logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -188,6 +216,7 @@ jobs:
             server-smoke.log
             forge-install.log
             client-smoke.log
+            xorg.log
             smokeserver/logs/
             smokeserver/crash-reports/
             run/logs/
