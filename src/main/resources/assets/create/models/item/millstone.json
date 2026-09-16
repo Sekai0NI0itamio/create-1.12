@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "block/block",
+	"parent": "minecraft:block/cube",
 	"textures": {
 		"gearbox": "create:block/gearbox",
 		"plates": "create:block/grinder_plates",

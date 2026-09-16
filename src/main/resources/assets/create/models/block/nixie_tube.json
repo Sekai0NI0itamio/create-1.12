@@ -1,5 +1,5 @@
 {
- "parent": "block/block",
+ "parent": "minecraft:block/cube",
  "textures": {
   "tube": "create:block/nixie_tube",
   "particle": "create:block/nixie_tube"

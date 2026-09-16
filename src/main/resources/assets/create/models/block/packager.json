@@ -1,5 +1,5 @@
 {
- "parent": "block/block",
+ "parent": "minecraft:block/cube",
  "textures": {
   "iris": "create:block/packager_iris_open",
   "particle": "create:block/packager_iris_closed"

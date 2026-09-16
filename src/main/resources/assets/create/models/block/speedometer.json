@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "block/block",
+	"parent": "minecraft:block/cube",
 	"textures": {
 		"2": "create:block/gauge",
 		"particle": "create:block/gauge"

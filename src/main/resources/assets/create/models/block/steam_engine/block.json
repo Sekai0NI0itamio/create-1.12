@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"1": "create:block/engine",
-		"particle": "create:block/copper_plating"
+		"particle": "create:block/block_copper"
 	},
 	"elements": [
 		{

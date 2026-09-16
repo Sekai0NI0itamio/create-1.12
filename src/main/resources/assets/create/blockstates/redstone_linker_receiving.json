@@ -1,0 +1,48 @@
+{
+ "variants": {
+  "facing=down,powered=false": {
+   "model": "create:block/redstone_linker",
+   "x": 90
+  },
+  "facing=down,powered=true": {
+   "model": "create:block/redstone_linker",
+   "x": 90
+  },
+  "facing=up,powered=false": {
+   "model": "create:block/redstone_linker"
+  },
+  "facing=up,powered=true": {
+   "model": "create:block/redstone_linker"
+  },
+  "facing=north,powered=false": {
+   "model": "create:block/redstone_linker"
+  },
+  "facing=north,powered=true": {
+   "model": "create:block/redstone_linker"
+  },
+  "facing=south,powered=false": {
+   "model": "create:block/redstone_linker",
+   "y": 180
+  },
+  "facing=south,powered=true": {
+   "model": "create:block/redstone_linker",
+   "y": 180
+  },
+  "facing=west,powered=false": {
+   "model": "create:block/redstone_linker",
+   "y": 270
+  },
+  "facing=west,powered=true": {
+   "model": "create:block/redstone_linker",
+   "y": 270
+  },
+  "facing=east,powered=false": {
+   "model": "create:block/redstone_linker",
+   "y": 90
+  },
+  "facing=east,powered=true": {
+   "model": "create:block/redstone_linker",
+   "y": 90
+  }
+ }
+}

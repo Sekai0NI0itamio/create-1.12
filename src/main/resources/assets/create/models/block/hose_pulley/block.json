@@ -1,12 +1,12 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "block/block",
+	"parent": "minecraft:block/cube",
 	"textures": {
-		"3": "create:block/encased_pipe",
-		"4": "create:block/copper_gearbox",
-		"7": "create:block/copper_underside",
-		"8": "create:block/copper_plating",
-		"particle": "create:block/copper_plating"
+		"3": "create:block/block_copper",
+		"4": "create:block/gearbox_brass",
+		"7": "create:block/casing/casing_copper",
+		"8": "create:block/block_copper",
+		"particle": "create:block/block_copper"
 	},
 	"elements": [
 		{

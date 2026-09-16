@@ -1,1 +1,10 @@
-{"variants":{"normal":{"model":"create:block/sequenced_gearshift"}}}
+{
+  "variants": {
+    "axis=y,powered=false": { "model": "create:block/sequenced_gearshift" },
+    "axis=y,powered=true": { "model": "create:block/sequenced_gearshift" },
+    "axis=z,powered=false": { "model": "create:block/sequenced_gearshift", "x": 90 },
+    "axis=z,powered=true": { "model": "create:block/sequenced_gearshift", "x": 90 },
+    "axis=x,powered=false": { "model": "create:block/sequenced_gearshift", "x": 90, "y": 90 },
+    "axis=x,powered=true": { "model": "create:block/sequenced_gearshift", "x": 90, "y": 90 }
+  }
+}

@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "block/block",
+	"parent": "minecraft:block/cube",
 	"textures": {
-		"1": "create:block/brass_gearbox",
+		"1": "create:block/gearbox_brass",
 		"4": "create:block/sequenced_gearshift",
-		"particle": "create:block/brass_gearbox"
+		"particle": "create:block/gearbox_brass"
 	},
 	"elements": [
 		{

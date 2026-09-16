@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "create:block/large_wheels",
+	"parent": "minecraft:block/cube",
 	"textures": {
 		"0": "create:block/rotation_speed_controller",
-		"4": "create:block/brass_gearbox",
-		"5": "create:block/rotation_speed_controller_top",
-		"6": "create:block/brass_block",
-		"7": "create:block/funnel/brass_funnel_neutral",
-		"particle": "create:block/brass_block"
+		"4": "create:block/gearbox_brass",
+		"5": "create:block/rotation_speed_controller",
+		"6": "create:block/block_brass",
+		"7": "create:block/block_brass",
+		"particle": "create:block/block_brass"
 	},
 	"elements": [
 		{

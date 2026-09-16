@@ -1,5 +1,5 @@
 {
-	"parent": "block/block",
+	"parent": "minecraft:block/cube",
 	"textures": {
 		"plates": "create:block/crushing_wheel_plates",
 		"insert": "create:block/crushing_wheel_insert",

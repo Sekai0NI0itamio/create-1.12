@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "block/block",
+	"parent": "minecraft:block/cube",
 	"textures": {
 		"0": "create:block/spout",
-		"particle": "create:block/copper_plating"
+		"particle": "create:block/block_copper"
 	},
 	"elements": [
 		{

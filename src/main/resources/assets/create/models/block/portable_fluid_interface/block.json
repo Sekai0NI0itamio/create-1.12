@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "create:block/portable_fluid_interface",
-		"1": "create:block/copper_casing",
-		"2": "create:block/copper_underside",
-		"particle": "create:block/copper_casing"
+		"1": "create:block/casing/casing_copper",
+		"2": "create:block/casing/casing_copper",
+		"particle": "create:block/casing/casing_copper"
 	},
 	"elements": [
 		{

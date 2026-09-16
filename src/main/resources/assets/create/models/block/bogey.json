@@ -1,5 +1,5 @@
 {
- "parent": "block/block",
+ "parent": "minecraft:block/cube",
  "textures": {
   "t": "create:block/bogey_top",
   "particle": "create:block/bogey_top"

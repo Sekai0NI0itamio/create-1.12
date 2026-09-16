@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "create:block/shaft"
+  }
+}

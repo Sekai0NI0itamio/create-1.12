@@ -1,9 +1,9 @@
 {
 	"texture_size": [32, 32],
 	"textures": {
-		"axis_top": "create:block/axis_top",
+		"axis_top": "create:block/shaft_top",
 		"fan_blades": "create:block/fan_blades",
-		"axis": "create:block/axis"
+		"axis": "create:block/shaft"
 	},
 	"elements": [
 		{

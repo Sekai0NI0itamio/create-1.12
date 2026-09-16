@@ -1,8 +1,8 @@
 {
- "parent": "block/block",
+ "parent": "minecraft:block/cube",
  "textures": {
-  "t": "create:block/rope_pulley",
-  "particle": "create:block/rope_pulley"
+  "t": "create:block/hose_pulley_rope",
+  "particle": "create:block/hose_pulley_rope"
  },
  "elements": [
   {

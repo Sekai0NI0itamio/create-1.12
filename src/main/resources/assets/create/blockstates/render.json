@@ -1,242 +1,187 @@
 {
   "variants": {
     "render_part=saw_x": {
-      "model": "create:render/saw_x"
+      "model": "create:block/render/empty"
     },
     "render_part=saw_y": {
-      "model": "create:render/saw_y"
+      "model": "create:block/render/empty"
     },
     "render_part=saw_z": {
-      "model": "create:render/saw_z"
+      "model": "create:block/render/empty"
     },
     "render_part=half_shaft_up": {
-      "model": "create:render/half_shaft"
+      "model": "create:block/render/empty"
     },
     "render_part=half_shaft_down": {
-      "model": "create:render/half_shaft",
-      "x": 180
+      "model": "create:block/render/empty"
     },
     "render_part=half_shaft_north": {
-      "model": "create:render/half_shaft",
-      "x": 90,
-      "y": 0
+      "model": "create:block/render/empty"
     },
     "render_part=half_shaft_east": {
-      "model": "create:render/half_shaft",
-      "x": 90,
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=half_shaft_south": {
-      "model": "create:render/half_shaft",
-      "x": 90,
-      "y": 180
+      "model": "create:block/render/empty"
     },
     "render_part=half_shaft_west": {
-      "model": "create:render/half_shaft",
-      "x": 90,
-      "y": 270
+      "model": "create:block/render/empty"
     },
     "render_part=dial": {
-      "model": "create:render/dial"
+      "model": "create:block/render/empty"
     },
     "render_part=drill_head_up": {
-      "model": "create:render/drill_head"
+      "model": "create:block/render/empty"
     },
     "render_part=drill_head_down": {
-      "model": "create:render/drill_head",
-      "x": 180
+      "model": "create:block/render/empty"
     },
     "render_part=drill_head_north": {
-      "model": "create:render/drill_head",
-      "x": 90,
-      "y": 0
+      "model": "create:block/render/empty"
     },
     "render_part=drill_head_east": {
-      "model": "create:render/drill_head",
-      "x": 90,
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=drill_head_south": {
-      "model": "create:render/drill_head",
-      "x": 90,
-      "y": 180
+      "model": "create:block/render/empty"
     },
     "render_part=drill_head_west": {
-      "model": "create:render/drill_head",
-      "x": 90,
-      "y": 270
+      "model": "create:block/render/empty"
     },
     "render_part=water_wheel_up": {
-      "model": "create:render/water_wheel",
-      "x": 90
+      "model": "create:block/render/empty"
     },
     "render_part=water_wheel_down": {
-      "model": "create:render/water_wheel",
-      "x": 90
+      "model": "create:block/render/empty"
     },
     "render_part=water_wheel_north": {
-      "model": "create:render/water_wheel"
+      "model": "create:block/render/empty"
     },
     "render_part=water_wheel_east": {
-      "model": "create:render/water_wheel",
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=water_wheel_south": {
-      "model": "create:render/water_wheel"
+      "model": "create:block/render/empty"
     },
     "render_part=water_wheel_west": {
-      "model": "create:render/water_wheel",
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=bearing_plate_up": {
-      "model": "create:render/bearing_plate"
+      "model": "create:block/render/empty"
     },
     "render_part=bearing_plate_down": {
-      "model": "create:render/bearing_plate",
-      "x": 180
+      "model": "create:block/render/empty"
     },
     "render_part=bearing_plate_north": {
-      "model": "create:render/bearing_plate",
-      "x": 90,
-      "y": 0
+      "model": "create:block/render/empty"
     },
     "render_part=bearing_plate_east": {
-      "model": "create:render/bearing_plate",
-      "x": 90,
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=bearing_plate_south": {
-      "model": "create:render/bearing_plate",
-      "x": 90,
-      "y": 180
+      "model": "create:block/render/empty"
     },
     "render_part=bearing_plate_west": {
-      "model": "create:render/bearing_plate",
-      "x": 90,
-      "y": 270
+      "model": "create:block/render/empty"
     },
     "render_part=clockwise_rotation_indicator": {
-      "model": "create:render/clockwise_rotation_indicator"
+      "model": "create:block/render/empty"
     },
     "render_part=counterclockwise_rotation_indicator": {
-      "model": "create:render/counterclockwise_rotation_indicator"
+      "model": "create:block/render/empty"
     },
     "render_part=press_x": {
-      "model": "create:render/press_head",
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=press_z": {
-      "model": "create:render/press_head"
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_down": {
-      "model": "create:render/deployer",
-      "x": 180
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_up": {
-      "model": "create:render/deployer"
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_north": {
-      "model": "create:render/deployer",
-      "x": 90
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_south": {
-      "model": "create:render/deployer",
-      "x": 90,
-      "y": 180
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_west": {
-      "model": "create:render/deployer",
-      "x": 90,
-      "y": 270
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_east": {
-      "model": "create:render/deployer",
-      "x": 90,
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_holding_down": {
-      "model": "create:render/deployer_holding",
-      "x": 180
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_holding_up": {
-      "model": "create:render/deployer_holding"
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_holding_north": {
-      "model": "create:render/deployer_holding",
-      "x": 90
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_holding_south": {
-      "model": "create:render/deployer_holding",
-      "x": 90,
-      "y": 180
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_holding_west": {
-      "model": "create:render/deployer_holding",
-      "x": 90,
-      "y": 270
+      "model": "create:block/render/empty"
     },
     "render_part=deployer_holding_east": {
-      "model": "create:render/deployer_holding",
-      "x": 90,
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=harvester": {
-      "model": "create:render/harvester"
+      "model": "create:block/render/empty"
     },
     "render_part=suction_cup": {
-      "model": "create:render/suction_cup"
+      "model": "create:block/render/empty"
     },
     "render_part=shaftless_cog_x": {
-      "model": "create:cogwheel_shaftless",
-      "x": 90,
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=shaftless_cog_y": {
-      "model": "create:cogwheel_shaftless"
+      "model": "create:block/render/empty"
     },
     "render_part=shaftless_cog_z": {
-      "model": "create:cogwheel_shaftless",
-      "x": 90
+      "model": "create:block/render/empty"
     },
     "render_part=whisk": {
-      "model": "create:render/whisk"
+      "model": "create:block/render/empty"
     },
     "render_part=blaze_smouldering": {
-      "model": "create:render/blaze_smouldering"
+      "model": "create:block/render/empty"
     },
     "render_part=blaze_kindled": {
-      "model": "create:render/blaze_kindled"
+      "model": "create:block/render/empty"
     },
     "render_part=blaze_seething": {
-      "model": "create:render/blaze_seething"
+      "model": "create:block/render/empty"
     },
     "render_part=crafter_cover_north": {
-      "model": "create:render/crafter_cover"
+      "model": "create:block/render/empty"
     },
     "render_part=crafter_cover_east": {
-      "model": "create:render/crafter_cover",
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=crafter_cover_south": {
-      "model": "create:render/crafter_cover",
-      "y": 180
+      "model": "create:block/render/empty"
     },
     "render_part=crafter_cover_west": {
-      "model": "create:render/crafter_cover",
-      "y": 270
+      "model": "create:block/render/empty"
     },
     "render_part=millstone": {
-      "model": "create:render/millstone"
+      "model": "create:block/render/empty"
     },
     "render_part=crushing_wheel_x": {
-      "model": "create:render/crushing_wheel"
+      "model": "create:block/render/empty"
     },
     "render_part=crushing_wheel_z": {
-      "model": "create:render/crushing_wheel",
-      "y": 90
+      "model": "create:block/render/empty"
     },
     "render_part=fan_propeller": {
-      "model": "create:render/fan_propeller"
+      "model": "create:block/render/empty"
     }
   }
 }

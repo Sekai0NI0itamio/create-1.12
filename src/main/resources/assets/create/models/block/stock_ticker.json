@@ -1,5 +1,5 @@
 {
- "parent": "block/block",
+ "parent": "minecraft:block/cube",
  "textures": {
   "face": "create:block/stock_ticker",
   "particle": "create:block/stock_ticker"

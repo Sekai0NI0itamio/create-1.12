@@ -45,8 +45,14 @@ CRASH_MARKERS = [
     "Attempted to set registry name",
     "Failed to start game",
 ]
-# FML finishing mod loading, then Minecraft finishing client init: together they mean
-# the title screen was constructed with our mods present.
+# Forge logs these only when one of OUR assets fails to resolve. They appear even
+# in runs that still reach the title screen, so they must fail the gate explicitly.
+ASSET_ERROR_MARKERS = [
+    "model loading errors for domain create",
+    "domain create is missing",
+    "Could not load vanilla model parent 'create:",
+    "Could not load model definition of model create:",
+]
 LOADED_MARKER = "Forge Mod Loader has successfully loaded"
 TITLE_MARKERS = [
     "Narrator library",
@@ -417,6 +423,11 @@ def assess(text, log_path):
         if marker in text:
             idx = text.find(marker)
             log(f"CRASH: marker {marker!r} at offset {idx}")
+            print(tail(text, 120))
+            return 1
+    for marker in ASSET_ERROR_MARKERS:
+        if marker in text:
+            log(f"ASSET ERROR: marker {marker!r} - a create asset failed to resolve")
             print(tail(text, 120))
             return 1
     if LOADED_MARKER in text:

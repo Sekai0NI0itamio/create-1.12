@@ -1,25 +1,25 @@
 {
   "variants": {
     "variant=asurine": {
-      "model": "create:orestone/asurine"
+      "model": "create:block/orestone/asurine"
     },
     "variant=crimsite": {
-      "model": "create:orestone/crimsite"
+      "model": "create:block/orestone/crimsite"
     },
     "variant=limestone": {
-      "model": "create:orestone/limestone"
+      "model": "create:block/orestone/limestone"
     },
     "variant=ochrum": {
-      "model": "create:orestone/ochrum"
+      "model": "create:block/orestone/ochrum"
     },
     "variant=scorchia": {
-      "model": "create:orestone/scorchia"
+      "model": "create:block/orestone/scorchia"
     },
     "variant=scoria": {
-      "model": "create:orestone/scoria"
+      "model": "create:block/orestone/scoria"
     },
     "variant=veridium": {
-      "model": "create:orestone/veridium"
+      "model": "create:block/orestone/veridium"
     }
   }
 }
