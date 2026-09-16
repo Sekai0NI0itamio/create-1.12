@@ -167,6 +167,8 @@ jobs:
           sleep 5
           (DISPLAY=:99 xrandr || true) | tee client-smoke.log
           cp /tmp/xorg.log xorg.log 2>/dev/null || true
+          echo "--- where is LWJGL in the FG cache? ---"
+          find ~/.gradle -iname "*lwjgl*" 2>/dev/null | head -n 20 || true
           python3 tools/mc_smoke.py \
             --mods dist/deps \
             --mc-dir .smokeclient \

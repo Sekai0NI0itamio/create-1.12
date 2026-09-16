@@ -122,15 +122,21 @@ def usable(path, min_size, expect_jar):
 def salvage(filename, min_size, expect_jar, extra_search_dirs):
     """Find a usable copy of filename under the given roots (ForgeGradle cache first)."""
     home = os.path.expanduser("~")
+    log(f"salvage: looking for {filename} (home={home})")
     roots = [os.path.join(home, ".gradle")] + list(extra_search_dirs)
+    walked = 0
     for root in roots:
         if not os.path.isdir(root):
+            log(f"salvage: not a dir: {root}")
             continue
         for dirpath, _dirnames, filenames in os.walk(root):
+            walked += len(filenames)
             if filename in filenames:
                 cand = os.path.join(dirpath, filename)
                 if usable(cand, min_size, expect_jar):
+                    log(f"salvage: walked {walked} files, using {cand}")
                     return cand
+    log(f"salvage: walked {walked} files, no usable {filename}")
     return None
 
 
