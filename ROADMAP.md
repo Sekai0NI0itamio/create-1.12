@@ -27,7 +27,7 @@ Fix logic bugs found, keep upstream syncable (small diffs, no rewrites).
 4. Steam boiler (heat providers, boiler heaters) + steam engine. DONE (build 35039791458): boiler level = min(heat, size/4, water/10) sampled on tank bottoms, steam engine 16 RPM at 16 SU/RPM * heat/engines efficiency, official engine model+texture.
 5. Mechanical crafter + sequenced assembly recipes. ALREADY UPSTREAM (verified): 3x3 groups, covers, deployer/press/saw steps, precision mechanism chain, 178 recipe registrations.
 6. Rotation speed controller, sequenced gearshift, adjustable chain drive. DONE (build 35040585195): RSC (settable +-256 RPM ladder, needs cog input, official model+texture), sequenced gearshift (pulse programs 90/180/360 with clutch-hold, official idle model+texture). Chain drive deferred to belt-connect phase.
-7. Displays, redstone links, pulse/toggle latches, stock ticker basics.
+7. Displays, redstone links, pulse/toggle latches, stock ticker basics. DONE (build 35041659379): display link (6 sources: speed/stress/items/fluid/boiler/redstone, right-click cycles, sneak toggles label), nixie tube + display board with official textures, floating-text TESR. Links/latches already upstream.
 8. Packager + logistics (stock ticker requests, package routing, factory gauges).
 9. Elevators, gantry carriages, rope/pulley contraptions.
 10. Schematics + schematicannon + clipboard/blueprints.
