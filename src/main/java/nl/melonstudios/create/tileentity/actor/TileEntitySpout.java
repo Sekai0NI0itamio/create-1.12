@@ -168,29 +168,32 @@ public class TileEntitySpout extends TileEntityKinetic implements IHaltBeltConte
     }
 
     @Override
-    public void writePacket(TrackedByteBuf buf) throws IOException {
-        super.writePacket(buf);
-        buf.writeBoolean(this.tank.getFluidAmount() > 0);
+    public NBTTagCompound writePacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
         if (this.tank.getFluidAmount() > 0) {
-            FluidStack f = this.tank.getFluid();
-            buf.writeCharSequence(net.minecraftforge.fluids.FluidRegistry.getFluidName(f), java.nio.charset.StandardCharsets.UTF_8);
-            buf.writeInt(f.amount);
+            nbt.setTag("Tank", this.tank.writeToNBT(new NBTTagCompound()));
         }
-        buf.writeInt(this.fillTimer);
+        nbt.setInteger("fillTimer", this.fillTimer);
+        return nbt;
+    }
+
+    @Override
+    public void readPacket(NBTTagCompound nbt) {
+        if (nbt.hasKey("Tank", 10)) this.tank.readFromNBT(nbt.getCompoundTag("Tank"));
+        else this.tank.setFluid(null);
+        this.fillTimer = nbt.getInteger("fillTimer");
+    }
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        io.netty.buffer.ByteBuf temp = io.netty.buffer.Unpooled.buffer();
+        net.minecraftforge.fml.common.network.ByteBufUtils.writeTag(temp, this.writePacket());
+        buf.writeBytes(temp);
     }
 
     @Override
     public void readPacket(ByteBuf buf) throws IOException {
-        super.readPacket(buf);
-        if (buf.readBoolean()) {
-            net.minecraftforge.fluids.Fluid fluid =
-                    net.minecraftforge.fluids.FluidRegistry.getFluid(buf.readCharSequence(buf.readableBytes(), java.nio.charset.StandardCharsets.UTF_8).toString());
-            int amount = buf.readInt();
-            this.tank.setFluid(fluid == null ? null : new FluidStack(fluid, amount));
-        } else {
-            this.tank.setFluid(null);
-        }
-        this.fillTimer = buf.readInt();
+        this.readPacket(net.minecraftforge.fml.common.network.ByteBufUtils.readTag(buf));
     }
 
     @Override

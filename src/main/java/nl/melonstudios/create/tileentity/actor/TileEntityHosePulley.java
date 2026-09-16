@@ -133,28 +133,32 @@ public class TileEntityHosePulley extends TileEntityKinetic {
     }
 
     @Override
-    public void writePacket(TrackedByteBuf buf) throws IOException {
-        super.writePacket(buf);
-        buf.writeFloat(this.hoseLength);
-        buf.writeBoolean(this.tank.getFluidAmount() > 0);
+    public NBTTagCompound writePacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setFloat("hose", this.hoseLength);
         if (this.tank.getFluidAmount() > 0) {
-            FluidStack f = this.tank.getFluid();
-            buf.writeCharSequence(FluidRegistry.getFluidName(f), java.nio.charset.StandardCharsets.UTF_8);
-            buf.writeInt(f.amount);
+            nbt.setTag("Tank", this.tank.writeToNBT(new NBTTagCompound()));
         }
+        return nbt;
+    }
+
+    @Override
+    public void readPacket(NBTTagCompound nbt) {
+        this.hoseLength = nbt.getFloat("hose");
+        if (nbt.hasKey("Tank", 10)) this.tank.readFromNBT(nbt.getCompoundTag("Tank"));
+        else this.tank.setFluid(null);
+    }
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        io.netty.buffer.ByteBuf temp = io.netty.buffer.Unpooled.buffer();
+        net.minecraftforge.fml.common.network.ByteBufUtils.writeTag(temp, this.writePacket());
+        buf.writeBytes(temp);
     }
 
     @Override
     public void readPacket(ByteBuf buf) throws IOException {
-        super.readPacket(buf);
-        this.hoseLength = buf.readFloat();
-        if (buf.readBoolean()) {
-            Fluid fluid = FluidRegistry.getFluid(buf.readCharSequence(buf.readableBytes(), java.nio.charset.StandardCharsets.UTF_8).toString());
-            int amount = buf.readInt();
-            this.tank.setFluid(fluid == null ? null : new FluidStack(fluid, amount));
-        } else {
-            this.tank.setFluid(null);
-        }
+        this.readPacket(net.minecraftforge.fml.common.network.ByteBufUtils.readTag(buf));
     }
 
     @Override
