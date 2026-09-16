@@ -15,6 +15,9 @@ import nl.melonstudios.create.block.actor.*;
 import nl.melonstudios.create.block.deco.*;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
+import nl.melonstudios.create.block.redstone.BlockDisplayBoard;
+import nl.melonstudios.create.block.redstone.BlockDisplayLink;
+import nl.melonstudios.create.block.redstone.BlockNixieTube;
 import nl.melonstudios.create.block.redstone.BlockRedstoneLatch;
 import nl.melonstudios.create.block.redstone.BlockRedstoneLinker;
 import nl.melonstudios.create.block.redstone.BlockRedstoneToggleLatch;
@@ -186,6 +189,18 @@ public final class BlockInit {
     public static final BlockSequencedGearshift SEQUENCED_GEARSHIFT = (BlockSequencedGearshift)
             registerBlockWithItem(new BlockSequencedGearshift(MapColor.WOOD, SoundType.WOOD)
             .setRegistryName("sequenced_gearshift").setUnlocalizedName("create.sequenced_gearshift"));
+
+    public static final BlockDisplayLink DISPLAY_LINK = (BlockDisplayLink)
+            registerBlockWithItem(new BlockDisplayLink()
+            .setRegistryName("display_link").setUnlocalizedName("create.display_link"));
+
+    public static final BlockNixieTube NIXIE_TUBE = (BlockNixieTube)
+            registerBlockWithItem(new BlockNixieTube()
+            .setRegistryName("nixie_tube").setUnlocalizedName("create.nixie_tube"));
+
+    public static final BlockDisplayBoard DISPLAY_BOARD = (BlockDisplayBoard)
+            registerBlockWithItem(new BlockDisplayBoard()
+            .setRegistryName("display_board").setUnlocalizedName("create.display_board"));
 
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()

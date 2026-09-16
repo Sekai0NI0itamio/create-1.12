@@ -26,6 +26,7 @@ import nl.melonstudios.create.tileentity.actor.*;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWall;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWallAdvanced;
 import nl.melonstudios.create.tileentity.generator.*;
+import nl.melonstudios.create.tileentity.redstone.TileEntityDisplayLink;
 import nl.melonstudios.create.tileentity.redstone.TileEntityRedstoneLinker;
 
 public class CommonProxy {
@@ -94,6 +95,7 @@ public class CommonProxy {
         this.registerTE(TileEntitySteamEngine.class, "steam_engine");
         this.registerTE(TileEntitySpeedController.class, "speed_controller");
         this.registerTE(TileEntitySequencedGearshift.class, "sequenced_gearshift");
+        this.registerTE(TileEntityDisplayLink.class, "display_link");
         this.registerTE(TileEntityCrafter.class, "crafter");
         this.registerTE(TileEntityBlazeBurner.class, "blaze_burner");
         this.registerTE(TileEntityDepot.class, "depot");

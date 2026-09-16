@@ -35,6 +35,7 @@ import nl.melonstudios.create.recipe.client.*;
 import nl.melonstudios.create.tesr.*;
 import nl.melonstudios.create.tesr.actor.*;
 import nl.melonstudios.create.tesr.funnel.TESRFunnelWallAdvanced;
+import nl.melonstudios.create.tesr.redstone.TESRDisplayLink;
 import nl.melonstudios.create.tesr.generator.TESRBearingWindmill;
 import nl.melonstudios.create.tesr.generator.TESRCreativeMotor;
 import nl.melonstudios.create.tesr.generator.TESRHandCrank;
@@ -44,6 +45,7 @@ import nl.melonstudios.create.tileentity.actor.*;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWall;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWallAdvanced;
 import nl.melonstudios.create.tileentity.generator.*;
+import nl.melonstudios.create.tileentity.redstone.TileEntityDisplayLink;
 import nl.melonstudios.create.tileentity.redstone.TileEntityRedstoneLinker;
 import nl.melonstudios.ponder.PonderRegistry;
 
@@ -113,6 +115,7 @@ public class ClientProxy extends CommonProxy {
         this.registerTESR(TileEntityFunnelWall.class, "funnel_wall", null);
         this.registerTESR(TileEntityFunnelWallAdvanced.class, "funnel_wall_advanced", new TESRFunnelWallAdvanced());
         this.registerTESR(TileEntityRedstoneLinker.class, "redstone_linker", null);
+        this.registerTESR(TileEntityDisplayLink.class, "display_link", new TESRDisplayLink());
     }
 
     @Override

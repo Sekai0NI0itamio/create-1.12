@@ -1,0 +1,42 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "face": "create:block/flap_display_side",
+  "particle": "create:block/flap_display_side"
+ },
+ "elements": [
+  {
+   "name": "Board",
+   "from": [
+    0,
+    2,
+    14
+   ],
+   "to": [
+    16,
+    14,
+    16
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      0,
+      2,
+      16,
+      14
+     ],
+     "texture": "#face"
+    },
+    "south": {
+     "uv": [
+      0,
+      2,
+      16,
+      14
+     ],
+     "texture": "#face"
+    }
+   }
+  }
+ ]
+}
