@@ -37,6 +37,19 @@ jobs:
           chmod +x gradlew
           ./gradlew build --no-daemon --stacktrace
 
+      - name: Set up Python for packager
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bundle install packs
+        if: success()
+        run: |
+          JAR=$(ls build/libs/*.jar | grep -v -i -e sources -e javadoc | head -n 1)
+          echo "Bundling $JAR"
+          python3 pack/pack.py "$JAR" --out dist --version "${{ github.sha }}"
+          ls -la dist/
+
       - name: Upload built jar
         if: success()
         uses: actions/upload-artifact@v4
@@ -61,7 +74,16 @@ jobs:
           body: |
             Auto-built from `${{ github.sha }}` ([run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})).
 
-            Install: Minecraft 1.12.2 + Forge 14.23.5.2859, plus MixinBooter 10.7+, MelonLib, CTM. Drop `create-1.12.2.jar` into `.minecraft/mods/`.
-          files: create-1.12.2.jar
+            One-click install (MC 1.12.2 + Forge 14.23.5.2859):
+            - `create-112-mods.zip` — unzip into `.minecraft/` (mods + deps included)
+            - `create-112-prism.mrpack` — Prism Launcher: Add Instance → Import
+            - `create-1.12.2.jar` — the mod alone (needs MixinBooter + MelonLib + CTM, JEI optional)
+
+            See `create-112-manifest.json` for pinned dependency URLs + sha1.
+          files: |
+            create-1.12.2.jar
+            dist/create-112-mods.zip
+            dist/create-112-prism.mrpack
+            dist/create-112-manifest.json
           draft: false
           prerelease: false

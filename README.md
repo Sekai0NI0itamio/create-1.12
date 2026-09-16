@@ -8,12 +8,16 @@ steam, speed control, displays, logistics, elevators, schematics, trains,
 worldgen, advancements. See `ROADMAP.md` for per-feature status.
 
 **Download (no building needed):** every green `main` push publishes
-`create-1.12.2.jar` to the
-[latest release](https://github.com/Sekai0NI0itamio/create-1.12/releases/latest)
+to the [latest release](https://github.com/Sekai0NI0itamio/create-1.12/releases/latest)
 (private repo — sign in to download).
 
-Install: Minecraft 1.12.2 + Forge 14.23.5.2859, plus MixinBooter 10.7+,
-MelonLib, CTM. Drop the jar into `.minecraft/mods/`.
+- `create-112-mods.zip` — **easiest**: unzip into `.minecraft/`, everything lands in `mods/`
+- `create-112-prism.mrpack` — Prism Launcher: Add Instance → Import → select the file
+- `create-1.12.2.jar` — mod alone (add MixinBooter + MelonLib + CTM yourself, JEI optional)
+
+Requires Minecraft 1.12.2 + Forge 14.23.5.2859. Bundle pins: MixinBooter
+11.17, MelonLib 1.12.2-1.11.3, CTM 1.0.2.31, JEI 4.16.5.1030 (see
+`create-112-manifest.json` for URLs + sha1).
 
 ## Credits
 
