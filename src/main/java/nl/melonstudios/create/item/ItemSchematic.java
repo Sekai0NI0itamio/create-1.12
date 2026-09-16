@@ -56,7 +56,7 @@ public class ItemSchematic extends Item {
         } else {
             BlockPos c1 = BlockPos.fromLong(tag.getLong("Corner1"));
             capture(world, c1, pos, tag);
-            stack.setMetadata(1);
+            stack.setItemDamage(1);
             player.sendStatusMessage(new TextComponentString("Schematic captured (" + tag.getTagList("Blocks", 10).tagCount() + " blocks)."), true);
         }
         stack.setTagCompound(tag);
