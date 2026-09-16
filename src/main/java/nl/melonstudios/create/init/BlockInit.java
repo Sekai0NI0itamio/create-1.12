@@ -179,6 +179,14 @@ public final class BlockInit {
             registerBlockWithItem(new BlockSteamEngine()
             .setRegistryName("steam_engine").setUnlocalizedName("create.steam_engine"));
 
+    public static final BlockSpeedController SPEED_CONTROLLER = (BlockSpeedController)
+            registerBlockWithItem(new BlockSpeedController()
+            .setRegistryName("speed_controller").setUnlocalizedName("create.speed_controller"));
+
+    public static final BlockSequencedGearshift SEQUENCED_GEARSHIFT = (BlockSequencedGearshift)
+            registerBlockWithItem(new BlockSequencedGearshift(MapColor.WOOD, SoundType.WOOD)
+            .setRegistryName("sequenced_gearshift").setUnlocalizedName("create.sequenced_gearshift"));
+
     public static final BlockCrafter CRAFTER = (BlockCrafter)
             registerBlockWithItem(new BlockCrafter()
             .setRegistryName("crafter").setUnlocalizedName("create.crafter"));

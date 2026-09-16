@@ -137,6 +137,8 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(BlockInit.HOSE_PULLEY);
         CreateLegacy.proxy.setItemModel(BlockInit.PORTABLE_FLUID_INTERFACE);
         CreateLegacy.proxy.setItemModel(BlockInit.STEAM_ENGINE);
+        CreateLegacy.proxy.setItemModel(BlockInit.SPEED_CONTROLLER);
+        CreateLegacy.proxy.setItemModel(BlockInit.SEQUENCED_GEARSHIFT);
         CreateLegacy.proxy.setItemModel(BlockInit.CRAFTER);
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 0, "blaze_burner_empty");
         CreateLegacy.proxy.setItemModel(BlockInit.BLAZE_BURNER, 1, "blaze_burner");

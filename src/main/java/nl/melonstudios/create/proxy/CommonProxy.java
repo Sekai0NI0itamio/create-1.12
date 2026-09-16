@@ -92,6 +92,8 @@ public class CommonProxy {
         this.registerTE(TileEntityHosePulley.class, "hose_pulley");
         this.registerTE(TileEntityPortableFluidInterface.class, "portable_fluid_interface");
         this.registerTE(TileEntitySteamEngine.class, "steam_engine");
+        this.registerTE(TileEntitySpeedController.class, "speed_controller");
+        this.registerTE(TileEntitySequencedGearshift.class, "sequenced_gearshift");
         this.registerTE(TileEntityCrafter.class, "crafter");
         this.registerTE(TileEntityBlazeBurner.class, "blaze_burner");
         this.registerTE(TileEntityDepot.class, "depot");
