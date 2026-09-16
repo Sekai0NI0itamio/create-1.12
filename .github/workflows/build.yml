@@ -37,21 +37,6 @@ jobs:
           chmod +x gradlew
           ./gradlew build --no-daemon --stacktrace
 
-      - name: Diagnose which Side.class the dev game sees (temp debug)
-        if: success()
-        run: |
-          J=$(find ~/.gradle/caches/forge_gradle -name "forge-1.12.2-14.23.5.2859*mapped*.jar" | head -n 1)
-          echo "=== runtime jar: $J"
-          javap -c -p -cp "$J" net.minecraftforge.fml.common.network.NetworkRegistry > /tmp/nr2.txt 2>&1 || true
-          python3 - <<'PYEOF' || true
-          txt = open('/tmp/nr2.txt', errors='replace').read()
-          i = txt.find('NetworkRegistry();')
-          print('--- constructor ---')
-          print(txt[i:i+2200] if i >= 0 else 'constructor not found')
-          PYEOF
-          javap -p -cp "$J" net.minecraftforge.fml.relauncher.Side 2>&1 | head -n 12 || true
-          echo done
-
       - name: Set up Python for packager
         uses: actions/setup-python@v5
         with:
@@ -136,91 +121,65 @@ jobs:
           echo "SERVER SMOKE FAILED: exit $CODE without Done marker"
           exit 1
 
-      - name: Headless client smoke (title screen or timeout)
+      - name: Cache Forge client install
+        if: success()
+        uses: actions/cache@v4
+        with:
+          path: |
+            .smoke-cache
+            .smokeclient/assets
+            .smokeclient/libraries
+          key: mc-smoke-${{ runner.os }}-1.12.2-14.23.5.2859
+          restore-keys: |
+            mc-smoke-${{ runner.os }}-1.12.2-
+
+      - name: Real Forge client smoke (title screen or timeout)
         if: success()
         run: |
-          set +e
-          mkdir -p run/mods
-          for j in dist/deps/*.jar; do
-            case "$j" in
-              *create-1.12.2.jar*) echo "skip $j (dev classes already on classpath)";;
-              *mixinbooter*) echo "skip $j (mixinbooter already on FG classpath via build.gradle)";;
-              *) cp -n "$j" run/mods/ && echo "mod $j";;
-            esac
-          done
-          rm -f client-smoke.log client-attempt.log
-          ATTEMPT=0
-          CODE=0
-          while [ "$ATTEMPT" -lt 3 ]; do
-            ATTEMPT=$((ATTEMPT + 1))
-            echo "=== client attempt $ATTEMPT/3 ===" | tee -a client-smoke.log
-            printf '%s\n' \
-            'Section "ServerFlags"' \
-            '    Option "DontVTSwitch" "true"' \
-            '    Option "AllowMouseOpenFail" "true"' \
-            'EndSection' \
-            'Section "Device"' \
-            '    Identifier "DummyDevice"' \
-            '    Driver "dummy"' \
-            '    VideoRam 256000' \
-            'EndSection' \
-            'Section "Monitor"' \
-            '    Identifier "DummyMonitor"' \
-            '    HorizSync 5.0-1000.0' \
-            '    VertRefresh 5.0-200.0' \
-            '    Modeline "1280x1024" 108.0 1280 1328 1440 1688 1024 1025 1028 1066' \
-            'EndSection' \
-            'Section "Screen"' \
-            '    Identifier "DummyScreen"' \
-            '    Device "DummyDevice"' \
-            '    Monitor "DummyMonitor"' \
-            '    DefaultDepth 24' \
-            '    SubSection "Display"' \
-            '        Depth 24' \
-            '        Modes "1280x1024"' \
-            '    EndSubSection' \
-            'EndSection' > /tmp/xdummy.conf
-            (sudo Xorg :99 -ac -config /tmp/xdummy.conf -logfile /tmp/xorg.log > /tmp/xorg.out 2>&1 &) || true
-            sleep 5
-            (DISPLAY=:99 xrandr || true) | tee -a client-smoke.log
-            (DISPLAY=:99 xdpyinfo -ext RANDR 2>/dev/null | head -n 30 || true) | tee -a client-smoke.log
-            DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 timeout 420 ./gradlew runClient --no-daemon --stacktrace > client-attempt.log 2>&1
-            CODE=$?
-            echo "attempt $ATTEMPT exit code: $CODE" | tee -a client-smoke.log
-            cat client-attempt.log >> client-smoke.log
-            if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod|Duplicate Mods" client-attempt.log; then
-              echo "crash marker found, no retry" | tee -a client-smoke.log
-              break
-            fi
-            if grep -q -E "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library" client-attempt.log; then
-              break
-            fi
-            if grep -q -E "downloadAssets FAILED|Failed to get asset|Could not resolve|Could not GET" client-attempt.log; then
-              echo "transient download failure, retrying in 10s..." | tee -a client-smoke.log
-              sleep 10
-              continue
-            fi
-            break
-          done
-          echo "client exit code: $CODE"
-          (cp /tmp/xorg.log ./xorg.log 2>/dev/null || true)
-          tail -n 100 client-smoke.log || true
+          sudo apt-get install -y x11-xserver-utils xserver-xorg-video-dummy || true
+          printf '%s\n' \
+          'Section "ServerFlags"' \
+          '    Option "DontVTSwitch" "true"' \
+          '    Option "AllowMouseOpenFail" "true"' \
+          'EndSection' \
+          'Section "Device"' \
+          '    Identifier "DummyDevice"' \
+          '    Driver "dummy"' \
+          '    VideoRam 256000' \
+          'EndSection' \
+          'Section "Monitor"' \
+          '    Identifier "DummyMonitor"' \
+          '    HorizSync 5.0-1000.0' \
+          '    VertRefresh 5.0-200.0' \
+          '    Modeline "1280x1024" 108.0 1280 1328 1440 1688 1024 1025 1028 1066' \
+          'EndSection' \
+          'Section "Screen"' \
+          '    Identifier "DummyScreen"' \
+          '    Device "DummyDevice"' \
+          '    Monitor "DummyMonitor"' \
+          '    DefaultDepth 24' \
+          '    SubSection "Display"' \
+          '        Depth 24' \
+          '        Modes "1280x1024"' \
+          '    EndSubSection' \
+          'EndSection' > /tmp/xdummy.conf
+          (sudo Xorg :99 -ac -config /tmp/xdummy.conf -logfile /tmp/xorg.log > /tmp/xorg.out 2>&1 &) || true
+          sleep 5
+          (DISPLAY=:99 xrandr || true) | tee client-smoke.log
+          cp /tmp/xorg.log xorg.log 2>/dev/null || true
+          python3 tools/mc_smoke.py \
+            --mods dist/deps \
+            --mc-dir .smokeclient \
+            --cache .smoke-cache \
+            --log client-smoke.log \
+            --timeout 900 \
+            --download-assets
+          CODE=$?
+          echo "mc_smoke exit code: $CODE"
           echo "--- client marker scan ---"
-          grep -E -i "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library|SoundSystem|Minecraft Crash Report|ExceptionInInitializerError|IllegalStateException|Attempted to set registry name|Found a duplicate mod|Caused by:" client-smoke.log | tail -n 60 || true
-          if grep -q -E "Minecraft Crash Report|ExceptionInInitializerError|Attempted to set registry name|Found a duplicate mod" client-smoke.log; then
-            echo "CLIENT SMOKE FAILED: crash marker found"
-            exit 1
-          fi
-          if grep -q -E "has successfully loaded|MinecraftForge v14.*Initialized|Narrator library" client-smoke.log; then
-            echo "CLIENT SMOKE PASSED: reached title-screen neighbourhood (timeout $CODE is expected, client idles)"
-            exit 0
-          fi
-          if [ "$CODE" -eq 124 ]; then
-            echo "CLIENT SMOKE FAILED: timed out without title-screen marker (see client-smoke.log)"
-            exit 1
-          fi
-          echo "CLIENT SMOKE FAILED: exit $CODE without success marker"
-          exit 1
+          grep -E -i "successfully loaded|Narrator library|Sound engine started|Found mod file|Minecraft Crash Report|Caused by:|Attempted to set registry name" client-smoke.log | tail -n 40 || true
+          exit $CODE
+
       - name: Upload smoke logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -233,8 +192,8 @@ jobs:
             xorg.log
             smokeserver/logs/
             smokeserver/crash-reports/
-            run/logs/
-            run/crash-reports/
+            .smokeclient/logs/
+            .smokeclient/crash-reports/
           if-no-files-found: warn
 
       - name: Stage stable jar name
