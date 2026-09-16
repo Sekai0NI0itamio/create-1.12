@@ -139,7 +139,10 @@ jobs:
           while [ "$ATTEMPT" -lt 3 ]; do
             ATTEMPT=$((ATTEMPT + 1))
             echo "=== client attempt $ATTEMPT/3 ===" | tee -a client-smoke.log
-            timeout 420 xvfb-run -a ./gradlew runClient --no-daemon --stacktrace > client-attempt.log 2>&1
+            (Xvfb :99 -screen 0 1280x1024x24 +extension GLX +extension RANDR +extension RENDER > xvfb.log 2>&1 &) || true
+            sleep 3
+            (DISPLAY=:99 xrandr || true) | tee -a client-smoke.log
+            DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 timeout 420 ./gradlew runClient --no-daemon --stacktrace > client-attempt.log 2>&1
             CODE=$?
             echo "attempt $ATTEMPT exit code: $CODE" | tee -a client-smoke.log
             cat client-attempt.log >> client-smoke.log
