@@ -404,3 +404,26 @@ create.subtitle.slime_added=Slime squishes
 create.subtitle.worldshaper_place=Worldshaper zaps
 create.subtitle.wrench_remove=Component breaks
 create.subtitle.wrench_rotate=Wrench used
+
+## BASE-BLOCK FALLBACK NAMES (variants resolve per-meta above) ##
+
+tile.create.auto_farm.name=Auto Farm
+tile.create.belt_straight.name=Belt
+tile.create.casing.name=Casing
+tile.create.contraption_interface.name=Contraption Interface
+tile.create.creative_motor.name=Creative Motor
+tile.create.framed_glass.name=Framed Glass
+tile.create.funnel_andesite_wall.name=Andesite Funnel
+tile.create.funnel_brass_wall.name=Brass Funnel
+tile.create.latch_powered.name=Powered Latch
+tile.create.mechanical_piston_extended.name=Mechanical Piston
+tile.create.mechanical_piston_sticky_extended.name=Sticky Mechanical Piston
+tile.create.ore.name=Ore
+tile.create.orestone_pillar.name=Cut Stone Pillar
+tile.create.piston_head.name=Piston Head
+tile.create.pouf.name=Pouf
+tile.create.redstone_linker.name=Redstone Link
+tile.create.redstone_linker_receiving.name=Redstone Link
+tile.create.render.name=Render
+tile.create.toggle_latch_powered.name=Powered Toggle Latch
+tile.create.window_wood.name=Wooden Window

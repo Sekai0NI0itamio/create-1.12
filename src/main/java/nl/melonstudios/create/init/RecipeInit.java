@@ -7,6 +7,8 @@ import com.melonstudios.melonlib.recipe.Ingredient;
 import com.melonstudios.melonlib.recipe.RecipeRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -48,6 +50,9 @@ public final class RecipeInit {
 
         FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(Blocks.SOUL_SAND, 1),
                 new ItemStack(BlockInit.ORESTONE, 1, 5), 0.05F);
+
+        FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ItemInit.INGREDIENT, 1, 1),
+                new ItemStack(Items.BREAD, 1), 0.35F);
 
         /*
 
@@ -578,6 +583,49 @@ public final class RecipeInit {
                         .setProcessingTime64RPM(40)
                         .build()
         );
+        recipes.addRecipe("create:brass_ingot",
+                MixingRecipe.builder()
+                        .setItemInputs(
+                                "ingotCopper",
+                                "ingotZinc"
+                        )
+                        .setItemOutputs(
+                                new ItemStack(ItemInit.INGREDIENT, 2, 18)
+                        )
+                        .setRequiredHeat(1)
+                        .setProcessingTime64RPM(40)
+                        .build()
+        );
+        recipes.addRecipe("create:pulp_from_saplings",
+                MixingRecipe.builder()
+                        .setItemInputs(
+                                "treeSapling",
+                                "treeSapling",
+                                "treeSapling",
+                                "treeSapling"
+                        )
+                        .setFluidInputs(new FluidStack(FluidRegistry.WATER, 250))
+                        .setItemOutputs(
+                                new ItemStack(ItemInit.INGREDIENT, 1, 12)
+                        )
+                        .setProcessingTime64RPM(40)
+                        .build()
+        );
+        recipes.addRecipe("create:pulp_from_sugar_cane",
+                MixingRecipe.builder()
+                        .setItemInputs(
+                                new ItemStack(Items.REEDS),
+                                new ItemStack(Items.REEDS),
+                                new ItemStack(Items.REEDS),
+                                new ItemStack(Items.REEDS)
+                        )
+                        .setFluidInputs(new FluidStack(FluidRegistry.WATER, 250))
+                        .setItemOutputs(
+                                new ItemStack(ItemInit.INGREDIENT, 1, 12)
+                        )
+                        .setProcessingTime64RPM(40)
+                        .build()
+        );
     }
     private static void deploying() {
         DeployerRecipes recipes = DeployerRecipes.instance;
@@ -613,6 +661,16 @@ public final class RecipeInit {
                 Ingredient.of("gemPolishedRoseQuartz"),
                 new ItemStack(ItemInit.INGREDIENT, 1, 10),
                 DeployerRecipe.InputType.CONSUME
+        );
+        recipes.addRecipe("create:cogwheel",
+                Ingredient.of(new ItemStack(BlockInit.SHAFT), false),
+                Ingredient.of("plankWood"),
+                new ItemStack(BlockInit.COG_SMALL)
+        );
+        recipes.addRecipe("create:large_cogwheel",
+                Ingredient.of(new ItemStack(BlockInit.COG_SMALL), false),
+                Ingredient.of("plankWood"),
+                new ItemStack(BlockInit.COG_LARGE)
         );
     }
     private static void sequences() {
@@ -783,6 +841,22 @@ public final class RecipeInit {
         recipes.addRecipe("create:wool", Ingredient.of("wool"),
                 new Tuple<>(new ItemStack(Items.STRING), 1.0F)
         );
+        recipes.addRecipe("create:sugar_cane", Ingredient.of(new ItemStack(Items.REEDS), false),
+                new Tuple<>(new ItemStack(Items.SUGAR, 2), 1.0F),
+                new Tuple<>(new ItemStack(Items.SUGAR, 1), 0.1F)
+        );
+        recipes.addRecipe("create:cocoa_beans", Ingredient.of(new ItemStack(Items.DYE, 1, 3), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 3), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 3), 0.1F)
+        );
+        recipes.addRecipe("create:charcoal", Ingredient.of(new ItemStack(Items.COAL, 1, 1), false),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 0), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 8), 0.1F)
+        );
+        recipes.addRecipe("create:lapis_lazuli", Ingredient.of(new ItemStack(Items.DYE, 1, 4), false),
+                new Tuple<>(new ItemStack(Items.DYE, 2, 4), 1.0F),
+                new Tuple<>(new ItemStack(Items.DYE, 1, 4), 0.1F)
+        );
     }
 
     /**
@@ -895,6 +969,15 @@ public final class RecipeInit {
         recipes.addRecipe("create:wheat", Ingredient.of(new ItemStack(Items.WHEAT), false),
                 new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 0), 1.0F),
                 new Tuple<>(new ItemStack(Items.WHEAT_SEEDS, 1), 0.25F));
+        recipes.addRecipe("create:crushing_wool", Ingredient.of("wool"),
+                new Tuple<>(new ItemStack(Items.STRING, 2), 1.0F),
+                new Tuple<>(new ItemStack(Items.STRING, 1), 0.5F));
+        recipes.addRecipe("create:prismarine_crystals", Ingredient.of(new ItemStack(Items.PRISMARINE_CRYSTALS), false),
+                new Tuple<>(new ItemStack(Items.QUARTZ), 1.0F),
+                new Tuple<>(new ItemStack(Items.QUARTZ, 2), 0.5F),
+                new Tuple<>(new ItemStack(Items.GLOWSTONE_DUST, 2), 0.1F));
+        recipes.addRecipe("create:nether_wart_block", Ingredient.of(new ItemStack(Blocks.NETHER_WART_BLOCK), false),
+                new Tuple<>(new ItemStack(Items.NETHER_WART), 0.25F));
     }
 
     /**
@@ -934,6 +1017,10 @@ public final class RecipeInit {
                 new Tuple<>(new ItemStack(Blocks.PACKED_ICE), 1.0F));
         recipes.addRecipe("create:magma", Ingredient.of(new ItemStack(Blocks.MAGMA), false),
                 new Tuple<>(new ItemStack(Blocks.OBSIDIAN), 1.0F));
+        recipes.addRecipe("create:stained_glass", Ingredient.of(new ItemStack(Blocks.STAINED_GLASS, 1, OreDictionary.WILDCARD_VALUE), false),
+                new Tuple<>(new ItemStack(Blocks.GLASS), 1.0F));
+        recipes.addRecipe("create:stained_glass_pane", Ingredient.of(new ItemStack(Blocks.STAINED_GLASS_PANE, 1, OreDictionary.WILDCARD_VALUE), false),
+                new Tuple<>(new ItemStack(Blocks.GLASS_PANE), 1.0F));
     }
 
     /**
@@ -950,6 +1037,23 @@ public final class RecipeInit {
                 new Tuple<>(new ItemStack(Blocks.SOUL_SAND), 1.0F));
         recipes.addRecipe("create:clay", Ingredient.of(new ItemStack(Blocks.CLAY), false),
                 new Tuple<>(new ItemStack(Blocks.SOUL_SAND), 1.0F));
+        recipes.addRecipe("create:poisonous_potato", Ingredient.of(new ItemStack(Items.POTATO), false),
+                new Tuple<>(new ItemStack(Items.POISONOUS_POTATO), 1.0F));
+        recipes.addRecipe("create:infested_stone", Ingredient.of(new ItemStack(Blocks.STONE), false),
+                new Tuple<>(new ItemStack(Blocks.MONSTER_EGG, 1, 0), 1.0F));
+        recipes.addRecipe("create:infested_stone_bricks", Ingredient.of(new ItemStack(Blocks.STONEBRICK), false),
+                new Tuple<>(new ItemStack(Blocks.MONSTER_EGG, 1, 2), 1.0F));
+        recipes.addRecipe("create:infested_mossy_stone_bricks", Ingredient.of(new ItemStack(Blocks.STONEBRICK, 1, 1), false),
+                new Tuple<>(new ItemStack(Blocks.MONSTER_EGG, 1, 3), 1.0F));
+        recipes.addRecipe("create:infested_cracked_stone_bricks", Ingredient.of(new ItemStack(Blocks.STONEBRICK, 1, 2), false),
+                new Tuple<>(new ItemStack(Blocks.MONSTER_EGG, 1, 4), 1.0F));
+        recipes.addRecipe("create:infested_chiseled_stone_bricks", Ingredient.of(new ItemStack(Blocks.STONEBRICK, 1, 3), false),
+                new Tuple<>(new ItemStack(Blocks.MONSTER_EGG, 1, 5), 1.0F));
+        recipes.addRecipe("create:nether_brick", Ingredient.of(new ItemStack(Items.BRICK), false),
+                new Tuple<>(new ItemStack(Items.NETHERBRICK), 1.0F));
+        recipes.addRecipe("create:lapis_recycling", Ingredient.of(new ItemStack(Items.DYE, 1, 4), false),
+                new Tuple<>(new ItemStack(Items.PRISMARINE_SHARD), 0.75F),
+                new Tuple<>(new ItemStack(Items.PRISMARINE_CRYSTALS), 0.125F));
     }
 
     private static Item getOrestone(int id) {
