@@ -21,9 +21,14 @@ on the official Create issue tracker or Discord.
   All Java here is from-scratch backport code; no official Create sources
   are vendored.
 - **[Create](https://github.com/Creators-of-Create/Create) by simibubi and
-  contributors** — the original mod this ports. **MIT** (as published on
-  the ported branches). Designs, mechanics, and reference textures belong
-  to them; backport textures are official assets or faithful redraws.
+  contributors** — the original mod this ports. **Code: MIT** (verified in
+  their `LICENSE.md`); **all files under their `src/main/resources/assets/`
+  (textures, models, sounds): All Rights Reserved.** So: mechanics may be
+  reimplemented from the public code (this is what we do, system by
+  system), but official Create art is NEVER copied into this repo — our
+  textures are original placeholders until redrawn. The MIT copyright +
+  permission notice for the Create Team is reproduced below as their
+  license requires for substantial use.
 
 ## Runtime dependencies (not shipped in our jar; fetched by `pack/pack.py`
 ## or installed by hand — their own licenses apply)
@@ -56,3 +61,25 @@ Notes for the license-conscious:
 - [x] LGPL deps linked as separate jars, unmodified.
 - [x] Attribution in README + in-game `mcmod.info` credits + this file.
 - [x] Bug reports directed here, not upstream (README + this file).
+
+## Third-party license texts
+
+### Create (code) — MIT, Copyright (c) The Create Team / The Creators of Create
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
