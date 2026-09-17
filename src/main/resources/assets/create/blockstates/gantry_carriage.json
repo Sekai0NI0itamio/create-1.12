@@ -1,7 +1,7 @@
 {
  "variants": {
   "normal": {
-   "model": "create:block/gantry_carriage"
+   "model": "create:gantry_carriage"
   }
  }
 }

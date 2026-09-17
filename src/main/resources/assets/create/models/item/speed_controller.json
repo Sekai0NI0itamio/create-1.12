@@ -1,1 +1,3 @@
-{"parent":"create:block/speed_controller"}
+{
+ "parent": "create:block/rotation_speed_controller"
+}

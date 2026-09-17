@@ -1,7 +1,7 @@
 {
  "variants": {
   "normal": {
-   "model": "create:block/elevator_contact"
+   "model": "create:elevator_contact"
   }
  }
 }

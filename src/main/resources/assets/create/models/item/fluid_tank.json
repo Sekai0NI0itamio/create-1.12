@@ -1,1 +1,3 @@
-{"parent":"create:block/fluid_tank/block"}
+{
+ "parent": "create:block/fluid_tank"
+}

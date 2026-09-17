@@ -1,63 +1,63 @@
 {
   "variants": {
     "facing=north,reset=false,set=false": {
-      "model": "create:block/diode/unpowered_latch"
+      "model": "create:diode/unpowered_latch"
     },
     "facing=north,reset=false,set=true": {
-      "model": "create:block/diode/unpowered_latch_set"
+      "model": "create:diode/unpowered_latch_set"
     },
     "facing=north,reset=true,set=false": {
-      "model": "create:block/diode/unpowered_latch_reset"
+      "model": "create:diode/unpowered_latch_reset"
     },
     "facing=north,reset=true,set=true": {
-      "model": "create:block/diode/unpowered_latch_set_reset"
+      "model": "create:diode/unpowered_latch_set_reset"
     },
     "facing=east,reset=false,set=false": {
-      "model": "create:block/diode/unpowered_latch",
+      "model": "create:diode/unpowered_latch",
       "y": 90
     },
     "facing=east,reset=false,set=true": {
-      "model": "create:block/diode/unpowered_latch_set",
+      "model": "create:diode/unpowered_latch_set",
       "y": 90
     },
     "facing=east,reset=true,set=false": {
-      "model": "create:block/diode/unpowered_latch_reset",
+      "model": "create:diode/unpowered_latch_reset",
       "y": 90
     },
     "facing=east,reset=true,set=true": {
-      "model": "create:block/diode/unpowered_latch_set_reset",
+      "model": "create:diode/unpowered_latch_set_reset",
       "y": 90
     },
     "facing=south,reset=false,set=false": {
-      "model": "create:block/diode/unpowered_latch",
+      "model": "create:diode/unpowered_latch",
       "y": 180
     },
     "facing=south,reset=false,set=true": {
-      "model": "create:block/diode/unpowered_latch_set",
+      "model": "create:diode/unpowered_latch_set",
       "y": 180
     },
     "facing=south,reset=true,set=false": {
-      "model": "create:block/diode/unpowered_latch_reset",
+      "model": "create:diode/unpowered_latch_reset",
       "y": 180
     },
     "facing=south,reset=true,set=true": {
-      "model": "create:block/diode/unpowered_latch_set_reset",
+      "model": "create:diode/unpowered_latch_set_reset",
       "y": 180
     },
     "facing=west,reset=false,set=false": {
-      "model": "create:block/diode/unpowered_latch",
+      "model": "create:diode/unpowered_latch",
       "y": 270
     },
     "facing=west,reset=false,set=true": {
-      "model": "create:block/diode/unpowered_latch_set",
+      "model": "create:diode/unpowered_latch_set",
       "y": 270
     },
     "facing=west,reset=true,set=false": {
-      "model": "create:block/diode/unpowered_latch_reset",
+      "model": "create:diode/unpowered_latch_reset",
       "y": 270
     },
     "facing=west,reset=true,set=true": {
-      "model": "create:block/diode/unpowered_latch_set_reset",
+      "model": "create:diode/unpowered_latch_set_reset",
       "y": 270
     }
   }

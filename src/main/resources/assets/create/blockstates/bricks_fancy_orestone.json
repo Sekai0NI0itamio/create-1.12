@@ -1,25 +1,25 @@
 {
   "variants": {
     "variant=asurine": {
-      "model": "create:block/orestone/bricks_fancy/asurine"
+      "model": "create:orestone/bricks_fancy/asurine"
     },
     "variant=crimsite": {
-      "model": "create:block/orestone/bricks_fancy/crimsite"
+      "model": "create:orestone/bricks_fancy/crimsite"
     },
     "variant=limestone": {
-      "model": "create:block/orestone/bricks_fancy/limestone"
+      "model": "create:orestone/bricks_fancy/limestone"
     },
     "variant=ochrum": {
-      "model": "create:block/orestone/bricks_fancy/ochrum"
+      "model": "create:orestone/bricks_fancy/ochrum"
     },
     "variant=scorchia": {
-      "model": "create:block/orestone/bricks_fancy/scorchia"
+      "model": "create:orestone/bricks_fancy/scorchia"
     },
     "variant=scoria": {
-      "model": "create:block/orestone/bricks_fancy/scoria"
+      "model": "create:orestone/bricks_fancy/scoria"
     },
     "variant=veridium": {
-      "model": "create:block/orestone/bricks_fancy/veridium"
+      "model": "create:orestone/bricks_fancy/veridium"
     }
   }
 }

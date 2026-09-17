@@ -1,7 +1,7 @@
 {
  "variants": {
   "normal": {
-   "model": "create:block/packager"
+   "model": "create:packager"
   }
  }
 }

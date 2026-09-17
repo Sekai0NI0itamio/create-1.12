@@ -1,52 +1,52 @@
 {
   "variants": {
     "color=white": {
-      "model": "create:block/pouf/white"
+      "model": "create:pouf/white"
     },
     "color=orange": {
-      "model": "create:block/pouf/orange"
+      "model": "create:pouf/orange"
     },
     "color=magenta": {
-      "model": "create:block/pouf/magenta"
+      "model": "create:pouf/magenta"
     },
     "color=light_blue": {
-      "model": "create:block/pouf/light_blue"
+      "model": "create:pouf/light_blue"
     },
     "color=yellow": {
-      "model": "create:block/pouf/yellow"
+      "model": "create:pouf/yellow"
     },
     "color=lime": {
-      "model": "create:block/pouf/lime"
+      "model": "create:pouf/lime"
     },
     "color=pink": {
-      "model": "create:block/pouf/pink"
+      "model": "create:pouf/pink"
     },
     "color=gray": {
-      "model": "create:block/pouf/gray"
+      "model": "create:pouf/gray"
     },
     "color=silver": {
-      "model": "create:block/pouf/silver"
+      "model": "create:pouf/silver"
     },
     "color=cyan": {
-      "model": "create:block/pouf/cyan"
+      "model": "create:pouf/cyan"
     },
     "color=purple": {
-      "model": "create:block/pouf/purple"
+      "model": "create:pouf/purple"
     },
     "color=blue": {
-      "model": "create:block/pouf/blue"
+      "model": "create:pouf/blue"
     },
     "color=brown": {
-      "model": "create:block/pouf/brown"
+      "model": "create:pouf/brown"
     },
     "color=green": {
-      "model": "create:block/pouf/green"
+      "model": "create:pouf/green"
     },
     "color=red": {
-      "model": "create:block/pouf/red"
+      "model": "create:pouf/red"
     },
     "color=black": {
-      "model": "create:block/pouf/black"
+      "model": "create:pouf/black"
     }
   }
 }

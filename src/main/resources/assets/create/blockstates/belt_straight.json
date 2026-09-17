@@ -1,62 +1,62 @@
 {
   "variants": {
     "axis=x,part=middle,vertical=false": {
-      "model": "create:block/belt/straight_middle"
+      "model": "create:belt/straight_middle"
     },
     "axis=x,part=pulley,vertical=false": {
-      "model": "create:block/belt/straight_middle"
+      "model": "create:belt/straight_middle"
     },
     "axis=x,part=end,vertical=false": {
-      "model": "create:block/belt/straight_end"
+      "model": "create:belt/straight_end"
     },
     "axis=x,part=start,vertical=false": {
-      "model": "create:block/belt/straight_end",
+      "model": "create:belt/straight_end",
       "y": 180
     },
     "axis=z,part=middle,vertical=false": {
-      "model": "create:block/belt/straight_middle",
+      "model": "create:belt/straight_middle",
       "y": 90
     },
     "axis=z,part=pulley,vertical=false": {
-      "model": "create:block/belt/straight_middle",
+      "model": "create:belt/straight_middle",
       "y": 90
     },
     "axis=z,part=end,vertical=false": {
-      "model": "create:block/belt/straight_end",
+      "model": "create:belt/straight_end",
       "y": 90
     },
     "axis=z,part=start,vertical=false": {
-      "model": "create:block/belt/straight_end",
+      "model": "create:belt/straight_end",
       "y": 270
     },
     "axis=x,part=middle,vertical=true": {
-      "model": "create:block/belt/vertical_middle"
+      "model": "create:belt/vertical_middle"
     },
     "axis=x,part=pulley,vertical=true": {
-      "model": "create:block/belt/vertical_middle"
+      "model": "create:belt/vertical_middle"
     },
     "axis=x,part=end,vertical=true": {
-      "model": "create:block/belt/vertical_end",
+      "model": "create:belt/vertical_end",
       "x": 180
     },
     "axis=x,part=start,vertical=true": {
-      "model": "create:block/belt/vertical_end"
+      "model": "create:belt/vertical_end"
     },
     "axis=z,part=middle,vertical=true": {
-      "model": "create:block/belt/vertical_middle",
+      "model": "create:belt/vertical_middle",
       "y": 90
     },
     "axis=z,part=pulley,vertical=true": {
-      "model": "create:block/belt/vertical_middle",
+      "model": "create:belt/vertical_middle",
       "y": 90
     },
     "axis=z,part=end,vertical=true": {
-      "model": "create:block/belt/vertical_end",
+      "model": "create:belt/vertical_end",
       "x": 180,
       "y": 90
     },
     "axis=z,part=start,vertical=true": {
-      "model": "create:block/belt/vertical_end",
+      "model": "create:belt/vertical_end",
       "y": 90 
     }
   }
