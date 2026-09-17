@@ -236,6 +236,15 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
+    public void spoutFX(net.minecraft.world.World world, double x, double y, double z, int tint) {
+        CreateParticles.fluidDrip(world, x, y, z, tint);
+        CreateParticles.fluidDrip(world, x, y - 0.3, z, tint);
+        if (world.rand.nextInt(10) == 0) {
+            world.playSound(x, y, z, SoundInit.spout, SoundCategory.BLOCKS, 0.8F, 1.0F, false);
+        }
+    }
+
+    @Override
     public void initiatePonders() {
         PonderRegistry.bootstrap();
     }

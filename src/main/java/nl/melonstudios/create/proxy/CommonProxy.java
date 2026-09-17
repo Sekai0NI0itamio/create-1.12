@@ -148,6 +148,9 @@ public class CommonProxy {
     public void wifiFX(World world, double x, double y, double z, int tint) {
 
     }
+    public void spoutFX(World world, double x, double y, double z, int tint) {
+
+    }
 
     public void initiatePonders() {}
 

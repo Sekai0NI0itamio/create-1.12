@@ -19,6 +19,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.tileentity.TileEntityKinetic;
 import nl.melonstudios.create.tileentity.marker.IDepot;
 import nl.melonstudios.create.tileentity.marker.IHaltBeltContents;
@@ -56,6 +57,12 @@ public class TileEntitySpout extends TileEntityKinetic implements IHaltBeltConte
         if (!this.filling.isEmpty()) {
             this.fillTimer -= Math.abs(this.getSpeed() / 8.0F) + 1;
             this.markDirty();
+            FluidStack pouring = this.tank.getFluid();
+            if (pouring != null && pouring.getFluid() != null) {
+                CreateLegacy.proxy.spoutFX(this.world,
+                        this.pos.getX() + 0.5D, this.pos.getY() - 0.2D, this.pos.getZ() + 0.5D,
+                        pouring.getFluid().getColor(pouring));
+            }
             if (this.fillTimer <= 0) {
                 this.finishFill();
             }

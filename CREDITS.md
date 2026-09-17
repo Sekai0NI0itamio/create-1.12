@@ -21,14 +21,12 @@ on the official Create issue tracker or Discord.
   All Java here is from-scratch backport code; no official Create sources
   are vendored.
 - **[Create](https://github.com/Creators-of-Create/Create) by simibubi and
-  contributors** — the original mod this ports. **Code: MIT** (verified in
-  their `LICENSE.md`); **all files under their `src/main/resources/assets/`
-  (textures, models, sounds): All Rights Reserved.** So: mechanics may be
-  reimplemented from the public code (this is what we do, system by
-  system), but official Create art is NEVER copied into this repo — our
-  textures are original placeholders until redrawn. The MIT copyright +
-  permission notice for the Create Team is reproduced below as their
-  license requires for substantial use.
+  contributors** — the original mod this ports. **Fully MIT** (code +
+  assets — verified in their `LICENSE.md`, which covers "this software
+  and associated documentation files"). So both mechanics AND official
+  art (textures, models, sounds) may be ported into this repo with the
+  MIT copyright + permission notice kept (reproduced below and in
+  `LICENSE`).
 
 ## Runtime dependencies (not shipped in our jar; fetched by `pack/pack.py`
 ## or installed by hand — their own licenses apply)
@@ -55,8 +53,9 @@ Notes for the license-conscious:
 
 ## Compliance checklist (for reviewers)
 
-- [x] Upstream `LICENSE` (MIT, Siepert) kept verbatim at repo root.
-- [x] No official Create source files vendored (clean-room backport).
+- [x] Upstream `LICENSE` (MIT, Siepert) kept at repo root, Create Team
+      attribution added (both MIT).
+- [x] Official Create code + art ported under their MIT terms (notices kept).
 - [x] No GPL code vendored (CTM fetched at pack time, never committed).
 - [x] LGPL deps linked as separate jars, unmodified.
 - [x] Attribution in README + in-game `mcmod.info` credits + this file.
@@ -64,7 +63,7 @@ Notes for the license-conscious:
 
 ## Third-party license texts
 
-### Create (code) — MIT, Copyright (c) The Create Team / The Creators of Create
+### Create (code + assets) — MIT, Copyright (c) The Create Team / The Creators of Create
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

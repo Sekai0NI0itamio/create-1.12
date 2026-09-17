@@ -60,6 +60,8 @@ public final class SoundInit {
     public static SoundEvent wrench_remove;
     public static SoundEvent wrench_remove_compounded_1;
     public static SoundEvent wrench_rotate;
+    public static SoundEvent spout;
+    public static SoundEvent steam;
     public static void init() {
         item_sandpaper_used = registerSound("item.sandpaper.used");
         block_cog_ambient = registerSound("block.cog.ambient");
@@ -116,6 +118,8 @@ public final class SoundInit {
         wrench_remove = registerSound("wrench_remove");
         wrench_remove_compounded_1 = registerSound("wrench_remove_compounded_1");
         wrench_rotate = registerSound("wrench_rotate");
+        spout = registerSound("spout");
+        steam = registerSound("steam");
     }
 
     private static SoundEvent registerSound(String registry) {
