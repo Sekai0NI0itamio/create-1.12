@@ -26,7 +26,10 @@ public class CreateWorldGen implements IWorldGenerator {
     private final WorldGenerator copper, zinc;
     private final WorldGenerator asurine, crimsite, limestone, ochrum, scorchia, scoria, veridium;
     public CreateWorldGen() {
-        this.copper = new WorldGenMinable(BlockOre.copper(), 6, BlockMatcher.forBlock(Blocks.STONE));
+        // Copper follows the 1.20.1 distribution: blobs of up to 10, spread
+        // from the bottom of the world up to Y=112 with the peak around 48.
+        // (1.12 worlds bottom out at Y=0, so the range is clamped to 2-112.)
+        this.copper = new WorldGenMinable(BlockOre.copper(), 10, BlockMatcher.forBlock(Blocks.STONE));
         this.zinc = new WorldGenMinable(BlockOre.zinc(), 6, BlockMatcher.forBlock(Blocks.STONE));
 
         this.asurine = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(0), 128, BlockMatcher.forBlock(Blocks.STONE));
@@ -63,7 +66,7 @@ public class CreateWorldGen implements IWorldGenerator {
     }
     private void genOverworld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         if (generateOres) {
-            this.runGenerator(this.copper, world, random, chunkX, chunkZ, 8 + random.nextInt(8), 32, 128);
+            this.runGenerator(this.copper, world, random, chunkX, chunkZ, 16, 2, 112);
             this.runGenerator(this.zinc, world, random, chunkX, chunkZ, 8, 4, 64);
         }
         if (generateStones) {
