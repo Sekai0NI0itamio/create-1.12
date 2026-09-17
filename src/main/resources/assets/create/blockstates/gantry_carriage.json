@@ -1,7 +1,28 @@
 {
  "variants": {
-  "normal": {
+  "axis=y,mode=forward": {
    "model": "create:gantry_carriage"
+  },
+  "axis=z,mode=forward": {
+   "model": "create:gantry_carriage",
+   "x": 90
+  },
+  "axis=x,mode=forward": {
+   "model": "create:gantry_carriage",
+   "x": 90,
+   "y": 90
+  },
+  "axis=y,mode=backward": {
+   "model": "create:gantry_carriage"
+  },
+  "axis=z,mode=backward": {
+   "model": "create:gantry_carriage",
+   "x": 90
+  },
+  "axis=x,mode=backward": {
+   "model": "create:gantry_carriage",
+   "x": 90,
+   "y": 90
   }
  }
 }

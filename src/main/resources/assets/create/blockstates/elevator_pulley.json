@@ -1,7 +1,26 @@
 {
  "variants": {
-  "normal": {
+  "facing=down": {
+   "model": "create:elevator_pulley",
+   "x": 90
+  },
+  "facing=up": {
    "model": "create:elevator_pulley"
+  },
+  "facing=north": {
+   "model": "create:elevator_pulley"
+  },
+  "facing=south": {
+   "model": "create:elevator_pulley",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "create:elevator_pulley",
+   "y": 270
+  },
+  "facing=east": {
+   "model": "create:elevator_pulley",
+   "y": 90
   }
  }
 }
