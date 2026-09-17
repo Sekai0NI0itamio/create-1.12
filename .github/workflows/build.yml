@@ -37,6 +37,11 @@ jobs:
           chmod +x gradlew
           ./gradlew build --no-daemon --stacktrace
 
+      - name: Static asset audit (blockstates/models/textures)
+        if: success()
+        run: |
+          python3 tools/audit_assets.py
+
       - name: Set up Python for packager
         uses: actions/setup-python@v5
         with:
