@@ -80,12 +80,18 @@ public class TileEntityRedstoneLinker extends TileEntityCachedRenderBB implement
     @Override
     public void updateSignal(int signal) {
         CreateLegacy.logger.debug("Received signal strength of {} (had: {})", signal, this.signal);
+        boolean changed = signal != this.signal;
         this.signal = signal;
         Utils.setBlockTESafe(this.world, this.pos,
                 this.getBlockType().getDefaultState()
                         .withProperty(BlockRedstoneLinker.FACING, EnumFacing.VALUES[this.getBlockMetadata() & 0b0111])
                         .withProperty(BlockRedstoneLinker.POWERED, signal > 0), 2
         );
+        if (changed && this.world != null && this.world.isRemote) {
+            CreateLegacy.proxy.wifiFX(this.world,
+                    this.pos.getX() + 0.5D, this.pos.getY() + 1.1D, this.pos.getZ() + 0.5D,
+                    0xBFFFEF);
+        }
         this.sync();
     }
 

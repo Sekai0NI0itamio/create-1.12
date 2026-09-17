@@ -110,5 +110,222 @@
       }
     ],
     "subtitle": "create.subtitle.contraption_disassemble"
+  },
+  "blaze_munch": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.blaze_munch",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.generic.eat" }]
+  },
+  "confirm": {
+    "category": "players",
+    "subtitle": "create.subtitle.confirm",
+    "sounds": [{ "type": "event", "name": "minecraft:block.note.bell" }]
+  },
+  "contraption_assemble_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.chest.open" }]
+  },
+  "controller_click": {
+    "category": "players",
+    "subtitle": "create.subtitle.controller_click",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.itemframe.add_item" }]
+  },
+  "controller_put": {
+    "category": "players",
+    "subtitle": "create.subtitle.controller_put",
+    "sounds": [{ "type": "event", "name": "minecraft:block.wood.place" }]
+  },
+  "controller_take": {
+    "category": "players",
+    "subtitle": "create.subtitle.controller_take",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.itemframe.remove_item" }]
+  },
+  "copper_armor_equip": {
+    "category": "players",
+    "subtitle": "create.subtitle.copper_armor_equip",
+    "sounds": [{ "type": "event", "name": "minecraft:item.armor.equip_gold" }]
+  },
+  "crafter_click": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.crafter_click",
+    "sounds": [{ "type": "event", "name": "minecraft:block.anvil.hit" }]
+  },
+  "crafter_click_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.wooden_trapdoor.open" }]
+  },
+  "crafter_craft": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.crafter_craft",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.item.break" }]
+  },
+  "cranking": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.cranking",
+    "sounds": [{ "type": "event", "name": "minecraft:block.wood.place" }]
+  },
+  "cranking_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.wooden_button.click_off" }]
+  },
+  "crushing_1": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.crushing_1",
+    "sounds": [{ "type": "event", "name": "minecraft:block.stone.hit" }]
+  },
+  "crushing_2": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.gravel.place" }]
+  },
+  "crushing_3": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.anvil.break" }]
+  },
+  "deny": {
+    "category": "players",
+    "subtitle": "create.subtitle.deny",
+    "sounds": [{ "type": "event", "name": "minecraft:block.note.bass" }]
+  },
+  "depot_plop": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.depot_plop",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.itemframe.add_item" }]
+  },
+  "depot_slide": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.depot_slide",
+    "sounds": [{ "type": "event", "name": "minecraft:block.sand.break" }]
+  },
+  "frogport_deposit": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.frogport_deposit",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.slime.squish" }]
+  },
+  "frogport_open": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.frogport_open",
+    "sounds": [{ "type": "event", "name": "minecraft:block.lever.click" }]
+  },
+  "funnel_flap": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.funnel_flap",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.itemframe.rotate_item" }]
+  },
+  "funnel_flap_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.cloth.break" }]
+  },
+  "item_hatch": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.item_hatch",
+    "sounds": [{ "type": "event", "name": "minecraft:block.chest.open" }]
+  },
+  "item_hatch_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.anvil.place" }]
+  },
+  "mechanical_press_activation": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.mechanical_press_activation",
+    "sounds": [{ "type": "event", "name": "minecraft:block.anvil.land" }]
+  },
+  "mechanical_press_activation_belt": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.mechanical_press_activation_belt",
+    "sounds": [{ "type": "event", "name": "minecraft:block.cloth.hit" }]
+  },
+  "mechanical_press_activation_belt_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.item.break" }]
+  },
+  "mechanical_press_activation_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.item.break" }]
+  },
+  "mixing": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.mixing",
+    "sounds": [{ "type": "event", "name": "minecraft:block.stone.break" }]
+  },
+  "mixing_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.stone.break" }]
+  },
+  "package_pop": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.package_pop",
+    "sounds": [{ "type": "event", "name": "minecraft:block.wood.break" }]
+  },
+  "package_pop_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.cloth.break" }]
+  },
+  "packager": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.packager",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.shulker.open" }]
+  },
+  "peculiar_bell_use": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.peculiar_bell_use",
+    "sounds": [{ "type": "event", "name": "minecraft:block.note.bell" }]
+  },
+  "potato_hit": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.potato_hit",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.itemframe.break" }]
+  },
+  "potato_hit_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.grass.break" }]
+  },
+  "saw_activate_stone": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.saw_activate_stone",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.experience_orb.pickup" }]
+  },
+  "saw_activate_wood": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.saw_activate_wood",
+    "sounds": [{ "type": "event", "name": "minecraft:block.wood.hit" }]
+  },
+  "schematicannon_finish": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.schematicannon_finish",
+    "sounds": [{ "type": "event", "name": "minecraft:block.note.bell" }]
+  },
+  "schematicannon_launch_block": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.schematicannon_launch_block",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.generic.explode" }]
+  },
+  "scroll_value": {
+    "category": "players",
+    "subtitle": "create.subtitle.scroll_value",
+    "sounds": [{ "type": "event", "name": "minecraft:block.note.hat" }]
+  },
+  "slime_added": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.slime_added",
+    "sounds": [{ "type": "event", "name": "minecraft:block.slime.place" }]
+  },
+  "worldshaper_place": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.worldshaper_place",
+    "sounds": [{ "type": "event", "name": "minecraft:block.note.basedrum" }]
+  },
+  "wrench_remove": {
+    "category": "players",
+    "subtitle": "create.subtitle.wrench_remove",
+    "sounds": [{ "type": "event", "name": "minecraft:entity.item.pickup" }]
+  },
+  "wrench_remove_compounded_1": {
+    "category": "blocks",
+    "sounds": [{ "type": "event", "name": "minecraft:block.anvil.hit" }]
+  },
+  "wrench_rotate": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.wrench_rotate",
+    "sounds": [{ "type": "event", "name": "minecraft:block.wooden_trapdoor.close" }]
   }
 }

@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.block.actor.BlockEncasedFan;
 import nl.melonstudios.create.recipe.PulverizationRecipe;
 import nl.melonstudios.create.recipe.server.BlastingRecipes;
@@ -281,7 +282,38 @@ public class TileEntityEncasedFan extends TileEntityKinetic {
 
     @SideOnly(Side.CLIENT)
     private void spawnAirParticles(EnumFacing facing, int travel, EnumFanProcess process) {
-        // Particles handled by TESR airflow; keep TE lean.
+        int tint;
+        switch (process) {
+            case SPLASHING:
+                tint = 0x3F76E4;
+                break;
+            case SMOKING:
+                tint = 0x888888;
+                break;
+            case BLASTING:
+                tint = 0xFF7714;
+                break;
+            case HAUNTING:
+                tint = 0x9DE2E6;
+                break;
+            default:
+                tint = 0xEEEEEE;
+                break;
+        }
+        double speed = 0.15D;
+        for (int i = 0; i < 2; i++) {
+            double d = 1.0D + this.world.rand.nextDouble() * Math.max(1, travel);
+            double x = this.pos.getX() + 0.5D + facing.getFrontOffsetX() * d
+                    + (this.world.rand.nextDouble() - 0.5D) * 0.5D;
+            double y = this.pos.getY() + 0.5D + facing.getFrontOffsetY() * d
+                    + (this.world.rand.nextDouble() - 0.5D) * 0.5D;
+            double z = this.pos.getZ() + 0.5D + facing.getFrontOffsetZ() * d
+                    + (this.world.rand.nextDouble() - 0.5D) * 0.5D;
+            CreateLegacy.proxy.airFlowFX(this.world, x, y, z,
+                    facing.getFrontOffsetX() * speed,
+                    facing.getFrontOffsetY() * speed,
+                    facing.getFrontOffsetZ() * speed, tint);
+        }
     }
 
     @Override

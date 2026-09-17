@@ -120,6 +120,8 @@ public class CreateLegacyEventHandler {
             for (EnumDyeColor color : EnumDyeColor.values()) {
                 map.registerSprite(new ResourceLocation("create:block/belt_scroll_" + color.getDyeColorName()));
             }
+            CreateLegacy.logger.info("Adding Create particle sprites to texture atlas");
+            nl.melonstudios.create.particle.CreateParticles.registerSprites(map);
         }
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -139,6 +140,12 @@ public class CommonProxy {
 
     }
     public void mixerFX(TileEntityBasin basin, double x, double y, double z) {
+
+    }
+    public void airFlowFX(World world, double x, double y, double z, double mx, double my, double mz, int tint) {
+
+    }
+    public void wifiFX(World world, double x, double y, double z, int tint) {
 
     }
 

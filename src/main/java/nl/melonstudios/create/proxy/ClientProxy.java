@@ -31,6 +31,7 @@ import nl.melonstudios.create.block.actor.BlockGauge;
 import nl.melonstudios.create.entity.*;
 import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.kinetics.FastStateRendering;
+import nl.melonstudios.create.particle.CreateParticles;
 import nl.melonstudios.create.recipe.client.*;
 import nl.melonstudios.create.tesr.*;
 import nl.melonstudios.create.tesr.actor.*;
@@ -202,6 +203,13 @@ public class ClientProxy extends CommonProxy {
                 this.spawnItemFX(x, y, z, vx, 0.5, vz, item);
             }
         }
+        if (!fluids.isEmpty()) {
+            FluidStack first = fluids.get(0);
+            if (first != null && first.getFluid() != null) {
+                CreateParticles.basinFluid(basin.getWorld(), x, y + 0.15, z,
+                        first.getFluid().getColor(first));
+            }
+        }
         EntityPlayer player = Minecraft.getMinecraft().player;
         if (basin.hasAnyFluid()) {
             basin.getWorld().playSound(player, x, y, z, SoundEvents.ENTITY_BOAT_PADDLE_WATER, SoundCategory.BLOCKS, 0.5F, 0.5F);
@@ -214,6 +222,17 @@ public class ClientProxy extends CommonProxy {
                 .spawnEffectParticle(EnumParticleTypes.ITEM_CRACK.getParticleID(), x, y, z, vx, vy, vz, 0, 0);
         Objects.requireNonNull(particle, "null particle!");
         particle.setParticleTexture(sprite);
+    }
+
+    @Override
+    public void airFlowFX(net.minecraft.world.World world, double x, double y, double z,
+                          double mx, double my, double mz, int tint) {
+        CreateParticles.airFlow(world, x, y, z, mx, my, mz, tint);
+    }
+
+    @Override
+    public void wifiFX(net.minecraft.world.World world, double x, double y, double z, int tint) {
+        CreateParticles.wifi(world, x, y, z, tint);
     }
 
     @Override
