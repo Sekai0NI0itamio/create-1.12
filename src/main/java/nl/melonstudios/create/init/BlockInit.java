@@ -17,6 +17,7 @@ import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
 import nl.melonstudios.create.block.logistics.BlockPackager;
 import nl.melonstudios.create.block.logistics.BlockStockTicker;
+import nl.melonstudios.create.block.logistics.BlockVault;
 import nl.melonstudios.create.block.actor.BlockElevatorContact;
 import nl.melonstudios.create.block.actor.BlockElevatorPulley;
 import nl.melonstudios.create.block.actor.BlockGantryCarriage;
@@ -219,6 +220,9 @@ public final class BlockInit {
     public static final BlockStockTicker STOCK_TICKER = (BlockStockTicker)
             registerBlockWithItem(new BlockStockTicker()
             .setRegistryName("stock_ticker").setUnlocalizedName("create.stock_ticker"));
+
+    public static final BlockVault VAULT = (BlockVault)
+            registerBlockWithItem(new BlockVault());
 
     public static final BlockElevatorPulley ELEVATOR_PULLEY = (BlockElevatorPulley)
             registerBlockWithItem(new BlockElevatorPulley()

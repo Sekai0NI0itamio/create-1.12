@@ -429,3 +429,5 @@ tile.create.redstone_linker_receiving.name=Redstone Link
 tile.create.render.name=Render
 tile.create.toggle_latch_powered.name=Powered Toggle Latch
 tile.create.window_wood.name=Wooden Window
+
+tile.create.vault.name=Item Vault

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "create:block/vault/vault_side_large",
+    "down": "create:block/vault/vault_bottom_large",
+    "up": "create:block/vault/vault_top_large",
+    "north": "create:block/vault/vault_front_large",
+    "south": "create:block/vault/vault_front_large",
+    "east": "create:block/vault/vault_side_large",
+    "west": "create:block/vault/vault_side_large"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x,large=false": {
+      "model": "create:vault"
+    },
+    "axis=x,large=true": {
+      "model": "create:vault_large",
+      "y": 90
+    },
+    "axis=z,large=false": {
+      "model": "create:vault"
+    },
+    "axis=z,large=true": {
+      "model": "create:vault_large"
+    }
+  }
+}
