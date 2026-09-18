@@ -2,16 +2,25 @@ package nl.melonstudios.create.item;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.EnumHelper;
 import nl.melonstudios.create.init.ItemInit;
 
 import javax.annotation.Nullable;
 
 public class ItemGoggles extends ItemArmor {
+    // Reference GogglesItem is a plain Item with no protection; ItemArmor is the
+    // 1.12 idiom for head-slot equip + dispenser behaviour, so use a material
+    // with zero protection instead of GOLD (gold helmet would grant 2 armor).
+    private static final ArmorMaterial GOGGLES_MATERIAL = EnumHelper.addArmorMaterial(
+            "CREATE_GOGGLES", "create:goggles", 0,
+            new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F);
+
     public ItemGoggles() {
-        super(ArmorMaterial.GOLD, 0, EntityEquipmentSlot.HEAD);
+        super(GOGGLES_MATERIAL, 0, EntityEquipmentSlot.HEAD);
         this.setRegistryName("goggles");
         this.setUnlocalizedName("create.goggles");
         this.setMaxStackSize(1);

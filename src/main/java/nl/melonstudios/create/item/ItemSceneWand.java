@@ -19,6 +19,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.melonstudios.create.CreateLegacy;
+import nl.melonstudios.create.init.ItemInit;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
@@ -31,6 +32,9 @@ public class ItemSceneWand extends Item {
         super();
 
         this.setRegistryName("scene_wand");
+        this.setUnlocalizedName("create.scene_wand");
+        this.setMaxStackSize(1);
+        this.setCreativeTab(ItemInit.TAB_CREATE);
     }
 
     @Override
@@ -41,6 +45,12 @@ public class ItemSceneWand extends Item {
                 if (nbt.hasKey("SecondPos", Constants.NBT.TAG_INT_ARRAY)) {
                     int[] array = nbt.getIntArray("FirstPos");
                     int[] array2 = nbt.getIntArray("SecondPos");
+                    if (array.length < 3 || array2.length < 3) {
+                        nbt.removeTag("FirstPos");
+                        nbt.removeTag("SecondPos");
+                        player.sendStatusMessage(new TextComponentString("Corrupt wand selection, cleared"), false);
+                        return EnumActionResult.SUCCESS;
+                    }
                     BlockPos firstPos = new BlockPos(array[0], array[1], array[2]);
                     BlockPos secondPos = new BlockPos(array2[0], array2[1], array2[2]);
                     File downloads = new File(System.getProperty("user.home") + "/Downloads");
@@ -62,6 +72,13 @@ public class ItemSceneWand extends Item {
                             int maxX = Math.max(firstPos.getX(), secondPos.getX());
                             int maxY = Math.max(firstPos.getY(), secondPos.getY());
                             int maxZ = Math.max(firstPos.getZ(), secondPos.getZ());
+                            long volume = (long) (maxX - minX + 1) * (maxY - minY + 1) * (maxZ - minZ + 1);
+                            if (volume > 262144L) {
+                                player.sendStatusMessage(new TextComponentString("Selection too large (" + volume + " blocks, max 262144), cleared"), false);
+                                nbt.removeTag("FirstPos");
+                                nbt.removeTag("SecondPos");
+                                return EnumActionResult.SUCCESS;
+                            }
                             for (int x = minX; x <= maxX; x++) {
                                 for (int y = minY; y <= maxY; y++) {
                                     for (int z = minZ; z <= maxZ; z++) {

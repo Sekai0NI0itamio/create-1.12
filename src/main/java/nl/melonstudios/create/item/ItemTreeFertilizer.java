@@ -27,12 +27,22 @@ public class ItemTreeFertilizer extends Item {
                 worldIn.playEvent(2005, pos, 0);
                 return EnumActionResult.SUCCESS;
             }
-            sapling.generateTree(worldIn, pos, state, worldIn.rand);
+            sapling.generateTree(worldIn, pos, withReadyStage(worldIn, pos, state), worldIn.rand);
             if (!player.isCreative()) {
                 player.getHeldItem(hand).shrink(1);
             }
             return EnumActionResult.SUCCESS;
         }
-        return EnumActionResult.FAIL;
+        return EnumActionResult.PASS;
+    }
+
+    // Reference forces STAGE=1 before growing so one use always grows the tree;
+    // vanilla 1.12 saplings otherwise spend the first use just flipping stage 0 -> 1.
+    private static IBlockState withReadyStage(World world, BlockPos pos, IBlockState state) {
+        if (state.getValue(BlockSapling.STAGE) == 0) {
+            state = state.withProperty(BlockSapling.STAGE, 1);
+            world.setBlockState(pos, state, 4);
+        }
+        return state;
     }
 }

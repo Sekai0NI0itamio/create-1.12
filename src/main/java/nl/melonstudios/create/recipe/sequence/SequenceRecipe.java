@@ -42,7 +42,7 @@ public class SequenceRecipe {
             list.add(new SequenceStep(stepNBT.getString("name"), stepNBT.getCompoundTag("Data")));
         }
         this.steps = ImmutableList.copyOf(list);
-        this.repetitions = Math.min(nbt.getInteger("repetitions"), 1);
+        this.repetitions = Math.max(nbt.getInteger("repetitions"), 1);
         this.result = new SequenceResult(nbt.getCompoundTag("Result"));
         this.validate();
     }

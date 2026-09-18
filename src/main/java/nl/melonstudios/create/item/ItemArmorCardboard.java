@@ -28,4 +28,10 @@ public class ItemArmorCardboard extends ItemArmor {
         // Reference CardboardArmorItem#getBurnTime returns 1000.
         return 1000;
     }
+
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+        // Reference repair ingredient is the cardboard item (meta 13 of ItemIngredient).
+        return repair.getItem() == ItemInit.INGREDIENT && repair.getMetadata() == 13;
+    }
 }

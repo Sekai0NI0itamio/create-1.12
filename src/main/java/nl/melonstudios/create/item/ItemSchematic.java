@@ -13,6 +13,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 /**
@@ -24,6 +25,25 @@ public class ItemSchematic extends Item {
     public ItemSchematic() {
         super();
         this.setMaxStackSize(1);
+        this.setHasSubtypes(true);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, java.util.List<String> tooltip,
+            net.minecraft.client.util.ITooltipFlag flagIn) {
+        if (isFinished(stack)) {
+            NBTTagCompound tag = stack.getTagCompound();
+            int[] size = tag.getIntArray("Size");
+            int blocks = tag.getTagList("Blocks", 10).tagCount();
+            if (size.length == 3) {
+                tooltip.add(TextFormatting.GOLD + "" + size[0] + " x " + size[1] + " x " + size[2]);
+            }
+            tooltip.add(TextFormatting.GRAY + blocks + " blocks");
+        } else if (stack.getMetadata() == 0) {
+            tooltip.add(TextFormatting.GRAY + "Empty. Sneak-click two corners to capture.");
+        } else {
+            tooltip.add(TextFormatting.RED + "Invalid schematic");
+        }
     }
 
     @Override

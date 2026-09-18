@@ -1,5 +1,6 @@
 package nl.melonstudios.create.item;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
@@ -16,8 +17,8 @@ import nl.melonstudios.create.init.ItemInit;
  * Falls into the void -> Shadow Steel; charges on enough light
  * (or inside an active beacon beam) -> Refined Radiance.
  * Simplified backport of the reference ChromaticCompoundItem: the
- * belt/depot light-eating path is omitted, placed glow blocks
- * (light level 10+) are eaten instead.
+ * belt/depot light-eating path is omitted; any placed light-emitting
+ * block is eaten instead (line-of-sight check omitted).
  */
 public class ItemChromaticCompound extends ItemNoGravity {
     public static final int LIGHT_NEEDED = 10;
@@ -108,9 +109,11 @@ public class ItemChromaticCompound extends ItemNoGravity {
                     entity.posX + world.rand.nextInt(7) - 3,
                     entity.posY + world.rand.nextInt(5) - 2,
                     entity.posZ + world.rand.nextInt(7) - 3);
-            if (world.getLight(p) >= 10
-                    && world.getBlockState(p).getBlock() != Blocks.BEDROCK
-                    && world.getBlockState(p).getBlockHardness(world, p) >= 0
+            IBlockState state = world.getBlockState(p);
+            if (state.getLightValue(world, p) > 0
+                    && state.getBlock() != Blocks.BEACON
+                    && state.getBlock() != Blocks.BEDROCK
+                    && state.getBlockHardness(world, p) >= 0
                     && world.getTileEntity(p) == null) {
                 world.destroyBlock(p, false);
                 ItemStack charged = stack.splitStack(1);

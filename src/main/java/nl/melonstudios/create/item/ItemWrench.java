@@ -25,23 +25,24 @@ public class ItemWrench extends Item {
         if (hand != EnumHand.MAIN_HAND) return EnumActionResult.PASS;
         if (!player.canPlayerEdit(pos, facing, player.getHeldItem(hand))) return EnumActionResult.PASS;
         IBlockState state = worldIn.getBlockState(pos);
-        if (player.isSneaking()) {
-            if (CreateTagHelper.isWrenchPickup(state)) {
-                NonNullList<ItemStack> drops = NonNullList.create();
-                state.getBlock().getDrops(drops, worldIn, pos, state, 0);
-                for (ItemStack stack : drops) player.inventory.addItemStackToInventory(stack);
+        boolean wrenchable = state.getBlock() instanceof IWrenchable;
+        if (player.isSneaking() && (wrenchable || CreateTagHelper.isWrenchPickup(state))) {
+            if (!worldIn.isRemote) {
+                if (!player.isCreative()) {
+                    NonNullList<ItemStack> drops = NonNullList.create();
+                    state.getBlock().getDrops(drops, worldIn, pos, state, 0);
+                    for (ItemStack stack : drops) player.inventory.addItemStackToInventory(stack);
+                }
                 worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
-                worldIn.playSound(null, pos, SoundInit.item_wrench_used_rotate, SoundCategory.PLAYERS,
-                        1.0F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
-                worldIn.playSound(null, pos, SoundInit.item_wrench_used_dismantle, SoundCategory.PLAYERS,
-                        1.0F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
-                return EnumActionResult.SUCCESS;
             }
+            worldIn.playSound(null, pos, SoundInit.item_wrench_used_dismantle, SoundCategory.PLAYERS,
+                    1.0F, 0.5F + worldIn.rand.nextFloat() * 0.5F);
+            return EnumActionResult.SUCCESS;
         }
-        if (state.getBlock() instanceof IWrenchable) {
+        if (!player.isSneaking() && wrenchable) {
             if (((IWrenchable)state.getBlock()).onWrenched(worldIn, pos, state, facing, hitX, hitY, hitZ)) {
                 worldIn.playSound(null, pos, SoundInit.item_wrench_used_rotate, SoundCategory.PLAYERS,
-                        1.0F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
+                        1.0F, 0.5F + worldIn.rand.nextFloat());
                 return EnumActionResult.SUCCESS;
             }
         }

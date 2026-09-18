@@ -60,35 +60,49 @@ public class ItemBeltConnector extends Item {
             return EnumActionResult.FAIL;
         }
         if (clicked.getBlock() != BlockInit.SHAFT) return EnumActionResult.FAIL;
-        player.getCooldownTracker().setCooldown(this, 10);
+        player.getCooldownTracker().setCooldown(this, 5);
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt != null && nbt.hasKey("LastPos", 10)) {
             BlockPos last = NBTUtil.getPosFromTag(nbt.getCompoundTag("LastPos"));
-            nbt.removeTag("LastPos");
-            if (nbt.getSize() == 0) stack.setTagCompound(null);
 
             IBlockState shaftFrom = worldIn.getBlockState(last);
             IBlockState shaftTo = worldIn.getBlockState(pos);
 
             if (shaftFrom.getBlock() != BlockInit.SHAFT || shaftTo.getBlock() != BlockInit.SHAFT) {
-                return this.failed(player, "Not a shaft", !worldIn.isRemote);
+                // Stale stored pulley (reference drops an invalid FirstPulley):
+                // forget it so the next click starts a fresh selection.
+                nbt.removeTag("LastPos");
+                if (nbt.getSize() == 0) stack.setTagCompound(null);
+                return this.failed(player, "message.create.belt_not_shaft", !worldIn.isRemote);
             }
-            if (shaftFrom != shaftTo) return this.failed(player, "Invalid shafts", !worldIn.isRemote);
+            // Reference canConnect returns FAIL without clearing FirstPulley,
+            // so every failure below keeps the stored pulley for a retry.
+            if (shaftFrom != shaftTo) return this.failed(player, "message.create.belt_invalid_shafts", !worldIn.isRemote);
             int mismatching = 0;
             if (last.getX() != pos.getX()) mismatching++;
             if (last.getY() != pos.getY()) mismatching++;
             if (last.getZ() != pos.getZ()) mismatching++;
-            if (mismatching != 1) return this.failed(player, "Cannot place diagonal belt", !worldIn.isRemote);
+            if (mismatching != 1) return this.failed(player, "message.create.belt_diagonal", !worldIn.isRemote);
+            // Reference canConnect caps runs at maxBeltLength (default 20 blocks,
+            // i.e. axis distance <= 19). Without a cap a far click would iterate
+            // a huge volume in the occlusion loop below.
+            int runLength = Math.abs(last.getX() - pos.getX())
+                    + Math.abs(last.getY() - pos.getY())
+                    + Math.abs(last.getZ() - pos.getZ());
+            if (runLength > BeltSlicer.MAX_BELT_LENGTH - 1)
+                return this.failed(player, "message.create.belt_too_long_connector", !worldIn.isRemote);
             for (BlockPos between : BlockPos.getAllInBox(last, pos)) {
                 IBlockState state = worldIn.getBlockState(between);
                 if (state != shaftFrom && !state.getBlock().isReplaceable(worldIn, between)) {
-                    return this.failed(player, "Something occludes the belt", !worldIn.isRemote);
+                    return this.failed(player, "message.create.belt_occluded", !worldIn.isRemote);
                 }
             }
             if (last.getX() != pos.getX()) {
                 if (shaftFrom.getValue(BlockShaft.AXIS) != EnumFacing.Axis.Z) {
-                    return this.failed(player, "Invalid shaft orientation", !worldIn.isRemote);
+                    return this.failed(player, "message.create.belt_orientation", !worldIn.isRemote);
                 }
+                nbt.removeTag("LastPos");
+                if (nbt.getSize() == 0) stack.setTagCompound(null);
                 if (!worldIn.isRemote) {
                     final BlockPos from = last.getX() < pos.getX() ? last : pos;
                     final BlockPos to = pos.getX() < last.getX() ? last : pos;
@@ -116,8 +130,10 @@ public class ItemBeltConnector extends Item {
             }
             if (last.getZ() != pos.getZ()) {
                 if (shaftFrom.getValue(BlockShaft.AXIS) != EnumFacing.Axis.X) {
-                    return this.failed(player, "Invalid shaft orientation", !worldIn.isRemote);
+                    return this.failed(player, "message.create.belt_orientation", !worldIn.isRemote);
                 }
+                nbt.removeTag("LastPos");
+                if (nbt.getSize() == 0) stack.setTagCompound(null);
                 if (!worldIn.isRemote) {
                     final BlockPos from = last.getZ() < pos.getZ() ? last : pos;
                     final BlockPos to = pos.getZ() < last.getZ() ? last : pos;
@@ -145,8 +161,10 @@ public class ItemBeltConnector extends Item {
             }
             if (last.getY() != pos.getY()) {
                 if (shaftFrom.getValue(BlockShaft.AXIS) == EnumFacing.Axis.Y) {
-                    return this.failed(player, "Invalid shaft orientation", !worldIn.isRemote);
+                    return this.failed(player, "message.create.belt_orientation", !worldIn.isRemote);
                 }
+                nbt.removeTag("LastPos");
+                if (nbt.getSize() == 0) stack.setTagCompound(null);
                 if (!worldIn.isRemote) {
                     final BlockPos from = last.getY() < pos.getY() ? last : pos;
                     final BlockPos to = pos.getY() < last.getY() ? last : pos;
@@ -172,7 +190,7 @@ public class ItemBeltConnector extends Item {
                 }
                 return EnumActionResult.SUCCESS;
             }
-            return this.failed(player, "Unknown problem :(", !worldIn.isRemote);
+            return this.failed(player, "message.create.belt_unknown", !worldIn.isRemote);
         } else {
             stack.setTagCompound(nbt != null ? nbt : new NBTTagCompound());
             stack.getTagCompound().setTag("LastPos", NBTUtil.createPosTag(pos));
@@ -188,7 +206,7 @@ public class ItemBeltConnector extends Item {
 
     private EnumActionResult failed(EntityPlayer player, String message, boolean client) {
         if (client) player.sendStatusMessage(new TextComponentTranslation(message), true);
-        return EnumActionResult.SUCCESS;
+        return EnumActionResult.FAIL;
     }
 
     @Override

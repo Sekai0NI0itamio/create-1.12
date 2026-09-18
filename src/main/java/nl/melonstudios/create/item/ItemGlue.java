@@ -44,20 +44,23 @@ public class ItemGlue extends Item implements IBypassBlockUse {
         List<EntityGlue> entity = worldIn.getEntities(EntityGlue.class, (glue) -> surface.equals(glue.getSurface()));
         if (player.isSneaking()) {
             if (!entity.isEmpty()) {
-                player.playSound(SoundEvents.BLOCK_SLIME_BREAK, 1.0F, 0.5F);
-                if (worldIn.isRemote) {
+                if (!worldIn.isRemote) {
+                    player.playSound(SoundEvents.BLOCK_SLIME_BREAK, 1.0F, 0.5F);
+                    entity.forEach(worldIn::removeEntity);
+                } else {
                     entity.forEach(EntityGlue::spawnTheSlimes);
                 }
-                entity.forEach(worldIn::removeEntity);
                 return EnumActionResult.SUCCESS;
             }
         } else {
             if (entity.isEmpty()) {
-                player.playSound(SoundEvents.BLOCK_SLIME_PLACE, 1.0F, 1.0F);
-                if (!player.isCreative()) {
-                    player.getHeldItem(hand).damageItem(1, player);
+                if (!worldIn.isRemote) {
+                    player.playSound(SoundEvents.BLOCK_SLIME_PLACE, 1.0F, 1.0F);
+                    if (!player.isCreative()) {
+                        player.getHeldItem(hand).damageItem(1, player);
+                    }
+                    worldIn.spawnEntity(new EntityGlue(worldIn, surface));
                 }
-                worldIn.spawnEntity(new EntityGlue(worldIn, surface));
                 return EnumActionResult.SUCCESS;
             }
         }

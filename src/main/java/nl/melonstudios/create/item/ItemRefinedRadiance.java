@@ -4,6 +4,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import nl.melonstudios.create.init.ItemInit;
 
@@ -34,13 +35,18 @@ public class ItemRefinedRadiance extends ItemNoGravity {
     public boolean onEntityItemUpdate(EntityItem entity) {
         super.onEntityItemUpdate(entity);
         World world = entity.world;
-        if (world.isRemote && world.rand.nextFloat() < 0.15F) {
+        if (world.isRemote && world.rand.nextFloat() < getIdleParticleChance(entity)) {
             world.spawnParticle(EnumParticleTypes.END_ROD,
                     entity.posX + (world.rand.nextFloat() - 0.5),
-                    entity.posY + world.rand.nextFloat() * 0.5,
+                    entity.posY,
                     entity.posZ + (world.rand.nextFloat() - 0.5),
                     0, -0.1, 0);
         }
         return false;
+    }
+
+    private float getIdleParticleChance(EntityItem entity) {
+        int count = entity.getItem().getCount();
+        return MathHelper.clamp((float) (count - 10), 5.0F, 100.0F) / 64.0F;
     }
 }

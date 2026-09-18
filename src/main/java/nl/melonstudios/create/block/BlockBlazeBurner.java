@@ -151,10 +151,29 @@ public class BlockBlazeBurner extends Block implements IHeatProvider, IMetaName,
             }
             return false;
         }
-        if (variant.getID() < 2 || variant == Variant.SUPERHEATED || hand != EnumHand.MAIN_HAND) return false;
+        if (variant.getID() < 2 || hand != EnumHand.MAIN_HAND) return false;
         TileEntityBlazeBurner te = Utils.cast(worldIn.getTileEntity(pos), TileEntityBlazeBurner.class);
         if (te == null) return false;
         ItemStack held = playerIn.getHeldItem(hand);
+        if (TileEntityBlazeBurner.isCreativeFuel(held)) {
+            te.applyCreativeFuel();
+            if (!worldIn.isRemote) {
+                worldIn.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.7F, 1.0F);
+                worldIn.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        SoundEvents.ENTITY_BLAZE_AMBIENT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            } else {
+                Random rnd = new Random();
+                for (int i = 0; i < 16; i++) {
+                    double x = pos.getX() + rnd.nextDouble();
+                    double y = pos.getY() + rnd.nextDouble();
+                    double z = pos.getZ() + rnd.nextDouble();
+                    worldIn.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0, 0.05, 0);
+                }
+            }
+            return true;
+        }
+        if (variant == Variant.SUPERHEATED) return false;
         boolean isBlazecake = OreDictionary.containsMatch(true, OreDictionary.getOres("create:blazecake"), held);
         if (isBlazecake) {
             te.blazecake(5000);
