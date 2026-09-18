@@ -128,6 +128,6 @@ public class BlockItemDrain extends Block implements ITileEntityProvider {
 
     @Override
     public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.CUTOUT;
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
 }

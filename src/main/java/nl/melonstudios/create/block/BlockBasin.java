@@ -91,7 +91,7 @@ public class BlockBasin extends Block implements ITileEntityProvider, IGoggleInf
 
     @Override
     public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.CUTOUT;
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Nullable

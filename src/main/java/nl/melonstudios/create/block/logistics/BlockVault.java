@@ -36,7 +36,7 @@ public class BlockVault extends Block implements ITileEntityProvider, IWrenchabl
         this.setUnlocalizedName("create.vault");
 
         this.setHardness(3.5F);
-        this.setResistance(8.0F);
+        this.setResistance(1200.0F);
         this.setHarvestLevel("pickaxe", 1);
 
         this.setDefaultState(this.blockState.getBaseState()

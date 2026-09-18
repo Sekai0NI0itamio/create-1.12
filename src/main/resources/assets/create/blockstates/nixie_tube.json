@@ -1,18 +1,33 @@
 {
  "variants": {
-  "facing=north": {
+  "ceiling=false,facing=north": {
    "model": "create:nixie_tube"
   },
-  "facing=east": {
+  "ceiling=false,facing=east": {
    "model": "create:nixie_tube",
    "y": 90
   },
-  "facing=south": {
+  "ceiling=false,facing=south": {
    "model": "create:nixie_tube",
    "y": 180
   },
-  "facing=west": {
+  "ceiling=false,facing=west": {
    "model": "create:nixie_tube",
+   "y": 270
+  },
+  "ceiling=true,facing=north": {
+   "model": "create:nixie_tube_ceiling"
+  },
+  "ceiling=true,facing=east": {
+   "model": "create:nixie_tube_ceiling",
+   "y": 90
+  },
+  "ceiling=true,facing=south": {
+   "model": "create:nixie_tube_ceiling",
+   "y": 180
+  },
+  "ceiling=true,facing=west": {
+   "model": "create:nixie_tube_ceiling",
    "y": 270
   }
  }
