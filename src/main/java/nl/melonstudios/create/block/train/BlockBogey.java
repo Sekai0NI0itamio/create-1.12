@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import com.melonstudios.melonlib.misc.BlockStateProperties;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -28,7 +29,7 @@ import net.minecraft.block.ITileEntityProvider;
  */
 @SuppressWarnings("deprecation")
 public class BlockBogey extends Block implements ITileEntityProvider, IWrenchable {
-    public static final PropertyEnum<EnumFacing.Axis> AXIS = PropertyEnum.create("axis", EnumFacing.Axis.class);
+    public static final PropertyEnum<EnumFacing.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
     public BlockBogey() {
         super(Material.IRON, MapColor.IRON);

@@ -5,7 +5,7 @@
     "s_side": "create:block/shaft",
     "planks": "blocks/planks_spruce",
     "lever": "blocks/lever",
-    "particle": "#planks"
+    "particle": "blocks/planks_spruce"
   },
   "elements": [
     {
