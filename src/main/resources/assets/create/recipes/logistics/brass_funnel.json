@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E",
+    "A",
+    "K"
+  ],
+  "key": {
+    "E": {
+      "type": "forge:ore_dict",
+      "ore": "electronTube"
+    },
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "ingotBrass"
+    },
+    "K": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "create:funnel_brass",
+    "count": 2
+  }
+}

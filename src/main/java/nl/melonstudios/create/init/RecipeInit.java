@@ -53,7 +53,8 @@ public final class RecipeInit {
 
         FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ItemInit.INGREDIENT, 1, 1),
                 new ItemStack(Items.BREAD, 1), 0.35F);
-
+        FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ItemInit.RAW_ZINC, 1),
+                new ItemStack(ItemInit.INGREDIENT, 1, 17), 0.3F);
         /*
 
         for (int i = 0; i < 7; i++) {
@@ -88,7 +89,7 @@ public final class RecipeInit {
         PressingRecipes recipes = PressingRecipes.instance;
 
         recipes.addRecipe("create:grass",
-                Ingredient.of("grass"),
+                Ingredient.of(new ItemStack(Blocks.GRASS), false),
                 new ItemStack(Blocks.GRASS_PATH)
         );
         recipes.addRecipe("create:sugarcane",
@@ -536,22 +537,22 @@ public final class RecipeInit {
         //endregion
 
         recipes.addRecipe("create:framed_glass",
-                Ingredient.of("blockGlassColorless"),
+                Ingredient.of("blockGlass"),
                 new ItemStack(BlockInit.FRAMED_GLASS, 1, 0),
                 200
         );
         recipes.addRecipe("create:framed_glass_horizontal",
-                Ingredient.of("blockGlassColorless"),
+                Ingredient.of("blockGlass"),
                 new ItemStack(BlockInit.FRAMED_GLASS, 1, 1),
                 200
         );
         recipes.addRecipe("create:framed_glass_vertical",
-                Ingredient.of("blockGlassColorless"),
+                Ingredient.of("blockGlass"),
                 new ItemStack(BlockInit.FRAMED_GLASS, 1, 2),
                 200
         );
         recipes.addRecipe("create:framed_glass_tiles",
-                Ingredient.of("blockGlassColorless"),
+                Ingredient.of("blockGlass"),
                 new ItemStack(BlockInit.FRAMED_GLASS, 1, 3),
                 200
         );
@@ -915,8 +916,8 @@ public final class RecipeInit {
                 new Tuple<>(new ItemStack(Items.GLOWSTONE_DUST, 3), 1.0F),
                 new Tuple<>(new ItemStack(Items.GLOWSTONE_DUST, 1), 0.5F));
         recipes.addRecipe("create:gold_ore", Ingredient.of("oreGold"),
-                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 28), 1.0F),
-                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 28), 0.3F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 27), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 27), 0.3F),
                 new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
         recipes.addRecipe("create:granite", Ingredient.of("stoneGranite"),
                 new Tuple<>(new ItemStack(Blocks.SAND, 1, 1), 1.0F));
@@ -958,12 +959,12 @@ public final class RecipeInit {
                 new Tuple<>(new ItemStack(Items.CLAY_BALL, 1), 0.25F));
         // Backport-only metals (no copper/zinc in vanilla 1.12): ore -> crushed.
         recipes.addRecipe("create:copper_ore", Ingredient.of("oreCopper"),
-                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 27), 1.0F),
-                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 27), 0.3F),
-                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
-        recipes.addRecipe("create:zinc_ore", Ingredient.of("oreZinc"),
                 new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 28), 1.0F),
                 new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 28), 0.3F),
+                new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
+        recipes.addRecipe("create:zinc_ore", Ingredient.of("oreZinc"),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 1, 29), 1.0F),
+                new Tuple<>(new ItemStack(ItemInit.INGREDIENT, 2, 29), 0.3F),
                 new Tuple<>(new ItemStack(Blocks.COBBLESTONE), 0.125F));
         // Shared milling-style entries also work here (official parity).
         recipes.addRecipe("create:wheat", Ingredient.of(new ItemStack(Items.WHEAT), false),

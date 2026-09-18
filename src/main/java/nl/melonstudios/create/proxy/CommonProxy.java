@@ -26,6 +26,8 @@ import nl.melonstudios.create.tileentity.*;
 import nl.melonstudios.create.tileentity.actor.*;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWall;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWallAdvanced;
+import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelDown;
+import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelDownAdvanced;
 import nl.melonstudios.create.tileentity.generator.*;
 import nl.melonstudios.create.tileentity.logistics.TileEntityPackager;
 import nl.melonstudios.create.tileentity.logistics.TileEntityVault;
@@ -118,6 +120,8 @@ public class CommonProxy {
         this.registerTE(TileEntityItemDrain.class, "item_drain");
         this.registerTE(TileEntityFunnelWall.class, "funnel_wall");
         this.registerTE(TileEntityFunnelWallAdvanced.class, "funnel_wall_advanced");
+        this.registerTE(TileEntityFunnelDown.class, "funnel_down");
+        this.registerTE(TileEntityFunnelDownAdvanced.class, "funnel_down_advanced");
         this.registerTE(TileEntityRedstoneLinker.class, "redstone_linker");
         this.registerTE(TileEntityVault.class, "vault");
     }    public void registerEntityRenderers() {}

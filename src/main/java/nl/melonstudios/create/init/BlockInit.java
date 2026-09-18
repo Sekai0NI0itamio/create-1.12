@@ -13,6 +13,7 @@ import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.block.*;
 import nl.melonstudios.create.block.actor.*;
 import nl.melonstudios.create.block.deco.*;
+import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
 import nl.melonstudios.create.block.logistics.BlockPackager;
@@ -289,6 +290,12 @@ public final class BlockInit {
     public static final BlockFunnelWall FUNNEL_BRASS_WALL = (BlockFunnelWall)
             registerBlock(new BlockFunnelWall("brass", true)
             .setRegistryName("funnel_brass_wall").setUnlocalizedName("create.funnel_brass"));
+    public static final BlockFunnelDown FUNNEL_ANDESITE = (BlockFunnelDown)
+            registerBlock(new BlockFunnelDown("andesite", false)
+            .setRegistryName("funnel_andesite").setUnlocalizedName("create.funnel_andesite"));
+    public static final BlockFunnelDown FUNNEL_BRASS = (BlockFunnelDown)
+            registerBlock(new BlockFunnelDown("brass", true)
+            .setRegistryName("funnel_brass").setUnlocalizedName("create.funnel_brass"));
     //endregion
 
     //region Redstone components

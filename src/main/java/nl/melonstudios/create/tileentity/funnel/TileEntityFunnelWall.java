@@ -6,10 +6,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.block.state.EnumFunnelState;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.marker.IDepot;
 import nl.melonstudios.create.tileentity.marker.ITopOpenInventory;
 import nl.melonstudios.create.util.filter.IItemFilter;
@@ -19,6 +21,8 @@ import java.util.List;
 
 public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITickable {
     public int cooldown = 0;
+    /** Flap animation state (reference: LerpedFloat flap). Counts down from 8 after a transfer; renderers read it. */
+    public int flap = 0;
     public TileEntityFunnelWall() {
         super();
     }
@@ -26,11 +30,13 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt.setInteger("cooldown", this.cooldown);
+        nbt.setInteger("Flap", this.flap);
         return super.writeToNBT(nbt);
     }
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         this.cooldown = nbt.getInteger("cooldown");
+        this.flap = nbt.getInteger("Flap");
         super.readFromNBT(nbt);
     }
 
@@ -63,9 +69,25 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
         return false;
     }
 
+    /**
+     * Reference FunnelBlockEntity.onTransfer + flap: runs on every successful
+     * transfer, snaps the flap open and plays the flap sound.
+     */
+    protected void onTransfer() {
+        this.flap = 8;
+        if (this.world != null && !this.world.isRemote) {
+            this.world.playSound(null, this.pos, SoundInit.funnel_flap, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
+        this.markDirty();
+    }
+
     @Override
     public void update() {
         if (!this.world.isRemote) {
+            if (this.flap > 0) {
+                this.flap--;
+                this.markDirty();
+            }
             if (this.isPowered()) {
                 if (this.cooldown != 0) {
                     this.cooldown = 0;
@@ -110,6 +132,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                     if (copy.isEmpty()) break;
                 }
                 depot.setPresentedItem(copy.isEmpty() ? ItemStack.EMPTY : copy);
+                this.onTransfer();
                 this.cooldown = 8;
                 this.markDirty();
             } else {
@@ -132,6 +155,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                             this.world.removeEntity(entity);
                             entity.setItem(ItemStack.EMPTY);
                         } else entity.setItem(copy);
+                        this.onTransfer();
                         this.cooldown = 8;
                         this.markDirty();
                         break;
@@ -152,6 +176,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                         if (!stack.isEmpty()) {
 
                         }
+                        this.onTransfer();
                         this.cooldown = 8;
                         this.markDirty();
                         break;
@@ -171,6 +196,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                         );
                         entity.motionX = entity.motionY = entity.motionZ = 0.0;
                         this.world.spawnEntity(entity);
+                        this.onTransfer();
                         this.cooldown = 8;
                         this.markDirty();
                         break;

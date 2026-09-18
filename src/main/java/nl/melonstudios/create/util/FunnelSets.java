@@ -1,5 +1,6 @@
 package nl.melonstudios.create.util;
 
+import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.init.BlockInit;
 import nl.melonstudios.create.init.ItemInit;
@@ -24,6 +25,11 @@ public class FunnelSets {
         }
 
         @Override
+        public BlockFunnelDown getDown() {
+            return BlockInit.FUNNEL_ANDESITE;
+        }
+
+        @Override
         public ItemBlockFunnel getItem() {
             return ItemInit.FUNNEL_ANDESITE;
         }
@@ -33,6 +39,11 @@ public class FunnelSets {
         @Override
         public BlockFunnelWall getWall() {
             return BlockInit.FUNNEL_BRASS_WALL;
+        }
+
+        @Override
+        public BlockFunnelDown getDown() {
+            return BlockInit.FUNNEL_BRASS;
         }
 
         @Override

@@ -63,6 +63,18 @@ public final class ItemInit {
     public static final ItemBlockFunnel FUNNEL_ANDESITE = registerItem(new ItemBlockFunnel("andesite"));
     public static final ItemBlockFunnel FUNNEL_BRASS = registerItem(new ItemBlockFunnel("brass"));
 
+    public static final ItemChromaticCompound CHROMATIC_COMPOUND = registerItem(new ItemChromaticCompound());
+    public static final ItemShadowSteel SHADOW_STEEL = registerItem(new ItemShadowSteel());
+    public static final ItemRefinedRadiance REFINED_RADIANCE = registerItem(new ItemRefinedRadiance());
+    public static final ItemExperienceNugget EXPERIENCE_NUGGET = registerItem(new ItemExperienceNugget());
+    public static final ItemBuildersTea BUILDERS_TEA = registerItem(new ItemBuildersTea());
+    public static final ItemSweetRoll SWEET_ROLL = registerItem(new ItemSweetRoll());
+    public static final ItemChocolateBar CHOCOLATE_BAR = registerItem(new ItemChocolateBar());
+    public static final ItemCreativeBlazeCake CREATIVE_BLAZE_CAKE = registerItem(new ItemCreativeBlazeCake());
+    public static final ItemCardboardSword CARDBOARD_SWORD = registerItem(new ItemCardboardSword());
+    public static final ItemRedSandpaper RED_SANDPAPER = registerItem(new ItemRedSandpaper());
+    public static final ItemRawZinc RAW_ZINC = registerItem(new ItemRawZinc());
+
     private static <T extends Item> T registerItem(T item) {
         ITEMS.add(item);
         return item;
@@ -92,6 +104,17 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(ASSEMBLY, 1, "assembly/" + ItemAssembly.NAME_LOOKUP[1]);
         CreateLegacy.proxy.setItemModel(FUNNEL_ANDESITE);
         CreateLegacy.proxy.setItemModel(FUNNEL_BRASS);
+        CreateLegacy.proxy.setItemModel(CHROMATIC_COMPOUND);
+        CreateLegacy.proxy.setItemModel(SHADOW_STEEL);
+        CreateLegacy.proxy.setItemModel(REFINED_RADIANCE);
+        CreateLegacy.proxy.setItemModel(EXPERIENCE_NUGGET);
+        CreateLegacy.proxy.setItemModel(BUILDERS_TEA);
+        CreateLegacy.proxy.setItemModel(SWEET_ROLL);
+        CreateLegacy.proxy.setItemModel(CHOCOLATE_BAR);
+        CreateLegacy.proxy.setItemModel(CREATIVE_BLAZE_CAKE);
+        CreateLegacy.proxy.setItemModel(CARDBOARD_SWORD);
+        CreateLegacy.proxy.setItemModel(RED_SANDPAPER);
+        CreateLegacy.proxy.setItemModel(RAW_ZINC);
 
         // blocks
         CreateLegacy.proxy.setItemModel(BlockInit.ORE, 0, "ore_copper");

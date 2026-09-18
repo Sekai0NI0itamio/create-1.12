@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "funnel_state=inserting,powered=false": {
+      "model": "create:funnel_andesite"
+    },
+    "funnel_state=inserting,powered=true": {
+      "model": "create:funnel_andesite"
+    },
+    "funnel_state=extracting,powered=false": {
+      "model": "create:funnel_andesite"
+    },
+    "funnel_state=extracting,powered=true": {
+      "model": "create:funnel_andesite"
+    }
+  }
+}

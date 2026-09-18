@@ -191,6 +191,13 @@ public final class OreDictInit {
         registerOre("crushedCopper", ItemInit.INGREDIENT, 28);
         registerOre("crushedZinc", ItemInit.INGREDIENT, 29);
         registerOre("create:blazecake", ItemInit.INGREDIENT, 31);
+        registerOre("brassHand", ItemInit.INGREDIENT, 9);
+        registerOre("transmitter", ItemInit.INGREDIENT, 11);
+        registerOre("pulp", ItemInit.INGREDIENT, 12);
+        registerOre("precisionMechanism", ItemInit.INGREDIENT, 14);
+        registerOre("andesiteAlloy", ItemInit.INGREDIENT, 15);
+        registerOre("blazecakeBase", ItemInit.INGREDIENT, 30);
+        registerOre("rawZinc", ItemInit.RAW_ZINC, 0);
     }
 
     private static void registerOre(String ore, Item item, int meta) {

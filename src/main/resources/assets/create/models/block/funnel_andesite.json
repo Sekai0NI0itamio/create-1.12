@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "create:block/andesite_block",
+    "base": "create:block/funnel/andesite_funnel",
+    "frame": "create:block/funnel/andesite_funnel_frame",
+    "open": "create:block/funnel/funnel_open"
+  },
+  "elements": [
+    {
+      "from": [0, 8, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 8], "texture": "#base"},
+        "east": {"uv": [0, 0, 16, 8], "texture": "#base"},
+        "south": {"uv": [0, 0, 16, 8], "texture": "#base"},
+        "west": {"uv": [0, 0, 16, 8], "texture": "#base"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#frame"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#base"}
+      }
+    },
+    {
+      "from": [5, 3, 5],
+      "to": [11, 8, 11],
+      "faces": {
+        "north": {"uv": [0, 8, 6, 13], "texture": "#base"},
+        "east": {"uv": [0, 8, 6, 13], "texture": "#base"},
+        "south": {"uv": [0, 8, 6, 13], "texture": "#base"},
+        "west": {"uv": [0, 8, 6, 13], "texture": "#base"}
+      }
+    },
+    {
+      "from": [6, 0, 6],
+      "to": [10, 3, 10],
+      "faces": {
+        "north": {"uv": [6, 13, 10, 16], "texture": "#base"},
+        "east": {"uv": [6, 13, 10, 16], "texture": "#base"},
+        "south": {"uv": [6, 13, 10, 16], "texture": "#base"},
+        "west": {"uv": [6, 13, 10, 16], "texture": "#base"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#open"}
+      }
+    }
+  ]
+}

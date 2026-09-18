@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import nl.melonstudios.create.block.BlockKineticBase;
 import nl.melonstudios.create.block.state.EnumBeltPart;
+import nl.melonstudios.create.init.BlockInit;
 import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.tileentity.actor.TileEntityBeltBase;
 import nl.melonstudios.create.util.BlockProperties;
@@ -164,6 +165,19 @@ public abstract class BlockBeltBase extends BlockKineticBase implements ITileEnt
         if (te instanceof TileEntityBeltBase) {
             TileEntityBeltBase belt = (TileEntityBeltBase) te;
             ItemStack held = playerIn.getHeldItem(hand);
+            if (!held.isEmpty() && !playerIn.isSneaking()) {
+                // Belt-end extension / merging with the connector (see BeltSlicer).
+                // Block activation runs before Item.onItemUse, so handling it
+                // here keeps it from conflicting with the connector's
+                // shaft-placement logic; sneaking still bypasses to the item.
+                if (held.getItem() == ItemInit.BELT_CONNECTOR) {
+                    return BeltSlicer.useConnector(worldIn, pos, state, playerIn, hand, hitX, hitY, hitZ);
+                }
+                // Shaft on a middle segment installs a pulley.
+                if (held.getItem() == Item.getItemFromBlock(BlockInit.SHAFT)) {
+                    return BeltSlicer.useShaft(worldIn, pos, state, playerIn, hand);
+                }
+            }
             if (facing == EnumFacing.UP && held.isEmpty()) {
                 if (!worldIn.isRemote) {
                     if (!belt.left.isEmpty()) {
@@ -205,6 +219,11 @@ public abstract class BlockBeltBase extends BlockKineticBase implements ITileEnt
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean onWrenched(World world, BlockPos pos, IBlockState state, EnumFacing side, float hitX, float hitY, float hitZ) {
+        return BeltSlicer.useWrench(world, pos, state, side);
     }
 
     @Override

@@ -1,13 +1,13 @@
 package nl.melonstudios.create.worldgen;
 
+import com.google.common.base.Predicate;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import nl.melonstudios.create.block.BlockOre;
 import nl.melonstudios.create.init.BlockInit;
@@ -23,22 +23,44 @@ public class CreateWorldGen implements IWorldGenerator {
         generateStones = stones;
     }
 
-    private final WorldGenerator copper, zinc;
-    private final WorldGenerator asurine, crimsite, limestone, ochrum, scorchia, scoria, veridium;
+    private static final class VeinSpec {
+        final IBlockState state;
+        final int count;
+        final Predicate<IBlockState> replaceable;
+
+        VeinSpec(IBlockState state, int count, Predicate<IBlockState> replaceable) {
+            this.state = state;
+            this.count = count;
+            this.replaceable = replaceable;
+        }
+    }
+
+    private final VeinSpec copper;
+    private final VeinSpec zinc;
+    private final VeinSpec asurine;
+    private final VeinSpec crimsite;
+    private final VeinSpec limestone;
+    private final VeinSpec ochrum;
+    private final VeinSpec scorchia;
+    private final VeinSpec scoria;
+    private final VeinSpec veridium;
+
     public CreateWorldGen() {
         // Copper follows the 1.20.1 distribution: blobs of up to 10, spread
         // from the bottom of the world up to Y=112 with the peak around 48.
         // (1.12 worlds bottom out at Y=0, so the range is clamped to 2-112.)
-        this.copper = new WorldGenMinable(BlockOre.copper(), 10, BlockMatcher.forBlock(Blocks.STONE));
-        this.zinc = new WorldGenMinable(BlockOre.zinc(), 6, BlockMatcher.forBlock(Blocks.STONE));
+        Predicate<IBlockState> stone = BlockMatcher.forBlock(Blocks.STONE);
+        Predicate<IBlockState> netherrack = BlockMatcher.forBlock(Blocks.NETHERRACK);
+        this.copper = new VeinSpec(BlockOre.copper(), 10, stone);
+        this.zinc = new VeinSpec(BlockOre.zinc(), 6, stone);
 
-        this.asurine = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(0), 128, BlockMatcher.forBlock(Blocks.STONE));
-        this.crimsite = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(1), 128, BlockMatcher.forBlock(Blocks.STONE));
-        this.limestone = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(2), 128, BlockMatcher.forBlock(Blocks.STONE));
-        this.ochrum = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(3), 128, BlockMatcher.forBlock(Blocks.STONE));
-        this.scorchia = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(4), 128, BlockMatcher.forBlock(Blocks.NETHERRACK));
-        this.scoria = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(5), 128, BlockMatcher.forBlock(Blocks.NETHERRACK));
-        this.veridium = new WorldGenMinable(BlockInit.ORESTONE.getStateFromMeta(6), 128, BlockMatcher.forBlock(Blocks.STONE));
+        this.asurine = new VeinSpec(BlockInit.ORESTONE.getStateFromMeta(0), 128, stone);
+        this.crimsite = new VeinSpec(BlockInit.ORESTONE.getStateFromMeta(1), 128, stone);
+        this.limestone = new VeinSpec(BlockInit.ORESTONE.getStateFromMeta(2), 128, stone);
+        this.ochrum = new VeinSpec(BlockInit.ORESTONE.getStateFromMeta(3), 128, stone);
+        this.scorchia = new VeinSpec(BlockInit.ORESTONE.getStateFromMeta(4), 128, netherrack);
+        this.scoria = new VeinSpec(BlockInit.ORESTONE.getStateFromMeta(5), 128, netherrack);
+        this.veridium = new VeinSpec(BlockInit.ORESTONE.getStateFromMeta(6), 128, stone);
     }
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
@@ -88,7 +110,7 @@ public class CreateWorldGen implements IWorldGenerator {
         }
     }
 
-    private void runGenerator(WorldGenerator generator, World world, Random random,
+    private void runGenerator(VeinSpec spec, World world, Random random,
                               int chunkX, int chunkZ, int veins, int minHeight, int maxHeight) {
         int heightDiff = maxHeight - minHeight;
 
@@ -97,7 +119,8 @@ public class CreateWorldGen implements IWorldGenerator {
             int z = chunkZ * 16 + random.nextInt(16);
             int y = minHeight + random.nextInt(heightDiff);
 
-            generator.generate(world, random, new BlockPos(x, y, z));
+            new BoundedVeinGenerator(spec.state, spec.count, spec.replaceable, chunkX, chunkZ)
+                    .generate(world, random, new BlockPos(x, y, z));
         }
     }
 }

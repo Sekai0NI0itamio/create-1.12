@@ -21,6 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.block.BlockShaft;
+import nl.melonstudios.create.block.actor.BeltSlicer;
 import nl.melonstudios.create.block.actor.BlockBeltStraight;
 import nl.melonstudios.create.block.state.EnumBeltPart;
 import nl.melonstudios.create.init.BlockInit;
@@ -47,7 +48,18 @@ public class ItemBeltConnector extends Item {
             }
             return EnumActionResult.SUCCESS;
         }
-        if (worldIn.getBlockState(pos).getBlock() != BlockInit.SHAFT) return EnumActionResult.FAIL;
+        IBlockState clicked = worldIn.getBlockState(pos);
+        if (clicked.getBlock() instanceof BlockBeltStraight) {
+            // Belt-end extension/merging fallback (see BeltSlicer). Normally the
+            // belt block already handled this in onBlockActivated before this
+            // item use runs; this branch only fires when that was skipped.
+            // It must never touch the stored first-pulley tag.
+            if (BeltSlicer.useConnector(worldIn, pos, clicked, player, hand, hitX, hitY, hitZ)) {
+                return EnumActionResult.SUCCESS;
+            }
+            return EnumActionResult.FAIL;
+        }
+        if (clicked.getBlock() != BlockInit.SHAFT) return EnumActionResult.FAIL;
         player.getCooldownTracker().setCooldown(this, 10);
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt != null && nbt.hasKey("LastPos", 10)) {

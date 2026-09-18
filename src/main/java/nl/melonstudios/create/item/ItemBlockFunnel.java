@@ -14,6 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import nl.melonstudios.create.block.BlockKineticBase;
+import nl.melonstudios.create.block.funnel.BlockFunnelBase;
+import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.state.EnumFunnelState;
 import nl.melonstudios.create.init.ItemInit;
@@ -59,6 +61,20 @@ public class ItemBlockFunnel extends Item implements IBypassBlockUse {
                     }
                     return EnumActionResult.SUCCESS;
                 }
+            } else {
+                IBlockState placed = set.getDown().getDefaultState()
+                        .withProperty(BlockFunnelDown.FUNNEL_STATE, player.isSneaking() ? EnumFunnelState.INSERTING : EnumFunnelState.EXTRACTING)
+                        .withProperty(BlockFunnelBase.POWERED, BlockKineticBase.isPosPowered(worldIn, pos));
+                if (worldIn.mayPlace(placed.getBlock(), pos, false, facing, player)
+                        && set.getDown().canPlaceBlockAt(worldIn, pos)) {
+                    if (worldIn.setBlockState(pos, placed, 11)) {
+                        IBlockState state = worldIn.getBlockState(pos);
+                        SoundType soundType = state.getBlock().getSoundType(state, worldIn, pos, player);
+                        worldIn.playSound(player, pos, soundType.getPlaceSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) * 0.5F, soundType.getPitch() * 0.8F);
+                        held.shrink(1);
+                    }
+                    return EnumActionResult.SUCCESS;
+                }
             }
         }
         return EnumActionResult.FAIL;
@@ -74,6 +90,10 @@ public class ItemBlockFunnel extends Item implements IBypassBlockUse {
                     11
             );
         }
-        return false;
+        return world.setBlockState(pos, set.getDown().getDefaultState()
+                .withProperty(BlockFunnelDown.FUNNEL_STATE, player.isSneaking() ? EnumFunnelState.INSERTING : EnumFunnelState.EXTRACTING)
+                .withProperty(BlockFunnelBase.POWERED, BlockKineticBase.isPosPowered(world, pos)),
+                11
+        );
     }
 }
