@@ -16,7 +16,7 @@ import nl.melonstudios.create.tileentity.TileEntityFluidTank;
 import javax.annotation.Nullable;
 
 /**
- * Fluid tank: stores 1000 mB per block, stacks vertically into one multiblock
+ * Fluid tank: stores 8000 mB per block, stacks vertically into one multiblock
  * (bottom TE owns the fluid, like official). Wrench/glass visuals via TESR.
  */
 @SuppressWarnings("deprecation")
@@ -24,6 +24,9 @@ public class BlockFluidTank extends Block implements ITileEntityProvider {
     public BlockFluidTank() {
         super(Material.GLASS, MapColor.AIR);
         this.blockSoundType = SoundType.GLASS;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
+        this.setHarvestLevel("pickaxe", 0);
     }
 
     @Nullable

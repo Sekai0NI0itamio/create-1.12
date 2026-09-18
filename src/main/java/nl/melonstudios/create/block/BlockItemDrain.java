@@ -32,8 +32,8 @@ public class BlockItemDrain extends Block implements ITileEntityProvider {
     public BlockItemDrain() {
         super(Material.IRON, MapColor.ORANGE_STAINED_HARDENED_CLAY);
 
-        this.setHarvestLevel("pickaxe", 1);
-        this.setHardness(BlockProperties.IRON_HARDNESS);
+        this.setHarvestLevel("pickaxe", 0);
+        this.setHardness(3.0F);
         this.setResistance(BlockProperties.IRON_RESISTANCE);
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }

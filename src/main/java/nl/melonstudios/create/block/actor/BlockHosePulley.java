@@ -26,6 +26,8 @@ public class BlockHosePulley extends BlockKineticBase implements ITileEntityProv
     public BlockHosePulley() {
         super(Material.ROCK, MapColor.STONE);
         this.blockSoundType = SoundType.STONE;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
     }
 
     @Nullable

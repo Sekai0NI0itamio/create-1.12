@@ -1,10 +1,15 @@
 package nl.melonstudios.create.block.redstone;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -26,9 +31,57 @@ import javax.annotation.Nullable;
  */
 @SuppressWarnings("deprecation")
 public class BlockDisplayLink extends BlockKineticBase implements ITileEntityProvider {
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+    public static final PropertyBool POWERED = PropertyBool.create("powered");
+
     public BlockDisplayLink() {
-        super(Material.ROCK, MapColor.STONE);
-        this.blockSoundType = SoundType.STONE;
+        super(Material.IRON, MapColor.IRON);
+        this.blockSoundType = SoundType.METAL;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
+        this.setHarvestLevel("pickaxe", 1);
+        this.setDefaultState(this.blockState.getBaseState()
+                .withProperty(FACING, EnumFacing.NORTH)
+                .withProperty(POWERED, false));
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, POWERED);
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        return this.getDefaultState()
+                .withProperty(FACING, facing)
+                .withProperty(POWERED, BlockKineticBase.isPosPowered(world, pos));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(FACING).getIndex() | (state.getValue(POWERED) ? 8 : 0);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState()
+                .withProperty(FACING, EnumFacing.getFront(meta & 7))
+                .withProperty(POWERED, (meta & 8) != 0);
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        boolean powered = BlockKineticBase.isPosPowered(worldIn, pos);
+        if (state.getValue(POWERED) != powered) {
+            worldIn.setBlockState(pos, state.withProperty(POWERED, powered), 2);
+        }
+    }
+
+    @Override
+    public boolean onWrenched(World world, BlockPos pos, IBlockState state, EnumFacing side, float hitX, float hitY, float hitZ) {
+        EnumFacing next = EnumFacing.getFront((state.getValue(FACING).getIndex() + 1) % 6);
+        world.setBlockState(pos, state.withProperty(FACING, next), 3);
+        return true;
     }
 
     @Nullable
@@ -69,6 +122,6 @@ public class BlockDisplayLink extends BlockKineticBase implements ITileEntityPro
 
     @Override
     public boolean isToolEffective(String type, IBlockState state) {
-        return "pickaxe".equals(type);
+        return "pickaxe".equals(type) || "axe".equals(type);
     }
 }

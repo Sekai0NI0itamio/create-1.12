@@ -51,7 +51,18 @@ public class TileEntityDisplayLink extends TileEntityOptimizedBase {
 
     private TileEntity source() {
         if (this.world == null) return null;
-        // Behind = north; fall back to below.
+        // The link reads the block it was placed against (opposite of its facing).
+        try {
+            net.minecraft.block.state.IBlockState state = this.world.getBlockState(this.pos);
+            if (state.getBlock() instanceof nl.melonstudios.create.block.redstone.BlockDisplayLink) {
+                EnumFacing facing = state.getValue(nl.melonstudios.create.block.redstone.BlockDisplayLink.FACING);
+                BlockPos p = this.pos.offset(facing.getOpposite());
+                if (this.world.isBlockLoaded(p)) return this.world.getTileEntity(p);
+                return null;
+            }
+        } catch (Exception ignored) {
+        }
+        // Fallback for legacy placements: behind = north, then below.
         BlockPos p = this.pos.north();
         if (this.world.isBlockLoaded(p) && this.world.getTileEntity(p) != null) return this.world.getTileEntity(p);
         p = this.pos.down();

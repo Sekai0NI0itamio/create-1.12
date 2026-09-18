@@ -43,4 +43,10 @@ public final class ItemIngredient extends Item {
             for (int i = 0; i < NAME_LOOKUP.length; i++) items.add(new ItemStack(this, 1, i));
         }
     }
+
+    @Override
+    public int getItemBurnTime(ItemStack stack) {
+        // Reference CARDBOARD (CombustibleItem) burn time is 1000; meta 13 is cardboard.
+        return stack.getMetadata() == 13 ? 1000 : super.getItemBurnTime(stack);
+    }
 }

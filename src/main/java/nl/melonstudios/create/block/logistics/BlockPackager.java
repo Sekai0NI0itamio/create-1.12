@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -26,8 +27,11 @@ import javax.annotation.Nullable;
 @SuppressWarnings("deprecation")
 public class BlockPackager extends BlockKineticBase implements ITileEntityProvider {
     public BlockPackager() {
-        super(Material.ROCK, MapColor.STONE);
-        this.blockSoundType = SoundType.STONE;
+        super(Material.IRON, MapColor.IRON);
+        this.blockSoundType = SoundType.METAL;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
+        this.setHarvestLevel("pickaxe", 1);
     }
 
     @Nullable
@@ -65,5 +69,25 @@ public class BlockPackager extends BlockKineticBase implements ITileEntityProvid
     @Override
     public boolean isToolEffective(String type, IBlockState state) {
         return "pickaxe".equals(type);
+    }
+
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT_MIPPED;
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState state, World worldIn, BlockPos pos) {
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (!(te instanceof TileEntityPackager)) return 0;
+        for (net.minecraft.item.ItemStack request : ((TileEntityPackager) te).requests) {
+            if (!request.isEmpty()) return 15;
+        }
+        return 0;
     }
 }

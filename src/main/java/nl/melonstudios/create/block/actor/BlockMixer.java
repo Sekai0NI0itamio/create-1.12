@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 public class BlockMixer extends BlockKineticBase implements ICogwheel, ITileEntityProvider {
     public BlockMixer() {
         super(Material.ROCK, MapColor.IRON);
-        this.setSoundType(SoundType.WOOD);
+        this.setSoundType(SoundType.STONE);
     }
 
     @Override

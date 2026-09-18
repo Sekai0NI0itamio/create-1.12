@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "create:item/crushed_zinc"
+    "layer0": "create:item/crushed_raw_zinc"
   }
 }

@@ -32,6 +32,8 @@ public class BlockElevatorPulley extends BlockKineticBase implements ITileEntity
     public BlockElevatorPulley() {
         super(Material.ROCK, MapColor.STONE);
         this.blockSoundType = SoundType.STONE;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
     }
 

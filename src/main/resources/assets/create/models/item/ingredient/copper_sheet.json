@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "create:item/plate_copper"
+    "layer0": "create:item/copper_sheet"
   }
 }

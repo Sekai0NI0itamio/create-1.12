@@ -19,6 +19,9 @@ public class BlockTrainTrack extends BlockRailBase {
     public BlockTrainTrack() {
         super(false);
         this.blockSoundType = SoundType.METAL;
+        this.setHardness(0.8F);
+        this.setResistance(0.8F);
+        this.setHarvestLevel("pickaxe", 0);
         this.setUnlocalizedName("create.train_track");
         this.setDefaultState(this.blockState.getBaseState().withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH));
     }

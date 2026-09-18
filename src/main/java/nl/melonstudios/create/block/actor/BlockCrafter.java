@@ -36,7 +36,9 @@ public class BlockCrafter extends BlockKineticHorizontalBase implements ICogwhee
 
     public BlockCrafter() {
         super(Material.ROCK, MapColor.WOOD);
-        this.setSoundType(SoundType.WOOD);
+        this.setSoundType(SoundType.METAL);
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
 
         this.setDefaultState(this.getDefaultState()
                 .withProperty(FACING, EnumFacing.NORTH)

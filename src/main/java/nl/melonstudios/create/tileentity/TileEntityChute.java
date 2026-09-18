@@ -209,7 +209,7 @@ public class TileEntityChute extends TileEntityOptimizedBase implements IItemHan
             this.sync();
             return stack.isEmpty() ? ItemStack.EMPTY : stack;
         } else if (ItemStack.areItemsEqual(this.stack, stack) && ItemStack.areItemStackTagsEqual(this.stack, stack)) {
-            int space = this.getSlotLimit(16) - this.stack.getCount();
+            int space = this.getSlotLimit(0) - this.stack.getCount();
             if (space > 0) {
                 int rem = Math.min(space, stack.getCount());
                 stack.shrink(rem);

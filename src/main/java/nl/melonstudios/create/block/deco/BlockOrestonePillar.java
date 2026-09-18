@@ -2,6 +2,7 @@ package nl.melonstudios.create.block.deco;
 
 import com.melonstudios.melonlib.item.IMetaName;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -14,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.melonstudios.create.block.state.CreateStateProperties;
 import nl.melonstudios.create.block.state.EnumOrestoneVariant;
@@ -77,6 +79,40 @@ public class BlockOrestonePillar extends Block implements IMetaName {
     @Override
     public int damageDropped(IBlockState state) {
         return state.getValue(VARIANT).getId();
+    }
+
+    // Same reference hardness split as the other orestone blocks.
+    @Override
+    public float getBlockHardness(IBlockState state, World world, BlockPos pos) {
+        switch (state.getValue(VARIANT)) {
+            case SCORIA:
+            case SCORCHIA:
+                return 1.5F;
+            default:
+                return 1.25F;
+        }
+    }
+
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        switch (state.getValue(VARIANT)) {
+            case ASURINE:
+                return MapColor.BLUE;
+            case CRIMSITE:
+                return MapColor.NETHERRACK;
+            case LIMESTONE:
+                return MapColor.SAND;
+            case OCHRUM:
+                return MapColor.ORANGE_STAINED_HARDENED_CLAY;
+            case SCORCHIA:
+                return MapColor.GRAY;
+            case SCORIA:
+                return MapColor.BROWN;
+            case VERIDIUM:
+                return MapColor.GREEN;
+            default:
+                return MapColor.STONE;
+        }
     }
 
     @Override

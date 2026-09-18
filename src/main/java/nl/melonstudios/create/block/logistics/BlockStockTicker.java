@@ -4,7 +4,10 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -28,9 +31,20 @@ import javax.annotation.Nullable;
  */
 @SuppressWarnings("deprecation")
 public class BlockStockTicker extends BlockKineticBase implements ITileEntityProvider {
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+
     public BlockStockTicker() {
-        super(Material.ROCK, MapColor.STONE);
-        this.blockSoundType = SoundType.STONE;
+        super(Material.IRON, MapColor.IRON);
+        this.blockSoundType = SoundType.GLASS;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
+        this.setHarvestLevel("pickaxe", 1);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING);
     }
 
     @Nullable
@@ -103,6 +117,27 @@ public class BlockStockTicker extends BlockKineticBase implements ITileEntityPro
     }
 
     @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(FACING).getHorizontalIndex();
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3));
+    }
+
+    @Override
+    public boolean onWrenched(World world, BlockPos pos, IBlockState state, EnumFacing side, float hitX, float hitY, float hitZ) {
+        world.setBlockState(pos, state.withProperty(FACING, state.getValue(FACING).rotateY()), 3);
+        return true;
+    }
+
+    @Override
     public EnumFacing.Axis getRotationAxis(IBlockState state) {
         return EnumFacing.Axis.Y;
     }
@@ -119,6 +154,6 @@ public class BlockStockTicker extends BlockKineticBase implements ITileEntityPro
 
     @Override
     public boolean isToolEffective(String type, IBlockState state) {
-        return "pickaxe".equals(type);
+        return "pickaxe".equals(type) || "axe".equals(type);
     }
 }

@@ -3,8 +3,8 @@
   "powering=false": {
    "model": "create:elevator_contact"
   },
-  "powering=true": {
-   "model": "create:elevator_contact"
-  }
+   "powering=true": {
+    "model": "create:elevator_contact_powered"
+   }
  }
 }

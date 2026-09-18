@@ -42,7 +42,7 @@ public final class ItemInit {
             registerItem(new ItemTreeFertilizer()
             .setRegistryName("tree_fertilizer").setUnlocalizedName("create.tree_fertilizer"));
     public static final ItemGlue SUPER_GLUE = (ItemGlue)
-            registerItem(new ItemGlue(256)
+            registerItem(new ItemGlue(99)
             .setRegistryName("superglue").setUnlocalizedName("create.superglue"));
     public static final Item CRAFTER_COVER = registerItem(new Item()
             .setMaxStackSize(64).setCreativeTab(TAB_CREATE)

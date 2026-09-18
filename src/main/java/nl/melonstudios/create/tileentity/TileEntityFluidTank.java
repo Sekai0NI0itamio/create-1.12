@@ -17,10 +17,10 @@ import javax.annotation.Nullable;
 
 /**
  * Fluid tank TE. Tanks stack: the bottom-most tank block in a vertical column
- * owns capacity = 1000 * height. Non-bottom tanks delegate to the bottom.
+ * owns capacity = 8000 * height. Non-bottom tanks delegate to the bottom.
  */
 public class TileEntityFluidTank extends TileEntityOptimizedBase {
-    private final FluidTank tank = new FluidTank(1000) {
+    private final FluidTank tank = new FluidTank(8000) {
         @Override
         protected void onContentsChanged() {
             TileEntityFluidTank.this.markDirty();
@@ -127,7 +127,7 @@ public class TileEntityFluidTank extends TileEntityOptimizedBase {
 
     public FluidTank effectiveTank() {
         TileEntityFluidTank b = this.bottom();
-        b.tank.setCapacity(1000 * Math.max(1, b.height()));
+        b.tank.setCapacity(8000 * Math.max(1, b.height()));
         return b.tank;
     }
 
@@ -137,7 +137,7 @@ public class TileEntityFluidTank extends TileEntityOptimizedBase {
 
     public int getCapacity() {
         TileEntityFluidTank b = this.bottom();
-        return 1000 * Math.max(1, b.height());
+        return 8000 * Math.max(1, b.height());
     }
 
     @Override

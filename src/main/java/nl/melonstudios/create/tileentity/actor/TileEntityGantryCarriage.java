@@ -36,7 +36,7 @@ public class TileEntityGantryCarriage extends TileEntityKinetic {
         } catch (Exception e) {
             return;
         }
-        double speed = Math.min(0.2, Math.abs(this.getSpeed()) / 256.0 * 0.2 + 0.02) * (backward ? -1 : 1) * this.dir;
+        double speed = Math.max(-0.49, Math.min(0.49, -this.getSpeed() / 512.0)) * (backward ? -1 : 1) * this.dir;
         double nx = this.pos.getX() + 0.5 + (axis == EnumFacing.Axis.X ? this.offset + speed : 0);
         double nz = this.pos.getZ() + 0.5 + (axis == EnumFacing.Axis.Z ? this.offset + speed : 0);
         // Stop at solid block or after 16 blocks travel.

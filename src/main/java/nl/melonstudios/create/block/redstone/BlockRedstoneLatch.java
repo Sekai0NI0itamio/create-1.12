@@ -185,6 +185,11 @@ public class BlockRedstoneLatch extends BlockRedstoneDiode {
     }
 
     @Override
+    public boolean canConnectRedstone(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, @javax.annotation.Nullable EnumFacing side) {
+        return side != null && side.getAxis().isHorizontal();
+    }
+
+    @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(FACING).getHorizontalIndex() | (state.getValue(SET) ? 0b0100 : 0b0000) | (state.getValue(RESET) ? 0b1000 : 0b0000);
     }

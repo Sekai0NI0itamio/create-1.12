@@ -51,8 +51,9 @@ public final class BlockOre extends Block implements IMetaName {
         this.setRegistryName("ore");
         this.setUnlocalizedName("create.ore");
 
+        // Reference zinc ores copy vanilla gold-ore strength (3.0 hardness).
         this.setHardness(BlockProperties.ORE_HARDNESS);
-        this.setResistance(BlockProperties.ORE_RESISTANCE);
+        this.setResistance(3.0F);
 
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(VARIANT, Variant.COPPER));

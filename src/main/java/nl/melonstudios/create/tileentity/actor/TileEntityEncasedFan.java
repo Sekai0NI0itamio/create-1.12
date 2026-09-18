@@ -54,18 +54,8 @@ public class TileEntityEncasedFan extends TileEntityKinetic {
     public static int rangeForSpeed(float rpm) {
         float a = Math.abs(rpm);
         if (a < 1) return 0;
-        if (a <= 12) return 4;
-        if (a <= 28) return 5;
-        if (a < 32) return 5;
-        if (a < 48) return 6;
-        if (a < 64) return 7;
-        if (a < 80) return 8;
-        if (a < 96) return 9;
-        if (a < 112) return 10;
-        if (a < 128) return 11;
-        if (a < 192) return 12;
-        if (a < 256) return 16;
-        return 20;
+        // Reference IAirCurrentSource#getMaxDistance: lerp(3 -> 20) over 0 -> 256 RPM.
+        return (int) (3.0F + Math.min(a / 256.0F, 1.0F) * 17.0F);
     }
 
     public EnumFacing getAirFacing() {

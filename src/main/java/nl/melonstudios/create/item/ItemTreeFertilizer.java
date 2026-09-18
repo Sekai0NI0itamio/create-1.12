@@ -22,8 +22,13 @@ public class ItemTreeFertilizer extends Item {
         if (state.getBlock() instanceof BlockSapling) {
             BlockSapling sapling = (BlockSapling) state.getBlock();
 
-            if (!worldIn.isRemote) {
-                sapling.generateTree(worldIn, pos, state, worldIn.rand);
+            if (worldIn.isRemote) {
+                // Matches the reference client path (bonemeal growth particles).
+                worldIn.playEvent(2005, pos, 0);
+                return EnumActionResult.SUCCESS;
+            }
+            sapling.generateTree(worldIn, pos, state, worldIn.rand);
+            if (!player.isCreative()) {
                 player.getHeldItem(hand).shrink(1);
             }
             return EnumActionResult.SUCCESS;

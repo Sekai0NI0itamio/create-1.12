@@ -1,1 +1,19 @@
-{"variants":{"normal":{"model":"create:nixie_tube"}}}
+{
+ "variants": {
+  "facing=north": {
+   "model": "create:nixie_tube"
+  },
+  "facing=east": {
+   "model": "create:nixie_tube",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "create:nixie_tube",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "create:nixie_tube",
+   "y": 270
+  }
+ }
+}

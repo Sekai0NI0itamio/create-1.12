@@ -54,9 +54,12 @@ public class BlockRedstoneToggleLatch extends BlockRedstoneDiode {
         if (!playerIn.capabilities.allowEdit) {
             return false;
         } else {
-            IBlockState newState = state.cycleProperty(POWERED);
+            IBlockState newState = (this.isRepeaterPowered ? BlockInit.TOGGLE_LATCH : BlockInit.TOGGLE_LATCH_POWERED)
+                    .getDefaultState()
+                    .withProperty(FACING, state.getValue(FACING))
+                    .withProperty(POWERED, state.getValue(POWERED));
             worldIn.setBlockState(pos, newState);
-            worldIn.playSound(null, pos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, newState.getValue(POWERED) ? 0.6F : 0.5F);
+            worldIn.playSound(null, pos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, this.isRepeaterPowered ? 0.5F : 0.6F);
             this.notifyNeighbors(worldIn, pos, newState);
             return true;
         }
@@ -64,7 +67,7 @@ public class BlockRedstoneToggleLatch extends BlockRedstoneDiode {
 
     @Override
     protected int getDelay(IBlockState state) {
-        return 2;
+        return 1;
     }
 
     @Override
@@ -83,22 +86,23 @@ public class BlockRedstoneToggleLatch extends BlockRedstoneDiode {
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        boolean flag = this.shouldBePowered(worldIn, pos, state);
-
-        if (this.isRepeaterPowered && !flag) {
-            worldIn.setBlockState(pos, this.getUnpoweredState(state), 2);
-        } else if (!this.isRepeaterPowered) {
-            worldIn.setBlockState(pos, this.getPoweredState(state).cycleProperty(POWERED), 2);
-
-            if (!flag) {
-                worldIn.updateBlockTick(pos, this.getPoweredState(state).getBlock(), this.getTickDelay(state), -1);
-            }
+        boolean input = this.shouldBePowered(worldIn, pos, state);
+        boolean memorized = state.getValue(POWERED);
+        if (input && !memorized) {
+            // Rising edge of the back input: latch it and toggle the output.
+            IBlockState toggled = (this.isRepeaterPowered ? BlockInit.TOGGLE_LATCH : BlockInit.TOGGLE_LATCH_POWERED)
+                    .getDefaultState()
+                    .withProperty(FACING, state.getValue(FACING))
+                    .withProperty(POWERED, true);
+            worldIn.setBlockState(pos, toggled, 2);
+        } else if (!input && memorized) {
+            worldIn.setBlockState(pos, state.withProperty(POWERED, false), 2);
         }
     }
 
     @Override
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (stateIn.getValue(POWERED)) {
+        if (this.isRepeaterPowered) {
             EnumFacing enumfacing = stateIn.getValue(FACING);
             double d0 = (double)((float)pos.getX() + 0.5F) + (double)(rand.nextFloat() - 0.5F) * 0.2D;
             double d1 = (double)((float)pos.getY() + 0.4F) + (double)(rand.nextFloat() - 0.5F) * 0.2D;
@@ -114,7 +118,7 @@ public class BlockRedstoneToggleLatch extends BlockRedstoneDiode {
 
     @Override
     public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-        if (!blockState.getValue(POWERED)) {
+        if (!this.isRepeaterPowered) {
             return 0;
         } else {
             return blockState.getValue(FACING) == side ? this.getActiveSignal(blockAccess, pos, blockState) : 0;

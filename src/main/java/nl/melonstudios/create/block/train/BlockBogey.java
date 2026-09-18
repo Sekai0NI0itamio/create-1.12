@@ -4,7 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -13,6 +16,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import nl.melonstudios.create.kinetics.contraption.IWrenchable;
 import nl.melonstudios.create.tileentity.train.TileEntityBogey;
 
 import javax.annotation.Nullable;
@@ -23,10 +27,42 @@ import net.minecraft.block.ITileEntityProvider;
  * station nearby, assemble a train. Spins its wheels with speed (TESR).
  */
 @SuppressWarnings("deprecation")
-public class BlockBogey extends Block implements ITileEntityProvider {
+public class BlockBogey extends Block implements ITileEntityProvider, IWrenchable {
+    public static final PropertyEnum<EnumFacing.Axis> AXIS = PropertyEnum.create("axis", EnumFacing.Axis.class);
+
     public BlockBogey() {
-        super(Material.ROCK, MapColor.STONE);
-        this.blockSoundType = SoundType.STONE;
+        super(Material.IRON, MapColor.IRON);
+        this.blockSoundType = SoundType.METAL;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
+        this.setHarvestLevel("pickaxe", 1);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.Z));
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, AXIS);
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        return this.getDefaultState().withProperty(AXIS, placer.getHorizontalFacing().getAxis());
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(AXIS) == EnumFacing.Axis.X ? 0 : 1;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(AXIS, meta == 0 ? EnumFacing.Axis.X : EnumFacing.Axis.Z);
+    }
+
+    @Override
+    public boolean onWrenched(World world, BlockPos pos, IBlockState state, EnumFacing side, float hitX, float hitY, float hitZ) {
+        world.setBlockState(pos, state.withProperty(AXIS, state.getValue(AXIS) == EnumFacing.Axis.X ? EnumFacing.Axis.Z : EnumFacing.Axis.X), 3);
+        return true;
     }
 
     @Nullable

@@ -325,7 +325,8 @@ public class TileEntityMechanicalPiston extends TileEntityKinetic implements ITi
 
         if (this.isAssembled() && !this.overstressed) {
             if (!this.isPausedThisTick) {
-                this.extension += this.getSpeed() / 64.0F * 0.05F;
+                float movement = Math.max(-0.49F, Math.min(0.49F, this.getSpeed() / 512.0F));
+                this.extension += movement;
 
                 if (this.extension <= 0.0F) {
                     this.extension = 0.0F;

@@ -1,7 +1,19 @@
 {
  "variants": {
-  "normal": {
+  "facing=north": {
    "model": "create:stock_ticker"
+  },
+  "facing=east": {
+   "model": "create:stock_ticker",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "create:stock_ticker",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "create:stock_ticker",
+   "y": 270
   }
  }
 }

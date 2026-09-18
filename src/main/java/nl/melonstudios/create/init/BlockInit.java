@@ -54,16 +54,16 @@ public final class BlockInit {
     //region Kinetics
     public static final BlockCasing CASING = registerBlockWithItem(new BlockCasing(), true);
 
-    public static final BlockShaft SHAFT = registerBlockWithItem(new BlockShaft(Material.ROCK, MapColor.STONE));
+    public static final BlockShaft SHAFT = registerBlockWithItem(new BlockShaft(Material.ROCK, MapColor.IRON));
     public static final BlockCogwheel COG_SMALL = registerBlockWithItem(new BlockCogwheel(MapColor.WOOD, SoundType.WOOD, false));
     public static final BlockCogwheel COG_LARGE = registerBlockWithItem(new BlockCogwheel(MapColor.WOOD, SoundType.WOOD, true));
 
-    public static final BlockGearbox GEARBOX = registerBlockWithItem(new BlockGearbox(MapColor.WOOD, SoundType.WOOD), true);
+    public static final BlockGearbox GEARBOX = registerBlockWithItem(new BlockGearbox(MapColor.PODZOL, SoundType.STONE), true);
     public static final BlockGearshift GEARSHIFT = (BlockGearshift)
-            registerBlockWithItem(new BlockGearshift(MapColor.WOOD, SoundType.WOOD)
+            registerBlockWithItem(new BlockGearshift(MapColor.PODZOL, SoundType.STONE)
             .setRegistryName("gearshift").setUnlocalizedName("create.gearshift"));
     public static final BlockClutch CLUTCH = (BlockClutch)
-            registerBlockWithItem(new BlockClutch(MapColor.WOOD, SoundType.WOOD)
+            registerBlockWithItem(new BlockClutch(MapColor.PODZOL, SoundType.STONE)
             .setRegistryName("clutch").setUnlocalizedName("create.clutch"));
 
     public static final BlockHandCrank HAND_CRANK = registerBlockWithItem(new BlockHandCrank(MapColor.WOOD, SoundType.WOOD));
@@ -198,7 +198,7 @@ public final class BlockInit {
             .setRegistryName("speed_controller").setUnlocalizedName("create.speed_controller"));
 
     public static final BlockSequencedGearshift SEQUENCED_GEARSHIFT = (BlockSequencedGearshift)
-            registerBlockWithItem(new BlockSequencedGearshift(MapColor.WOOD, SoundType.WOOD)
+            registerBlockWithItem(new BlockSequencedGearshift(MapColor.PODZOL, SoundType.STONE)
             .setRegistryName("sequenced_gearshift").setUnlocalizedName("create.sequenced_gearshift"));
 
     public static final BlockDisplayLink DISPLAY_LINK = (BlockDisplayLink)

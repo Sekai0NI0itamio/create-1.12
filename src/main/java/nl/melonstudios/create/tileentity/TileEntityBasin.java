@@ -248,23 +248,23 @@ public class TileEntityBasin extends TileEntityOptimizedBase implements ITileEnt
         for (int i = 0; i < this.inventory.size(); i++) {
             ItemStack prev = this.inventory.get(i);
             if (prev.isEmpty()) {
-                this.inventory.set(i, stack.splitStack(16));
+                this.inventory.set(i, stack.splitStack(64));
                 return stack;
             }
             if (ItemStack.areItemsEqual(prev, stack) && ItemStack.areItemStackTagsEqual(prev, stack)) {
-                int space = Math.min(prev.getMaxStackSize(), 16);
+                int space = Math.min(prev.getMaxStackSize(), 64);
                 prev.grow(space);
                 stack.shrink(space);
             }
             if (stack.isEmpty()) return ItemStack.EMPTY;
         }
-        this.inventory.add(stack.splitStack(16));
+        this.inventory.add(stack.splitStack(64));
         return stack;
     }
 
     @Override
     public boolean isInsertionSlotEmpty(ItemStack stack) {
-        return stack.getCount() <= 16 &&
+        return stack.getCount() <= 64 &&
                 this.inventory.stream().noneMatch(item ->
                         (ItemStack.areItemsEqual(item, stack) && ItemStack.areItemStackTagsEqual(item, stack))
                 );
@@ -324,7 +324,7 @@ public class TileEntityBasin extends TileEntityOptimizedBase implements ITileEnt
 
     @Override
     public int getSlotLimit(int slot) {
-        return 16;
+        return 64;
     }
 
     private boolean mayInsertNewItem(ItemStack stack) {

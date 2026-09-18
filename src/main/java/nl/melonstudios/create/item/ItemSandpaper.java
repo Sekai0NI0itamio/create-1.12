@@ -1,6 +1,8 @@
 package nl.melonstudios.create.item;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -39,25 +41,51 @@ public class ItemSandpaper extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        ItemStack paper = playerIn.getHeldItem(EnumHand.MAIN_HAND);
-        if (handIn == EnumHand.MAIN_HAND) {
-            ItemStack offhand = playerIn.getHeldItem(EnumHand.OFF_HAND);
+    public int getMaxItemUseDuration(ItemStack stack) {
+        // Reference SandPaperItem#getUseDuration returns 32.
+        return 32;
+    }
 
-            ItemStack result = SandingRecipes.instance.getResult(offhand);
-            if (!result.isEmpty()) {
-                playerIn.inventory.placeItemBackInInventory(worldIn, result);
-                if (!playerIn.isCreative()) {
-                    paper.damageItem(1, playerIn);
-                    playerIn.getCooldownTracker().setCooldown(this, 40);
-                    offhand.shrink(1);
-                }
-                worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ,
-                        SoundInit.item_sandpaper_used, SoundCategory.PLAYERS, 1.0F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
-                return ActionResult.newResult(EnumActionResult.SUCCESS, paper);
-            }
-            return ActionResult.newResult(EnumActionResult.PASS, paper);
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack) {
+        // Reference uses UseAnim.EAT for the polishing action.
+        return EnumAction.EAT;
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        ItemStack paper = playerIn.getHeldItem(handIn);
+        EnumHand otherHand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+        ItemStack offhand = playerIn.getHeldItem(otherHand);
+
+        if (!SandingRecipes.instance.getResult(offhand).isEmpty()) {
+            // Hold-to-polish like the reference: the result is applied in onItemUseFinish.
+            playerIn.setActiveHand(handIn);
+            return ActionResult.newResult(EnumActionResult.SUCCESS, paper);
         }
-        return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+        return ActionResult.newResult(EnumActionResult.PASS, paper);
+    }
+
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+        if (entityLiving instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entityLiving;
+            EnumHand paperHand = player.getHeldItem(EnumHand.MAIN_HAND).getItem() == this
+                    ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
+            EnumHand otherHand = paperHand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+            ItemStack target = player.getHeldItem(otherHand);
+
+            ItemStack result = SandingRecipes.instance.getResult(target);
+            if (!result.isEmpty() && !target.isEmpty()) {
+                player.inventory.placeItemBackInInventory(worldIn, result);
+                if (!player.isCreative()) {
+                    stack.damageItem(1, player);
+                    target.shrink(1);
+                }
+                worldIn.playSound(null, player.posX, player.posY, player.posZ,
+                        SoundInit.item_sandpaper_used, SoundCategory.PLAYERS, 1.0F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
+            }
+        }
+        return stack;
     }
 }

@@ -38,11 +38,17 @@ public abstract class BlockFunnelBase extends Block implements ITileEntityProvid
     public final String set;
     public BlockFunnelBase(String set, boolean advanced) {
         super(Material.IRON, MapColor.IRON);
-        this.blockSoundType = SoundType.METAL;
         this.set = set;
         this.isAdvanced = advanced;
-        this.blockHardness = BlockProperties.IRON_HARDNESS;
-        this.blockResistance = BlockProperties.IRON_RESISTANCE;
+        if ("brass".equals(set)) {
+            this.blockSoundType = SoundType.METAL;
+            this.blockHardness = 3.0F;
+            this.blockResistance = BlockProperties.IRON_RESISTANCE;
+        } else {
+            this.blockSoundType = SoundType.STONE;
+            this.blockHardness = BlockProperties.STONE_HARDNESS;
+            this.blockResistance = BlockProperties.STONE_RESISTANCE;
+        }
         this.setHarvestLevel("pickaxe", 0);
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }

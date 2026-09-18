@@ -72,7 +72,7 @@ public class BlockBlazeBurner extends Block implements IHeatProvider, IMetaName,
     public BlockBlazeBurner() {
         super(Material.IRON, MapColor.NETHERRACK);
 
-        this.setHardness(BlockProperties.IRON_HARDNESS);
+        this.setHardness(3.0F);
         this.setResistance(BlockProperties.IRON_RESISTANCE);
 
         this.setHarvestLevel("pickaxe", 1);
@@ -157,7 +157,7 @@ public class BlockBlazeBurner extends Block implements IHeatProvider, IMetaName,
         ItemStack held = playerIn.getHeldItem(hand);
         boolean isBlazecake = OreDictionary.containsMatch(true, OreDictionary.getOres("create:blazecake"), held);
         if (isBlazecake) {
-            te.blazecake(4000);
+            te.blazecake(5000);
             if (!worldIn.isRemote) {
                 ItemStack container = held.getItem().getContainerItem(held);
                 held.shrink(1);

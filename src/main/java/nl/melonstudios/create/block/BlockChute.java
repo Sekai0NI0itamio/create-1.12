@@ -4,6 +4,7 @@ import com.melonstudios.melonlib.misc.AABB;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -40,8 +41,9 @@ public class BlockChute extends Block implements ITileEntityProvider, IWrenchabl
 
     public BlockChute() {
         super(Material.IRON);
+        this.blockSoundType = SoundType.METAL;
 
-        this.setHardness(BlockProperties.IRON_HARDNESS);
+        this.setHardness(3.0F);
         this.setResistance(BlockProperties.IRON_RESISTANCE);
         this.setHarvestLevel("pickaxe", 1);
 

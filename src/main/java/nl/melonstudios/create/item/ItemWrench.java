@@ -23,6 +23,7 @@ public class ItemWrench extends Item {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos,
                                       EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (hand != EnumHand.MAIN_HAND) return EnumActionResult.PASS;
+        if (!player.canPlayerEdit(pos, facing, player.getHeldItem(hand))) return EnumActionResult.PASS;
         IBlockState state = worldIn.getBlockState(pos);
         if (player.isSneaking()) {
             if (CreateTagHelper.isWrenchPickup(state)) {

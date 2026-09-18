@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.melonstudios.create.init.ItemInit;
-import nl.melonstudios.create.util.BlockProperties;
 
 import javax.annotation.Nullable;
 
@@ -51,13 +50,14 @@ public final class BlockCasing extends Block implements IMetaName {
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
 
     public BlockCasing() {
-        super(Material.ROCK, MapColor.WOOD);
+        super(Material.ROCK, MapColor.DIRT);
         this.blockSoundType = SoundType.WOOD;
 
         this.setRegistryName("casing");
 
-        this.setHardness(BlockProperties.WOOD_HARDNESS);
-        this.setResistance(BlockProperties.WOOD_RESISTANCE);
+        // Reference casings are stone-based (SharedProperties::stone + casing() transform).
+        this.setHardness(1.5F);
+        this.setResistance(6.0F);
 
         this.setHarvestLevel("pickaxe", 0);
 
@@ -92,9 +92,11 @@ public final class BlockCasing extends Block implements IMetaName {
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         switch (state.getValue(VARIANT)) {
             case ANDESITE:
+                return MapColor.DIRT;
             case COPPER:
+                return MapColor.SILVER;
             case BRASS:
-                return MapColor.WOOD;
+                return MapColor.BROWN;
             case TRAIN:
                 return MapColor.OBSIDIAN;
             default:

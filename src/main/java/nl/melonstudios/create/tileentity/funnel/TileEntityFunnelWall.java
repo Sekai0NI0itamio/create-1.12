@@ -110,7 +110,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                     if (copy.isEmpty()) break;
                 }
                 depot.setPresentedItem(copy.isEmpty() ? ItemStack.EMPTY : copy);
-                this.cooldown = 2;
+                this.cooldown = 8;
                 this.markDirty();
             } else {
                 List<EntityItem> candidates = this.world.getEntitiesWithinAABB(EntityItem.class, this.getEntityAABB());
@@ -132,7 +132,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                             this.world.removeEntity(entity);
                             entity.setItem(ItemStack.EMPTY);
                         } else entity.setItem(copy);
-                        this.cooldown = 10;
+                        this.cooldown = 8;
                         this.markDirty();
                         break;
                     }
@@ -152,7 +152,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                         if (!stack.isEmpty()) {
 
                         }
-                        this.cooldown = 2;
+                        this.cooldown = 8;
                         this.markDirty();
                         break;
                     }
@@ -171,7 +171,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                         );
                         entity.motionX = entity.motionY = entity.motionZ = 0.0;
                         this.world.spawnEntity(entity);
-                        this.cooldown = 10;
+                        this.cooldown = 8;
                         this.markDirty();
                         break;
                     }

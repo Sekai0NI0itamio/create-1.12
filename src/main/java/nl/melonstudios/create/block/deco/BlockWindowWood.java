@@ -1,6 +1,7 @@
 package nl.melonstudios.create.block.deco;
 
 import com.melonstudios.melonlib.item.IMetaName;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -9,10 +10,12 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import nl.melonstudios.create.init.ItemInit;
-import nl.melonstudios.create.util.BlockProperties;
 
 import java.util.Random;
 
@@ -60,9 +63,10 @@ public class BlockWindowWood extends BlockGlass implements IMetaName {
         this.setRegistryName("window_wood");
         this.setUnlocalizedName("create.window_wood");
 
-        this.setHardness(BlockProperties.WOOD_HARDNESS);
-        this.setSoundType(SoundType.WOOD);
-        this.setHarvestLevel("axe", -1);
+        // Reference windows copy vanilla glass strength/sound, no tool required.
+        this.setHardness(0.3F);
+        this.setResistance(1.5F);
+        this.setSoundType(SoundType.GLASS);
 
         this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
     }
@@ -91,12 +95,31 @@ public class BlockWindowWood extends BlockGlass implements IMetaName {
         return this.getDefaultState().withProperty(VARIANT, Variant.byId(meta));
     }
 
+    // Reference loot: dropWhenSilkTouch — nothing without silk touch.
     @Override
     public int quantityDropped(Random random) {
-        return 1;
+        return 0;
+    }
+    @Override
+    protected boolean canSilkHarvest() {
+        return true;
     }
     @Override
     public int damageDropped(IBlockState state) {
         return state.getValue(VARIANT).getId();
+    }
+
+    // Reference WindowBlock.skipRendering: same block culls; window against
+    // connected glass culls on horizontal faces.
+    @Override
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+        Block neighbor = world.getBlockState(pos.offset(side)).getBlock();
+        if (neighbor instanceof BlockWindowWood || neighbor instanceof BlockWindowIron) {
+            return false;
+        }
+        if (side.getAxis().isHorizontal() && neighbor instanceof BlockFramedGlass) {
+            return false;
+        }
+        return super.shouldSideBeRendered(state, world, pos, side);
     }
 }

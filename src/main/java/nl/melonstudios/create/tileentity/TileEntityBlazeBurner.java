@@ -8,7 +8,8 @@ import nl.melonstudios.create.block.BlockBlazeBurner;
 import nl.melonstudios.create.util.Utils;
 
 public class TileEntityBlazeBurner extends TileEntityOptimizedBase {
-    public int fuelTicks = 0; //Above 8000 is superheated
+    public static final int MAX_HEAT_CAPACITY = 10000;
+    public int fuelTicks = 0; //Above MAX_HEAT_CAPACITY is superheated
 
     public TileEntityBlazeBurner() {
 
@@ -21,7 +22,7 @@ public class TileEntityBlazeBurner extends TileEntityOptimizedBase {
             this.markDirty();
             if (!this.world.isRemote) {
                 IBlockState oldState = this.getState();
-                IBlockState newState = oldState.withProperty(BlockBlazeBurner.VARIANT, this.fuelTicks > 8000 ? BlockBlazeBurner.Variant.SUPERHEATED :
+                IBlockState newState = oldState.withProperty(BlockBlazeBurner.VARIANT, this.fuelTicks > MAX_HEAT_CAPACITY ? BlockBlazeBurner.Variant.SUPERHEATED :
                         this.fuelTicks != 0 ? BlockBlazeBurner.Variant.HEATED : BlockBlazeBurner.Variant.PASSIVE);
                 if (oldState != newState) {
                     Utils.setBlockTESafe(this.world, this.pos, newState, 3);
@@ -37,11 +38,11 @@ public class TileEntityBlazeBurner extends TileEntityOptimizedBase {
     }
 
     public void feed(int ticks) {
-        this.fuelTicks = Math.min(this.fuelTicks + ticks, 8000);
+        this.fuelTicks = Math.min(this.fuelTicks + ticks, MAX_HEAT_CAPACITY);
         this.sync();
     }
     public void blazecake(int ticks) {
-        this.fuelTicks = 8000 + ticks;
+        this.fuelTicks = MAX_HEAT_CAPACITY + ticks;
         this.sync();
     }
 

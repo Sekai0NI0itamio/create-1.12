@@ -37,7 +37,7 @@ import java.util.List;
 public class BlockDepot extends Block implements ITileEntityProvider, IGoggleInfo {
     public BlockDepot() {
         super(Material.ROCK, MapColor.STONE);
-        this.blockSoundType = SoundType.WOOD;
+        this.blockSoundType = SoundType.STONE;
 
         this.setHardness(BlockProperties.STONE_HARDNESS);
         this.setResistance(BlockProperties.STONE_RESISTANCE);
@@ -154,5 +154,20 @@ public class BlockDepot extends Block implements ITileEntityProvider, IGoggleInf
     @Override
     public boolean isToolEffective(String type, IBlockState state) {
         return "pickaxe".equals(type) || "axe".equals(type);
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState state, World worldIn, BlockPos pos) {
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (!(te instanceof TileEntityDepot)) return 0;
+        ItemStack held = ((TileEntityDepot) te).mainItem;
+        if (held.isEmpty()) return 0;
+        float fill = (float) held.getCount() / (float) Math.max(1, held.getMaxStackSize());
+        return Math.max(0, Math.min(15, (int) (fill * 14.0F) + 1));
     }
 }

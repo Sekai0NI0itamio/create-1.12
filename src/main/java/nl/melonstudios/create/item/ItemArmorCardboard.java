@@ -22,4 +22,10 @@ public class ItemArmorCardboard extends ItemArmor {
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
         return "create:textures/armor/cardboard" + (slot == EntityEquipmentSlot.LEGS ? "_overlay.png" : ".png");
     }
+
+    @Override
+    public int getItemBurnTime(ItemStack stack) {
+        // Reference CardboardArmorItem#getBurnTime returns 1000.
+        return 1000;
+    }
 }

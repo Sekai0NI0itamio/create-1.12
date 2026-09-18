@@ -105,7 +105,7 @@ public class TileEntityMixer extends TileEntityKinetic implements ISpeedRequirem
 
     @Override
     public float minimumSpeed() {
-        return 32.0F;
+        return 0.0F;
     }
 
     @Override

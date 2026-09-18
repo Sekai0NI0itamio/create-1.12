@@ -163,7 +163,7 @@ public class TileEntityWaterWheel extends TileEntityKineticGeneratorBase {
 
     @Override
     public float getGeneratedSpeed() {
-        return (float) (MathHelper.clamp(this.flowScore, -4, 4) * 8) / this.getSize();
+        return (float) (MathHelper.clamp(this.flowScore, -1, 1) * 8) / this.getSize();
     }
 
     @SideOnly(Side.CLIENT)

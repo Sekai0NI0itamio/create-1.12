@@ -24,13 +24,13 @@ import java.io.IOException;
 /**
  * Hose pulley: hose extends 1 block per 16 ticks of runtime down to 32.
  * Draining (positive speed): consumes the fluid block at the tip (water /
- * lava source) into the 4000 mB tank. Ocean/river water (adjacent water at
+ * lava source) into the 1500 mB tank. Ocean/river water (adjacent water at
  * tip) is infinite. Placing (negative speed): deposits the stored fluid as
  * blocks at the tip if replaceable.
  */
 public class TileEntityHosePulley extends TileEntityKinetic {
     public float hoseLength;
-    public final FluidTank tank = new FluidTank(4000) {
+    public final FluidTank tank = new FluidTank(1500) {
         @Override
         protected void onContentsChanged() {
             TileEntityHosePulley.this.sync();

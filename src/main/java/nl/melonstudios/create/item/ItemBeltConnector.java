@@ -38,6 +38,15 @@ public class ItemBeltConnector extends Item {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.isEmpty() || stack.getItem() != this) return EnumActionResult.PASS;
+        // Reference BeltConnectorItem: sneaking clears the stored first pulley.
+        if (player.isSneaking()) {
+            NBTTagCompound held = stack.getTagCompound();
+            if (held != null) {
+                held.removeTag("LastPos");
+                if (held.getSize() == 0) stack.setTagCompound(null);
+            }
+            return EnumActionResult.SUCCESS;
+        }
         if (worldIn.getBlockState(pos).getBlock() != BlockInit.SHAFT) return EnumActionResult.FAIL;
         player.getCooldownTracker().setCooldown(this, 10);
         NBTTagCompound nbt = stack.getTagCompound();

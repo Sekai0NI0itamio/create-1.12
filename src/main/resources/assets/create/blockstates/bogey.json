@@ -1,7 +1,11 @@
 {
- "variants": {
-  "normal": {
-   "model": "create:bogey"
+  "variants": {
+    "axis=x": {
+      "model": "create:bogey"
+    },
+    "axis=z": {
+      "model": "create:bogey",
+      "y": 90
+    }
   }
- }
 }

@@ -28,7 +28,9 @@ public class ItemGlue extends Item implements IBypassBlockUse {
     public ItemGlue(int durability) {
         this.canRepair = false;
         this.setHasSubtypes(false);
-        this.setMaxDamage(durability);
+        // Reference AllItems SUPER_GLUE uses durability(99); clamp any
+        // registration value to that so behavior matches 1.20.1.
+        this.setMaxDamage(Math.min(durability, 99));
         this.setMaxStackSize(1);
 
         this.setCreativeTab(ItemInit.TAB_CREATE);

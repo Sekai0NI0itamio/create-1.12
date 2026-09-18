@@ -28,6 +28,8 @@ public class BlockSchematicannon extends BlockKineticBase implements ITileEntity
     public BlockSchematicannon() {
         super(Material.ROCK, MapColor.STONE);
         this.blockSoundType = SoundType.STONE;
+        this.setHardness(3.5F);
+        this.setResistance(6.0F);
     }
 
     @Nullable

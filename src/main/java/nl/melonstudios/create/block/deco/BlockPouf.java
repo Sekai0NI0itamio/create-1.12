@@ -45,6 +45,10 @@ public class BlockPouf extends BlockColored implements IMetaName {
 
     public BlockPouf() {
         super(Material.WOOD);
+        // Reference seats copy wooden (log) strength, axe-only.
+        this.setHardness(2.0F);
+        this.setResistance(2.0F);
+        this.setHarvestLevel("axe", 0);
         this.setSoundType(SoundType.WOOD);
         this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
 

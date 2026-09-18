@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public final class CreateEnums {
     public static final ItemArmor.ArmorMaterial ARMOR_MATERIAL_CARDBOARD = Objects.requireNonNull(EnumHelper.addArmorMaterial(
-            "CREATE$CARDBOARD", "cardboard", 1, new int[]{1, 1, 1, 1},
-            0, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F
+            "CREATE$CARDBOARD", "cardboard", 4, new int[]{1, 1, 1, 1},
+            25, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F
     ), "Could not create ArmorMaterial: cardboard");
 }

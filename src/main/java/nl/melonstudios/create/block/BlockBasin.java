@@ -40,11 +40,11 @@ import java.util.List;
 @SuppressWarnings("deprecation")
 public class BlockBasin extends Block implements ITileEntityProvider, IGoggleInfo {
     public BlockBasin() {
-        super(Material.IRON, MapColor.IRON);
+        super(Material.ROCK, MapColor.IRON);
         this.setSoundType(SoundType.ANVIL);
 
-        this.setHardness(BlockProperties.IRON_HARDNESS);
-        this.setResistance(BlockProperties.IRON_RESISTANCE);
+        this.setHardness(BlockProperties.STONE_HARDNESS);
+        this.setResistance(BlockProperties.STONE_RESISTANCE);
 
         this.setHarvestLevel("pickaxe", 0);
 

@@ -26,8 +26,11 @@ import javax.annotation.Nullable;
 @SuppressWarnings("deprecation")
 public class BlockStation extends Block implements ITileEntityProvider {
     public BlockStation() {
-        super(Material.ROCK, MapColor.STONE);
-        this.blockSoundType = SoundType.STONE;
+        super(Material.IRON, MapColor.IRON);
+        this.blockSoundType = SoundType.METAL;
+        this.setHardness(3.0F);
+        this.setResistance(6.0F);
+        this.setHarvestLevel("pickaxe", 1);
     }
 
     @Nullable
