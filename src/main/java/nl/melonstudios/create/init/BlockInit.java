@@ -58,12 +58,12 @@ public final class BlockInit {
     public static final BlockCogwheel COG_SMALL = registerBlockWithItem(new BlockCogwheel(MapColor.WOOD, SoundType.WOOD, false));
     public static final BlockCogwheel COG_LARGE = registerBlockWithItem(new BlockCogwheel(MapColor.WOOD, SoundType.WOOD, true));
 
-    public static final BlockGearbox GEARBOX = registerBlockWithItem(new BlockGearbox(MapColor.PODZOL, SoundType.STONE), true);
+    public static final BlockGearbox GEARBOX = registerBlockWithItem(new BlockGearbox(MapColor.DIRT, SoundType.STONE), true);
     public static final BlockGearshift GEARSHIFT = (BlockGearshift)
-            registerBlockWithItem(new BlockGearshift(MapColor.PODZOL, SoundType.STONE)
+            registerBlockWithItem(new BlockGearshift(MapColor.DIRT, SoundType.STONE)
             .setRegistryName("gearshift").setUnlocalizedName("create.gearshift"));
     public static final BlockClutch CLUTCH = (BlockClutch)
-            registerBlockWithItem(new BlockClutch(MapColor.PODZOL, SoundType.STONE)
+            registerBlockWithItem(new BlockClutch(MapColor.DIRT, SoundType.STONE)
             .setRegistryName("clutch").setUnlocalizedName("create.clutch"));
 
     public static final BlockHandCrank HAND_CRANK = registerBlockWithItem(new BlockHandCrank(MapColor.WOOD, SoundType.WOOD));
@@ -198,7 +198,7 @@ public final class BlockInit {
             .setRegistryName("speed_controller").setUnlocalizedName("create.speed_controller"));
 
     public static final BlockSequencedGearshift SEQUENCED_GEARSHIFT = (BlockSequencedGearshift)
-            registerBlockWithItem(new BlockSequencedGearshift(MapColor.PODZOL, SoundType.STONE)
+            registerBlockWithItem(new BlockSequencedGearshift(MapColor.DIRT, SoundType.STONE)
             .setRegistryName("sequenced_gearshift").setUnlocalizedName("create.sequenced_gearshift"));
 
     public static final BlockDisplayLink DISPLAY_LINK = (BlockDisplayLink)

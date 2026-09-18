@@ -32,7 +32,7 @@ public final class VaultConnectivity {
         return world.getBlockState(pos).getValue(BlockVault.AXIS);
     }
 
-    static void requestFormAround(World world, BlockPos pos) {
+    public static void requestFormAround(World world, BlockPos pos) {
         for (EnumFacing side : EnumFacing.VALUES) {
             TileEntity te = world.getTileEntity(pos.offset(side));
             if (te instanceof TileEntityVault) {
