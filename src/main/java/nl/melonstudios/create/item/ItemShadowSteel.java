@@ -16,7 +16,6 @@ public class ItemShadowSteel extends ItemNoGravity {
     public ItemShadowSteel() {
         this.setRegistryName("shadow_steel");
         this.setUnlocalizedName("create.shadow_steel");
-        this.setRarity(EnumRarity.UNCOMMON);
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }
 
@@ -47,5 +46,10 @@ public class ItemShadowSteel extends ItemNoGravity {
         int count = entity.getItem().getCount();
         float min = MathHelper.clamp((float) (entity.motionY * 20), 5.0F, 20.0F);
         return MathHelper.clamp((float) (count - 10), min, 100.0F) / 64.0F;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
 }

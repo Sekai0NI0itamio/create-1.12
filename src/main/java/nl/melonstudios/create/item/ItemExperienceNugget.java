@@ -22,7 +22,6 @@ public class ItemExperienceNugget extends Item {
     public ItemExperienceNugget() {
         this.setRegistryName("experience_nugget");
         this.setUnlocalizedName("create.experience_nugget");
-        this.setRarity(EnumRarity.UNCOMMON);
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }
 
@@ -56,5 +55,10 @@ public class ItemExperienceNugget extends Item {
         }
         held.shrink(amount);
         return ActionResult.newResult(EnumActionResult.SUCCESS, held);
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
 }

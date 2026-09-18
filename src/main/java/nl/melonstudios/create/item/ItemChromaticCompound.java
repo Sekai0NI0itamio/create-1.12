@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBeacon;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import nl.melonstudios.create.init.ItemInit;
@@ -26,7 +27,6 @@ public class ItemChromaticCompound extends ItemNoGravity {
     public ItemChromaticCompound() {
         this.setRegistryName("chromatic_compound");
         this.setUnlocalizedName("create.chromatic_compound");
-        this.setRarity(EnumRarity.UNCOMMON);
         this.setMaxStackSize(16);
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }
@@ -131,7 +131,7 @@ public class ItemChromaticCompound extends ItemNoGravity {
     private static boolean isOverActiveBeacon(World world, BlockPos pos) {
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
         while (cursor.getY() > 0) {
-            cursor.move(0, -1, 0);
+            cursor.move(EnumFacing.DOWN);
             if (world.getBlockState(cursor).getBlock() == Blocks.BEDROCK) break;
             if (world.getBlockState(cursor).getBlock() == Blocks.BEACON) {
                 TileEntity te = world.getTileEntity(cursor);
@@ -141,5 +141,10 @@ public class ItemChromaticCompound extends ItemNoGravity {
             if (world.getBlockState(cursor).isOpaqueCube()) break;
         }
         return false;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
 }

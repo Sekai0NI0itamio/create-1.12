@@ -16,7 +16,6 @@ public class ItemRefinedRadiance extends ItemNoGravity {
     public ItemRefinedRadiance() {
         this.setRegistryName("refined_radiance");
         this.setUnlocalizedName("create.refined_radiance");
-        this.setRarity(EnumRarity.UNCOMMON);
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }
 
@@ -48,5 +47,10 @@ public class ItemRefinedRadiance extends ItemNoGravity {
     private float getIdleParticleChance(EntityItem entity) {
         int count = entity.getItem().getCount();
         return MathHelper.clamp((float) (count - 10), 5.0F, 100.0F) / 64.0F;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.UNCOMMON;
     }
 }
