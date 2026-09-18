@@ -15,6 +15,11 @@ import nl.melonstudios.create.util.interfaces.IRotate;
 import java.util.LinkedList;
 
 public class TileEntityCogwheel extends TileEntityKinetic {
+    @Override
+    protected boolean isNoisy() {
+        return false;
+    }
+
     public boolean isLarge() {
         return ((ICogwheel)this.getBlockType()).isLargeCog();
     }

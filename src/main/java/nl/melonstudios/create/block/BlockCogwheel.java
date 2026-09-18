@@ -13,6 +13,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import com.melonstudios.melonlib.misc.BlockStateProperties;
 import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.tileentity.TileEntityCogwheel;
 import nl.melonstudios.create.util.BlockProperties;
@@ -52,8 +53,9 @@ public class BlockCogwheel extends BlockSimpleShaftBase implements ICogwheel {
     protected EnumFacing.Axis getAxisForPlacement(World world, BlockPos pos, EntityLivingBase placer, EnumFacing side) {
         if (placer.isSneaking()) return side.getAxis();
 
-        IBlockState stateBelow = world.getBlockState(pos.down());
-
+        // No speed-controller horizontal-axis special case: the backport
+        // BlockSpeedController has a fixed Y rotation axis, so there is no
+        // HORIZONTAL_AXIS property to inherit here.
         BlockPos placedOnPos = pos.offset(side.getOpposite());
         IBlockState placedAgainst = world.getBlockState(placedOnPos);
 
@@ -72,6 +74,33 @@ public class BlockCogwheel extends BlockSimpleShaftBase implements ICogwheel {
     @Override
     public boolean isDedicatedCogwheel() {
         return true;
+    }
+
+    public static boolean isValidCogwheelPosition(boolean large, IBlockAccess world, BlockPos pos, EnumFacing.Axis cogAxis) {
+        for (EnumFacing facing : EnumFacing.VALUES) {
+            if (facing.getAxis() == cogAxis)
+                continue;
+
+            BlockPos offsetPos = pos.offset(facing);
+            IBlockState blockState = world.getBlockState(offsetPos);
+            if (blockState.getPropertyKeys().contains(BlockStateProperties.AXIS)
+                    && facing.getAxis() == blockState.getValue(BlockStateProperties.AXIS))
+                continue;
+
+            if (ICogwheel.isLargeCog(blockState) || large && ICogwheel.isSmallCog(blockState))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+        if (!super.canPlaceBlockAt(world, pos)) return false;
+        for (EnumFacing.Axis axis : EnumFacing.Axis.values()) {
+            if (isValidCogwheelPosition(this.isLarge, world, pos, axis)) return true;
+        }
+        return false;
     }
 
     @Nullable

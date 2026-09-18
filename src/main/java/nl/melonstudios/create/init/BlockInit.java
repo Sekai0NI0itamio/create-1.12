@@ -56,8 +56,8 @@ public final class BlockInit {
     public static final BlockCasing CASING = registerBlockWithItem(new BlockCasing(), true);
 
     public static final BlockShaft SHAFT = registerBlockWithItem(new BlockShaft(Material.ROCK, MapColor.IRON));
-    public static final BlockCogwheel COG_SMALL = registerBlockWithItem(new BlockCogwheel(MapColor.WOOD, SoundType.WOOD, false));
-    public static final BlockCogwheel COG_LARGE = registerBlockWithItem(new BlockCogwheel(MapColor.WOOD, SoundType.WOOD, true));
+    public static final BlockCogwheel COG_SMALL = registerBlockWithItem(new BlockCogwheel(MapColor.DIRT, SoundType.WOOD, false));
+    public static final BlockCogwheel COG_LARGE = registerBlockWithItem(new BlockCogwheel(MapColor.DIRT, SoundType.WOOD, true));
 
     public static final BlockGearbox GEARBOX = registerBlockWithItem(new BlockGearbox(MapColor.DIRT, SoundType.STONE), true);
     public static final BlockGearshift GEARSHIFT = (BlockGearshift)

@@ -64,6 +64,12 @@ public class ItemSandpaper extends Item {
         EnumHand otherHand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
         ItemStack offhand = playerIn.getHeldItem(otherHand);
 
+        if (paper.getTagCompound() != null && paper.getTagCompound().hasKey("Polishing")) {
+            // Already holding a picked-up item: just resume polishing, never overwrite the stored item.
+            playerIn.setActiveHand(handIn);
+            return ActionResult.newResult(EnumActionResult.PASS, paper);
+        }
+
         if (!SandingRecipes.instance.getResult(offhand).isEmpty()) {
             // Hold-to-polish like the reference: the result is applied in onItemUseFinish.
             playerIn.setActiveHand(handIn);
@@ -152,5 +158,18 @@ public class ItemSandpaper extends Item {
             }
         }
         return stack;
+    }
+
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
+        // Aborted mid-polish: give back the ground-picked item instead of voiding it.
+        if (entityLiving instanceof EntityPlayer && stack.getTagCompound() != null
+                && stack.getTagCompound().hasKey("Polishing")) {
+            ItemStack toPolish = new ItemStack(stack.getTagCompound().getCompoundTag("Polishing"));
+            stack.getTagCompound().removeTag("Polishing");
+            if (!worldIn.isRemote && !toPolish.isEmpty()) {
+                ((EntityPlayer) entityLiving).inventory.placeItemBackInInventory(worldIn, toPolish);
+            }
+        }
     }
 }
