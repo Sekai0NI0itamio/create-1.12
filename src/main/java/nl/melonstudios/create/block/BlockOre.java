@@ -3,6 +3,7 @@ package nl.melonstudios.create.block;
 import com.melonstudios.melonlib.item.IMetaName;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -11,6 +12,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import nl.melonstudios.create.init.BlockInit;
 import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.util.BlockProperties;
@@ -77,6 +80,14 @@ public final class BlockOre extends Block implements IMetaName {
     @Override
     public int damageDropped(IBlockState state) {
         return state.getValue(VARIANT).ordinal();
+    }
+
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        // Reference zinc ore uses METAL; copper keeps the stone default.
+        return state.getValue(VARIANT) == Variant.ZINC
+                ? MapColor.IRON
+                : super.getMapColor(state, worldIn, pos);
     }
 
     @Override

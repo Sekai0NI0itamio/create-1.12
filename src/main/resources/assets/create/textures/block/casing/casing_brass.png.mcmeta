@@ -2,7 +2,7 @@
   "ctm":{
     "ctm_version": 1,
     "type":"CTM",
-    "layer":"CUTOUT",
+    "layer":"SOLID",
     "textures":[
       "create:block/casing/casing_brass_ctm"
     ]

@@ -53,6 +53,6 @@ public class BlockTrainTrack extends BlockRailBase {
 
     @Override
     public net.minecraft.block.material.MapColor getMapColor(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos) {
-        return net.minecraft.block.material.MapColor.STONE;
+        return net.minecraft.block.material.MapColor.IRON;
     }
 }

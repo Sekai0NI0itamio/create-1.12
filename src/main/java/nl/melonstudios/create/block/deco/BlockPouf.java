@@ -16,6 +16,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.oredict.OreDictionary;
 import nl.melonstudios.create.entity.EntityPouf;
 import nl.melonstudios.create.init.ItemInit;
@@ -79,6 +80,9 @@ public class BlockPouf extends BlockColored implements IMetaName {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        // Reference SeatBlock: sneaking or FakePlayer (deployer) never sits/recolors.
+        if (playerIn.isSneaking() || playerIn instanceof FakePlayer)
+            return false;
         ItemStack held = playerIn.getHeldItem(hand);
         if (held.isEmpty()) {
             if (!worldIn.isRemote) {
@@ -90,6 +94,12 @@ public class BlockPouf extends BlockColored implements IMetaName {
                     worldIn.spawnEntity(pouf);
                 } else {
                     pouf = poufs.get(0);
+                }
+                // Reference: never steal a seat occupied by a player; eject anything else first.
+                if (!pouf.getPassengers().isEmpty()) {
+                    if (pouf.getPassengers().get(0) instanceof EntityPlayer)
+                        return false;
+                    pouf.removePassengers();
                 }
                 playerIn.startRiding(pouf);
             }
@@ -117,6 +127,7 @@ public class BlockPouf extends BlockColored implements IMetaName {
         final List<EntityPouf> poufs = worldIn.getEntitiesWithinAABB(EntityPouf.class, new AxisAlignedBB(pos));
         poufs.removeIf(pouf -> !pouf.blockBased);
         poufs.forEach(Entity::setDead);
+        super.breakBlock(worldIn, pos, state);
     }
 
     @Override

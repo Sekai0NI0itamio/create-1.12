@@ -4,6 +4,7 @@ import com.melonstudios.melonlib.item.IMetaName;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -12,6 +13,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.util.BlockProperties;
 
@@ -96,5 +100,29 @@ public final class BlockMetal extends Block implements IMetaName {
     @Override
     public int damageDropped(IBlockState state) {
         return state.getValue(VARIANT).ordinal();
+    }
+
+    @Override
+    public float getBlockHardness(IBlockState state, World worldIn, BlockPos pos) {
+        // Reference andesite-alloy block copies vanilla andesite (1.5); other metals copy iron block.
+        return state.getValue(VARIANT) == Variant.ANDESITE_ALLOY
+                ? BlockProperties.STONE_HARDNESS
+                : super.getBlockHardness(state, worldIn, pos);
+    }
+
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        // Reference colors: andesite STONE, copper orange, zinc pale, brass yellow.
+        switch (state.getValue(VARIANT)) {
+            case ANDESITE_ALLOY:
+                return MapColor.STONE;
+            case COPPER:
+                return MapColor.ADOBE;
+            case ZINC:
+                return MapColor.SILVER;
+            case BRASS:
+            default:
+                return MapColor.GOLD;
+        }
     }
 }

@@ -98,7 +98,7 @@ public final class BlockCasing extends Block implements IMetaName {
             case BRASS:
                 return MapColor.BROWN;
             case TRAIN:
-                return MapColor.OBSIDIAN;
+                return MapColor.CYAN;
             default:
                 return MapColor.STONE;
         }
@@ -108,9 +108,9 @@ public final class BlockCasing extends Block implements IMetaName {
     public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
         switch (state.getValue(VARIANT)) {
             case ANDESITE:
-            case COPPER:
             case BRASS:
                 return SoundType.WOOD;
+            case COPPER:
             case TRAIN:
                 return SoundType.METAL;
             default:
@@ -128,6 +128,6 @@ public final class BlockCasing extends Block implements IMetaName {
 
     @Override
     public boolean isToolEffective(String type, IBlockState state) {
-        return "pickaxe".equals(type) || ("axe".equals(type) && state.getValue(VARIANT) != Variant.TRAIN);
+        return "pickaxe".equals(type) || "axe".equals(type);
     }
 }

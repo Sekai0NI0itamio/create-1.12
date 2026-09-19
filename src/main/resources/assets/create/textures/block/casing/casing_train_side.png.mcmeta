@@ -1,7 +1,7 @@
 {
   "ctm":{
     "ctm_version": 1,
-    "type":"ctm",
+    "type":"CTM",
     "layer":"SOLID",
     "textures":[
       "create:block/casing/casing_train_ctm"

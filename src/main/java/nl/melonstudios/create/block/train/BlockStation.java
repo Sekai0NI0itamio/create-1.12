@@ -56,7 +56,9 @@ public class BlockStation extends Block implements ITileEntityProvider {
     @Override
     @SuppressWarnings("deprecation")
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return FULL_BLOCK_AABB;
+        // Reference STATION shape: base plate (0,0,0,16,2,16) + body (1,0,1,15,13,15);
+        // 1.12 takes a single box, so return their union (height 13/16).
+        return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 13.0D / 16.0D, 1.0D);
     }
 
     @Override

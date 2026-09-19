@@ -101,6 +101,20 @@ public class BlockRedstoneToggleLatch extends BlockRedstoneDiode {
     }
 
     @Override
+    protected void updateState(World worldIn, BlockPos pos, IBlockState state) {
+        // Gated on the input MEMORY (POWERED prop), not on the output variant:
+        // the output block intentionally diverges from the back input, so the
+        // vanilla diode check (input vs isRepeaterPowered) would stop scheduling
+        // ticks while input == output and swallow every second rising edge.
+        boolean input = this.shouldBePowered(worldIn, pos, state);
+        boolean memorized = state.getValue(POWERED);
+
+        if (input != memorized && !worldIn.isBlockTickPending(pos, this)) {
+            worldIn.updateBlockTick(pos, this, this.getDelay(state), -1);
+        }
+    }
+
+    @Override
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (this.isRepeaterPowered) {
             EnumFacing enumfacing = stateIn.getValue(FACING);

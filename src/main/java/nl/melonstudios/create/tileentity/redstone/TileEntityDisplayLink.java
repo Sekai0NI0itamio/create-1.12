@@ -30,6 +30,8 @@ public class TileEntityDisplayLink extends TileEntityOptimizedBase {
     @Override
     public void tick() {
         if (this.world != null && !this.world.isRemote && this.world.getTotalWorldTime() % 20 == 0) {
+            // Like the original (tickSource returns early while POWERED): a powered link pauses gathering.
+            if (this.isPausedByRedstone()) return;
             String next = this.computeLine();
             if (!next.equals(this.line)) {
                 this.line = next;
@@ -49,30 +51,54 @@ public class TileEntityDisplayLink extends TileEntityOptimizedBase {
         return value;
     }
 
-    private TileEntity source() {
+    private boolean isPausedByRedstone() {
+        try {
+            net.minecraft.block.state.IBlockState state = this.world.getBlockState(this.pos);
+            if (state.getBlock() instanceof nl.melonstudios.create.block.redstone.BlockDisplayLink) {
+                return state.getValue(nl.melonstudios.create.block.redstone.BlockDisplayLink.POWERED);
+            }
+        } catch (Exception ignored) {
+        }
+        return false;
+    }
+
+    private BlockPos sourcePos() {
         if (this.world == null) return null;
         // The link reads the block it was placed against (opposite of its facing).
         try {
             net.minecraft.block.state.IBlockState state = this.world.getBlockState(this.pos);
             if (state.getBlock() instanceof nl.melonstudios.create.block.redstone.BlockDisplayLink) {
                 EnumFacing facing = state.getValue(nl.melonstudios.create.block.redstone.BlockDisplayLink.FACING);
-                BlockPos p = this.pos.offset(facing.getOpposite());
-                if (this.world.isBlockLoaded(p)) return this.world.getTileEntity(p);
-                return null;
+                return this.pos.offset(facing.getOpposite());
             }
         } catch (Exception ignored) {
         }
-        // Fallback for legacy placements: behind = north, then below.
-        BlockPos p = this.pos.north();
-        if (this.world.isBlockLoaded(p) && this.world.getTileEntity(p) != null) return this.world.getTileEntity(p);
+        // Fallback for legacy placements: behind = north.
+        return this.pos.north();
+    }
+
+    private TileEntity source() {
+        BlockPos p = this.sourcePos();
+        if (p == null || !this.world.isBlockLoaded(p)) return null;
+        TileEntity te = this.world.getTileEntity(p);
+        if (te != null) return te;
+        // Fallback for legacy placements: below.
         p = this.pos.down();
         if (this.world.isBlockLoaded(p)) return this.world.getTileEntity(p);
         return null;
     }
 
     private String readValue(TileEntity src) {
-        if (src == null) return "--";
         try {
+            // Redstone sources (dust, levers, torches) have no tile entity, so handle
+            // this mode before the null check, reading the signal at the source block.
+            if (this.mode == 5) {
+                BlockPos p = this.sourcePos();
+                if (p == null || !this.world.isBlockLoaded(p)) return "--";
+                int power = this.world.getStrongPower(p);
+                return power + "/15";
+            }
+            if (src == null) return "--";
             if (this.mode == 0 && src instanceof TileEntityKinetic) {
                 float s = ((TileEntityKinetic) src).getSpeed();
                 return ((int) s) + " RPM";
@@ -106,10 +132,6 @@ public class TileEntityDisplayLink extends TileEntityOptimizedBase {
                     return "boiler Lv" + t.getBoilerLevel();
                 }
                 return "--";
-            }
-            if (this.mode == 5) {
-                int p = this.world.getStrongPower(this.pos);
-                return p + "/15";
             }
         } catch (Exception e) {
             return "err";
