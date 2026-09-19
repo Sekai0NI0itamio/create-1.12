@@ -1,6 +1,5 @@
 package nl.melonstudios.create.block.logistics;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -12,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -20,9 +20,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.block.BlockKineticBase;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.logistics.TileEntityPackager;
-
-import javax.annotation.Nullable;
 
 /**
  * Stock ticker: right-click to see a chat summary of stock in the inventory
@@ -30,8 +29,9 @@ import javax.annotation.Nullable;
  * Simplified backport of the stock-ticker request flow (no GUI).
  */
 @SuppressWarnings("deprecation")
-public class BlockStockTicker extends BlockKineticBase implements ITileEntityProvider {
+public class BlockStockTicker extends BlockKineticBase {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    private static final AxisAlignedBB TICKER_AABB = new AxisAlignedBB(1 / 16.0, 0, 1 / 16.0, 15 / 16.0, 1, 15 / 16.0);
 
     public BlockStockTicker() {
         super(Material.IRON, MapColor.IRON);
@@ -45,17 +45,6 @@ public class BlockStockTicker extends BlockKineticBase implements ITileEntityPro
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING);
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return null;
-    }
-
-    @Override
-    public boolean hasTileEntity(IBlockState state) {
-        return false;
     }
 
     @Override
@@ -75,8 +64,12 @@ public class BlockStockTicker extends BlockKineticBase implements ITileEntityPro
                 }
                 packager.packageAll();
                 packager.sync();
-                player.sendStatusMessage(new TextComponentString("Ordered " + n + " request(s) to the packager."), true);
+                world.playSound(null, pos, SoundInit.stock_ticker_request, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                String msg = "Ordered " + n + " request(s) to the packager.";
+                if (!packager.address.isEmpty()) msg += " (address: " + packager.address + ")";
+                player.sendStatusMessage(new TextComponentString(msg), true);
             } else {
+                world.playSound(null, pos, SoundInit.deny, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 player.sendStatusMessage(new TextComponentString("Need a packager + stocked inventory adjacent."), true);
             }
             return true;
@@ -149,7 +142,7 @@ public class BlockStockTicker extends BlockKineticBase implements ITileEntityPro
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return FULL_BLOCK_AABB;
+        return TICKER_AABB;
     }
 
     @Override

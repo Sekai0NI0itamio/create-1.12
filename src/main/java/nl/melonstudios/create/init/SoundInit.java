@@ -62,6 +62,8 @@ public final class SoundInit {
     public static SoundEvent wrench_rotate;
     public static SoundEvent spout;
     public static SoundEvent steam;
+    public static SoundEvent stock_ticker_request;
+    public static SoundEvent stock_ticker_trade;
     public static void init() {
         item_sandpaper_used = registerSound("item.sandpaper.used");
         block_cog_ambient = registerSound("block.cog.ambient");
@@ -120,6 +122,8 @@ public final class SoundInit {
         wrench_rotate = registerSound("wrench_rotate");
         spout = registerSound("spout");
         steam = registerSound("steam");
+        stock_ticker_request = registerSound("stock_ticker_request");
+        stock_ticker_trade = registerSound("stock_ticker_trade");
     }
 
     private static SoundEvent registerSound(String registry) {

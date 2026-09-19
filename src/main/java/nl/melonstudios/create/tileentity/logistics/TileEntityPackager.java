@@ -15,7 +15,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraft.util.SoundCategory;
 import nl.melonstudios.create.init.ItemInit;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.item.ItemPackage;
 import nl.melonstudios.create.tileentity.TileEntityKinetic;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
@@ -64,6 +66,7 @@ public class TileEntityPackager extends TileEntityKinetic {
             ItemPackage.setContents(box, gathered);
             if (!this.address.isEmpty()) ItemPackage.setAddress(box, this.address);
             StackUtil.spawnItemNoVelocity(this.world, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, box);
+            this.world.playSound(null, this.pos, SoundInit.packager, SoundCategory.BLOCKS, 1.0F, 1.0F);
             made = true;
         }
         if (made) this.sync();

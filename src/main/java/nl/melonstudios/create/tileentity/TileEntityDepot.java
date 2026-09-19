@@ -7,11 +7,13 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.marker.IDepot;
 import nl.melonstudios.create.tileentity.marker.ITopOpenInventory;
 
@@ -120,6 +122,11 @@ public class TileEntityDepot extends TileEntityOptimizedBase implements ITopOpen
         if (buf.readBoolean()) {
             this.mainItem = StackUtil.readItemStack(buf, true, true);
         } else this.mainItem = ItemStack.EMPTY;
+        for (int i = 0; i < 8; i++) {
+            if (buf.readBoolean()) {
+                this.additionalItems[i] = StackUtil.readItemStack(buf, true, true);
+            } else this.additionalItems[i] = ItemStack.EMPTY;
+        }
     }
 
     @Override
@@ -154,13 +161,31 @@ public class TileEntityDepot extends TileEntityOptimizedBase implements ITopOpen
         return true;
     }
 
+    private boolean isOutputEmpty() {
+        for (int i = 0; i < 8; i++) {
+            if (!this.additionalItems[i].isEmpty()) return false;
+        }
+        return true;
+    }
+
     @Override
     public ItemStack tryInsertItem(ItemStack stack) {
         if (stack.isEmpty()) return ItemStack.EMPTY;
         if (!this.mainItem.isEmpty()) return stack;
-        this.mainItem = stack.copy();
+        int maxCount = stack.getMaxStackSize();
+        ItemStack remainder = ItemStack.EMPTY;
+        ItemStack inserted = stack.copy();
+        if (stack.getCount() > maxCount) {
+            remainder = stack.copy();
+            remainder.setCount(stack.getCount() - maxCount);
+            inserted.setCount(maxCount);
+        }
+        this.mainItem = inserted;
+        if (!this.world.isRemote) {
+            this.world.playSound(null, this.pos, SoundInit.depot_plop, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
         this.sync();
-        return ItemStack.EMPTY;
+        return remainder;
     }
 
     @Override
@@ -256,20 +281,19 @@ public class TileEntityDepot extends TileEntityOptimizedBase implements ITopOpen
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         if (stack.isEmpty()) return ItemStack.EMPTY;
         if (slot != 0) return stack;
+        // Basic depot does not merge: an occupied main slot rejects automation input.
+        if (!mainItem.isEmpty()) return stack;
+        if (!isOutputEmpty()) return stack;
 
-        int space = mainItem.isEmpty() ? getSlotLimit(slot) : mainItem.getMaxStackSize() - mainItem.getCount();
-        if (space == 0) return stack;
-
-        int tryInputCount = stack.getCount();
-        int inputCount = Math.min(space, tryInputCount);
+        int maxCount = Math.min(getSlotLimit(slot), stack.getMaxStackSize());
+        int inputCount = Math.min(maxCount, stack.getCount());
 
         if (!simulate) {
-            if (mainItem.isEmpty()) {
-                ItemStack inputStack = stack.copy();
-                inputStack.setCount(inputCount);
-                mainItem = inputStack;
-            } else {
-                mainItem.grow(inputCount);
+            ItemStack inputStack = stack.copy();
+            inputStack.setCount(inputCount);
+            mainItem = inputStack;
+            if (!this.world.isRemote) {
+                this.world.playSound(null, this.pos, SoundInit.depot_plop, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
             sync();
         }
@@ -278,7 +302,7 @@ public class TileEntityDepot extends TileEntityOptimizedBase implements ITopOpen
             return ItemStack.EMPTY;
         } else {
             ItemStack outputStack = stack.copy();
-            outputStack.shrink(inputCount);
+            outputStack.setCount(stack.getCount() - inputCount);
             return outputStack;
         }
     }
@@ -294,6 +318,7 @@ public class TileEntityDepot extends TileEntityOptimizedBase implements ITopOpen
 
     @Override
     public int getSlotLimit(int slot) {
+        if (slot == 0 && !mainItem.isEmpty()) return mainItem.getMaxStackSize();
         return 64;
     }
 

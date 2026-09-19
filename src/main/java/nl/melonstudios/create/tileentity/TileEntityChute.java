@@ -4,6 +4,8 @@ import com.melonstudios.melonlib.misc.StackUtil;
 import com.melonstudios.melonlib.network.TrackedByteBuf;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -61,6 +63,20 @@ public class TileEntityChute extends TileEntityOptimizedBase implements IItemHan
                     }
                 }
                 if (mod && below instanceof TileEntityChute) ((TileEntityChute)below).itemLocked = true;
+            } else if (!this.world.isRemote) {
+                IBlockState downState = this.world.getBlockState(this.pos.down());
+                if (downState.getBlock().isAir(downState, this.world, this.pos.down())
+                        || downState.getBlock().isReplaceable(this.world, this.pos.down())) {
+                    EntityItem entity = new EntityItem(this.world,
+                            this.pos.getX() + 0.5D, this.pos.getY() - 0.7D, this.pos.getZ() + 0.5D,
+                            this.stack);
+                    entity.motionX = 0;
+                    entity.motionY = 0;
+                    entity.motionZ = 0;
+                    this.world.spawnEntity(entity);
+                    this.stack = ItemStack.EMPTY;
+                    mod = true;
+                }
             }
         }
 
@@ -161,8 +177,10 @@ public class TileEntityChute extends TileEntityOptimizedBase implements IItemHan
             return copy;
         }
         if (ItemHandlerHelper.canItemStacksStack(this.stack, stack)) {
+            int space = Math.min(this.stack.getMaxStackSize(), this.getSlotLimit(slot)) - this.stack.getCount();
+            if (space <= 0) return stack;
             ItemStack copy = stack.copy();
-            ItemStack ret = copy.splitStack(Math.min(this.stack.getMaxStackSize(), this.getSlotLimit(slot)) - this.stack.getCount());
+            ItemStack ret = copy.splitStack(space);
             if (!simulate) {
                 this.stack.grow(ret.getCount());
                 this.sync();

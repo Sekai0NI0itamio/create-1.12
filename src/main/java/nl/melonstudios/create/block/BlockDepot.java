@@ -20,6 +20,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.melonstudios.create.init.ItemInit;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.TileEntityDepot;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 import nl.melonstudios.create.util.BlockProperties;
@@ -125,30 +126,44 @@ public class BlockDepot extends Block implements ITileEntityProvider, IGoggleInf
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (facing == EnumFacing.UP) {
-            return Boolean.TRUE.equals(BlockKineticBase.withTEDo(worldIn, pos, TileEntityDepot.class, (te) -> {
-                if (te.isEmpty()) {
-                    te.mainItem = playerIn.getHeldItem(hand).copy();
-                    playerIn.setHeldItem(hand, ItemStack.EMPTY);
-                } else {
-                    if (!te.mainItem.isEmpty()) {
-                        playerIn.inventory.addItemStackToInventory(te.mainItem.copy());
-                        te.mainItem = ItemStack.EMPTY;
-                    }
-                    for (int i = 0; i < 8; i++) {
-                        if (!te.additionalItems[i].isEmpty()) {
-                            playerIn.inventory.addItemStackToInventory(te.additionalItems[i].copy());
-                            te.additionalItems[i] = ItemStack.EMPTY;
-                        }
-                    }
-                    worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
-                            1.0F, 0.9F + worldIn.rand.nextFloat() * 0.2F);
+        if (facing != EnumFacing.UP) return false;
+        if (worldIn.isRemote) return true;
+        return Boolean.TRUE.equals(BlockKineticBase.withTEDo(worldIn, pos, TileEntityDepot.class, (te) -> {
+            ItemStack heldItem = playerIn.getHeldItem(hand);
+            boolean wasEmptyHanded = heldItem.isEmpty();
+
+            // Take out the held stack plus any processing outputs first.
+            if (!te.mainItem.isEmpty()) {
+                playerIn.inventory.addItemStackToInventory(te.mainItem.copy());
+                te.mainItem = ItemStack.EMPTY;
+                worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
+                        0.2F, 1.0F + worldIn.rand.nextFloat());
+            }
+            for (int i = 0; i < 8; i++) {
+                if (!te.additionalItems[i].isEmpty()) {
+                    playerIn.inventory.addItemStackToInventory(te.additionalItems[i].copy());
+                    te.additionalItems[i] = ItemStack.EMPTY;
                 }
-                te.sync();
-                return true;
-            }));
-        }
-        return false;
+            }
+
+            // Then place the hand stack, truncated to its max stack size.
+            if (!wasEmptyHanded) {
+                ItemStack placed = heldItem.copy();
+                int maxCount = placed.getMaxStackSize();
+                if (placed.getCount() > maxCount) {
+                    placed.setCount(maxCount);
+                    ItemStack remainder = heldItem.copy();
+                    remainder.setCount(heldItem.getCount() - maxCount);
+                    playerIn.setHeldItem(hand, remainder);
+                } else {
+                    playerIn.setHeldItem(hand, ItemStack.EMPTY);
+                }
+                te.mainItem = placed;
+                worldIn.playSound(null, pos, SoundInit.depot_slide, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            }
+            te.sync();
+            return true;
+        }));
     }
 
     @Override
@@ -165,9 +180,18 @@ public class BlockDepot extends Block implements ITileEntityProvider, IGoggleInf
     public int getComparatorInputOverride(IBlockState state, World worldIn, BlockPos pos) {
         TileEntity te = worldIn.getTileEntity(pos);
         if (!(te instanceof TileEntityDepot)) return 0;
-        ItemStack held = ((TileEntityDepot) te).mainItem;
-        if (held.isEmpty()) return 0;
-        float fill = (float) held.getCount() / (float) Math.max(1, held.getMaxStackSize());
-        return Math.max(0, Math.min(15, (int) (fill * 14.0F) + 1));
+        TileEntityDepot depot = (TileEntityDepot) te;
+        float present = 0;
+        int max = 64;
+        if (!depot.mainItem.isEmpty()) {
+            present += depot.mainItem.getCount();
+            max = depot.mainItem.getMaxStackSize();
+        }
+        for (int i = 0; i < 8; i++) {
+            if (!depot.additionalItems[i].isEmpty()) present += depot.additionalItems[i].getCount();
+        }
+        if (max <= 0) max = 64;
+        float f = present / (float) max;
+        return Math.max(0, Math.min(15, (int) (f * 14.0F) + (f > 0 ? 1 : 0)));
     }
 }

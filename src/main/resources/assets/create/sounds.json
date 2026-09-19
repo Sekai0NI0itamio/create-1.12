@@ -342,5 +342,15 @@
     "category": "blocks",
     "subtitle": "create.subtitle.steam",
     "sounds": [{ "name": "create:steam", "attenuation_distance": 32 }]
+  },
+  "stock_ticker_request": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.stock_ticker_request",
+    "sounds": [{ "name": "create:stock_ticker_request" }]
+  },
+  "stock_ticker_trade": {
+    "category": "blocks",
+    "subtitle": "create.subtitle.stock_ticker_trade",
+    "sounds": [{ "name": "create:stock_ticker_trade" }]
   }
 }
