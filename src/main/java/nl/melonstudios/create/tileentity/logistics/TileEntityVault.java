@@ -2,6 +2,7 @@ package nl.melonstudios.create.tileentity.logistics;
 
 import com.melonstudios.melonlib.network.TrackedByteBuf;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -114,30 +115,40 @@ public class TileEntityVault extends TileEntityOptimizedBase {
     }
 
     private IItemHandler buildCombined() {
-        List<TileEntityVault> members = new ArrayList<>();
         if (this.world == null) {
-            members.add(this);
-            return new VaultCombinedHandler(members);
+            return new VaultCombinedHandler(java.util.Collections.singletonList(this.inventory));
         }
         EnumFacing.Axis axis = this.getAxis();
         BlockPos min = this.isController() ? this.pos : this.controller;
+        if (min == null) {
+            return new VaultCombinedHandler(java.util.Collections.singletonList(this.inventory));
+        }
+        // Collect member positions in cuboid order, then sort by position so slot
+        // indices are stable. Missing tile entities (e.g. across an unloaded chunk
+        // border) get an empty placeholder so later slots do not shift, mirroring
+        // the reference, which substitutes an empty handler for missing parts.
+        List<BlockPos> order = new ArrayList<>();
         for (int i = 0; i < this.radius; i++) {
             for (int j = 0; j < this.radius; j++) {
                 for (int k = 0; k < this.length; k++) {
-                    BlockPos p = axis == EnumFacing.Axis.X
+                    order.add(axis == EnumFacing.Axis.X
                             ? min.add(k, i, j)
-                            : min.add(i, j, k);
-                    TileEntity te = this.world.getTileEntity(p);
-                    if (te instanceof TileEntityVault) {
-                        members.add((TileEntityVault) te);
-                    }
+                            : min.add(i, j, k));
                 }
             }
         }
-        if (members.isEmpty()) {
-            members.add(this);
+        order.sort(BlockPos::compareTo);
+        List<ItemStackHandler> parts = new ArrayList<>(order.size());
+        for (BlockPos p : order) {
+            TileEntity te = this.world.getTileEntity(p);
+            parts.add(te instanceof TileEntityVault
+                    ? ((TileEntityVault) te).getOwnInventory()
+                    : new ItemStackHandler(SLOTS_PER_BLOCK));
         }
-        return new VaultCombinedHandler(members);
+        if (parts.isEmpty()) {
+            parts.add(this.inventory);
+        }
+        return new VaultCombinedHandler(parts);
     }
 
     public int getComparatorSignal() {
@@ -147,10 +158,36 @@ public class TileEntityVault extends TileEntityOptimizedBase {
     }
 
     private void updateComparator() {
-        if (this.world != null && !this.world.isRemote
-                && this.world.getBlockState(this.pos).getBlock() instanceof BlockVault) {
-            this.world.updateComparatorOutputLevel(this.pos,
-                    this.world.getBlockState(this.pos).getBlock());
+        if (this.world == null || this.world.isRemote) {
+            return;
+        }
+        // Mirror the reference updateComparators(): any slot change must poke the
+        // neighbours of every member, otherwise a comparator reading a different
+        // member than the one that changed goes stale.
+        TileEntityVault controllerTE = this.getControllerTE();
+        if (controllerTE == null) {
+            this.pokeComparator(this.pos);
+            return;
+        }
+        EnumFacing.Axis axis = controllerTE.getAxis();
+        BlockPos min = controllerTE.controller == null ? controllerTE.pos : controllerTE.controller;
+        int radius = controllerTE.radius;
+        int length = controllerTE.length;
+        for (int i = 0; i < radius; i++) {
+            for (int j = 0; j < radius; j++) {
+                for (int k = 0; k < length; k++) {
+                    this.pokeComparator(axis == EnumFacing.Axis.X
+                            ? min.add(k, i, j)
+                            : min.add(i, j, k));
+                }
+            }
+        }
+    }
+
+    private void pokeComparator(BlockPos p) {
+        IBlockState state = this.world.getBlockState(p);
+        if (state.getBlock() instanceof BlockVault) {
+            this.world.updateComparatorOutputLevel(p, state.getBlock());
         }
     }
 

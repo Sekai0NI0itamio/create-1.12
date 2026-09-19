@@ -86,7 +86,7 @@ public class ItemSandpaper extends Item {
                 if (entity.isDead) {
                     continue;
                 }
-                if (entity.getDistanceToEntity(playerIn) > 3) {
+                if (entity.getDistance(playerIn) > 3) {
                     continue;
                 }
                 ItemStack stack = entity.getItem();

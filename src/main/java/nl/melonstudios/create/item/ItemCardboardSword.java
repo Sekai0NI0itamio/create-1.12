@@ -58,7 +58,6 @@ public class ItemCardboardSword extends ItemSword {
     @SubscribeEvent
     public static void cardboardSwordsMakeNoiseOnClick(PlayerInteractEvent.LeftClickBlock event) {
         if (!(event.getItemStack().getItem() instanceof ItemCardboardSword)) return;
-        if (event.getAction() != PlayerInteractEvent.LeftClickBlock.Action.START) return;
         if (event.getWorld().isRemote) return;
         event.getWorld().playSound(null, event.getPos(),
                 SoundEvents.BLOCK_WOOD_HIT, SoundCategory.PLAYERS, 0.5F, 1.85F);

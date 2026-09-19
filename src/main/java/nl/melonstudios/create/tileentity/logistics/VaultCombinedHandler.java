@@ -17,11 +17,8 @@ import java.util.List;
 final class VaultCombinedHandler implements IItemHandlerModifiable {
     private final List<ItemStackHandler> parts = new ArrayList<>();
 
-    VaultCombinedHandler(List<TileEntityVault> members) {
-        members.sort((a, b) -> a.getPos().compareTo(b.getPos()));
-        for (TileEntityVault te : members) {
-            this.parts.add(te.getOwnInventory());
-        }
+    VaultCombinedHandler(List<ItemStackHandler> parts) {
+        this.parts.addAll(parts);
     }
 
     private static final class SlotRef {

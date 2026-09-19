@@ -38,7 +38,7 @@ public class ItemSchematic extends Item {
             if (size.length == 3) {
                 tooltip.add(TextFormatting.GOLD + "" + size[0] + " x " + size[1] + " x " + size[2]);
             }
-            tooltip.add(TextFormatting.GRAY + blocks + " blocks");
+            tooltip.add(TextFormatting.GRAY + "" + blocks + " blocks");
         } else if (stack.getMetadata() == 0) {
             tooltip.add(TextFormatting.GRAY + "Empty. Sneak-click two corners to capture.");
         } else {

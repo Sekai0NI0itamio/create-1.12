@@ -52,6 +52,7 @@ import nl.melonstudios.create.kinetics.contraption.ContraptionRendering;
 import nl.melonstudios.create.kinetics.contraption.ITileEntityWithContraption;
 import nl.melonstudios.create.init.RecipeInit;
 import nl.melonstudios.create.recipe.sequence.SequenceRecipe;
+import nl.melonstudios.create.recipe.sequence.SequenceStep;
 
 import nl.melonstudios.create.util.PerFrameDebugInfo;
 import nl.melonstudios.create.util.TextBuilder;

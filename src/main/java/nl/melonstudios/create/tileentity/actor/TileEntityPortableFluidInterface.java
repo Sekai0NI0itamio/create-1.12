@@ -5,6 +5,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import javax.annotation.Nullable;
 
@@ -33,23 +34,11 @@ public class TileEntityPortableFluidInterface extends TileEntityContraptionInter
     }
 
     @Override
-    public int getTanks() {
-        return 0;
-    }
-
-    @Override
-    public FluidStack getFluidInTank(int tank) {
-        return null;
-    }
-
-    @Override
-    public int getTankCapacity(int tank) {
-        return 0;
-    }
-
-    @Override
-    public boolean isFluidValid(int tank, FluidStack stack) {
-        return false;
+    public IFluidTankProperties[] getTankProperties() {
+        if (!this.isConnected()) {
+            return new IFluidTankProperties[0];
+        }
+        return this.getInventory().getTankRepresentation().getTankProperties();
     }
 
     @Override
