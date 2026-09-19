@@ -252,9 +252,12 @@ public class TileEntityBasin extends TileEntityOptimizedBase implements ITileEnt
                 return stack;
             }
             if (ItemStack.areItemsEqual(prev, stack) && ItemStack.areItemStackTagsEqual(prev, stack)) {
-                int space = Math.min(prev.getMaxStackSize(), 64);
-                prev.grow(space);
-                stack.shrink(space);
+                int space = Math.min(prev.getMaxStackSize(), 64) - prev.getCount();
+                if (space > 0) {
+                    int move = Math.min(space, stack.getCount());
+                    prev.grow(move);
+                    stack.shrink(move);
+                }
             }
             if (stack.isEmpty()) return ItemStack.EMPTY;
         }

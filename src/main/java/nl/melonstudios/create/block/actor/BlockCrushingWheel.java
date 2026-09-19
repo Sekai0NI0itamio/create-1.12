@@ -19,9 +19,10 @@ import nl.melonstudios.create.util.BlockProperties;
 import javax.annotation.Nullable;
 
 /**
- * Crushing wheel: kinetic block with a horizontal axis. Two wheels side by
- * side on the same axis, spinning opposite directions, form a crusher — the
- * controller block spawns between them automatically (see TileEntity).
+ * Crushing wheel: kinetic block with a horizontal axis. Two wheels sharing
+ * one axis, two blocks apart along a horizontal direction perpendicular to
+ * it and spinning opposite directions, form a crusher — the air gap between
+ * them is the working spot (see TileEntity).
  */
 @SuppressWarnings("deprecation")
 public class BlockCrushingWheel extends BlockKineticHorizontalAxisBase implements ITileEntityProvider {

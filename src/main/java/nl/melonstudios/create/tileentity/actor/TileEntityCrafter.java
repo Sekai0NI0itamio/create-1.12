@@ -11,6 +11,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -18,6 +19,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.block.state.EnumDirection;
 import nl.melonstudios.create.init.ItemInit;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.TileEntityKinetic;
 import nl.melonstudios.create.util.CrafterContext;
 import nl.melonstudios.create.util.InventoryCrafter;
@@ -37,6 +39,7 @@ public class TileEntityCrafter extends TileEntityKinetic implements IItemHandler
 
     public CrafterContext crafterContext = null;
     public ItemStack containedItem = ItemStack.EMPTY;
+    private boolean wasPoweredBefore = true;
 
     public EnumFacing getFacing() {
         return EnumFacing.HORIZONTALS[this.getBlockMetadata() & 3];
@@ -49,18 +52,29 @@ public class TileEntityCrafter extends TileEntityKinetic implements IItemHandler
     public void tick() {
         super.tick();
 
+        if (!this.world.isRemote && this.crafterContext == null) {
+            boolean powered = this.world.isBlockPowered(this.pos);
+            if (powered && !this.wasPoweredBefore) {
+                this.startCraftingIfReady(true);
+            }
+            this.wasPoweredBefore = powered;
+        }
+
         //TODO: fix
         if (this.crafterContext != null) {
             if (this.crafterContext.currentPattern != null) {
                 this.crafterContext.addProgress(Math.abs(this.getSpeed()) * 0.015625F);
-                if (this.crafterContext.progress >= 1.0F) {
+                if (this.crafterContext.progress >= 1.0F && !this.world.isRemote) {
                     TileEntityCrafter pointer = this.getPointerCrafter();
                     if (pointer != null) {
                         pointer.acceptContextPattern(this);
+                        this.world.playSound(null, this.pos, SoundInit.crafter_click, SoundCategory.BLOCKS, 1.0F,
+                                0.5F + this.crafterContext.crafterPositions.size() / 16.0F);
                     } else {
                         List<TileEntityCrafter> crafters = this.crafterContext.crafterPositions.stream()
                                 .map(this.world::getTileEntity)
-                                .map(te -> (TileEntityCrafter)te)
+                                .map(te -> Utils.cast(te, TileEntityCrafter.class))
+                                .filter(Objects::nonNull)
                                 .collect(Collectors.toList());
                         InventoryCrafter inventoryCrafter = new InventoryCrafter(convertToGrid(
                                 crafters, this.getFacing()
@@ -68,6 +82,8 @@ public class TileEntityCrafter extends TileEntityKinetic implements IItemHandler
                         IRecipe recipe = CraftingManager.findMatchingRecipe(inventoryCrafter, this.world);
                         if (recipe != null) {
                             ItemStack result = recipe.getCraftingResult(inventoryCrafter);
+                            this.world.playSound(null, this.pos, SoundInit.crafter_click, SoundCategory.BLOCKS, 1.0F, 2.0F);
+                            this.world.playSound(null, this.pos, SoundInit.crafter_craft, SoundCategory.BLOCKS, 1.0F, 1.0F);
                             List<ItemStack> containers = new ArrayList<>();
                             for (TileEntityCrafter crafter : crafters) {
                                 if (crafter.containedItem.getItem() != ItemInit.CRAFTER_COVER) {
@@ -339,6 +355,8 @@ public class TileEntityCrafter extends TileEntityKinetic implements IItemHandler
         }
     }
     public void startCraftingIfReady(boolean redstone) {
+        if (this.getSpeed() == 0.0F) return;
+        if (this.crafterContext != null) return;
         Set<TileEntityCrafter> crafters = new HashSet<>();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         this.getConnectedCrafters(crafters, this.world, pos);

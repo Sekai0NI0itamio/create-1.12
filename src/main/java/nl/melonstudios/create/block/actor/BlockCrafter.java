@@ -70,7 +70,7 @@ public class BlockCrafter extends BlockKineticHorizontalBase implements ICogwhee
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add("this does not work (it WILL crash maybe)");
+        tooltip.add("Place in a grid, then click a filled Crafter to start");
     }
 
     @Override

@@ -76,7 +76,7 @@ public class TESRCrafter extends TESRKineticBase<TileEntityCrafter> {
                     } else {
                         GlStateManager.scale(0.25F, 0.25F, 0.25F);
                     }
-                    this.mc.getRenderItem().renderItem(te.containedItem, model);
+                    this.mc.getRenderItem().renderItem(stack, model);
 
                     GlStateManager.popMatrix();
                 }

@@ -50,9 +50,9 @@ import nl.melonstudios.create.kinetics.KNManager;
 import nl.melonstudios.create.kinetics.contraption.Contraption;
 import nl.melonstudios.create.kinetics.contraption.ContraptionRendering;
 import nl.melonstudios.create.kinetics.contraption.ITileEntityWithContraption;
+import nl.melonstudios.create.init.RecipeInit;
 import nl.melonstudios.create.recipe.sequence.SequenceRecipe;
-import nl.melonstudios.create.recipe.sequence.SequenceStep;
-import nl.melonstudios.create.recipe.sequence.SequencedRecipes;
+
 import nl.melonstudios.create.util.PerFrameDebugInfo;
 import nl.melonstudios.create.util.TextBuilder;
 import nl.melonstudios.create.util.interfaces.IBypassBlockUse;
@@ -172,12 +172,14 @@ public class CreateLegacyEventHandler {
         event.registerStress(BlockInit.SAW, 4.0F);
         event.registerStress(BlockInit.DEPLOYER, 4.0F);
         event.registerStress(BlockInit.MILLSTONE, 4.0F);
+        event.registerStress(BlockInit.CRAFTER, 2.0F);
+        event.registerStress(BlockInit.MECHANICAL_PISTON, 4.0F);
+        event.registerStress(BlockInit.MECHANICAL_PISTON_STICKY, 4.0F);
         event.registerStress(BlockInit.CRUSHING_WHEEL, 8.0F);
         event.registerStress(BlockInit.ENCASED_FAN, 2.0F);
         event.registerStress(BlockInit.SPOUT, 4.0F);
         event.registerStress(BlockInit.HOSE_PULLEY, 4.0F);
         event.registerStress(BlockInit.ELEVATOR_PULLEY, 4.0F);
-        event.registerStress(BlockInit.GANTRY_CARRIAGE, 4.0F);
         event.registerStress(BlockInit.ROPE_PULLEY, 4.0F);
         event.registerStress(BlockInit.PACKAGER, 4.0F);
         event.registerStress(BlockInit.SCHEMATICANNON, 4.0F);
@@ -304,7 +306,11 @@ public class CreateLegacyEventHandler {
             }
             String id = data.getString("id");
             int step = data.getInteger("step");
-            SequenceRecipe recipe = SequencedRecipes.instance.getRecipe(id);
+            SequenceRecipe recipe = RecipeInit.getSequenceRecipes(true).getRecipe(id);
+            if (recipe == null) {
+                event.getToolTip().add("[sequence error]");
+                return;
+            }
             List<String> tooltips = event.getToolTip();
             TextBuilder builder = new TextBuilder();
             builder.formatting(TextFormatting.GOLD);

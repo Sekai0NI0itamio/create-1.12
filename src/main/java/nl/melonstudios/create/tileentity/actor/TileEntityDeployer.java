@@ -197,7 +197,7 @@ public class TileEntityDeployer extends TileEntityKinetic implements IContraptio
                                     {
                                         if (SequenceRecipe.isInSequence(in)) {
                                             SequenceStep next = SequenceRecipe.getNextStep(in);
-                                            if ("deploying".equals(next.name)) {
+                                            if (next != null && "deploying".equals(next.name)) {
                                                 Ingredient applied = Ingredient.read(next.data.getCompoundTag("Applied"));
                                                 if (applied.matches(this.heldItem)) {
                                                     DeployerRecipe.InputType inputType = DeployerRecipe.InputType.get(next.data.getString("inputType"));
@@ -547,11 +547,11 @@ public class TileEntityDeployer extends TileEntityKinetic implements IContraptio
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (amount == 0 || slot == 0) return ItemStack.EMPTY;
         if (simulate) {
-            ItemStack copy = this.heldItem.copy();
+            ItemStack copy = this.cloggedItem.copy();
             return copy.splitStack(amount);
         } else {
             this.sync();
-            return this.heldItem.splitStack(amount);
+            return this.cloggedItem.splitStack(amount);
         }
     }
 

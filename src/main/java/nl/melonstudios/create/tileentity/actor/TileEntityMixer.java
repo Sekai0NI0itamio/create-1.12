@@ -5,10 +5,12 @@ import com.melonstudios.melonlib.network.TrackedByteBuf;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.init.RecipeInit;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.recipe.MixingRecipe;
 import nl.melonstudios.create.recipe.server.MixingRecipes;
 import nl.melonstudios.create.tileentity.TileEntityBasin;
@@ -51,9 +53,15 @@ public class TileEntityMixer extends TileEntityKinetic implements ISpeedRequirem
             }
         }
         MixingRecipe recipe = this.currentRecipe != null ? this.getRecipe() : null;
-        boolean process = recipe != null && recipe.checkOutputSpace(basin);
+        float speed = Math.abs(this.getSpeed());
+        boolean process = speed > 0 && recipe != null && recipe.checkOutputSpace(basin);
         if (process) {
-            if (this.lowering < 20) this.lowering++;
+            if (this.lowering < 20) {
+                this.lowering++;
+                if (this.lowering == 20 && !this.world.isRemote) {
+                    this.world.playSound(null, this.pos, SoundInit.mixing, SoundCategory.BLOCKS, 0.75F, 1.0F);
+                }
+            }
         } else {
             this.progress = 0;
             if (this.lowering > 0) this.lowering--;
@@ -62,7 +70,7 @@ public class TileEntityMixer extends TileEntityKinetic implements ISpeedRequirem
         if (this.lowering >= 20 && recipe != null && basin != null) {
             this.recipeFX(basin, this.basinPos.getX() + 0.5, this.basinPos.getY() + 0.5, this.basinPos.getZ() + 0.5);
             basin.addedItemRotation += (int)(this.getSpeed() * 0.3);
-            if ((this.progress += (int) this.getSpeed()) >= recipe.processingTime) {
+            if ((this.progress += (int) speed) >= recipe.processingTime) {
                 this.progress = 0;
                 if (recipe.removeRequiredInput(basin)) {
                     basin.dumpRecipeResults(recipe);
@@ -74,7 +82,7 @@ public class TileEntityMixer extends TileEntityKinetic implements ISpeedRequirem
 
     @Override
     public void tickLazy() {
-        if (this.currentRecipe == null && this.getSpeed() >= this.minimumSpeed() && this.getBasin() != null) {
+        if (this.currentRecipe == null && Math.abs(this.getSpeed()) >= this.minimumSpeed() && this.getBasin() != null) {
             this.searchRecipe(this.getBasin());
         }
     }

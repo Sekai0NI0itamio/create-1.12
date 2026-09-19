@@ -66,6 +66,9 @@ public class SequenceRecipe {
         String id = data.getString("id");
         int step = data.getInteger("step");
         SequenceRecipe recipe = SequencedRecipes.instance.getRecipe(id);
+        if (recipe == null || recipe.steps.isEmpty()) {
+            return null;
+        }
         return recipe.steps.get(step % recipe.steps.size());
     }
     public static void initialize(ItemStack processing, String id) {
@@ -78,6 +81,9 @@ public class SequenceRecipe {
         String id = data.getString("id");
         int nextStep = data.getInteger("step") + 1;
         SequenceRecipe recipe = SequencedRecipes.instance.getRecipe(id);
+        if (recipe == null || recipe.steps.isEmpty()) {
+            return processing;
+        }
         int max = recipe.steps.size() * recipe.repetitions;
         if (nextStep >= max) {
             Random rnd = CreateLegacy.rand;

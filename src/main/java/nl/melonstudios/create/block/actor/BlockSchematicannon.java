@@ -5,7 +5,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -36,6 +38,20 @@ public class BlockSchematicannon extends BlockKineticBase implements ITileEntity
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntitySchematicannon();
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        super.onBlockPlacedBy(world, pos, state, placer, stack);
+        if (placer != null) {
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof TileEntitySchematicannon) {
+                TileEntitySchematicannon cannon = (TileEntitySchematicannon) te;
+                // Translate of the reference setPlacedBy yaw snap (16 steps).
+                cannon.defaultYaw = (-net.minecraft.util.math.MathHelper.floor(
+                        (placer.rotationYaw + (placer.isSneaking() ? 180.0F : 0.0F)) * 16.0F / 360.0F + 0.5F) & 15) * 360.0F / 16.0F;
+            }
+        }
     }
 
     @Override

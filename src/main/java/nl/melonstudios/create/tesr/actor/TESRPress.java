@@ -18,12 +18,15 @@ public class TESRPress<T extends TileEntityPress> extends TESRKineticBase<T> {
     @Override
     protected void render(T te, float pt, float alpha) {
         GlStateManager.pushMatrix();
-        float adjustedProgress = MathHelper.clamp(Utils.lerp(pt, te.lastProgress, te.progress), te.lastProgress, te.progress);
-        adjustedProgress *= 0.001F;
-        if (adjustedProgress > 1) adjustedProgress = Math.abs(1.0F - (adjustedProgress-1.0F));
-        else adjustedProgress = adjustedProgress * adjustedProgress * adjustedProgress * adjustedProgress;
-        if (adjustedProgress > 0.0F && adjustedProgress < 1.0F) adjustedProgress *= -te.multiplier();
-        GlStateManager.translate(0.0F, adjustedProgress, 0.0F);
+        float rawProgress = MathHelper.clamp(Utils.lerp(pt, te.lastProgress, te.progress), Math.min(te.lastProgress, te.progress), Math.max(te.lastProgress, te.progress));
+        float dip;
+        if (rawProgress < 4000.0F / 3.0F) {
+            float up = rawProgress / 2000.0F * 2.0F;
+            dip = MathHelper.clamp(up * up * up, 0.0F, 1.0F);
+        } else {
+            dip = MathHelper.clamp((2000.0F - rawProgress) / 2000.0F * 3.0F, 0.0F, 1.0F);
+        }
+        GlStateManager.translate(0.0F, -dip * te.multiplier(), 0.0F);
         IBlockState state = BlockRender.byEnum(te.getRenderAxis() == EnumFacing.Axis.X ? EnumRenderPart.PRESS_X : EnumRenderPart.PRESS_Z);
         IBakedModel model = this.mc.getBlockRendererDispatcher().getModelForState(state);
         this.renderBakedModel(1.0F, model, state);

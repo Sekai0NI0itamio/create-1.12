@@ -44,11 +44,11 @@ public class TileEntityItemDrain extends TileEntityOptimizedBase implements ITop
             if (this.roll == 30) {
                 IFluidHandlerItem handler = FluidUtil.getFluidHandler(this.draining);
                 if (handler != null) {
-                    FluidStack drained = handler.drain(this.tank.getCapacity() - this.tank.getFluidAmount(), true);
+                    FluidStack drained = handler.drain(this.tank.getCapacity() - this.tank.getFluidAmount(), false);
                     if (drained != null) {
                         FluidStack stored = this.tank.getFluid();
                         if (stored != null) {
-                            if (drained.isFluidEqual(drained)) {
+                            if (stored.isFluidEqual(drained)) {
                                 this.world.playSound(null, this.pos, drained.getFluid().getEmptySound(drained), SoundCategory.BLOCKS, 1.0F, 1.0F);
                                 this.tank.fillInternal(handler.drain(this.tank.getCapacity() - this.tank.getFluidAmount(), true), true);
                                 this.roll++;

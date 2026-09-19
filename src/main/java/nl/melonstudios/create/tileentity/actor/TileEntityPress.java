@@ -102,7 +102,7 @@ public class TileEntityPress extends TileEntityKinetic implements IHaltBeltConte
                     {
                         if (SequenceRecipe.isInSequence(stack)) {
                             SequenceStep next = SequenceRecipe.getNextStep(stack);
-                            if ("pressing".equals(next.name)) {
+                            if (next != null && "pressing".equals(next.name)) {
                                 shouldMove = true;
                                 if (this.lastProgress < 1000 && this.progress >= 1000) {
                                     this.squishParticles(
@@ -124,7 +124,7 @@ public class TileEntityPress extends TileEntityKinetic implements IHaltBeltConte
                 List<EntityItem> entityItems = this.world.getEntitiesWithinAABB(
                         EntityItem.class,
                         new AxisAlignedBB(this.pos.down()),
-                        EntityItem::isEntityAlive
+                        entityItem -> entityItem.isEntityAlive() && entityItem.onGround
                 );
                 if (!entityItems.isEmpty()) {
                     for (EntityItem entityItem : entityItems) {
@@ -219,7 +219,23 @@ public class TileEntityPress extends TileEntityKinetic implements IHaltBeltConte
 
     @Override
     public boolean shouldHaltItem(ItemStack stack) {
-        return PressingRecipes.getRecipeForInput(stack, this.world.isRemote) != null;
+        if (stack.isEmpty()) return false;
+        if (PressingRecipes.getRecipeForInput(stack, this.world.isRemote) != null) return true;
+        boolean client = this.world.isRemote;
+        if (SequenceRecipe.isInSequence(stack)) {
+            NBTTagCompound data = stack.getSubCompound("SequencedAssembly");
+            if (data == null) return false;
+            SequenceRecipe recipe = RecipeInit.getSequenceRecipes(client).getRecipe(data.getString("id"));
+            if (recipe == null) return false;
+            SequenceStep next = recipe.getStep(data.getInteger("step"));
+            return next != null && "pressing".equals(next.name);
+        }
+        String recipeID = SequencedRecipes.getRecipeForInput(stack, client);
+        if (recipeID != null) {
+            SequenceRecipe recipe = RecipeInit.getSequenceRecipes(client).getRecipe(recipeID);
+            return recipe != null && "pressing".equals(recipe.getFirstStep().name);
+        }
+        return false;
     }
 
     @SideOnly(Side.CLIENT)

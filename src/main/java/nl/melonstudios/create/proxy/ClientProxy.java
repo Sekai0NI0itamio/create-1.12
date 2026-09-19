@@ -109,13 +109,14 @@ public class ClientProxy extends CommonProxy {
         this.registerTESR(TileEntityCrushingWheel.class, "crushing_wheel", new TESRCrushingWheel());
         this.registerTESR(TileEntityEncasedFan.class, "encased_fan", new TESREncasedFan());
         this.registerTESR(TileEntityCrafter.class, "crafter", new TESRCrafter());
-        this.registerTESR(TileEntityBlazeBurner.class, "blaze_burner", new TESRBlazeBurner());
+        this.registerTESR(TileEntitySchematicannon.class, "schematicannon", new TESRSchematicannon());        this.registerTESR(TileEntityBlazeBurner.class, "blaze_burner", new TESRBlazeBurner());
         this.registerTESR(TileEntityDepot.class, "depot", new TESRDepot());
         this.registerTESR(TileEntityBasin.class, "basin", new TESRBasin());
         this.registerTESR(TileEntityChute.class, "chute", new TESRChute());
         this.registerTESR(TileEntityBeltStraight.class, "belt_straight", new TESRBeltStraight());
         this.registerTESR(TileEntityBeltDiagonal.class, "belt_diagonal", null);
         this.registerTESR(TileEntityItemDrain.class, "item_drain", new TESRItemDrain());
+        this.registerTESR(TileEntityFluidTank.class, "fluid_tank", new TESRFluidTank());
         this.registerTESR(TileEntityFunnelWall.class, "funnel_wall", null);
         this.registerTESR(TileEntityFunnelWallAdvanced.class, "funnel_wall_advanced", new TESRFunnelWallAdvanced());
         this.registerTESR(TileEntityFunnelDown.class, "funnel_down", null);
@@ -167,11 +168,13 @@ public class ClientProxy extends CommonProxy {
         if (in.isEmpty()) return;
         int id = Item.getIdFromItem(in.getItem());
         int meta = in.getMetadata();
+        float pitch = Math.max(0.85F, Math.min(1.0F,
+                Math.abs(millstone.getSpeed()) / 256.0F + 0.45F));
+        millstone.getWorld().playSound(Minecraft.getMinecraft().player, pos,
+                SoundInit.block_millstone_ambient, SoundCategory.BLOCKS,
+                0.35F, pitch
+        );
         for (int i = 0; i < 5; i++) {
-            millstone.getWorld().playSound(Minecraft.getMinecraft().player, pos,
-                    SoundInit.block_millstone_ambient, SoundCategory.BLOCKS,
-                    0.35F, 0.8F + millstone.getWorld().rand.nextFloat() * 0.3F
-            );
             double xOffset = rnd.nextDouble() - 0.5;
             double zOffset = rnd.nextDouble() - 0.5;
             Minecraft.getMinecraft().effectRenderer

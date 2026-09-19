@@ -2,7 +2,7 @@
  "parent": "create:brass",
  "display": {
   "icon": {
-   "item": "create:mechanical_crafter"
+   "item": "create:crafter"
   },
   "title": {
    "translate": "advancement.create.mechanical_crafter"
@@ -21,7 +21,7 @@
    "conditions": {
     "items": [
      {
-      "item": "create:mechanical_crafter"
+      "item": "create:crafter"
      }
     ]
    }

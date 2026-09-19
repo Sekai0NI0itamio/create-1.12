@@ -4,13 +4,16 @@ import com.melonstudios.melonlib.misc.StackUtil;
 import com.melonstudios.melonlib.network.TrackedByteBuf;
 import io.netty.buffer.ByteBuf;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.SoundType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -20,6 +23,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.init.RecipeInit;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.recipe.CuttingRecipe;
 import nl.melonstudios.create.recipe.server.CuttingRecipes;
 import nl.melonstudios.create.tileentity.TileEntityKinetic;
@@ -100,6 +104,7 @@ public class TileEntitySawProcessing extends TileEntityKinetic implements ITileE
             if (this.currentRecipe != null) {
                 if (this.progress >= this.currentRecipe.processingTime * this.currentlyProcessing.getCount()) {
                     int size = this.currentlyProcessing.getCount();
+                    this.playCutSound(this.currentlyProcessing);
                     this.currentlyProcessing = ItemStack.EMPTY;
                     ItemStack result = this.currentRecipe.result.copy();
                     result.setCount(size * result.getCount());
@@ -110,6 +115,7 @@ public class TileEntitySawProcessing extends TileEntityKinetic implements ITileE
                 }
             } else {
                 if (this.progress >= this.getProgressTick() * 10) {
+                    this.playCutSound(this.currentlyProcessing);
                     this.outputQueue = this.currentlyProcessing.copy();
                     this.currentlyProcessing = ItemStack.EMPTY;
                     this.currentRecipeID = null;
@@ -125,6 +131,17 @@ public class TileEntitySawProcessing extends TileEntityKinetic implements ITileE
 
     public int getProgressTick() {
         return Math.max(1, MathHelper.floor(Math.abs(this.getSpeed())  * 0.125F));
+    }
+    private void playCutSound(ItemStack input) {
+        if (this.world.isRemote || input.isEmpty())
+            return;
+        boolean wood = false;
+        if (input.getItem() instanceof ItemBlock) {
+            wood = ((ItemBlock) input.getItem()).getBlock().getSoundType() == SoundType.WOOD;
+        }
+        this.world.playSound(null, this.pos,
+                wood ? SoundInit.saw_activate_wood : SoundInit.saw_activate_stone,
+                SoundCategory.BLOCKS, 1.0F, 1.0F);
     }
     private void pushResult() {
         if (this.world.isRemote) return;

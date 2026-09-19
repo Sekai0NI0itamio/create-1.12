@@ -56,7 +56,7 @@ public class BlockAutoFarm extends BlockHorizontal implements ITileEntityProvide
 
     public BlockAutoFarm() {
         super(Material.ROCK, MapColor.IRON);
-        this.setSoundType(SoundType.WOOD);
+        this.setSoundType(SoundType.STONE);
 
         this.setHardness(BlockProperties.STONE_HARDNESS);
         this.setResistance(BlockProperties.STONE_RESISTANCE);

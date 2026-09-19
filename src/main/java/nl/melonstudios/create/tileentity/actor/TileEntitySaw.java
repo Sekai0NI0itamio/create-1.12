@@ -2,6 +2,12 @@ package nl.melonstudios.create.tileentity.actor;
 
 import com.melonstudios.melonlib.blockdict.BlockDictionary;
 import com.melonstudios.melonlib.misc.StackUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCactus;
+import net.minecraft.block.BlockChorusFlower;
+import net.minecraft.block.BlockChorusPlant;
+import net.minecraft.block.BlockReed;
+import net.minecraft.block.BlockStem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -29,7 +35,20 @@ public class TileEntitySaw extends TileEntityBreakBlockBase implements IContrapt
 
     @Override
     public boolean canBreak(IBlockState stateToBreak, float blockHardness) {
-        return super.canBreak(stateToBreak, blockHardness) && BlockDictionary.isBlockTagged(stateToBreak, "logWood");
+        return super.canBreak(stateToBreak, blockHardness) && isSawable(stateToBreak);
+    }
+
+    public static boolean isSawable(IBlockState stateToBreak) {
+        if (BlockDictionary.isBlockTagged(stateToBreak, "logWood"))
+            return true;
+        if (BlockDictionary.isBlockTagged(stateToBreak, "treeLeaves"))
+            return true;
+        Block block = stateToBreak.getBlock();
+        return block instanceof BlockCactus
+                || block instanceof BlockReed
+                || block instanceof BlockChorusPlant
+                || block instanceof BlockChorusFlower
+                || block instanceof BlockStem;
     }
 
     @Override

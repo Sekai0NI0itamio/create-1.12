@@ -10,13 +10,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntitySnowman;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -109,23 +115,23 @@ public class TileEntityEncasedFan extends TileEntityKinetic {
                 if (pl.capabilities.isCreativeMode && pl.capabilities.isFlying) continue;
                 if (Math.abs(speed) < 4) continue;
             }
-            double dist = distanceAlong(e, facing);
-            double accel = Math.abs(speed) / 512.0 / Math.max(1.0, dist / Math.max(1, travel));
-            double mx = 0, my = 0, mz = 0;
+            // Reference AirCurrent: acceleration pulls velocity toward the stream
+            // velocity, per-axis clamped, then eased in at 1/8 per tick.
+            float sneakDiv = e.isSneaking() ? 4096.0F : 512.0F;
+            double distOld = e.getDistance(this.pos.getX() + 0.5D, e.posY, this.pos.getZ() + 0.5D);
+            double accel = Math.abs(speed) / sneakDiv / Math.max(1.0D, distOld / Math.max(1.0D, (double) range));
             EnumFacing push = pushing ? facing : facing.getOpposite();
-            mx = push.getFrontOffsetX() * accel;
-            my = push.getFrontOffsetY() * accel;
-            mz = push.getFrontOffsetZ() * accel;
-            e.motionX += mx / 8.0;
-            e.motionY += my / 8.0;
-            e.motionZ += mz / 8.0;
+            double inX = MathHelper.clamp(push.getFrontOffsetX() * accel - e.motionX, -5.0D, 5.0D);
+            double inY = MathHelper.clamp(push.getFrontOffsetY() * accel - e.motionY, -5.0D, 5.0D);
+            double inZ = MathHelper.clamp(push.getFrontOffsetZ() * accel - e.motionZ, -5.0D, 5.0D);
+            e.motionX += inX / 8.0D;
+            e.motionY += inY / 8.0D;
+            e.motionZ += inZ / 8.0D;
             e.fallDistance = 0;
             if (e instanceof EntityItem && process != EnumFanProcess.NONE) {
                 this.processItem((EntityItem) e, process);
             }
-            if (e instanceof EntityLivingBase && process == EnumFanProcess.BLASTING) {
-                e.setFire(2);
-            }
+            this.affectEntity(e, process);
         }
 
         if (this.world.isRemote && this.world.getTotalWorldTime() % 4 == 0) {
@@ -149,13 +155,6 @@ public class TileEntityEncasedFan extends TileEntityKinetic {
         double y2 = Math.max(from.getY(), to.getY()) + 1;
         double z2 = Math.max(from.getZ(), to.getZ()) + 1;
         return new AxisAlignedBB(x1, y1, z1, x2, y2, z2);
-    }
-
-    private double distanceAlong(Entity e, EnumFacing facing) {
-        double dx = e.posX - (this.pos.getX() + 0.5);
-        double dy = e.posY - (this.pos.getY() + 0.5);
-        double dz = e.posZ - (this.pos.getZ() + 0.5);
-        return Math.abs(dx * facing.getFrontOffsetX() + dy * facing.getFrontOffsetY() + dz * facing.getFrontOffsetZ());
     }
 
     public enum EnumFanProcess {
@@ -198,10 +197,12 @@ public class TileEntityEncasedFan extends TileEntityKinetic {
                 }
             }
         }
-        if (soulFire) return EnumFanProcess.HAUNTING;
-        if (lava) return EnumFanProcess.BLASTING;
-        if (fire) return EnumFanProcess.SMOKING;
+        // Reference FanProcessingTypeRegistry sorts by descending priority:
+        // splashing (400) > haunting (300) > smoking (200) > blasting (100).
         if (water) return EnumFanProcess.SPLASHING;
+        if (soulFire) return EnumFanProcess.HAUNTING;
+        if (fire) return EnumFanProcess.SMOKING;
+        if (lava) return EnumFanProcess.BLASTING;
         return EnumFanProcess.NONE;
     }
 
@@ -263,6 +264,40 @@ public class TileEntityEncasedFan extends TileEntityKinetic {
             }
             this.world.playEvent(2001, this.pos, net.minecraft.block.Block.getStateId(
                     net.minecraft.init.Blocks.WATER.getDefaultState()));
+        }
+    }
+
+    /** Reference AllFanProcessingTypes.*Type#affectEntity, translated to 1.12 APIs. */
+    private void affectEntity(Entity e, EnumFanProcess process) {
+        switch (process) {
+            case BLASTING:
+                if (!e.isImmuneToFire()) {
+                    e.setFire(10);
+                    e.attackEntityFrom(DamageSource.LAVA, 4.0F);
+                }
+                break;
+            case SMOKING:
+                if (!e.isImmuneToFire()) {
+                    e.setFire(2);
+                    e.attackEntityFrom(DamageSource.ON_FIRE, 2.0F);
+                }
+                break;
+            case HAUNTING:
+                if (e instanceof EntityLivingBase) {
+                    ((EntityLivingBase) e).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 0));
+                    ((EntityLivingBase) e).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 1));
+                }
+                break;
+            case SPLASHING:
+                if (e instanceof EntityEnderman || e instanceof EntityBlaze || e instanceof EntitySnowman) {
+                    e.attackEntityFrom(DamageSource.DROWN, 2.0F);
+                }
+                if (e.isBurning()) {
+                    e.extinguish();
+                }
+                break;
+            default:
+                break;
         }
     }
 

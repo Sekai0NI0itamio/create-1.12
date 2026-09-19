@@ -8,11 +8,14 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -21,6 +24,7 @@ import net.minecraft.world.World;
 import nl.melonstudios.create.block.BlockKineticDirectionalBase;
 import nl.melonstudios.create.block.state.CreateStateProperties;
 import nl.melonstudios.create.init.BlockInit;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.actor.TileEntityMechanicalPiston;
 import nl.melonstudios.create.util.BlockProperties;
 import nl.melonstudios.create.util.TextBuilder;
@@ -83,8 +87,23 @@ public class BlockMechanicalPiston extends BlockKineticDirectionalBase implement
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (facing == state.getValue(FACING) || hand == EnumHand.OFF_HAND) return false;
         ItemStack held = playerIn.getHeldItem(hand);
+        if (!this.sticky && !this.extended && facing == state.getValue(FACING) && hand == EnumHand.MAIN_HAND
+                && !held.isEmpty() && held.getItem() == Items.SLIME_BALL) {
+            if (worldIn.isRemote) {
+                for (int i = 0; i < 8; i++) {
+                    worldIn.spawnParticle(EnumParticleTypes.SLIME,
+                            pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ,
+                            (worldIn.rand.nextFloat() - 0.5) * 0.2, worldIn.rand.nextFloat() * 0.2, (worldIn.rand.nextFloat() - 0.5) * 0.2);
+                }
+                return true;
+            }
+            if (!playerIn.isCreative()) held.shrink(1);
+            Utils.setBlockKineticTESafe(worldIn, pos, BlockInit.MECHANICAL_PISTON_STICKY.copyState(state), 3);
+            worldIn.playSound(null, pos, SoundInit.slime_added, SoundCategory.BLOCKS, 0.5F, 1.0F);
+            return true;
+        }
+        if (facing == state.getValue(FACING) || hand == EnumHand.OFF_HAND) return false;
         if (held.isEmpty()) {
             return Boolean.TRUE.equals(withTEDo(worldIn, pos, TileEntityMechanicalPiston.class, TileEntityMechanicalPiston::tryAssemble));
         }

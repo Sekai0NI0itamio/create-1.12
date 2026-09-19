@@ -71,28 +71,28 @@ public class BlockMillstone extends BlockKineticBase implements ITileEntityProvi
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (playerIn.getHeldItem(hand).isEmpty()) {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof TileEntityMillstone) {
-                TileEntityMillstone millstone = (TileEntityMillstone) te;
-                boolean switchToMain = true;
-                for (int i = 0; i < millstone.output.length; i++) {
-                    ItemStack stack = millstone.output[i];
-                    if (!stack.isEmpty()) {
-                        switchToMain = false;
-                        playerIn.inventory.addItemStackToInventory(stack.copy());
-                        millstone.output[i] = ItemStack.EMPTY;
-                        millstone.sync();
-                    }
-                }
-                if (switchToMain) {
-                    if (millstone.input.isEmpty()) return false;
-                    playerIn.inventory.addItemStackToInventory(millstone.input.copy());
-                    millstone.input = ItemStack.EMPTY;
+        if (!playerIn.getHeldItem(hand).isEmpty()) return false;
+        if (worldIn.isRemote) return true;
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityMillstone) {
+            TileEntityMillstone millstone = (TileEntityMillstone) te;
+            boolean switchToMain = true;
+            for (int i = 0; i < millstone.output.length; i++) {
+                ItemStack stack = millstone.output[i];
+                if (!stack.isEmpty()) {
+                    switchToMain = false;
+                    playerIn.inventory.addItemStackToInventory(stack.copy());
+                    millstone.output[i] = ItemStack.EMPTY;
                     millstone.sync();
                 }
-                return true;
             }
+            if (switchToMain) {
+                if (millstone.input.isEmpty()) return false;
+                playerIn.inventory.addItemStackToInventory(millstone.input.copy());
+                millstone.input = ItemStack.EMPTY;
+                millstone.sync();
+            }
+            return true;
         }
         return false;
     }

@@ -20,7 +20,7 @@ public abstract class TileEntityBreakBlockBase extends TileEntityKinetic {
     @Override
     public void onSpeedChanged(float lastSpeed) {
         super.onSpeedChanged(lastSpeed);
-        if (this.destroyProgress == -1) {
+        if (this.ticksUntilNextProgress == -1) {
             this.destroyNextTick();
         }
     }
@@ -28,7 +28,7 @@ public abstract class TileEntityBreakBlockBase extends TileEntityKinetic {
     @Override
     public void tickLazy() {
         super.tickLazy();
-        if (this.destroyProgress == -1) {
+        if (this.ticksUntilNextProgress == -1) {
             this.destroyNextTick();
         }
     }

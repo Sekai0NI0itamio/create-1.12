@@ -157,10 +157,11 @@ public class BlockSaw extends BlockKineticBase implements ITileEntityProvider {
         } else {
             EnumFacing newRot = mirrorIn.mirror(real);
             switch (newRot) {
-                case NORTH: state.withProperty(FACING, EnumSawRotation.NORTH);
-                case EAST: state.withProperty(FACING, EnumSawRotation.EAST);
-                case SOUTH: state.withProperty(FACING, EnumSawRotation.SOUTH);
-                case WEST: state.withProperty(FACING, EnumSawRotation.WEST);
+                case NORTH: return state.withProperty(FACING, EnumSawRotation.NORTH);
+                case EAST: return state.withProperty(FACING, EnumSawRotation.EAST);
+                case SOUTH: return state.withProperty(FACING, EnumSawRotation.SOUTH);
+                case WEST: return state.withProperty(FACING, EnumSawRotation.WEST);
+                default: return state;
             }
         }
         return state;

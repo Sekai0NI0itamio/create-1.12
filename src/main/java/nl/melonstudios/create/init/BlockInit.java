@@ -148,10 +148,10 @@ public final class BlockInit {
             registerBlockWithItem(new BlockDrill(MapColor.STONE, SoundType.METAL)
             .setRegistryName("drill").setUnlocalizedName("create.drill"));
     public static final BlockSaw SAW = (BlockSaw)
-            registerBlockWithItem(new BlockSaw(MapColor.IRON, SoundType.METAL)
+            registerBlockWithItem(new BlockSaw(MapColor.DIRT, SoundType.METAL)
             .setRegistryName("saw").setUnlocalizedName("create.saw"));
     public static final BlockDeployer DEPLOYER = (BlockDeployer)
-            registerBlockWithItem(new BlockDeployer(MapColor.STONE, SoundType.WOOD)
+            registerBlockWithItem(new BlockDeployer(MapColor.DIRT, SoundType.STONE)
             .setRegistryName("deployer").setUnlocalizedName("create.deployer"),
             ItemBlockDepotActor::new);
 

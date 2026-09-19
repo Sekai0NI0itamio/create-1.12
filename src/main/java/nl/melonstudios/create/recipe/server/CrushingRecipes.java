@@ -89,7 +89,8 @@ public class CrushingRecipes implements ISyncedRecipeType<PulverizationRecipe> {
         for (PulverizationRecipe recipe : this.recipes.values()) {
             if (recipe.input.test(input)) return recipe;
         }
-        return null;
+        // Reference falls back to milling recipes when nothing crushes.
+        return MillingRecipes.instance.getRecipeForInput(input);
     }
 
     @Override
