@@ -164,7 +164,6 @@ public class BlockSaw extends BlockKineticBase implements ITileEntityProvider {
                 default: return state;
             }
         }
-        return state;
     }
 
     @Override
