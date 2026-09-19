@@ -3,8 +3,10 @@ package nl.melonstudios.create.kinetics.contraption;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.util.filter.IItemFilter;
@@ -35,6 +37,7 @@ public class ContraptionInventory {
             }
         }
         this.inventoryRepresentation = new InventoryRepresentation(this.inventories);
+        this.tankRepresentation = new CombinedTanks(this.tanks);
     }
 
     public ItemStack insertItem(ItemStack stack, boolean simulate) {
@@ -83,8 +86,110 @@ public class ContraptionInventory {
         return this.inventories.isEmpty();
     }
 
+    public boolean hasNoTanks() {
+        return this.tanks.isEmpty();
+    }
+
     public IItemHandler getInventoryRepresentation() {
         return this.inventoryRepresentation;
+    }
+
+    public IFluidHandler getTankRepresentation() {
+        return this.tankRepresentation;
+    }
+
+    private static class CombinedTanks implements IFluidHandler {
+        private final List<IFluidHandler> tanks;
+
+        CombinedTanks(List<IFluidHandler> tanks) {
+            this.tanks = tanks;
+        }
+
+        @Override
+        public int fill(FluidStack resource, boolean doFill) {
+            if (resource == null || resource.amount <= 0) {
+                return 0;
+            }
+            int filled = 0;
+            FluidStack remaining = resource.copy();
+            for (IFluidHandler tank : this.tanks) {
+                int n = tank.fill(remaining, doFill);
+                filled += n;
+                remaining.amount -= n;
+                if (remaining.amount <= 0) {
+                    break;
+                }
+            }
+            return filled;
+        }
+
+        @Nullable
+        @Override
+        public FluidStack drain(FluidStack resource, boolean doDrain) {
+            if (resource == null || resource.amount <= 0) {
+                return null;
+            }
+            FluidStack drained = null;
+            int remaining = resource.amount;
+            for (IFluidHandler tank : this.tanks) {
+                FluidStack part = tank.drain(new FluidStack(resource, remaining), doDrain);
+                if (part == null || part.amount <= 0) {
+                    continue;
+                }
+                if (drained == null) {
+                    drained = part.copy();
+                } else {
+                    drained.amount += part.amount;
+                }
+                remaining -= part.amount;
+                if (remaining <= 0) {
+                    break;
+                }
+            }
+            return drained;
+        }
+
+        @Nullable
+        @Override
+        public FluidStack drain(int maxDrain, boolean doDrain) {
+            if (maxDrain <= 0) {
+                return null;
+            }
+            FluidStack drained = null;
+            int remaining = maxDrain;
+            for (IFluidHandler tank : this.tanks) {
+                FluidStack part = tank.drain(remaining, doDrain);
+                if (part == null || part.amount <= 0) {
+                    continue;
+                }
+                if (drained == null) {
+                    drained = part.copy();
+                } else if (drained.isFluidEqual(part)) {
+                    drained.amount += part.amount;
+                } else {
+                    break;
+                }
+                remaining -= part.amount;
+                if (remaining <= 0) {
+                    break;
+                }
+            }
+            return drained;
+        }
+
+        @Override
+        public IFluidTankProperties[] getTankProperties() {
+            List<IFluidTankProperties> props = new ArrayList<>();
+            for (IFluidHandler tank : this.tanks) {
+                IFluidTankProperties[] sub = tank.getTankProperties();
+                if (sub != null) {
+                    for (IFluidTankProperties p : sub) {
+                        props.add(p);
+                    }
+                }
+            }
+            return props.toArray(new IFluidTankProperties[0]);
+        }
     }
 
     public static ContraptionInventory empty() {
@@ -124,6 +229,37 @@ public class ContraptionInventory {
         @Override
         public IItemHandler getInventoryRepresentation() {
             return Inventory.INSTANCE;
+        }
+
+        @Override
+        public IFluidHandler getTankRepresentation() {
+            return EmptyTanks.INSTANCE;
+        }
+
+        private static class EmptyTanks implements IFluidHandler {
+            private static final IFluidHandler INSTANCE = new EmptyTanks();
+
+            @Override
+            public int fill(FluidStack resource, boolean doFill) {
+                return 0;
+            }
+
+            @Nullable
+            @Override
+            public FluidStack drain(FluidStack resource, boolean doDrain) {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public FluidStack drain(int maxDrain, boolean doDrain) {
+                return null;
+            }
+
+            @Override
+            public IFluidTankProperties[] getTankProperties() {
+                return new IFluidTankProperties[0];
+            }
         }
 
         private static class Inventory implements IItemHandler {

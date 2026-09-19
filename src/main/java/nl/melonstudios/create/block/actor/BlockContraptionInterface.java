@@ -1,6 +1,7 @@
 package nl.melonstudios.create.block.actor;
 
 import com.melonstudios.melonlib.item.IMetaName;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -16,11 +17,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.kinetics.contraption.IWrenchable;
+import nl.melonstudios.create.tileentity.actor.TileEntityContraptionInterfaceBase;
+import nl.melonstudios.create.tileentity.actor.TileEntityPortableFluidInterface;
 import nl.melonstudios.create.tileentity.actor.TileEntityStorageInterface;
 import nl.melonstudios.create.util.BlockProperties;
 import nl.melonstudios.create.util.Utils;
@@ -54,7 +59,7 @@ public class BlockContraptionInterface extends BlockDirectional implements ITile
 
     public BlockContraptionInterface() {
         super(Material.ROCK);
-        this.setSoundType(SoundType.WOOD);
+        this.setSoundType(SoundType.STONE);
         this.fullBlock = false;
         this.translucent = true;
 
@@ -107,19 +112,46 @@ public class BlockContraptionInterface extends BlockDirectional implements ITile
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         Variant variant = Variant.byID(meta);
-        if (placer.isSneaking()) {
-            return this.getDefaultState().withProperty(VARIANT, variant)
-                    .withProperty(FACING, facing.getOpposite());
-        } else {
-            return this.getDefaultState().withProperty(VARIANT, variant)
-                    .withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer));
-        }
+        // Reference: direction = nearest looking direction (all 6 sides);
+        // shift inverts; stored FACING is the opposite of that direction.
+        Vec3d look = placer.getLookVec();
+        EnumFacing direction = EnumFacing.getFacingFromVector((float) look.x, (float) look.y, (float) look.z);
+        if (placer.isSneaking()) direction = direction.getOpposite();
+        return this.getDefaultState().withProperty(VARIANT, variant)
+                .withProperty(FACING, direction.getOpposite());
     }
 
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return (meta & 1) != 0 ? null : new TileEntityStorageInterface();
+        return (meta & 1) != 0 ? new TileEntityPortableFluidInterface() : new TileEntityStorageInterface();
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityContraptionInterfaceBase) {
+            ((TileEntityContraptionInterfaceBase) te).neighbourChanged();
+        }
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState state, World worldIn, BlockPos pos) {
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityContraptionInterfaceBase) {
+            return ((TileEntityContraptionInterfaceBase) te).isConnected() ? 15 : 0;
+        }
+        return 0;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return BlockProperties.CASING_12PX_MAPPED[state.getValue(FACING).getIndex()];
     }
 
     @Override

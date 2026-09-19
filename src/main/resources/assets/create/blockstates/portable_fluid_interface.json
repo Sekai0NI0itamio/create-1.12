@@ -1,1 +1,30 @@
-{"variants":{"normal":{"model":"create:portable_fluid_interface/block"}}}
+{
+  "variants": {
+    "facing=up": {
+      "model": "create:portable_fluid_interface/block"
+    },
+    "facing=down": {
+      "model": "create:portable_fluid_interface/block",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "create:portable_fluid_interface/block",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "create:portable_fluid_interface/block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south": {
+      "model": "create:portable_fluid_interface/block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "create:portable_fluid_interface/block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

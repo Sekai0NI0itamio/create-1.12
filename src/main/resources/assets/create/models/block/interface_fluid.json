@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"particle": "create:block/casing/casing_copper",
+		"particle": "create:block/portable_fluid_interface",
 		"casing": "create:block/copper_casing_short",
 		"back": "create:block/casing/casing_copper"
 	},

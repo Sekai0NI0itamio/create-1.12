@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"particle": "create:block/casing/casing_andesite",
+		"particle": "create:block/portable_storage_interface",
 		"casing": "create:block/andesite_casing_short",
 		"back": "create:block/gearbox_top"
 	},
