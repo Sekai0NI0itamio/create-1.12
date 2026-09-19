@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.actor;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -16,9 +17,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.melonstudios.create.block.BlockEncasedShaftBase;
+import nl.melonstudios.create.kinetics.KineticPropagator;
+import nl.melonstudios.create.tileentity.TileEntityKinetic;
 import nl.melonstudios.create.tileentity.actor.TileEntitySequencedGearshift;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 /**
  * Sequenced gearshift: runs a small program of rotate/stop/reverse steps,
@@ -66,9 +70,26 @@ public class BlockSequencedGearshift extends BlockEncasedShaftBase implements IT
                 TileEntity te = world.getTileEntity(pos);
                 if (te instanceof TileEntitySequencedGearshift) {
                     ((TileEntitySequencedGearshift) te).onPulse();
+                    // Output modifier changed (holding -> running): re-propagate.
+                    this.detachKinetics(world, pos, true);
                 }
             }
         }
+    }
+
+    public void detachKinetics(World world, BlockPos pos, boolean reattachNextTick) {
+        TileEntity te = world.getTileEntity(pos);
+        if (!(te instanceof TileEntityKinetic)) return;
+        KineticPropagator.handleRemoved(world, pos, (TileEntityKinetic) te);
+
+        if (reattachNextTick) world.scheduleUpdate(pos, this, 1);
+    }
+
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (!(te instanceof TileEntityKinetic)) return;
+        KineticPropagator.handleAdded(worldIn, pos, (TileEntityKinetic) te);
     }
 
     @Override

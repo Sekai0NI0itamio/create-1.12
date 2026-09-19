@@ -33,13 +33,15 @@ public class BlockCreativeMotor extends BlockKineticDirectionalBase implements I
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (facing == state.getValue(FACING).getOpposite()) {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof TileEntityCreativeMotor) {
-                TileEntityCreativeMotor motor = (TileEntityCreativeMotor) te;
-                if (playerIn.isSneaking()) motor.speedIndex = Math.max(motor.speedIndex - 1, 0);
-                else motor.speedIndex = Math.min(motor.speedIndex + 1, 17);
-                motor.updateGeneratedRotation();
-                motor.sync();
+            // Mutate on the server only; the TE sync carries it to clients.
+            if (!worldIn.isRemote && !playerIn.isSpectator()) {
+                TileEntity te = worldIn.getTileEntity(pos);
+                if (te instanceof TileEntityCreativeMotor) {
+                    TileEntityCreativeMotor motor = (TileEntityCreativeMotor) te;
+                    motor.cycleSpeedIndex(playerIn.isSneaking() ? -1 : 1);
+                    motor.updateGeneratedRotation();
+                    motor.sync();
+                }
             }
             return true;
         }

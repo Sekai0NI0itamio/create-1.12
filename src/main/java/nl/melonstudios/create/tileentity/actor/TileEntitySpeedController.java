@@ -39,7 +39,8 @@ public class TileEntitySpeedController extends TileEntityKineticGeneratorBase {
 
     private boolean hasCogwheelInput() {
         if (this.world == null) return false;
-        for (EnumFacing f : EnumFacing.HORIZONTALS) {
+        for (EnumFacing f : EnumFacing.VALUES) {
+            if (f == EnumFacing.DOWN) continue;
             BlockPos p = this.pos.offset(f);
             if (!this.world.isBlockLoaded(p)) continue;
             Block b = this.world.getBlockState(p).getBlock();

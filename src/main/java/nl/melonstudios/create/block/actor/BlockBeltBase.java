@@ -128,6 +128,9 @@ public abstract class BlockBeltBase extends BlockKineticBase implements ITileEnt
 
     @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        // Vertical belts cannot transport (reference BeltBlock.canTransportObjects
+        // rejects VERTICAL/SIDEWAYS; caps are likewise gated in hasCapability).
+        if (!this.isFunctional(state)) return;
         if (entityIn.onGround && entityIn.isEntityAlive() && !worldIn.isRemote) {
             if (MathHelper.floor(entityIn.posX) == pos.getX() &&
                     MathHelper.floor(entityIn.posY) == pos.getY() &&

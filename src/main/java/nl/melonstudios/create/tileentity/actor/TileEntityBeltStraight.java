@@ -44,8 +44,8 @@ public class TileEntityBeltStraight extends TileEntityBeltBase implements IDepot
             }
             if (diff.getY() != 0) {
                 if (!vertical) return 0.0F;
-                if (diff.getZ() > 0 && part == EnumBeltPart.END) return 0.0F;
-                if (diff.getZ() < 0 && part == EnumBeltPart.START) return 0.0F;
+                if (diff.getY() > 0 && part == EnumBeltPart.END) return 0.0F;
+                if (diff.getY() < 0 && part == EnumBeltPart.START) return 0.0F;
                 return 1.0F;
             }
         }

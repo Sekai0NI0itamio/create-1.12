@@ -8,6 +8,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -73,7 +75,15 @@ public class BlockTurntable extends BlockKineticBase implements ITileEntityProvi
             float speed = turntable.getSpeed() * 3 / 10;
             if (speed == 0) return;
 
+            // Reference TurntableBlock turns every entity's yaw, and additionally
+            // turns head/body yaw of non-player living entities standing on it.
             entityIn.rotationYaw -= speed;
+            if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
+                EntityLivingBase living = (EntityLivingBase) entityIn;
+                living.rotationYawHead -= speed;
+                living.renderYawOffset -= speed;
+            }
+            entityIn.velocityChanged = true;
         }
     }
 

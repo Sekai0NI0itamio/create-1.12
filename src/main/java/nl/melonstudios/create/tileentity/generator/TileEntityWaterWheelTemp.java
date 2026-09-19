@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import nl.melonstudios.create.block.generator.BlockWaterWheelTemp;
 import nl.melonstudios.create.tileentity.TileEntityKineticGeneratorBase;
@@ -18,7 +19,7 @@ public class TileEntityWaterWheelTemp extends TileEntityKineticGeneratorBase {
     }
     @Override
     public float getGeneratedSpeed() {
-        return this.flowScore * 8;
+        return MathHelper.clamp(this.flowScore, -1, 1) * 8;
     }
 
     public EnumFacing.Axis getAxis() {
@@ -29,7 +30,7 @@ public class TileEntityWaterWheelTemp extends TileEntityKineticGeneratorBase {
     public void tickLazy() {
         super.tickLazy();
 
-        this.determineAndApplyFlowSource();
+        if (!this.world.isRemote) this.determineAndApplyFlowSource();
     }
 
     public int flowScore;
@@ -50,9 +51,6 @@ public class TileEntityWaterWheelTemp extends TileEntityKineticGeneratorBase {
             this.setFlowScoreAndUpdate(0);
             return;
         }
-
-        flowAtPos = flowAtPos.normalize();
-
 
         flowAtPos = flowAtPos.normalize();
         Vec3d normal = new Vec3d(pos).normalize();

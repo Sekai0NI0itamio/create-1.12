@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import nl.melonstudios.create.block.BlockKineticDirectionalBase;
 import nl.melonstudios.create.tileentity.generator.TileEntityHandCrank;
+import nl.melonstudios.create.util.BlockProperties;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -25,8 +26,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class BlockHandCrank extends BlockKineticDirectionalBase implements ITileEntityProvider {
     public BlockHandCrank(MapColor blockMapColorIn, SoundType soundTypeIn) {
-        super(Material.ROCK, blockMapColorIn);
+        super(Material.WOOD, blockMapColorIn);
         this.blockSoundType = soundTypeIn;
+
+        // Reference uses wooden properties (SharedProperties::wooden, axeOrPickaxe).
+        this.setHardness(BlockProperties.WOOD_HARDNESS);
+        this.setResistance(BlockProperties.WOOD_RESISTANCE);
+        this.setHarvestLevel("axe", 0);
 
         this.setRegistryName("hand_crank");
         this.setUnlocalizedName("create.hand_crank");
@@ -60,7 +66,8 @@ public class BlockHandCrank extends BlockKineticDirectionalBase implements ITile
         if (te instanceof TileEntityHandCrank) {
             ((TileEntityHandCrank)te).turn(playerIn.isSneaking());
         }
-        playerIn.addExhaustion(0.001F);
+        // Reference: causeFoodExhaustion(speed * crankHungerMultiplier), defaults 32 * 0.01.
+        playerIn.addExhaustion(0.32F);
         return true;
     }
 
@@ -78,7 +85,7 @@ public class BlockHandCrank extends BlockKineticDirectionalBase implements ITile
 
     private boolean canSurvive(IBlockState state, World world, BlockPos pos) {
         EnumFacing facing = state.getValue(FACING);
-        BlockPos offPos = pos.offset(facing);
+        BlockPos offPos = pos.offset(facing.getOpposite());
         IBlockState hello = world.getBlockState(offPos);
         return hello.getCollisionBoundingBox(world, offPos) != Block.NULL_AABB;
     }

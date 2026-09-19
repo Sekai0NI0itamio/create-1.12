@@ -37,6 +37,19 @@ public class BlockWaterWheel extends BlockKineticDirectionalBase implements ITil
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         super.onBlockAdded(worldIn, pos, state);
         worldIn.scheduleUpdate(pos, this, 1);
+        // Reference WaterWheelBlock.canSurvive: wheels may only touch along a
+        // shared axis with matching axes. Pop invalid placements.
+        EnumFacing.Axis axis = state.getValue(FACING).getAxis();
+        for (EnumFacing side : EnumFacing.VALUES) {
+            IBlockState neighbour = worldIn.getBlockState(pos.offset(side));
+            if (!(neighbour.getBlock() instanceof BlockWaterWheel)) {
+                continue;
+            }
+            if (neighbour.getValue(FACING).getAxis() != axis || axis != side.getAxis()) {
+                worldIn.destroyBlock(pos, true);
+                return;
+            }
+        }
     }
 
     @Override

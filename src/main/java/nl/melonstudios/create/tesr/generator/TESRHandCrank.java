@@ -20,6 +20,8 @@ public class TESRHandCrank extends TESRKineticBase<TileEntityHandCrank> {
     @Override
     protected void render(TileEntityHandCrank te, float pt, float alpha) {
         EnumFacing facing = te.getRenderFacing();
+        // Reference renders the kinetic shaft plus the crank handle.
+        this.spinShaft(te, pt, facing.getAxis());
         IBlockState state = this.facings[facing.getIndex()];
         IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
 

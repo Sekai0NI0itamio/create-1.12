@@ -108,7 +108,10 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
 
         this.leftPosOld = this.leftPos;
         this.rightPosOld = this.rightPos;
-        double speed = this.getSpeed() * 0.0625 * 0.05;
+        // Reference BeltBlockEntity.getBeltMovementSpeed() is speed/480 blocks per tick.
+        // One belt segment holds two half-slots (left 0..1, right 0..1), i.e. 2.0
+        // position units per block, so the per-tick increment is speed/240.
+        double speed = this.getSpeed() / 240.0;
         if (speed != 0.0) {
             this.markDirty();
             EnumFacing.Axis transportAxis = this.block().getTransportAxis(this.getState());

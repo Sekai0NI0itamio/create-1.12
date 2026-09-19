@@ -20,7 +20,7 @@ public class TileEntityStressometer extends TileEntityGaugeBase {
 
         if (this.dialTarget > 0) {
             if (this.dialTarget < 0.5F) this.color = Color.mixColors(0x00FF00, 0xFFFF00, this.dialTarget * 2);
-            else if (this.dialTarget < 1.0F) this.color = Color.mixColors(0xFFFF00, 0x00FF00, this.dialTarget * 2 - 1);
+            else if (this.dialTarget < 1.0F) this.color = Color.mixColors(0xFFFF00, 0xFF0000, this.dialTarget * 2 - 1);
             else this.color = 0xFF0000;
         }
 
@@ -45,7 +45,7 @@ public class TileEntityStressometer extends TileEntityGaugeBase {
     public void readPacket(NBTTagCompound nbt) {
         super.readPacket(nbt);
 
-        if (this.pos != null && this.pos == lastSent) lastSent = null;
+        if (this.pos != null && this.pos.equals(lastSent)) lastSent = null;
     }
 
     public float getNetworkStress() {

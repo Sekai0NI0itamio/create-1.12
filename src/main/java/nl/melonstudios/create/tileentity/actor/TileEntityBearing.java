@@ -26,7 +26,7 @@ public class TileEntityBearing extends TileEntityBearingBase implements ITileEnt
         if (!this.world.isRemote) {
             if (lastSpeed != 0.0F && this.getSpeed() == 0.0F && this.isAssembled()) {
                 if (this.movementType == EnumMovementType.PLACE_WHEN_STOPPED ||
-                        (this.movementType == EnumMovementType.PLACE_AT_START && (this.angle < 45.0F || this.angle > 315.0F))) {
+                        (this.movementType == EnumMovementType.PLACE_AT_START && this.isNearInitialAngle())) {
                     this.mightDisassemble = true;
                 }
             } else if (lastSpeed == 0.0F && this.getSpeed() != 0.0F && !this.isAssembled()) {
@@ -96,8 +96,12 @@ public class TileEntityBearing extends TileEntityBearingBase implements ITileEnt
         addSubInteractionBoxes(this.getState().getValue(BlockBearingBase.FACING).getAxis(), this);
     }
 
-    public boolean setMovementType(EntityPlayer player, boolean sneaking, ItemStack held, int direction) {
-        if (SubInteractionBox.Helper.basicScrollRequirements(held, sneaking)) {
+    public boolean isNearInitialAngle() {
+        float a = Math.abs(this.angle % 360.0F);
+        return a < 22.5F || a > 360.0F - 22.5F;
+    }
+
+    public boolean setMovementType(EntityPlayer player, boolean sneaking, ItemStack held, int direction) {        if (SubInteractionBox.Helper.basicScrollRequirements(held, sneaking)) {
             int id = this.movementType.getId() + (int)Math.signum(direction);
             this.movementType = EnumMovementType.byId(id < 0 ? 2 : id > 2 ? 0 : id);
             this.sync();

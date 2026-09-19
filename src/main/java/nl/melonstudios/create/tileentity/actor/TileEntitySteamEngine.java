@@ -5,8 +5,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import nl.melonstudios.create.block.BlockFluidTank;
 import nl.melonstudios.create.tileentity.TileEntityFluidTank;
 import nl.melonstudios.create.tileentity.TileEntityKineticGeneratorBase;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Steam engine generator: finds an adjacent boiler tank, outputs 16 RPM at
@@ -51,18 +55,22 @@ public class TileEntitySteamEngine extends TileEntityKineticGeneratorBase {
     }
 
     private int countEngines(TileEntityFluidTank boiler) {
-        int n = 0;
-        BlockPos bp = boiler.getPos();
-        for (int dx = -3; dx <= 3; dx++) {
-            for (int dy = -3; dy <= 3; dy++) {
-                for (int dz = -3; dz <= 3; dz++) {
-                    BlockPos p = bp.add(dx, dy, dz);
-                    if (!this.world.isBlockLoaded(p)) continue;
-                    if (this.world.getTileEntity(p) instanceof TileEntitySteamEngine) n++;
-                }
+        // Official BoilerData.evaluate counts only engines touching this tank;
+        // distant or foreign-boiler engines must not dilute the split.
+        Set<BlockPos> found = new HashSet<>();
+        TileEntityFluidTank bottom = boiler.bottom();
+        int h = Math.max(1, bottom.height());
+        for (int i = 0; i < h; i++) {
+            BlockPos p = bottom.getPos().up(i);
+            if (!this.world.isBlockLoaded(p)) continue;
+            if (!(this.world.getBlockState(p).getBlock() instanceof BlockFluidTank)) break;
+            for (EnumFacing f : EnumFacing.VALUES) {
+                BlockPos q = p.offset(f);
+                if (!this.world.isBlockLoaded(q)) continue;
+                if (this.world.getTileEntity(q) instanceof TileEntitySteamEngine) found.add(q);
             }
         }
-        return Math.max(1, n);
+        return Math.max(1, found.size());
     }
 
     @Override

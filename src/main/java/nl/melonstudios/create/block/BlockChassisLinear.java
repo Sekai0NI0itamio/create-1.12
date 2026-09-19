@@ -47,6 +47,10 @@ public class BlockChassisLinear extends BlockRotatedPillar implements IExtension
         this.setResistance(BlockProperties.STONE_RESISTANCE);
         this.setHarvestLevel("pickaxe", 0);
 
+        this.setDefaultState(this.blockState.getBaseState()
+                .withProperty(AXIS, EnumFacing.Axis.Y)
+                .withProperty(SECONDARY, false));
+
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }
 
@@ -87,13 +91,15 @@ public class BlockChassisLinear extends BlockRotatedPillar implements IExtension
 
     @Override
     public int getMetaFromState(IBlockState state) {
+        // AXIS occupies bits 0-1 (via super); SECONDARY lives on bit 2 so no
+        // axis/secondary combination collides (Y+secondary used to equal X+plain).
         int meta = super.getMetaFromState(state);
-        return state.getValue(SECONDARY) ? meta | 0b0001 : meta;
+        return state.getValue(SECONDARY) ? meta | 0b0100 : meta;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return super.getStateFromMeta(meta).withProperty(SECONDARY, (meta & 0b0001) != 0);
+        return super.getStateFromMeta(meta & 0b0011).withProperty(SECONDARY, (meta & 0b0100) != 0);
     }
 
     @Override

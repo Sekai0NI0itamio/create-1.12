@@ -23,7 +23,7 @@ public class BlockClutch extends BlockGearshift {
         boolean lastPowered = state.getValue(POWERED);
         if (lastPowered != isPosPowered(worldIn, pos)) {
             worldIn.setBlockState(pos, state.cycleProperty(POWERED), 18);
-            this.detachKinetics(worldIn, pos, !lastPowered);
+            this.detachKinetics(worldIn, pos, lastPowered);
         }
     }
 

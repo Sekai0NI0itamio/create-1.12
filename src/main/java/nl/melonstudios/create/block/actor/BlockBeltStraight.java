@@ -105,7 +105,9 @@ public class BlockBeltStraight extends BlockBeltBase implements IExtensionBlock 
                 TileEntity te = worldIn.getTileEntity(pos);
                 if (te instanceof TileEntityBeltBase) {
                     TileEntityBeltBase belt = (TileEntityBeltBase) te;
-                    double speed = belt.getSpeed() * 0.0625 * 0.025;
+                    // Blocks per tick, matching the item rate above and the reference
+                    // BeltMovementHandler movement speed (speed/480).
+                    double speed = belt.getSpeed() / 480.0;
                     if (speed != 0.0) {
                         EnumFacing.Axis axis = state.getValue(AXIS);
                         EnumFacing facing = axis == EnumFacing.Axis.X ? EnumFacing.WEST : EnumFacing.SOUTH;

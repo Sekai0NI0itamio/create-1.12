@@ -42,6 +42,8 @@ public class BlockChassisRadial extends BlockRotatedPillar implements IExtension
         this.setResistance(BlockProperties.STONE_RESISTANCE);
         this.setHarvestLevel("pickaxe", 0);
 
+        this.setDefaultState(this.blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.Y));
+
         this.setCreativeTab(ItemInit.TAB_CREATE);
     }
 
