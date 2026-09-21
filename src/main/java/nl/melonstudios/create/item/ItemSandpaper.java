@@ -22,10 +22,14 @@ import nl.melonstudios.create.recipe.SandingRecipes;
 
 public class ItemSandpaper extends Item {
     public ItemSandpaper() {
+        this("sandpaper", "create.sandpaper");
+    }
+
+    protected ItemSandpaper(String registryName, String unlocalizedName) {
         super();
         this.setMaxStackSize(1);
-        this.setRegistryName("sandpaper");
-        this.setUnlocalizedName("create.sandpaper");
+        this.setRegistryName(registryName);
+        this.setUnlocalizedName(unlocalizedName);
         this.setMaxDamage(8);
 
         this.setCreativeTab(ItemInit.TAB_CREATE);
