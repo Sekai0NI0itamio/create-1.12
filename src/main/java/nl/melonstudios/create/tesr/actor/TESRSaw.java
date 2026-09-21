@@ -9,7 +9,6 @@ import nl.melonstudios.create.block.BlockRender;
 import nl.melonstudios.create.tesr.TESRKineticBase;
 import nl.melonstudios.create.tileentity.actor.TileEntitySaw;
 import nl.melonstudios.create.util.EnumRenderPart;
-import nl.melonstudios.create.util.EnumRenderPart;
 
 @SideOnly(Side.CLIENT)
 public class TESRSaw extends TESRKineticBase<TileEntitySaw> {

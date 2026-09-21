@@ -4,7 +4,7 @@
       "model": "create:belt/straight_middle"
     },
     "axis=x,part=pulley,vertical=false": {
-      "model": "create:belt/straight_middle"
+      "model": "create:belt/pulley"
     },
     "axis=x,part=end,vertical=false": {
       "model": "create:belt/straight_end"
@@ -18,7 +18,7 @@
       "y": 90
     },
     "axis=z,part=pulley,vertical=false": {
-      "model": "create:belt/straight_middle",
+      "model": "create:belt/pulley",
       "y": 90
     },
     "axis=z,part=end,vertical=false": {

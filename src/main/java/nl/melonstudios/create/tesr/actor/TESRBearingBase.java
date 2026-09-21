@@ -22,7 +22,7 @@ public class TESRBearingBase<T extends TileEntityBearingBase> extends TESRKineti
     @Override
     protected void render(T te, float pt, float alpha) {
         EnumFacing facing = te.getFacing();
-        this.spinHalfShaft(te, te.speed, facing.getOpposite(), pt);
+        this.spinHalfShaft(te, te.getSpeed(), facing.getOpposite(), pt);
         if (te.isAssembled()) {
             {
                 GlStateManager.pushMatrix();

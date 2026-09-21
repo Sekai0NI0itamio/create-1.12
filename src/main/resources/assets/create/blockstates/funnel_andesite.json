@@ -4,13 +4,13 @@
       "model": "create:funnel_andesite"
     },
     "funnel_state=inserting,powered=true": {
-      "model": "create:funnel_andesite"
+      "model": "create:funnel_andesite_powered"
     },
     "funnel_state=extracting,powered=false": {
-      "model": "create:funnel_andesite"
+      "model": "create:funnel_andesite_extracting"
     },
     "funnel_state=extracting,powered=true": {
-      "model": "create:funnel_andesite"
+      "model": "create:funnel_andesite_extracting_powered"
     }
   }
 }

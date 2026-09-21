@@ -45,7 +45,9 @@ public class TESRBeltBase<T extends TileEntityBeltBase> extends TESRKineticBase<
                 GlStateManager.pushMatrix();
                 IBakedModel model = this.mc.getRenderItem().getItemModelWithOverrides(te.left, this.getWorld(), null);
                 boolean isFlat = model instanceof BakedItemModel;
-                GlStateManager.translate(0.5 + facing.getFrontOffsetX() * pos, 0.75, 0.5 + facing.getFrontOffsetZ() * pos);
+                // Reference BeltRenderer rests items at beltStartOffset y = 15/16;
+                // 0.75 put them coplanar with the scrolling top quad.
+                GlStateManager.translate(0.5 + facing.getFrontOffsetX() * pos, 15.0 / 16.0, 0.5 + facing.getFrontOffsetZ() * pos);
 
                 if (isFlat) {
                     if (this.upright(te.left)) {
@@ -62,7 +64,8 @@ public class TESRBeltBase<T extends TileEntityBeltBase> extends TESRKineticBase<
                 GlStateManager.pushMatrix();
                 IBakedModel model = this.mc.getRenderItem().getItemModelWithOverrides(te.right, this.getWorld(), null);
                 boolean isFlat = model instanceof BakedItemModel;
-                GlStateManager.translate(0.5 + facing.getFrontOffsetX() * pos, 0.75, 0.5 + facing.getFrontOffsetZ() * pos);
+                // Same 15/16 rest height as the left slot (see above).
+                GlStateManager.translate(0.5 + facing.getFrontOffsetX() * pos, 15.0 / 16.0, 0.5 + facing.getFrontOffsetZ() * pos);
 
                 if (isFlat) {
                     if (this.upright(te.right)) {
@@ -114,7 +117,9 @@ public class TESRBeltBase<T extends TileEntityBeltBase> extends TESRKineticBase<
     }
     private void renderUprightItem(IBakedModel model, ItemStack stack) {
         GlStateManager.scale(0.5F, 0.5F, 0.5F);
-        GlStateManager.translate(0.0F, 0.5F, 0.0F);
+        // Reference lifts upright items by 3/32 of a block; applied after the
+        // 0.5 scale that is 0.1875 units here.
+        GlStateManager.translate(0.0F, 0.1875F, 0.0F);
         int amount = (stack.getCount() + 6) / 8;
         this.mc.getRenderItem().renderItem(stack, model);
         Random rand = new Random(OFFSET_SEED);

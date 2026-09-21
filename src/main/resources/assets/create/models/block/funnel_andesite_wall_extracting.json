@@ -4,7 +4,7 @@
     "particle": "create:block/andesite_block",
     "back": "create:block/funnel/funnel_back",
     "base": "create:block/funnel/andesite_funnel",
-    "direction": "create:block/funnel/andesite_funnel_push",
+    "direction": "create:block/funnel/andesite_funnel_pull",
     "redstone": "create:block/funnel/andesite_funnel_unpowered",
     "flap": "create:block/funnel/funnel_open",
     "block": "create:block/andesite_block"

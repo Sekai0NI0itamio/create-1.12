@@ -3,12 +3,12 @@ package nl.melonstudios.create.tesr.actor;
 import com.melonstudios.melonlib.misc.BlockStateProperties;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.melonstudios.create.block.BlockRender;
 import nl.melonstudios.create.block.actor.BlockGauge;
-import nl.melonstudios.create.kinetics.FastStateRendering;
 import nl.melonstudios.create.tesr.TESRKineticBase;
 import nl.melonstudios.create.tileentity.TileEntityGaugeBase;
 import nl.melonstudios.create.util.EnumRenderPart;
@@ -30,7 +30,7 @@ public class TESRGauge<T extends TileEntityGaugeBase> extends TESRKineticBase<T>
         float progress = Utils.lerp(pt, te.prevDialState, te.dialState) * 90;
 
         IBlockState dialState = BlockRender.byEnum(EnumRenderPart.DIAL);
-        //IBakedModel dialModel = this.mc.getBlockRendererDispatcher().getModelForState(dialState);
+        IBakedModel dialModel = this.mc.getBlockRendererDispatcher().getModelForState(dialState);
 
         for (EnumFacing facing : EnumFacing.VALUES) {
             if (!((BlockGauge)gaugeState.getBlock()).renderHeadOnFace(te.getWorld(), te.getPos(), gaugeState, facing)) continue;
@@ -40,10 +40,7 @@ public class TESRGauge<T extends TileEntityGaugeBase> extends TESRKineticBase<T>
             GlStateManager.translate(0, dialPivot, dialPivot);
             GlStateManager.rotate(-progress, 1, 0, 0);
             GlStateManager.translate(0, -dialPivot, -dialPivot);
-            //GlStateManager.rotate(-90, 0, 1, 0);
-            FastStateRendering.INSTANCE.renderFast(dialState);
-            //this.mc.getBlockRendererDispatcher().getBlockModelRenderer()
-            //        .renderModelBrightness(dialModel, dialState, 1.0F, true);
+            this.renderBakedModel(1.0F, dialModel, dialState);
             GlStateManager.popMatrix();
         }
     }

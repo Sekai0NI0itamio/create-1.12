@@ -1,13 +1,13 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "create:block/andesite_block",
+    "particle": "create:block/brass_block",
     "back": "create:block/funnel/funnel_back",
-    "base": "create:block/funnel/andesite_funnel",
-    "direction": "create:block/funnel/andesite_funnel_push",
-    "redstone": "create:block/funnel/andesite_funnel_unpowered",
-    "flap": "create:block/funnel/funnel_open",
-    "block": "create:block/andesite_block"
+    "base": "create:block/funnel/brass_funnel",
+    "direction": "create:block/funnel/brass_funnel_push",
+    "redstone": "create:block/funnel/brass_funnel_powered",
+    "flap": "create:block/funnel/funnel_closed",
+    "block": "create:block/brass_block"
   },
   "elements": [
     {

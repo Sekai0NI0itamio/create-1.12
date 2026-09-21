@@ -18,18 +18,22 @@ public class TESRMixer extends TESRKineticBase<TileEntityMixer> {
     protected void render(TileEntityMixer te, float pt, float alpha) {
         this.spinShaftlessCog(te, te.getSpeed(), EnumFacing.Axis.Y, pt);
 
-        float lowering = Utils.clampedLerp(pt, te.loweringOld, te.lowering) * -0.05F;
-        GlStateManager.translate(0.0F, lowering, 0.0F);
-        {
-            IBlockState state = BlockRender.byEnum(EnumRenderPart.PRESS_Z);
-            IBakedModel model = this.mc.getBlockRendererDispatcher().getModelForState(state);
-            this.renderBakedModel(1.0F, model, state);
-        }
+        // Cosine-eased drop matching the reference lower curve; the backport
+        // lowers over 0 -> 20 ticks and holds, so only the ease-in half applies.
+        // NOTE: the reference also renders a pole between cog and head; no pole
+        // model exists in the backport (see NEEDS-LEAD), so only the whisk renders.
+        float num = Utils.clampedLerp(pt, te.loweringOld, te.lowering) / 20.0F;
+        float eased = (2.0F - (float) Math.cos(num * Math.PI)) * 0.5F - 0.5F;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0.0F, -eased, 0.0F);
         GlStateManager.translate(0.0F, -1.0F, 0.0F);
         {
             IBlockState state = BlockRender.byEnum(EnumRenderPart.WHISK);
             IBakedModel model = this.mc.getBlockRendererDispatcher().getModelForState(state);
-            this.spinModel(te, pt, EnumFacing.Axis.Y, model, state, te.lowering == 20 ? 4.0F : 1.0F);
+            // Reference spins the head 2x while fully lowered, 1x while moving, half speed at rest.
+            float m = te.lowering >= 20 ? 2.0F : (te.lowering > 0 ? 1.0F : 0.5F);
+            this.spinModel(te, pt, EnumFacing.Axis.Y, model, state, m);
         }
+        GlStateManager.popMatrix();
     }
 }

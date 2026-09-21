@@ -5,8 +5,8 @@
     "back": "create:block/funnel/funnel_back",
     "base": "create:block/funnel/andesite_funnel",
     "direction": "create:block/funnel/andesite_funnel_push",
-    "redstone": "create:block/funnel/andesite_funnel_unpowered",
-    "flap": "create:block/funnel/funnel_open",
+    "redstone": "create:block/funnel/andesite_funnel_powered",
+    "flap": "create:block/funnel/funnel_closed",
     "block": "create:block/andesite_block"
   },
   "elements": [
@@ -34,19 +34,19 @@
     },
     {
       "from": [2.05, 2, 14],
-      "to": [13.95, 13.95, 18.1],
+      "to": [13.95, 16, 18.1],
       "faces": {
-        "north": {"uv": [0, 0, 6, 6], "texture": "#base"},
-        "east": {"uv": [8, 2, 12, 14], "texture": "#redstone"},
-        "south": {"uv": [6, 0, 12, 6], "texture": "#base"},
-        "west": {"uv": [8, 2, 12, 14], "rotation": 180, "texture": "#redstone"},
-        "up": {"uv": [8, 2, 12, 14], "rotation": 270, "texture": "#redstone"},
-        "down": {"uv": [8, 2, 12, 14], "rotation": 90, "texture": "#redstone"}
+        "north": {"uv": [0, 0, 6, 7], "texture": "#base"},
+        "east": {"uv": [8, 0, 12, 14], "texture": "#redstone"},
+        "south": {"uv": [6, 0, 12, 7], "texture": "#base"},
+        "west": {"uv": [8, 0, 12, 14], "rotation": 180, "texture": "#redstone"},
+        "up": {"uv": [8, 0, 12, 14], "rotation": 270, "texture": "#redstone"},
+        "down": {"uv": [8, 0, 12, 14], "rotation": 90, "texture": "#redstone"}
       }
     },
     {
-      "from": [2, 10, 10],
-      "to": [14, 12, 14],
+      "from": [2, 12, 10],
+      "to": [14, 14, 14],
       "faces": {
         "down": {"uv": [0, 0, 6, 2.5], "rotation": 180, "texture": "#base"}
       }
@@ -76,10 +76,10 @@
     },
     {
       "from": [4, 3, 12.15],
-      "to": [12, 11, 12.35],
+      "to": [12, 13, 12.35],
       "faces": {
-        "north": {"uv": [4, 3, 12, 11], "texture": "#flap"},
-        "south": {"uv": [4, 3, 12, 11], "texture": "#flap"}
+        "north": {"uv": [4, 3, 12, 13], "texture": "#flap"},
+        "south": {"uv": [4, 3, 12, 13], "texture": "#flap"}
       }
     }
   ]

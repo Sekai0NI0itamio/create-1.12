@@ -31,7 +31,8 @@ public class TESRDeployer extends TESRKineticBase<TileEntityDeployer> {
         SubInteractionBox.renderPotentialInteractionBoxes(this.mc.objectMouseOver, te);
         GlStateManager.popMatrix();
 
-        float adjustedProgress = MathHelper.clamp(te.progressOld + (te.progress - te.progressOld) * pt, te.progressOld, te.progress);
+        float raw = te.progressOld + (te.progress - te.progressOld) * pt;
+        float adjustedProgress = MathHelper.clamp(raw, Math.min(te.progressOld, te.progress), Math.max(te.progressOld, te.progress));
         if (adjustedProgress > 1000) adjustedProgress = Math.abs(1000.0F - (adjustedProgress-1000.0F));
         adjustedProgress *= 0.001F;
 
@@ -112,6 +113,7 @@ public class TESRDeployer extends TESRKineticBase<TileEntityDeployer> {
             }
         }
 
+        GlStateManager.pushMatrix();
         GlStateManager.translate(
                 adjustedProgress*facing.getFrontOffsetX(),
                 adjustedProgress*facing.getFrontOffsetY(),
@@ -121,5 +123,6 @@ public class TESRDeployer extends TESRKineticBase<TileEntityDeployer> {
         IBakedModel model = this.mc.getBlockRendererDispatcher().getModelForState(hand);
         if (shouldRebind) this.rebindTex();
         this.renderBakedModel(1.0F, model, hand);
+        GlStateManager.popMatrix();
     }
 }

@@ -1,0 +1,50 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"particle": "create:block/belt",
+		"belt": "create:block/belt"
+	},
+	"elements": [
+		{
+			"from": [0, 4, 1],
+			"to": [16, 6, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 4, 1]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#belt"},
+				"south": {"uv": [15, 0, 16, 16], "rotation": 90, "texture": "#belt"}
+			}
+		},
+		{
+			"from": [0, 10, 1],
+			"to": [16, 12, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 10, 1]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#belt"},
+				"south": {"uv": [15, 0, 16, 16], "rotation": 90, "texture": "#belt"}
+			}
+		},
+		{
+			"from": [4, 5, 2],
+			"to": [12, 11, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#belt"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#belt"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#belt"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#belt"}
+			}
+		},
+		{
+			"from": [5, 4, 2],
+			"to": [11, 12, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#belt"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#belt"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#belt"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#belt"}
+			}
+		}
+	]
+}

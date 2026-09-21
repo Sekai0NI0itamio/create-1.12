@@ -4,13 +4,13 @@
       "model": "create:funnel_brass"
     },
     "funnel_state=inserting,powered=true": {
-      "model": "create:funnel_brass"
+      "model": "create:funnel_brass_powered"
     },
     "funnel_state=extracting,powered=false": {
-      "model": "create:funnel_brass"
+      "model": "create:funnel_brass_extracting"
     },
     "funnel_state=extracting,powered=true": {
-      "model": "create:funnel_brass"
+      "model": "create:funnel_brass_extracting_powered"
     }
   }
 }

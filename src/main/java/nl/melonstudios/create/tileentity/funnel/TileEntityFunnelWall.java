@@ -1,5 +1,6 @@
 package nl.melonstudios.create.tileentity.funnel;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,9 +10,12 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import nl.melonstudios.create.block.actor.BlockBeltBase;
 import nl.melonstudios.create.block.state.EnumFunnelState;
 import nl.melonstudios.create.init.SoundInit;
+import nl.melonstudios.create.tileentity.actor.TileEntityBeltBase;
 import nl.melonstudios.create.tileentity.marker.IDepot;
 import nl.melonstudios.create.tileentity.marker.ITopOpenInventory;
 import nl.melonstudios.create.util.filter.IItemFilter;
@@ -118,11 +122,106 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
         return this.lastAABB;
     }
 
+    /**
+     * Belt pull (reference BeltFunnelInteractionHandler.checkForFunnels, TAKING_FROM_BELT).
+     * A funnel sitting above a belt segment pulls riders off the belt into the
+     * attached inventory (the neighbour on the funnel's source side). Belt items
+     * ride at belt-top height (+0.75, see TESRBeltBase / IDepot.getItemHeight),
+     * so this reads the belt segment TE directly below instead of scanning the
+     * funnel's own block space, which is a full block higher and never overlaps
+     * the riders.
+     *
+     * Ported reference rules:
+     * - Powered funnels never pull (gated by update(), which also resets cooldown).
+     * - No pull when the funnel faces along the belt movement (items pass under).
+     *   Perpendicular and blocking (facing against movement) funnels pull.
+     * - Pickup at the segment center: funnelEntry = segment + .5, i.e. the mouth
+     *   slot reaching leftPos == 1.0 (positive flow) / rightPos == 0.0 (negative
+     *   flow). Uses a one-tick crossing window instead of exact double equality.
+     * - Brass exact-amount shortfall pulls nothing; target-full pulls nothing.
+     * - Flap + sound on transfer, 8-tick cooldown (reference defaultExtractionTimer = 8).
+     *
+     * @return true if items moved (cooldown set, caller must return).
+     */
+    private boolean tryPullFromBelt(TileEntityBeltBase belt, IItemHandler inventory) {
+        if (inventory == null || inventory.getSlots() <= 0) return false;
+        if (belt.getSpeed() == 0.0F) return false;
+        if (!(belt instanceof IDepot)) return false;
+        if (!belt.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) return false;
+        IItemHandler beltCap = belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        if (beltCap == null || beltCap.getSlots() <= 0) return false;
+
+        EnumFacing movement = this.getBeltMovementFacing(belt);
+        if (movement != null && this.getFacing(this.getBlockMetadata()) == movement) return false;
+
+        ItemStack peek = beltCap.getStackInSlot(0);
+        if (peek.isEmpty()) return false;
+
+        boolean flag = belt.getFlag();
+        double step = Math.abs(belt.getSpeed()) / 240.0;
+        boolean atMouth = flag
+                ? belt.leftPos >= 1.0 - step - 1.0E-4
+                : belt.rightPos <= 0.0 + step + 1.0E-4;
+        if (!atMouth) return false;
+
+        if (this.getFilter() != null && !this.getFilter().matches(peek)) return false;
+
+        int amount = Math.max(this.getExtractionAmount(), 1);
+        if (this.isExtractionAmountExact() && peek.getCount() < amount) return false;
+        int take = this.isExtractionAmountExact() ? Math.min(amount, peek.getCount()) : peek.getCount();
+
+        ItemStack sim = peek.copy();
+        sim.setCount(take);
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            sim = inventory.insertItem(i, sim, true);
+            if (sim.isEmpty()) break;
+        }
+        if (sim.getCount() >= take) return false;
+        int moved = take - sim.getCount();
+
+        ItemStack extracted = ((IDepot) belt).takePresented(moved);
+        if (extracted.isEmpty()) return false;
+        ItemStack leftover = extracted.copy();
+        for (int i = 0; i < inventory.getSlots() && !leftover.isEmpty(); i++) {
+            leftover = inventory.insertItem(i, leftover, false);
+        }
+        if (!leftover.isEmpty()) {
+            leftover = belt.tryInsertItem(leftover);
+            if (!leftover.isEmpty() && !this.world.isRemote) {
+                EntityItem entity = new EntityItem(this.world,
+                        belt.getPos().getX() + 0.5, belt.getPos().getY() + 0.85, belt.getPos().getZ() + 0.5,
+                        leftover.copy()
+                );
+                entity.motionX = entity.motionY = entity.motionZ = 0.0;
+                this.world.spawnEntity(entity);
+            }
+        }
+        this.onTransfer();
+        this.cooldown = 8;
+        this.markDirty();
+        return true;
+    }
+
+    @Nullable
+    private EnumFacing getBeltMovementFacing(TileEntityBeltBase belt) {
+        IBlockState beltState = this.world.getBlockState(belt.getPos());
+        if (!(beltState.getBlock() instanceof BlockBeltBase)) return null;
+        EnumFacing.Axis axis = ((BlockBeltBase) beltState.getBlock()).getTransportAxis(beltState);
+        if (axis == null || axis == EnumFacing.Axis.Y) return null;
+        // Mirrors TileEntityBeltBase.tick: X-axis belts move negated (speed *= -1).
+        boolean positive = (belt.getSpeed() > 0.0F) != (axis == EnumFacing.Axis.X);
+        return EnumFacing.getFacingFromAxis(positive
+                ? EnumFacing.AxisDirection.POSITIVE : EnumFacing.AxisDirection.NEGATIVE, axis);
+    }
+
     @SuppressWarnings("unchecked")
     private <DEPOT extends TileEntity & IDepot, TOP_OPEN extends TileEntity & ITopOpenInventory> void tick(IItemHandler inventory, EnumFunnelState state) {
         this.getDepot();
         if (state == EnumFunnelState.INSERTING) {
             if (this.depot instanceof IDepot) {
+                if (this.depot instanceof TileEntityBeltBase) {
+                    if (this.tryPullFromBelt((TileEntityBeltBase) this.depot, inventory)) return;
+                }
                 DEPOT depot = (DEPOT) this.depot;
                 ItemStack presented = depot.getPresentedItem();
                 if (presented.isEmpty() || (this.getFilter() != null && this.getFilter().matches(presented))) return;

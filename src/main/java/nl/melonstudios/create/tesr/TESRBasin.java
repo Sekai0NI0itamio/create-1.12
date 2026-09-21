@@ -62,7 +62,7 @@ public class TESRBasin extends TileEntitySpecialRenderer<TileEntityBasin> {
 
             for (int i = 0; i < liquids.size(); i++) {
                 FluidStack liquid = liquids.get(i);
-                this.setLevels(world, te, liquid.hashCode());
+                this.setLevels(world, te, liquid.hashCode(), partialTicks);
                 this.renderLiquid(liquid, world, te.getPos(), i, renderer);
             }
 
@@ -111,6 +111,12 @@ public class TESRBasin extends TileEntitySpecialRenderer<TileEntityBasin> {
                         .getItemModelWithOverrides(stack, te.getWorld(), null);
                 GlStateManager.rotate(spacing*i+baseRot, 0.0F, 1.0F, 0.0F);
                 GlStateManager.translate(0.35F, 0.0F, 0.0F);
+                if (fluidAmount > 0) {
+                    // Gentle bob while submerged, matching the reference BasinRenderer.
+                    double renderTime = (double) this.getWorld().getTotalWorldTime() + partialTicks;
+                    GlStateManager.translate(0.0F,
+                            (Math.sin(renderTime / 12.0 + spacing * i) + 1.5) / 32.0, 0.0F);
+                }
                 if (itemModel instanceof BakedItemModel) {
                     GlStateManager.scale(0.25F, 0.25F, 0.25F);
                 } else {
@@ -145,8 +151,8 @@ public class TESRBasin extends TileEntitySpecialRenderer<TileEntityBasin> {
                 r, g, b, a, l1, l2
         );
     }
-    private void setLevels(World world, TileEntityBasin te, int offset) {
-        long time = world.getTotalWorldTime() + Math.abs(te.hashCode() | ((long)te.getPos().hashCode() << 32));
+    private void setLevels(World world, TileEntityBasin te, int offset, float pt) {
+        double time = (double) world.getTotalWorldTime() + pt + Math.abs(te.hashCode() | ((long)te.getPos().hashCode() << 32));
         double lvl1 = Math.sin(Math.toRadians((time+offset) % 360))*0.01+this.level[0];
         double lvl2 = Math.sin(Math.toRadians((time+offset+90) % 360))*0.01+this.level[0];
         double lvl3 = Math.sin(Math.toRadians((time+offset+180) % 360))*0.01+this.level[0];

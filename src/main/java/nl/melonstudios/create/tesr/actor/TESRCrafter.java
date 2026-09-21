@@ -93,6 +93,7 @@ public class TESRCrafter extends TESRKineticBase<TileEntityCrafter> {
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
+            GlStateManager.pushMatrix();
             IBakedModel model = this.mc.getRenderItem().getItemModelWithOverrides(te.containedItem, this.getWorld(), null);
             boolean isFlat = model instanceof BakedItemModel;
 
@@ -108,6 +109,7 @@ public class TESRCrafter extends TESRKineticBase<TileEntityCrafter> {
             }
             this.mc.getRenderItem().renderItem(te.containedItem, model);
 
+            GlStateManager.popMatrix();
             GlStateManager.disableRescaleNormal();
             GlStateManager.disableBlend();
         }
