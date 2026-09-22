@@ -19,7 +19,7 @@
     "render_part=half_shaft_north": {
       "model": "create:render/half_shaft",
       "x": 90,
-      "y": 0
+      "y": 180
     },
     "render_part=half_shaft_east": {
       "model": "create:render/half_shaft",
@@ -29,7 +29,7 @@
     "render_part=half_shaft_south": {
       "model": "create:render/half_shaft",
       "x": 90,
-      "y": 180
+      "y": 0
     },
     "render_part=half_shaft_west": {
       "model": "create:render/half_shaft",

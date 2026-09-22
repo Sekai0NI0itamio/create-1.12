@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube",
   "textures": {
     "up": "create:block/orestone/pillar_flipped/veridium",
     "down": "create:block/orestone/pillar_flipped/veridium",

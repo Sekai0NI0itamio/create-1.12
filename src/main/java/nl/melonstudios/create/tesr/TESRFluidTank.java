@@ -54,6 +54,10 @@ public class TESRFluidTank extends TileEntitySpecialRenderer<TileEntityFluidTank
             local = 1.0D;
         }
         double surface = 0.06D + local * 0.88D;
+        // Reference pins lighter-than-air fluids to the ceiling instead of the floor.
+        if (fluid.getFluid().isGaseous(fluid)) {
+            surface = 0.94D - local * 0.88D;
+        }
 
         this.mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         RenderUtils.prepare(x, y, z);

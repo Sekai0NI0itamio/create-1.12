@@ -17,9 +17,9 @@ import nl.melonstudios.create.tileentity.actor.TileEntitySchematicannon;
  * cannon mouth to its target along the reference bezier flight path
  * (translate of SchematicannonRenderer#renderLaunchedBlocks, block part).
  *
- * NOTE: requires registration in ClientProxy (see NEEDS-LEAD in the family
- * verification report):
- *   this.registerTESR(TileEntitySchematicannon.class, "schematicannon", new TESRSchematicannon());
+ * NOTE: registered in ClientProxy (TileEntitySchematicannon -> "schematicannon").
+ * Cannon barrel aim is part of the static block model; only the in-flight
+ * block tracer renders here.
  */
 @SideOnly(Side.CLIENT)
 public class TESRSchematicannon extends TESRKineticBase<TileEntitySchematicannon> {

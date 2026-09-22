@@ -35,6 +35,42 @@
       14
      ],
      "texture": "#face"
+    },
+    "east": {
+     "uv": [
+      14,
+      2,
+      16,
+      14
+     ],
+     "texture": "#face"
+    },
+    "west": {
+     "uv": [
+      0,
+      2,
+      2,
+      14
+     ],
+     "texture": "#face"
+    },
+    "up": {
+     "uv": [
+      0,
+      14,
+      16,
+      16
+     ],
+     "texture": "#face"
+    },
+    "down": {
+     "uv": [
+      0,
+      0,
+      16,
+      2
+     ],
+     "texture": "#face"
     }
    }
   }

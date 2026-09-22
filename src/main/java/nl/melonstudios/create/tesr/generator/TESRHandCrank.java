@@ -1,7 +1,6 @@
 package nl.melonstudios.create.tesr.generator;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,10 +19,11 @@ public class TESRHandCrank extends TESRKineticBase<TileEntityHandCrank> {
     @Override
     protected void render(TileEntityHandCrank te, float pt, float alpha) {
         EnumFacing facing = te.getRenderFacing();
-        // Reference renders the kinetic shaft plus the crank handle.
-        this.spinShaft(te, pt, facing.getAxis());
+        // The crank block model is a single piece (no separate handle part yet),
+        // and it spins at exactly the shaft angle, so one spin call draws it.
+        // A second shaft-only pass would redraw the same shaft twice (z-fight).
         IBlockState state = this.facings[facing.getIndex()];
-        IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
+        IBakedModel model = this.mc.getBlockRendererDispatcher().getModelForState(state);
 
         this.spinModel(te, pt, facing.getAxis(), model, state, 1.0F);
     }

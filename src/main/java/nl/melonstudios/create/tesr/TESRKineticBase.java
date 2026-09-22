@@ -123,15 +123,27 @@ public abstract class TESRKineticBase<T extends TileEntityKinetic> extends TESRB
 
     protected final float calculateAngle(TileEntityKinetic te, EnumFacing.Axis axis, float pt, float speed) {
         if (speed == 0) return te.getAxisShift(axis);
-        float time = this.getAdjustedTime(pt);
+        float time = this.kineticTime(pt);
 
         return ((time * 0.3F * speed) % 360) + te.getAxisShift(axis);
     }
     protected final float calculateAngle(TileEntityKinetic te, EnumFacing.Axis axis, float pt, float m, boolean addOffset) {
         if (te.getSpeed() == 0) return addOffset ? te.getAxisShift(axis) : 0.0F;
-        float time = this.getAdjustedTime(pt);
+        float time = this.kineticTime(pt);
 
         return ((time * 0.3F * te.getSpeed() * m) % 360) + (addOffset ? te.getAxisShift(axis) : 0.0F);
+    }
+
+    /**
+     * Clock for spin math, in the same units the reference renderer uses:
+     * client world ticks plus the partial tick. The frame-counter clock in the
+     * shared base advances once per rendered frame, which would make every
+     * shaft spin faster at higher framerates and disagree with the tick-driven
+     * bearing plate angle, so kinetics keep their own tick-based clock here.
+     */
+    protected final float kineticTime(float pt) {
+        if (this.getWorld() == null) return this.getAdjustedTime(pt);
+        return (float) this.getWorld().getTotalWorldTime() + pt;
     }
 
     public static boolean isAxisShifted(BlockPos pos, EnumFacing.Axis axis) {

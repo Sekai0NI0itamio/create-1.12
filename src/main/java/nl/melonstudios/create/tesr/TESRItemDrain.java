@@ -33,7 +33,8 @@ public class TESRItemDrain extends TileEntitySpecialRenderer<TileEntityItemDrain
         if (fluid != null) {
             World world = te.getWorld();
             double level = (fluid.amount / 1500.0) * 0.5 + 0.15;
-            long time = world.getTotalWorldTime() + Math.abs(te.hashCode() | ((long)te.getPos().hashCode() << 32));
+            double time = (double) world.getTotalWorldTime() + partialTicks
+                    + Math.abs(te.hashCode() | ((long) te.getPos().hashCode() << 32));
             double lvl1 = Math.sin(Math.toRadians(time % 360))*0.01+level;
             double lvl2 = Math.sin(Math.toRadians((time+90) % 360))*0.01+level;
             double lvl3 = Math.sin(Math.toRadians((time+180) % 360))*0.01+level;

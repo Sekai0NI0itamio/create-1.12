@@ -103,6 +103,8 @@ public class TESRBasin extends TileEntitySpecialRenderer<TileEntityBasin> {
             GlStateManager.translate(0.5, this.level[0], 0.5);
             float baseRot = Utils.clampedLerp(partialTicks, te.itemRotationOld, te.itemRotation);
             float spacing = 360.0F / count;
+            // Reference centers a lone item; only spread a ring for 2+ items.
+            float ringR = count == 1 ? 0.0F : 0.35F;
             Random rnd = new Random(te.hashCode());
             for (int i = 0; i < count; i++) {
                 GlStateManager.pushMatrix();
@@ -110,7 +112,7 @@ public class TESRBasin extends TileEntitySpecialRenderer<TileEntityBasin> {
                 IBakedModel itemModel = this.mc.getRenderItem()
                         .getItemModelWithOverrides(stack, te.getWorld(), null);
                 GlStateManager.rotate(spacing*i+baseRot, 0.0F, 1.0F, 0.0F);
-                GlStateManager.translate(0.35F, 0.0F, 0.0F);
+                GlStateManager.translate(ringR, 0.0F, 0.0F);
                 if (fluidAmount > 0) {
                     // Gentle bob while submerged, matching the reference BasinRenderer.
                     double renderTime = (double) this.getWorld().getTotalWorldTime() + partialTicks;

@@ -1,4 +1,6 @@
 {
   "parent": "minecraft:item/generated",
-  "textures": "create:item/sword_cardboard"
+  "textures": {
+    "layer0": "create:item/sword_cardboard"
+  }
 }
