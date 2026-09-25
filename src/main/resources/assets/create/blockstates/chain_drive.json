@@ -1,0 +1,45 @@
+{
+  "variants": {
+    "axis=y,part=none": {
+      "model": "create:chain_drive_single"
+    },
+    "axis=y,part=start": {
+      "model": "create:chain_drive_end"
+    },
+    "axis=y,part=middle": {
+      "model": "create:chain_drive_middle"
+    },
+    "axis=y,part=end": {
+      "model": "create:chain_drive_end",
+      "y": 180
+    },
+    "axis=x,part=none": {
+      "model": "create:chain_drive_single"
+    },
+    "axis=x,part=start": {
+      "model": "create:chain_drive_end",
+      "y": 90
+    },
+    "axis=x,part=middle": {
+      "model": "create:chain_drive_middle",
+      "y": 90
+    },
+    "axis=x,part=end": {
+      "model": "create:chain_drive_end",
+      "y": 270
+    },
+    "axis=z,part=none": {
+      "model": "create:chain_drive_single"
+    },
+    "axis=z,part=start": {
+      "model": "create:chain_drive_end"
+    },
+    "axis=z,part=middle": {
+      "model": "create:chain_drive_middle"
+    },
+    "axis=z,part=end": {
+      "model": "create:chain_drive_end",
+      "y": 180
+    }
+  }
+}

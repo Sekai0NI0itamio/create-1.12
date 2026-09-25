@@ -442,6 +442,9 @@ tile.create.glass_fluid_pipe.name=Glass Fluid Pipe
 tile.create.encased_fluid_pipe.name=Encased Fluid Pipe
 tile.create.mechanical_pump.name=Mechanical Pump
 tile.create.fluid_valve.name=Fluid Valve
+tile.create.mechanical_arm.name=Mechanical Arm
+tile.create.chain_drive.name=Chain Drive
+tile.create.chain_conveyor.name=Chain Conveyor
 
 item.create.chromatic_compound.name=Chromatic Compound
 item.create.shadow_steel.name=Shadow Steel

@@ -1,0 +1,16 @@
+{
+ "variants": {
+  "part=start": {
+   "model": "create:chain_conveyor"
+  },
+  "part=end": {
+   "model": "create:chain_conveyor"
+  },
+  "part=middle": {
+   "model": "create:chain_conveyor_segment"
+  },
+  "part=pulley": {
+   "model": "create:chain_conveyor"
+  }
+ }
+}

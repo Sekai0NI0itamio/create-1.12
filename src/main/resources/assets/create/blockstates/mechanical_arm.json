@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "create:mechanical_arm",
+      "x": 180
+    },
+    "facing=up": {
+      "model": "create:mechanical_arm"
+    },
+    "facing=north": {
+      "model": "create:mechanical_arm",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "create:mechanical_arm",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "create:mechanical_arm",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "create:mechanical_arm",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

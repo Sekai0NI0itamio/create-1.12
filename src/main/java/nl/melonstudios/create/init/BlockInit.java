@@ -14,6 +14,8 @@ import nl.melonstudios.create.block.*;
 import nl.melonstudios.create.block.actor.*;
 import nl.melonstudios.create.block.deco.*;
 import nl.melonstudios.create.block.fluid.*;
+import nl.melonstudios.create.block.BlockChainDrive;
+import nl.melonstudios.create.block.BlockChainConveyor;
 import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
@@ -256,6 +258,12 @@ public final class BlockInit {
             registerBlockWithItem(new BlockMechanicalPump());
     public static final BlockFluidValve FLUID_VALVE = (BlockFluidValve)
             registerBlockWithItem(new BlockFluidValve());
+    public static final BlockMechanicalArm MECHANICAL_ARM = (BlockMechanicalArm)
+            registerBlockWithItem(new BlockMechanicalArm());
+    public static final BlockChainDrive CHAIN_DRIVE = (BlockChainDrive)
+            registerBlockWithItem(new BlockChainDrive(Material.IRON, MapColor.GRAY));
+    public static final BlockChainConveyor CHAIN_CONVEYOR = (BlockChainConveyor)
+            registerBlockWithItem(new BlockChainConveyor());
 
     public static final BlockTrainTrack TRAIN_TRACK = (BlockTrainTrack)
             registerBlockWithItem(new BlockTrainTrack()
