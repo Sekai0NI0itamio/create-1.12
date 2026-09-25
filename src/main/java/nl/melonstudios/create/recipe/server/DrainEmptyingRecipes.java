@@ -169,11 +169,7 @@ public class DrainEmptyingRecipes implements ISyncedRecipeType<DrainEmptyingReci
         NBTTagCompound tag = stack.tag;
         buf.writeBoolean(tag != null);
         if (tag != null) {
-            try {
-                new PacketBuffer(buf).writeCompoundTag(tag);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            new PacketBuffer(buf).writeCompoundTag(tag);
         }
     }
 
