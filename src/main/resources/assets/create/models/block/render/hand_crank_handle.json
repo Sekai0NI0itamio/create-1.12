@@ -1,0 +1,66 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"grip": "create:block/axis",
+		"arm": "create:block/andesite_casing_short",
+		"hub": "create:block/smooth_dark_log_top",
+		"particle": "create:block/axis"
+	},
+	"elements": [
+		{
+			"name": "hub",
+			"from": [5, 5, 11],
+			"to": [11, 11, 14],
+			"faces": {
+				"north": {"uv": [5, 5, 11, 11], "texture": "#hub"},
+				"east": {"uv": [13, 6, 16, 12], "texture": "#hub"},
+				"south": {"uv": [5, 5, 11, 11], "texture": "#hub"},
+				"west": {"uv": [0, 3, 3, 9], "texture": "#hub"},
+				"up": {"uv": [6, 0, 12, 3], "texture": "#hub"},
+				"down": {"uv": [6, 13, 12, 16], "texture": "#hub"}
+			}
+		},
+		{
+			"name": "arm",
+			"from": [-2, 6, 10],
+			"to": [14, 10, 13],
+			"faces": {
+				"north": {"uv": [0, 6, 16, 10], "texture": "#arm"},
+				"east": {"uv": [0, 0, 4, 3], "rotation": 90, "texture": "#arm"},
+				"south": {"uv": [0, 6, 16, 10], "texture": "#arm"},
+				"west": {"uv": [0, 0, 4, 3], "rotation": 90, "texture": "#arm"},
+				"up": {"uv": [0, 6, 16, 9], "texture": "#arm"},
+				"down": {"uv": [0, 6, 16, 9], "texture": "#arm"}
+			}
+		},
+		{
+			"name": "link",
+			"from": [0, 7, 9],
+			"to": [2, 9, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 8, 9]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 2], "texture": "#arm"},
+				"east": {"uv": [0, 0, 1, 2], "texture": "#arm"},
+				"south": {"uv": [0, 0, 2, 2], "texture": "#arm"},
+				"west": {"uv": [0, 0, 1, 2], "texture": "#arm"},
+				"up": {"uv": [0, 0, 2, 1], "texture": "#arm"},
+				"down": {"uv": [0, 0, 2, 1], "texture": "#arm"}
+			}
+		},
+		{
+			"name": "grip",
+			"from": [-0.5, 6.5, 3],
+			"to": [2.5, 9.5, 9],
+			"rotation": {"angle": 45, "axis": "z", "origin": [1, 8, 9]},
+			"faces": {
+				"north": {"uv": [6, 11, 9, 14], "rotation": 90, "texture": "#grip"},
+				"east": {"uv": [7, 1, 10, 7], "rotation": 90, "texture": "#grip"},
+				"south": {"uv": [7, 5, 10, 8], "texture": "#grip"},
+				"west": {"uv": [7, 1, 10, 7], "rotation": 90, "texture": "#grip"},
+				"up": {"uv": [7, 1, 10, 7], "texture": "#grip"},
+				"down": {"uv": [7, 1, 10, 7], "texture": "#grip"}
+			}
+		}
+	],
+	"display": {}
+}

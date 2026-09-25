@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.melonstudios.create.network.CreateLegacyPacketManager;
 import nl.melonstudios.create.network.CreateLegacySPackets;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.marker.ITileEntityWithSubInteractions;
 import nl.melonstudios.create.util.SubInteractionBox;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,6 +47,7 @@ public abstract class MixinInventoryPlayer {
                         SubInteractionBox.ScrollInteraction interaction = (SubInteractionBox.ScrollInteraction) box.getInteraction();
                         CreateLegacyPacketManager.sendToServer(CreateLegacySPackets.SCROLL_INTERACTION.create(pos, hitX, hitY, hitZ, direction));
                         if (interaction.scroll(this.player, this.player.isSneaking(), this.player.getHeldItem(EnumHand.MAIN_HAND), direction)) {
+                            this.player.playSound(SoundInit.scroll_value, 0.25F, 1.2F);
                             ci.cancel();
                         }
                         break start;

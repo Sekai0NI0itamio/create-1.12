@@ -88,6 +88,8 @@ public enum EnumRenderPart implements IStringSerializable {
     CRUSHING_WHEEL_Z,
 
     FAN_PROPELLER,
+
+    HAND_CRANK_HANDLE,
     ;
 
     private final int id = this.ordinal();

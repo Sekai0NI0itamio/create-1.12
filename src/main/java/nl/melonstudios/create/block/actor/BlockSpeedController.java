@@ -9,11 +9,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.melonstudios.create.block.BlockKineticBase;
+import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.tileentity.actor.TileEntitySpeedController;
 
 import javax.annotation.Nullable;
@@ -46,6 +48,7 @@ public class BlockSpeedController extends BlockKineticBase implements ITileEntit
             else sc.speedIndex = Math.min(sc.speedIndex + 1, TileEntitySpeedController.SPEEDS.length - 1);
             sc.updateGeneratedRotation();
             sc.sync();
+            world.playSound(null, pos, SoundInit.scroll_value, SoundCategory.BLOCKS, 0.25F, 1.2F);
             player.sendStatusMessage(new net.minecraft.util.text.TextComponentString(
                     "Target speed: " + (int) TileEntitySpeedController.SPEEDS[sc.speedIndex] + " RPM"), true);
         }

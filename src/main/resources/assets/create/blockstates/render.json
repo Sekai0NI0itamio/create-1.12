@@ -237,6 +237,9 @@
     },
     "render_part=fan_propeller": {
       "model": "create:render/fan_propeller"
+    },
+    "render_part=hand_crank_handle": {
+      "model": "create:render/hand_crank_handle"
     }
   }
 }

@@ -36,6 +36,10 @@ public class TileEntityPackager extends TileEntityKinetic {
     public final List<ItemStack> requests = new ArrayList<>();
     public String address = "";
     private int cooldown;
+    /** Emit-cycle clock driving the client iris-hatch animation. Counts down from CYCLE. */
+    public static final int CYCLE = 20;
+    public int animationTicks;
+    public int lastAnimationTicks;
 
     public TileEntityPackager() {
         for (int i = 0; i < 9; i++) requests.add(ItemStack.EMPTY);
@@ -49,8 +53,13 @@ public class TileEntityPackager extends TileEntityKinetic {
     @Override
     public void tick() {
         super.tick();
+        this.lastAnimationTicks = this.animationTicks;
+        if (this.world.isRemote) {
+            if (this.animationTicks > 0) this.animationTicks--;
+            return;
+        }
         if (this.getSpeed() == 0) return;
-        if (this.world.isRemote) return;
+        if (this.animationTicks > 0 && --this.animationTicks == 0) this.sync();
         if (--this.cooldown > 0) return;
         this.cooldown = 20;
 
@@ -69,7 +78,10 @@ public class TileEntityPackager extends TileEntityKinetic {
             this.world.playSound(null, this.pos, SoundInit.packager, SoundCategory.BLOCKS, 1.0F, 1.0F);
             made = true;
         }
-        if (made) this.sync();
+        if (made) {
+            this.animationTicks = CYCLE;
+            this.sync();
+        }
     }
 
     private IItemHandler attachedInventory() {
@@ -105,6 +117,7 @@ public class TileEntityPackager extends TileEntityKinetic {
         }
         nbt.setTag("Requests", list);
         nbt.setString("Address", this.address);
+        nbt.setInteger("AnimationTicks", this.animationTicks);
         return nbt;
     }
 
@@ -120,18 +133,22 @@ public class TileEntityPackager extends TileEntityKinetic {
         }
         while (this.requests.size() < 9) this.requests.add(ItemStack.EMPTY);
         this.address = nbt.getString("Address");
+        this.animationTicks = nbt.getInteger("AnimationTicks");
     }
 
     @Override
     public NBTTagCompound writePacket() {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setString("Address", this.address);
+        nbt.setInteger("AnimationTicks", this.animationTicks);
         return nbt;
     }
 
     @Override
     public void readPacket(NBTTagCompound nbt) {
         this.address = nbt.getString("Address");
+        this.lastAnimationTicks = this.animationTicks;
+        this.animationTicks = nbt.getInteger("AnimationTicks");
     }
 
     @Override

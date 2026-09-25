@@ -48,6 +48,7 @@ import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWallAdvanced;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelDown;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelDownAdvanced;
 import nl.melonstudios.create.tileentity.generator.*;
+import nl.melonstudios.create.tileentity.logistics.TileEntityPackager;
 import nl.melonstudios.create.tileentity.redstone.TileEntityDisplayLink;
 import nl.melonstudios.create.tileentity.redstone.TileEntityRedstoneLinker;
 import nl.melonstudios.ponder.PonderRegistry;
@@ -117,12 +118,14 @@ public class ClientProxy extends CommonProxy {
         this.registerTESR(TileEntityBeltDiagonal.class, "belt_diagonal", null);
         this.registerTESR(TileEntityItemDrain.class, "item_drain", new TESRItemDrain());
         this.registerTESR(TileEntityFluidTank.class, "fluid_tank", new TESRFluidTank());
+        this.registerTESR(TileEntitySpout.class, "spout", new TESRSpout());
         this.registerTESR(TileEntityFunnelWall.class, "funnel_wall", null);
         this.registerTESR(TileEntityFunnelWallAdvanced.class, "funnel_wall_advanced", new TESRFunnelWallAdvanced());
         this.registerTESR(TileEntityFunnelDown.class, "funnel_down", null);
         this.registerTESR(TileEntityFunnelDownAdvanced.class, "funnel_down_advanced", new TESRFunnelWallAdvanced());
         this.registerTESR(TileEntityRedstoneLinker.class, "redstone_linker", null);
         this.registerTESR(TileEntityDisplayLink.class, "display_link", new TESRDisplayLink());
+        this.registerTESR(TileEntityPackager.class, "packager", new TESRPackager());
     }
 
     @Override

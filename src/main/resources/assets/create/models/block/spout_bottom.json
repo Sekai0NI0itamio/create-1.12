@@ -1,0 +1,23 @@
+{
+	"credit": "Create 1.12 backport: spout bottom slice for the pour squeeze animation",
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"0": "create:block/spout",
+		"particle": "create:block/block_copper"
+	},
+	"elements": [
+		{
+			"name": "SpoutBottom",
+			"from": [1, 0, 1],
+			"to": [15, 4, 15],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		}
+	]
+}

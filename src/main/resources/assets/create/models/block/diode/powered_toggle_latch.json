@@ -1,5 +1,5 @@
 {
-  "parent": "create:block/diode/unpowered_toggle_latch",
+  "parent": "create:block/diode/unpowered_toggle_latch_set",
   "textures": {
     "texture": "create:block/diode/powered_toggle_latch"
   }

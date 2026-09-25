@@ -12,6 +12,11 @@ import nl.melonstudios.create.tileentity.TileEntityKineticGeneratorBase;
 public class TileEntityHandCrank extends TileEntityKineticGeneratorBase {
     public int inUse;
     public boolean backwards;
+    // Chased handle angle (degrees). Smoothed visual state derived from the
+    // synced kinetic speed each tick on both sides, like the gauge dial state:
+    // no packet of its own, both sides converge from the same speed.
+    public float independentAngle;
+    public float chasingVelocity;
 
     public void turn(boolean back) {
         boolean update = this.getGeneratedSpeed() == 0 || back != this.backwards;
@@ -21,6 +26,10 @@ public class TileEntityHandCrank extends TileEntityKineticGeneratorBase {
         if (update && !this.world.isRemote) {
             this.updateGeneratedRotation();
         }
+    }
+
+    public float getIndependentAngle(float partialTicks) {
+        return this.independentAngle + partialTicks * this.chasingVelocity;
     }
 
     @Override
@@ -52,6 +61,13 @@ public class TileEntityHandCrank extends TileEntityKineticGeneratorBase {
     @Override
     public void tick() {
         super.tick();
+
+        // Handle chases the shaft speed with a lag so it spins up/down
+        // smoothly instead of snapping. Runs on both sides; both derive
+        // from the synced speed, so server and client stay in agreement.
+        float actualSpeed = this.getSpeed();
+        this.chasingVelocity += ((actualSpeed * 10.0F / 3.0F) - this.chasingVelocity) * 0.25F;
+        this.independentAngle += this.chasingVelocity;
 
         if (this.inUse > 0) {
             this.inUse--;
