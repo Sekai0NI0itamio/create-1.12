@@ -1,8 +1,10 @@
 package nl.melonstudios.create.entity.train;
 
+import net.minecraft.block.BlockRailBase;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -16,6 +18,16 @@ import java.util.UUID;
  * Carriage visuals: the assembled frame blocks ride as passengers' context
  * (backport simplification: frames stored as block list, re-placed on
  * disassemble; carts carry players/chests visually).
+ *
+ * Movement model (track following): vanilla minecart physics rides the rails
+ * (curves, slopes and switches included); this entity only commands speed
+ * along the rail tangent resolved by {@link TrainTrackFollower}. Each tick the
+ * current velocity is projected onto the tangent so the cart never drifts
+ * sideways off the line, then accelerated toward a target speed that tapers
+ * near the scheduled station via a braking envelope. Following the reference
+ * design, travel halts (blocked) at dead ends and off rails (derailed), and
+ * trailing carriages sharing a train id match the leader's pace at a fixed
+ * spacing instead of pathing independently.
  */
 public class EntityTrain extends EntityMinecartEmpty {
     public UUID trainId = UUID.randomUUID();
@@ -24,6 +36,22 @@ public class EntityTrain extends EntityMinecartEmpty {
     public int dwellTicks;
     public boolean running;
     public double cruiseSpeed = 0.3;
+
+    /** Signed speed along the current rail tangent (blocks/tick). */
+    public double railSpeed;
+    /** Total distance rolled; used to order carriages front-to-back. */
+    public double odometer;
+    /** True while off rails; speed target is forced to zero until re-railed. */
+    public boolean derailed;
+
+    private int offRailTicks;
+    private int endStopTicks;
+
+    private static final double ACCEL = 0.02;
+    private static final double BRAKE = 0.06;
+    private static final double CREEP = 0.04;
+    private static final int DWELL_DEFAULT = 100;
+    private static final double SPACING = 2.5;
 
     public EntityTrain(World world) {
         super(world);
@@ -37,44 +65,152 @@ public class EntityTrain extends EntityMinecartEmpty {
         if (!this.schedule.isEmpty()) {
             this.running = true;
             this.stopIndex = 0;
-            this.dwellTicks = 100;
+            this.dwellTicks = DWELL_DEFAULT;
+            this.derailed = false;
+            this.offRailTicks = 0;
+            this.endStopTicks = 0;
         }
     }
 
     public void halt() {
         this.running = false;
-        this.motionX = 0; this.motionZ = 0;
+        this.railSpeed = 0.0;
+        this.motionX = 0;
+        this.motionZ = 0;
+    }
+
+    public boolean isDerailed() {
+        return this.derailed;
     }
 
     @Override
     public void onUpdate() {
+        // Vanilla rail riding first: curves, slopes and switch guidance.
         super.onUpdate();
-        if (this.world.isRemote || !this.running || this.schedule.isEmpty()) return;
+
+        double planar = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        this.odometer += planar;
+
+        if (this.world.isRemote || !this.running || this.schedule.isEmpty()) {
+            return;
+        }
+
         BlockPos target = this.schedule.get(this.stopIndex % this.schedule.size());
-        double dx = target.getX() + 0.5 - this.posX;
-        double dz = target.getZ() + 0.5 - this.posZ;
-        double dist = Math.sqrt(dx * dx + dz * dz);
-        if (dist < 2.0) {
-            // Dwell at station.
-            this.motionX *= 0.8; this.motionZ *= 0.8;
-            if (--this.dwellTicks <= 0) {
-                this.stopIndex++;
-                this.dwellTicks = 100;
+        double tx = target.getX() + 0.5 - this.posX;
+        double tz = target.getZ() + 0.5 - this.posZ;
+        double dist = Math.sqrt(tx * tx + tz * tz);
+
+        BlockRailBase.EnumRailDirection shape =
+                TrainTrackFollower.railShapeAt(this.world, this.posX, this.posY, this.posZ);
+        if (shape == null) {
+            // Off rails: coast down and flag derailed until pushed back on.
+            this.offRailTicks++;
+            this.motionX *= 0.9;
+            this.motionZ *= 0.9;
+            if (this.offRailTicks > 10) {
+                this.derailed = true;
+                this.railSpeed = planar;
             }
             return;
         }
-        // Drive along motion clamped to cruise speed (rails guide direction).
-        double mx = this.motionX;
-        double mz = this.motionZ;
-        double sp = Math.sqrt(mx * mx + mz * mz);
-        if (sp < 0.01) {
-            // Nudge toward the target.
-            this.motionX = dx / dist * 0.05; this.motionZ = dz / dist * 0.05;
-        } else if (sp > this.cruiseSpeed) {
-            this.motionX = mx / sp * this.cruiseSpeed; this.motionZ = mz / sp * this.cruiseSpeed;
-        } else {
-            double ns = Math.min(this.cruiseSpeed, sp + 0.01); this.motionX = mx / sp * ns; this.motionZ = mz / sp * ns;
+        this.offRailTicks = 0;
+        this.derailed = false;
+
+        // Reference vector: keep rolling the way we roll; only aim at the
+        // station when standing still.
+        double refX = planar > 0.02 ? this.motionX : tx;
+        double refZ = planar > 0.02 ? this.motionZ : tz;
+        double[] tangent = TrainTrackFollower.orientedTangent(shape, refX, refZ);
+        double ux = tangent[0];
+        double uz = tangent[1];
+
+        // Station dwell: inside the arrival radius, hold position, count down,
+        // then advance the schedule and depart.
+        if (dist < TrainTrackFollower.ARRIVE_RADIUS) {
+            this.motionX *= 0.7;
+            this.motionZ *= 0.7;
+            this.railSpeed = 0.0;
+            this.endStopTicks = 0;
+            if (--this.dwellTicks <= 0) {
+                this.stopIndex++;
+                this.dwellTicks = DWELL_DEFAULT;
+            }
+            return;
         }
+
+        double allowed = TrainTrackFollower.approachAllowed(dist, this.cruiseSpeed, BRAKE, CREEP);
+
+        // Dead end ahead: no rail where travel is heading, so stop (blocked)
+        // instead of running off. After a pause, reverse out automatically.
+        double aheadX = this.posX + ux * 1.5;
+        double aheadZ = this.posZ + uz * 1.5;
+        boolean ends = !TrainTrackFollower.hasRail(this.world, aheadX, this.posY, aheadZ)
+                && !TrainTrackFollower.hasRail(this.world, aheadX, this.posY - 1.0, aheadZ);
+        if (ends) {
+            allowed = 0.0;
+        }
+
+        // Follow-the-leader: trailing carriages of the same train match the
+        // leader's pace, closing or opening the gap toward fixed spacing.
+        EntityTrain leader = this.findLeader();
+        if (leader != null && leader != this) {
+            double gap = this.getDistance(leader);
+            double follow = leader.railSpeed;
+            if (gap > SPACING + 1.0) {
+                follow = Math.min(this.cruiseSpeed, follow + 0.06);
+            } else if (gap < SPACING - 0.5) {
+                follow = Math.max(0.0, follow - 0.08);
+            }
+            allowed = Math.min(allowed, follow);
+        }
+
+        // Speed control toward the target along the oriented tangent.
+        double current = this.motionX * ux + this.motionZ * uz;
+        if (current < 0) {
+            current = 0;
+        }
+        if (current < allowed) {
+            current = Math.min(allowed, current + ACCEL);
+        } else {
+            current = Math.max(allowed, current - BRAKE);
+        }
+        this.motionX = ux * current;
+        this.motionZ = uz * current;
+        this.railSpeed = current;
+
+        if (planar > 0.01 || current > 0.01) {
+            this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0 / Math.PI);
+        }
+
+        if (ends && current < 0.02) {
+            if (++this.endStopTicks > 60) {
+                // Back out of the terminus so the schedule can be approached
+                // from the live side of the line.
+                this.motionX = -ux * 0.08;
+                this.motionZ = -uz * 0.08;
+                this.endStopTicks = 0;
+            }
+        } else if (!ends) {
+            this.endStopTicks = 0;
+        }
+    }
+
+    /** Front of the consist: the live sibling (same train id) with the greatest odometer. */
+    private EntityTrain findLeader() {
+        List<EntityTrain> kin = this.world.getEntitiesWithinAABB(EntityTrain.class,
+                new AxisAlignedBB(this.posX - 24, this.posY - 6, this.posZ - 24,
+                        this.posX + 24, this.posY + 6, this.posZ + 24),
+                e -> e != null && e != this && e.isEntityAlive() && this.trainId.equals(e.trainId));
+        if (kin.isEmpty()) {
+            return this;
+        }
+        EntityTrain best = this;
+        for (EntityTrain other : kin) {
+            if (other.odometer > best.odometer) {
+                best = other;
+            }
+        }
+        return best;
     }
 
     @Override
@@ -88,6 +224,12 @@ public class EntityTrain extends EntityMinecartEmpty {
         for (int i = 0; i < this.schedule.size(); i++) {
             nbt.setLong("Stop" + i, this.schedule.get(i).toLong());
         }
+        nbt.setDouble("RailSpeed", this.railSpeed);
+        nbt.setDouble("Odo", this.odometer);
+        nbt.setBoolean("Derailed", this.derailed);
+        nbt.setInteger("Dwell", this.dwellTicks);
+        nbt.setInteger("OffRail", this.offRailTicks);
+        nbt.setInteger("EndStop", this.endStopTicks);
     }
 
     @Override
@@ -102,6 +244,16 @@ public class EntityTrain extends EntityMinecartEmpty {
         for (int i = 0; i < n; i++) {
             this.schedule.add(BlockPos.fromLong(nbt.getLong("Stop" + i)));
         }
+        if (nbt.hasKey("RailSpeed")) this.railSpeed = nbt.getDouble("RailSpeed");
+        if (nbt.hasKey("Odo")) this.odometer = nbt.getDouble("Odo");
+        if (nbt.hasKey("Derailed")) this.derailed = nbt.getBoolean("Derailed");
+        if (nbt.hasKey("Dwell")) {
+            this.dwellTicks = nbt.getInteger("Dwell");
+        } else {
+            this.dwellTicks = DWELL_DEFAULT;
+        }
+        this.offRailTicks = nbt.getInteger("OffRail");
+        this.endStopTicks = nbt.getInteger("EndStop");
     }
 
     @Override
