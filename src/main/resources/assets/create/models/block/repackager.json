@@ -1,0 +1,23 @@
+{
+ "parent": "minecraft:block/block",
+ "textures": {
+  "frame": "create:block/packager_frame",
+  "iris": "create:block/repackager_particle",
+  "particle": "create:block/repackager_particle"
+ },
+ "elements": [
+  {
+   "name": "Box",
+   "from": [1, 0, 1],
+   "to": [15, 12, 15],
+   "faces": {
+    "north": {"uv": [1, 0, 15, 12], "texture": "#frame"},
+    "south": {"uv": [1, 0, 15, 12], "texture": "#frame"},
+    "east": {"uv": [1, 0, 15, 12], "texture": "#frame"},
+    "west": {"uv": [1, 0, 15, 12], "texture": "#frame"},
+    "up": {"uv": [1, 1, 15, 15], "texture": "#iris"},
+    "down": {"uv": [1, 1, 15, 15], "texture": "#frame"}
+   }
+  }
+ ]
+}

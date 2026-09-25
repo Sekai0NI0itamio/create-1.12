@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    { "apply": { "model": "create:andesite_bars_post" } },
+    { "when": { "north": true }, "apply": { "model": "create:andesite_bars_side" } },
+    { "when": { "east": true }, "apply": { "model": "create:andesite_bars_side", "y": 90 } },
+    { "when": { "south": true }, "apply": { "model": "create:andesite_bars_side", "y": 180 } },
+    { "when": { "west": true }, "apply": { "model": "create:andesite_bars_side", "y": 270 } }
+  ]
+}

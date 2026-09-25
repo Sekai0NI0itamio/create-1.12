@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  E",
+    " O ",
+    "E  "
+  ],
+  "key": {
+    "E": {
+      "item": "create:ingredient",
+      "data": 15
+    },
+    "O": {
+      "type": "forge:ore_dict",
+      "ore": "plateIron"
+    }
+  },
+  "result": {
+    "item": "create:minecart_coupling"
+  }
+}

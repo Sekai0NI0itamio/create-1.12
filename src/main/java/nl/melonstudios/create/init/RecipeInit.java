@@ -83,6 +83,12 @@ public final class RecipeInit {
         crushing();
         splashing();
         haunting();
+        compacting();
+        filling();
+        emptying();
+        mechanicalCrafting();
+        sandpaperPolishing();
+        itemApplication();
     }
 
     private static void pressing() {
@@ -1057,6 +1063,30 @@ public final class RecipeInit {
                 new Tuple<>(new ItemStack(Items.PRISMARINE_CRYSTALS), 0.125F));
     }
 
+    private static void compacting() {
+        CompactingRecipes.initDefaults();
+    }
+
+    private static void filling() {
+        SpoutFillingRecipes.initDefaults();
+    }
+
+    private static void emptying() {
+        DrainEmptyingRecipes.initDefaults();
+    }
+
+    private static void mechanicalCrafting() {
+        CrafterMechanicalRecipes.initDefaults();
+    }
+
+    private static void sandpaperPolishing() {
+        SandpaperPolishingRecipes.initDefaults();
+    }
+
+    private static void itemApplication() {
+        DeployerApplicationRecipes.initDefaults();
+    }
+
     private static Item getOrestone(int id) {
         switch (id) {
             case 1: return Item.getItemFromBlock(BlockInit.ORESTONE_CUT);
@@ -1115,5 +1145,23 @@ public final class RecipeInit {
     }
     public static IRecipeAccessor<SequenceRecipe> getSequenceRecipes(boolean client) {
         return client ? RecipeRegistry.getRecipeAccessor("create:sequence") : RecipeRegistry.getRecipeType("create:sequence");
+    }
+    public static IRecipeAccessor<CompactingRecipes.Recipe> getCompactingRecipes(boolean client) {
+        return client ? RecipeRegistry.getRecipeAccessor("create:compacting") : RecipeRegistry.getRecipeType("create:compacting");
+    }
+    public static IRecipeAccessor<SpoutFillingRecipes.Recipe> getFillingRecipes(boolean client) {
+        return client ? RecipeRegistry.getRecipeAccessor("create:filling") : RecipeRegistry.getRecipeType("create:filling");
+    }
+    public static IRecipeAccessor<DrainEmptyingRecipes.Recipe> getEmptyingRecipes(boolean client) {
+        return client ? RecipeRegistry.getRecipeAccessor("create:emptying") : RecipeRegistry.getRecipeType("create:emptying");
+    }
+    public static IRecipeAccessor<CrafterMechanicalRecipes.Recipe> getMechanicalCraftingRecipes(boolean client) {
+        return client ? RecipeRegistry.getRecipeAccessor("create:mechanical_crafting") : RecipeRegistry.getRecipeType("create:mechanical_crafting");
+    }
+    public static IRecipeAccessor<SandpaperPolishingRecipes.Recipe> getSandpaperPolishingRecipes(boolean client) {
+        return client ? RecipeRegistry.getRecipeAccessor("create:sandpaper_polishing") : RecipeRegistry.getRecipeType("create:sandpaper_polishing");
+    }
+    public static IRecipeAccessor<DeployerApplicationRecipes.Recipe> getItemApplicationRecipes(boolean client) {
+        return client ? RecipeRegistry.getRecipeAccessor("create:item_application") : RecipeRegistry.getRecipeType("create:item_application");
     }
 }

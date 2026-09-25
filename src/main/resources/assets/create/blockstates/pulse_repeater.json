@@ -1,0 +1,64 @@
+{
+ "variants": {
+  "facing=north,inverted=false,powering=false": {
+   "model": "create:diode/pulse_repeater_idle"
+  },
+  "facing=north,inverted=false,powering=true": {
+   "model": "create:diode/pulse_repeater_powering"
+  },
+  "facing=north,inverted=true,powering=false": {
+   "model": "create:diode/pulse_repeater_powered"
+  },
+  "facing=north,inverted=true,powering=true": {
+   "model": "create:diode/pulse_repeater_powered_powering"
+  },
+  "facing=east,inverted=false,powering=false": {
+   "model": "create:diode/pulse_repeater_idle",
+   "y": 90
+  },
+  "facing=east,inverted=false,powering=true": {
+   "model": "create:diode/pulse_repeater_powering",
+   "y": 90
+  },
+  "facing=east,inverted=true,powering=false": {
+   "model": "create:diode/pulse_repeater_powered",
+   "y": 90
+  },
+  "facing=east,inverted=true,powering=true": {
+   "model": "create:diode/pulse_repeater_powered_powering",
+   "y": 90
+  },
+  "facing=south,inverted=false,powering=false": {
+   "model": "create:diode/pulse_repeater_idle",
+   "y": 180
+  },
+  "facing=south,inverted=false,powering=true": {
+   "model": "create:diode/pulse_repeater_powering",
+   "y": 180
+  },
+  "facing=south,inverted=true,powering=false": {
+   "model": "create:diode/pulse_repeater_powered",
+   "y": 180
+  },
+  "facing=south,inverted=true,powering=true": {
+   "model": "create:diode/pulse_repeater_powered_powering",
+   "y": 180
+  },
+  "facing=west,inverted=false,powering=false": {
+   "model": "create:diode/pulse_repeater_idle",
+   "y": 270
+  },
+  "facing=west,inverted=false,powering=true": {
+   "model": "create:diode/pulse_repeater_powering",
+   "y": 270
+  },
+  "facing=west,inverted=true,powering=false": {
+   "model": "create:diode/pulse_repeater_powered",
+   "y": 270
+  },
+  "facing=west,inverted=true,powering=true": {
+   "model": "create:diode/pulse_repeater_powered_powering",
+   "y": 270
+  }
+ }
+}

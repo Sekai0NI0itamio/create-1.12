@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P P",
+    "P P",
+    "G G"
+  ],
+  "key": {
+    "G": {
+      "item": "create:ingredient",
+      "data": 15
+    },
+    "P": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCopper"
+    }
+  },
+  "result": {
+    "item": "create:copper_diving_boots"
+  }
+}

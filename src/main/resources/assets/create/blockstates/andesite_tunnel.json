@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "create:andesite_tunnel"
+    },
+    "axis=z": {
+      "model": "create:andesite_tunnel",
+      "y": 90
+    }
+  }
+}

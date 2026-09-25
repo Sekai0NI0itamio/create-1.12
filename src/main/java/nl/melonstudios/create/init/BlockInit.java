@@ -19,6 +19,7 @@ import nl.melonstudios.create.block.BlockChainDrive;
 import nl.melonstudios.create.block.BlockChainConveyor;
 import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
+import nl.melonstudios.create.block.funnel.BlockFunnelBelt;
 import nl.melonstudios.create.block.generator.*;
 import nl.melonstudios.create.block.train.*;
 import nl.melonstudios.create.block.redstone.*;
@@ -34,6 +35,9 @@ import nl.melonstudios.create.block.logistics.BlockPackagerLink;
 import nl.melonstudios.create.block.logistics.BlockRedstoneRequester;
 import nl.melonstudios.create.block.logistics.BlockTableCloth;
 import nl.melonstudios.create.block.logistics.BlockFactoryBoard;
+import nl.melonstudios.create.block.logistics.BlockAndesiteTunnel;
+import nl.melonstudios.create.block.logistics.BlockRepackager;
+import nl.melonstudios.create.block.logistics.BlockPostbox;
 import nl.melonstudios.create.block.actor.BlockElevatorContact;
 import nl.melonstudios.create.block.actor.BlockElevatorPulley;
 import nl.melonstudios.create.block.actor.BlockGantryCarriage;
@@ -424,6 +428,118 @@ public final class BlockInit {
             registerBlockWithItem(new BlockNetheriteBacktank());
     public static final BlockCardboard CARDBOARD_BLOCK = (BlockCardboard)
             registerBlockWithItem(new BlockCardboard());
+    public static final BlockAndesiteTunnel ANDESITE_TUNNEL = (BlockAndesiteTunnel)
+            registerBlockWithItem(new BlockAndesiteTunnel()
+            .setRegistryName("andesite_tunnel").setUnlocalizedName("create.andesite_tunnel"));
+    public static final BlockFunnelBelt BELT_FUNNEL_ANDESITE = (BlockFunnelBelt)
+            registerBlockWithItem(new BlockFunnelBelt("andesite", false)
+            .setRegistryName("andesite_belt_funnel").setUnlocalizedName("create.funnel_andesite"));
+    public static final BlockFunnelBelt BELT_FUNNEL_BRASS = (BlockFunnelBelt)
+            registerBlockWithItem(new BlockFunnelBelt("brass", true)
+            .setRegistryName("brass_belt_funnel").setUnlocalizedName("create.funnel_brass"));
+    public static final BlockRepackager REPACKAGER = (BlockRepackager)
+            registerBlockWithItem(new BlockRepackager()
+            .setRegistryName("repackager").setUnlocalizedName("create.repackager"));
+    public static final BlockPostbox WHITE_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.WHITE)
+            .setRegistryName("postbox_white").setUnlocalizedName("create.postbox_white"));
+    public static final BlockPostbox ORANGE_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.ORANGE)
+            .setRegistryName("postbox_orange").setUnlocalizedName("create.postbox_orange"));
+    public static final BlockPostbox MAGENTA_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.MAGENTA)
+            .setRegistryName("postbox_magenta").setUnlocalizedName("create.postbox_magenta"));
+    public static final BlockPostbox LIGHT_BLUE_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.LIGHT_BLUE)
+            .setRegistryName("postbox_light_blue").setUnlocalizedName("create.postbox_light_blue"));
+    public static final BlockPostbox YELLOW_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.YELLOW)
+            .setRegistryName("postbox_yellow").setUnlocalizedName("create.postbox_yellow"));
+    public static final BlockPostbox LIME_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.LIME)
+            .setRegistryName("postbox_lime").setUnlocalizedName("create.postbox_lime"));
+    public static final BlockPostbox PINK_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.PINK)
+            .setRegistryName("postbox_pink").setUnlocalizedName("create.postbox_pink"));
+    public static final BlockPostbox GRAY_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.GRAY)
+            .setRegistryName("postbox_gray").setUnlocalizedName("create.postbox_gray"));
+    public static final BlockPostbox SILVER_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.SILVER)
+            .setRegistryName("postbox_light_gray").setUnlocalizedName("create.postbox_light_gray"));
+    public static final BlockPostbox CYAN_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.CYAN)
+            .setRegistryName("postbox_cyan").setUnlocalizedName("create.postbox_cyan"));
+    public static final BlockPostbox PURPLE_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.PURPLE)
+            .setRegistryName("postbox_purple").setUnlocalizedName("create.postbox_purple"));
+    public static final BlockPostbox BLUE_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.BLUE)
+            .setRegistryName("postbox_blue").setUnlocalizedName("create.postbox_blue"));
+    public static final BlockPostbox BROWN_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.BROWN)
+            .setRegistryName("postbox_brown").setUnlocalizedName("create.postbox_brown"));
+    public static final BlockPostbox GREEN_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.GREEN)
+            .setRegistryName("postbox_green").setUnlocalizedName("create.postbox_green"));
+    public static final BlockPostbox RED_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.RED)
+            .setRegistryName("postbox_red").setUnlocalizedName("create.postbox_red"));
+    public static final BlockPostbox BLACK_POSTBOX = (BlockPostbox)
+            registerBlockWithItem(new BlockPostbox(EnumDyeColor.BLACK)
+            .setRegistryName("postbox_black").setUnlocalizedName("create.postbox_black"));
+    public static final BlockPulseRepeater PULSE_REPEATER = (BlockPulseRepeater)
+            registerBlockWithItem(new BlockPulseRepeater());
+    public static final BlockPulseExtender PULSE_EXTENDER = (BlockPulseExtender)
+            registerBlockWithItem(new BlockPulseExtender());
+    public static final BlockPulseTimer PULSE_TIMER = (BlockPulseTimer)
+            registerBlockWithItem(new BlockPulseTimer());
+    public static final BlockPlacard PLACARD = (BlockPlacard)
+            registerBlockWithItem(new BlockPlacard());
+    public static final BlockLecternController LECTERN_CONTROLLER = (BlockLecternController)
+            registerBlockWithItem(new BlockLecternController());
+    public static final BlockSchematicTable SCHEMATIC_TABLE = (BlockSchematicTable)
+            registerBlockWithItem(new BlockSchematicTable());
+    public static final BlockCopycatBase COPYCAT_BASE = (BlockCopycatBase)
+            registerBlockWithItem(new BlockCopycatBase());
+    public static final BlockCopycatStep COPYCAT_STEP = (BlockCopycatStep)
+            registerBlockWithItem(new BlockCopycatStep());
+    public static final BlockCopycatPanel COPYCAT_PANEL = (BlockCopycatPanel)
+            registerBlockWithItem(new BlockCopycatPanel());
+    public static final BlockCopycatBars COPYCAT_BARS = (BlockCopycatBars)
+            registerBlockWithItem(new BlockCopycatBars());
+    public static final BlockGlassDoor ANDESITE_DOOR = (BlockGlassDoor)
+            registerBlock(new BlockGlassDoor("andesite"));
+    public static final BlockGlassDoor BRASS_DOOR = (BlockGlassDoor)
+            registerBlock(new BlockGlassDoor("brass"));
+    public static final BlockGlassDoor COPPER_DOOR = (BlockGlassDoor)
+            registerBlock(new BlockGlassDoor("copper"));
+    public static final BlockGlassDoor FRAMED_GLASS_DOOR = (BlockGlassDoor)
+            registerBlock(new BlockGlassDoor("framed_glass"));
+    public static final BlockGlassDoor TRAIN_DOOR = (BlockGlassDoor)
+            registerBlock(new BlockGlassDoor("train"));
+    public static final BlockGlassTrapdoor TRAIN_TRAPDOOR = (BlockGlassTrapdoor)
+            registerBlockWithItem(new BlockGlassTrapdoor("train"));
+    public static final BlockGlassTrapdoor FRAMED_GLASS_TRAPDOOR = (BlockGlassTrapdoor)
+            registerBlockWithItem(new BlockGlassTrapdoor("framed_glass"));
+    public static final BlockMetalLadder ANDESITE_LADDER = (BlockMetalLadder)
+            registerBlockWithItem(new BlockMetalLadder("andesite"));
+    public static final BlockMetalLadder BRASS_LADDER = (BlockMetalLadder)
+            registerBlockWithItem(new BlockMetalLadder("brass"));
+    public static final BlockMetalLadder COPPER_LADDER = (BlockMetalLadder)
+            registerBlockWithItem(new BlockMetalLadder("copper"));
+    public static final BlockMetalBars ANDESITE_BARS = (BlockMetalBars)
+            registerBlockWithItem(new BlockMetalBars("andesite"));
+    public static final BlockMetalBars BRASS_BARS = (BlockMetalBars)
+            registerBlockWithItem(new BlockMetalBars("brass"));
+    public static final BlockMetalBars COPPER_BARS = (BlockMetalBars)
+            registerBlockWithItem(new BlockMetalBars("copper"));
+    public static final BlockMetalScaffold ANDESITE_SCAFFOLDING = (BlockMetalScaffold)
+            registerBlockWithItem(new BlockMetalScaffold("andesite"));
+    public static final BlockMetalScaffold BRASS_SCAFFOLDING = (BlockMetalScaffold)
+            registerBlockWithItem(new BlockMetalScaffold("brass"));
+    public static final BlockMetalScaffold COPPER_SCAFFOLDING = (BlockMetalScaffold)
+            registerBlockWithItem(new BlockMetalScaffold("copper"));
 
     public static final BlockBogey BOGEY = (BlockBogey)
             registerBlockWithItem(new BlockBogey()

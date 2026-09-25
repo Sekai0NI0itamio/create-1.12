@@ -1,0 +1,12 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "up": "create:block/schematic_table_top",
+  "down": "blocks/planks_oak",
+  "north": "create:block/schematic_table_side",
+  "south": "create:block/schematic_table_side",
+  "west": "create:block/schematic_table_side",
+  "east": "create:block/schematic_table_side",
+  "particle": "create:block/schematic_table_side"
+ }
+}

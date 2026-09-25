@@ -1,0 +1,51 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "create:block/post_box/post_box_cyan",
+    "side": "create:block/post_box/post_box_cyan",
+    "lid": "create:block/post_box/post_box_cyan_closed"
+  },
+  "elements": [
+    {
+      "from": [1, 0, 1],
+      "to": [15, 12, 15],
+      "faces": {
+        "north": {"uv": [1, 0, 15, 12], "texture": "#side"},
+        "east": {"uv": [1, 0, 15, 12], "texture": "#side"},
+        "south": {"uv": [1, 0, 15, 12], "texture": "#side"},
+        "west": {"uv": [1, 0, 15, 12], "texture": "#side"},
+        "down": {"uv": [1, 1, 15, 15], "texture": "#side"}
+      }
+    },
+    {
+      "from": [0, 12, 0],
+      "to": [16, 14, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 2], "texture": "#side"},
+        "east": {"uv": [0, 0, 16, 2], "texture": "#side"},
+        "south": {"uv": [0, 0, 16, 2], "texture": "#side"},
+        "west": {"uv": [0, 0, 16, 2], "texture": "#side"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#lid"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#side"}
+      }
+    },
+    {
+      "from": [13, 12, 7],
+      "to": [14, 16, 8],
+      "faces": {
+        "north": {"uv": [13, 0, 14, 4], "texture": "#side"},
+        "east": {"uv": [7, 0, 8, 4], "texture": "#side"},
+        "south": {"uv": [13, 0, 14, 4], "texture": "#side"},
+        "west": {"uv": [7, 0, 8, 4], "texture": "#side"}
+      }
+    },
+    {
+      "from": [14, 13, 4],
+      "to": [15, 16, 11],
+      "faces": {
+        "east": {"uv": [4, 0, 11, 3], "texture": "#side"},
+        "west": {"uv": [4, 0, 11, 3], "texture": "#side"}
+      }
+    }
+  ]
+}

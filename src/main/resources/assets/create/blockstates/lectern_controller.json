@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "create:lectern_controller"
+  },
+  "facing=east": {
+   "model": "create:lectern_controller",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "create:lectern_controller",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "create:lectern_controller",
+   "y": 270
+  }
+ }
+}

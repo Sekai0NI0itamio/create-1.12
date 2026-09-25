@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=up": { "model": "create:copycat_panel_up" },
+    "facing=down": { "model": "create:copycat_panel_down" },
+    "facing=north": { "model": "create:copycat_panel_side" },
+    "facing=south": { "model": "create:copycat_panel_side", "y": 180 },
+    "facing=west": { "model": "create:copycat_panel_side", "y": 270 },
+    "facing=east": { "model": "create:copycat_panel_side", "y": 90 }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "bottom=false": { "model": "create:andesite_scaffolding" },
+    "bottom=true": { "model": "create:andesite_scaffolding_bottom" }
+  }
+}

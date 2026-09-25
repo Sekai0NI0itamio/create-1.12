@@ -97,6 +97,51 @@ public final class ItemInit {
             registerItem(new ItemBlueprint()
             .setRegistryName("crafting_blueprint").setUnlocalizedName("create.crafting_blueprint"));
     public static final ItemTrainSchedule SCHEDULE = registerItem(new ItemTrainSchedule());
+    public static final ItemDoor ANDESITE_DOOR = (ItemDoor)
+            registerItem(new ItemDoor(BlockInit.ANDESITE_DOOR)
+            .setRegistryName("andesite_door").setUnlocalizedName("create.andesite_door"));
+    public static final ItemDoor BRASS_DOOR = (ItemDoor)
+            registerItem(new ItemDoor(BlockInit.BRASS_DOOR)
+            .setRegistryName("brass_door").setUnlocalizedName("create.brass_door"));
+    public static final ItemDoor COPPER_DOOR = (ItemDoor)
+            registerItem(new ItemDoor(BlockInit.COPPER_DOOR)
+            .setRegistryName("copper_door").setUnlocalizedName("create.copper_door"));
+    public static final ItemDoor FRAMED_GLASS_DOOR = (ItemDoor)
+            registerItem(new ItemDoor(BlockInit.FRAMED_GLASS_DOOR)
+            .setRegistryName("framed_glass_door").setUnlocalizedName("create.framed_glass_door"));
+    public static final ItemDoor TRAIN_DOOR = (ItemDoor)
+            registerItem(new ItemDoor(BlockInit.TRAIN_DOOR)
+            .setRegistryName("train_door").setUnlocalizedName("create.train_door"));
+    public static final ItemAttributeFilter ATTRIBUTE_FILTER = (ItemAttributeFilter)
+            registerItem(new ItemAttributeFilter()
+            .setRegistryName("attribute_filter").setUnlocalizedName("create.attribute_filter"));
+    public static final ItemPackageFilter PACKAGE_FILTER = (ItemPackageFilter)
+            registerItem(new ItemPackageFilter()
+            .setRegistryName("package_filter").setUnlocalizedName("create.package_filter"));
+    public static final ItemEmptySchematic EMPTY_SCHEMATIC = (ItemEmptySchematic)
+            registerItem(new ItemEmptySchematic()
+            .setRegistryName("empty_schematic").setUnlocalizedName("create.empty_schematic"));
+    public static final ItemSchematicAndQuill SCHEMATIC_AND_QUILL = (ItemSchematicAndQuill)
+            registerItem(new ItemSchematicAndQuill()
+            .setRegistryName("schematic_and_quill").setUnlocalizedName("create.schematic_and_quill"));
+    public static final ItemLinkedController LINKED_CONTROLLER = (ItemLinkedController)
+            registerItem(new ItemLinkedController()
+            .setRegistryName("linked_controller").setUnlocalizedName("create.linked_controller"));
+    public static final ItemMinecartContraption MINECART_CONTRAPTION = (ItemMinecartContraption)
+            registerItem(new ItemMinecartContraption()
+            .setRegistryName("minecart_contraption").setUnlocalizedName("create.minecart_contraption"));
+    public static final ItemMinecartCoupling MINECART_COUPLING = (ItemMinecartCoupling)
+            registerItem(new ItemMinecartCoupling()
+            .setRegistryName("minecart_coupling").setUnlocalizedName("create.minecart_coupling"));
+    public static final ItemCopperDivingHelmet COPPER_DIVING_HELMET = (ItemCopperDivingHelmet)
+            registerItem(new ItemCopperDivingHelmet()
+            .setRegistryName("copper_diving_helmet").setUnlocalizedName("create.copper_diving_helmet"));
+    public static final ItemCopperDivingBoots COPPER_DIVING_BOOTS = (ItemCopperDivingBoots)
+            registerItem(new ItemCopperDivingBoots()
+            .setRegistryName("copper_diving_boots").setUnlocalizedName("create.copper_diving_boots"));
+    public static final ItemShoppingList SHOPPING_LIST = (ItemShoppingList)
+            registerItem(new ItemShoppingList()
+            .setRegistryName("shopping_list").setUnlocalizedName("create.shopping_list"));
 
     private static <T extends Item> T registerItem(T item) {
         ITEMS.add(item);
@@ -143,6 +188,9 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(EXTENDO_GRIP);
         CreateLegacy.proxy.setItemModel(HAT, 0, "hat/conductor");
         CreateLegacy.proxy.setItemModel(HAT, 1, "hat/engineer");
+        CreateLegacy.proxy.setItemModel(MINECART_CONTRAPTION, 0, "minecart_contraption/0");
+        CreateLegacy.proxy.setItemModel(MINECART_CONTRAPTION, 1, "minecart_contraption/1");
+        CreateLegacy.proxy.setItemModel(MINECART_CONTRAPTION, 2, "minecart_contraption/2");
         CreateLegacy.proxy.setItemModel(BLUEPRINT, 0, "blueprint");
         CreateLegacy.proxy.setItemModel(SYMMETRY_WAND, 0, "symmetry_wand");
         CreateLegacy.proxy.setItemModel(SCHEDULE);

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,open=false": {"model": "create:postbox_pink"},
+    "facing=north,open=true": {"model": "create:postbox_pink_open"},
+    "facing=east,open=false": {"model": "create:postbox_pink", "y": 90},
+    "facing=east,open=true": {"model": "create:postbox_pink_open", "y": 90},
+    "facing=south,open=false": {"model": "create:postbox_pink", "y": 180},
+    "facing=south,open=true": {"model": "create:postbox_pink_open", "y": 180},
+    "facing=west,open=false": {"model": "create:postbox_pink", "y": 270},
+    "facing=west,open=true": {"model": "create:postbox_pink_open", "y": 270}
+  }
+}

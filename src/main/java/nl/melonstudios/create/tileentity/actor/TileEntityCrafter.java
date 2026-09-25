@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import nl.melonstudios.create.recipe.server.CrafterMechanicalRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -79,9 +80,12 @@ public class TileEntityCrafter extends TileEntityKinetic implements IItemHandler
                         InventoryCrafter inventoryCrafter = new InventoryCrafter(convertToGrid(
                                 crafters, this.getFacing()
                         ));
-                        IRecipe recipe = CraftingManager.findMatchingRecipe(inventoryCrafter, this.world);
-                        if (recipe != null) {
-                            ItemStack result = recipe.getCraftingResult(inventoryCrafter);
+                        CrafterMechanicalRecipes.Recipe mechanical = CrafterMechanicalRecipes.getRecipeForInput(convertToGrid(
+                                crafters, this.getFacing()
+                        ));
+                        IRecipe recipe = mechanical == null ? CraftingManager.findMatchingRecipe(inventoryCrafter, this.world) : null;
+                        if (mechanical != null || recipe != null) {
+                            ItemStack result = mechanical != null ? mechanical.result.copy() : recipe.getCraftingResult(inventoryCrafter);
                             this.world.playSound(null, this.pos, SoundInit.crafter_click, SoundCategory.BLOCKS, 1.0F, 2.0F);
                             this.world.playSound(null, this.pos, SoundInit.crafter_craft, SoundCategory.BLOCKS, 1.0F, 1.0F);
                             List<ItemStack> containers = new ArrayList<>();

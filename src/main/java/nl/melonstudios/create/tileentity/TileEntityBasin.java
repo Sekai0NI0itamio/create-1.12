@@ -24,6 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.capability.fluid.FluidHandlerBasin;
 import nl.melonstudios.create.recipe.MixingRecipe;
+import nl.melonstudios.create.recipe.server.CompactingRecipes;
 import nl.melonstudios.create.tileentity.marker.ITileEntityWithSubInteractions;
 import nl.melonstudios.create.tileentity.marker.ITopOpenInventory;
 import nl.melonstudios.create.util.SubInteractionBox;
@@ -39,9 +40,11 @@ import java.util.List;
 public class TileEntityBasin extends TileEntityOptimizedBase implements ITileEntityWithSubInteractions, ITopOpenInventory, IItemHandler {
     public final FluidHandlerBasin fluid = new FluidHandlerBasin();
     public final NonNullList<ItemStack> inventory = NonNullList.create();
-    public final NonNullList<FluidStack> fluidQueue = NonNullList.create();
+
     public final NonNullList<ItemStack> inventoryQueue = NonNullList.create();
     public IItemFilter recipeFilter = null;
+    private int compactingProgress = 0;
+    private String compactingId = "";
 
     public TileEntityBasin() {
         this.setTickRateLazy(Integer.MAX_VALUE);
@@ -122,6 +125,38 @@ public class TileEntityBasin extends TileEntityOptimizedBase implements ITileEnt
                 if (over.isEmpty()) entityItem.setDead();
                 else if (over.getCount() != before) entityItem.setItem(over);
             }
+        }
+        if (!this.world.isRemote) {
+            this.tickCompacting();
+        }
+    }
+
+    /**
+     * Heated-basin compacting (reference: compacting recipes process in a
+     * heated basin with no mixer). Progress persists in NBT.
+     */
+    private void tickCompacting() {
+        String match = this.getHeat() >= 1 ? CompactingRecipes.getRecipeForInput(this) : null;
+        if (match == null || !match.equals(this.compactingId)) {
+            this.compactingId = match == null ? "" : match;
+            this.compactingProgress = 0;
+            if (match == null) {
+                return;
+            }
+        }
+        CompactingRecipes.Recipe recipe = CompactingRecipes.instance.recipes.get(this.compactingId);
+        if (recipe == null) {
+            this.compactingId = "";
+            this.compactingProgress = 0;
+            return;
+        }
+        if (++this.compactingProgress >= Math.max(1, recipe.processingTime)) {
+            if (recipe.consumeInputs(this)) {
+                for (ItemStack out : recipe.itemOutputs) {
+                    this.tryInsertItem(out.copy());
+                }
+            }
+            this.compactingProgress = 0;
         }
     }
 

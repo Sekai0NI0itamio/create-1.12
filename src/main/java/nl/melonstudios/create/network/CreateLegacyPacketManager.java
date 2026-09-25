@@ -91,6 +91,7 @@ public class CreateLegacyPacketManager {
 
     public CreateLegacyPacketManager() {
         register(CreateLegacySPackets.SCROLL_INTERACTION, 0);
+        register(CreateLegacySPackets.TRAIN_WHISTLE, 1);
     }
 
     public static void sendToAll(FMLProxyPacket pkt) {

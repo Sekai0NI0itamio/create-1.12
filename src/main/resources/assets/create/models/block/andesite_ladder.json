@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "create:block/ladder_andesite",
+    "ladder": "create:block/ladder_andesite"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 2],
+      "faces": {
+        "up": { "uv": [0, 0, 16, 2], "texture": "#ladder" },
+        "down": { "uv": [0, 0, 16, 2], "texture": "#ladder" },
+        "north": { "uv": [0, 0, 16, 16], "texture": "#ladder" },
+        "south": { "uv": [0, 0, 16, 16], "texture": "#ladder" },
+        "west": { "uv": [0, 0, 2, 16], "texture": "#ladder" },
+        "east": { "uv": [14, 0, 16, 16], "texture": "#ladder" }
+      }
+    }
+  ]
+}

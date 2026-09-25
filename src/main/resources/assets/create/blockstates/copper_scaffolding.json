@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "bottom=false": { "model": "create:copper_scaffolding" },
+    "bottom=true": { "model": "create:copper_scaffolding_bottom" }
+  }
+}

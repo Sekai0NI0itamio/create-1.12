@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "create:block/bars/copper_bars",
+    "bars": "create:block/bars/copper_bars",
+    "edge": "create:block/bars/copper_bars_edge"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7],
+      "to": [9, 16, 9],
+      "faces": {
+        "up": { "uv": [7, 7, 9, 9], "texture": "#edge" },
+        "down": { "uv": [7, 7, 9, 9], "texture": "#edge" },
+        "north": { "uv": [7, 0, 9, 16], "texture": "#bars" },
+        "south": { "uv": [7, 0, 9, 16], "texture": "#bars" },
+        "west": { "uv": [7, 0, 9, 16], "texture": "#bars" },
+        "east": { "uv": [7, 0, 9, 16], "texture": "#bars" }
+      }
+    }
+  ]
+}

@@ -20,6 +20,8 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import nl.melonstudios.create.CreateLegacy;
+import nl.melonstudios.create.init.SoundInit;
+import nl.melonstudios.create.recipe.server.SpoutFillingRecipes;
 import nl.melonstudios.create.tileentity.TileEntityKinetic;
 import nl.melonstudios.create.tileentity.marker.IDepot;
 import nl.melonstudios.create.tileentity.marker.IHaltBeltContents;
@@ -111,6 +113,19 @@ public class TileEntitySpout extends TileEntityKinetic implements IHaltBeltConte
     }
 
     private void finishFill() {
+        FluidStack inTank = this.tank.getFluid();
+        SpoutFillingRecipes.Recipe filling = inTank == null ? null
+                : SpoutFillingRecipes.getRecipeForInput(this.filling, inTank);
+        if (filling != null && !this.world.isRemote) {
+            int need = filling.fluidAmount > 0 ? filling.fluidAmount : 250;
+            if (inTank.amount >= need) {
+                this.tank.drainInternal(need, true);
+                this.filling = filling.result.copy();
+                this.world.playSound(null, this.pos, SoundInit.spout, SoundCategory.BLOCKS, 0.8F, 1.0F, false);
+                this.sync();
+            }
+            return;
+        }
         IFluidHandlerItem handler = FluidUtil.getFluidHandler(this.filling);
         if (handler == null) {
             this.filling = ItemStack.EMPTY;

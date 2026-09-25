@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,half=bottom": { "model": "create:copycat_step" },
+    "facing=south,half=bottom": { "model": "create:copycat_step" },
+    "facing=west,half=bottom": { "model": "create:copycat_step" },
+    "facing=east,half=bottom": { "model": "create:copycat_step" },
+    "facing=north,half=top": { "model": "create:copycat_step_top" },
+    "facing=south,half=top": { "model": "create:copycat_step_top" },
+    "facing=west,half=top": { "model": "create:copycat_step_top" },
+    "facing=east,half=top": { "model": "create:copycat_step_top" }
+  }
+}

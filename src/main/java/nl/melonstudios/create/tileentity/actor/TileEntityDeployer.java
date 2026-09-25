@@ -36,6 +36,8 @@ import nl.melonstudios.create.recipe.sequence.SequenceRecipe;
 import nl.melonstudios.create.recipe.sequence.SequenceStep;
 import nl.melonstudios.create.recipe.sequence.SequencedRecipes;
 import nl.melonstudios.create.recipe.server.DeployerRecipes;
+import nl.melonstudios.create.recipe.server.SandpaperPolishingRecipes;
+import nl.melonstudios.create.recipe.server.DeployerApplicationRecipes;
 import nl.melonstudios.create.tileentity.TileEntityKinetic;
 import nl.melonstudios.create.tileentity.marker.IDepot;
 import nl.melonstudios.create.tileentity.marker.IHaltBeltContents;
@@ -144,6 +146,40 @@ public class TileEntityDeployer extends TileEntityKinetic implements IContraptio
                                                         use.getX() + 0.5F, use.getY() + depot.getItemHeight(), use.getZ() + 0.5F,
                                                         SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F
                                                 );
+                                            }
+                                            break recipes;
+                                        }
+                                    }
+                                    {
+                                        SandpaperPolishingRecipes.Recipe polish = SandpaperPolishingRecipes.getRecipeForInput(in);
+                                        if (polish != null && (this.heldItem.getItem() == ItemInit.SANDPAPER
+                                                || this.heldItem.getItem() == ItemInit.RED_SANDPAPER)) {
+                                            depot.decreasePresentedAndAddOutput(polish.result.copy());
+                                            this.heldItem.damageItem(1, this.player);
+                                            if (this.heldItem.getItemDamage() >= this.heldItem.getMaxDamage()) {
+                                                this.heldItem = ItemStack.EMPTY;
+                                            }
+                                            this.world.playSound(null,
+                                                    use.getX() + 0.5F, use.getY() + depot.getItemHeight(), use.getZ() + 0.5F,
+                                                    SoundInit.item_sandpaper_used, SoundCategory.BLOCKS, 1.0F, 1.0F
+                                            );
+                                            break recipes;
+                                        }
+                                    }
+                                    {
+                                        DeployerApplicationRecipes.Recipe apply = DeployerApplicationRecipes.instance.getRecipeForInput(in, this.heldItem);
+                                        if (apply != null) {
+                                            depot.decreasePresentedAndAddOutput(apply.result.copy());
+                                            switch (apply.inputType) {
+                                                case CONSUME:
+                                                    this.heldItem.shrink(1);
+                                                    break;
+                                                case DAMAGE:
+                                                    this.heldItem.damageItem(1, this.player);
+                                                    if (this.heldItem.getItemDamage() >= this.heldItem.getMaxDamage()) {
+                                                        this.heldItem = ItemStack.EMPTY;
+                                                    }
+                                                    break;
                                             }
                                             break recipes;
                                         }

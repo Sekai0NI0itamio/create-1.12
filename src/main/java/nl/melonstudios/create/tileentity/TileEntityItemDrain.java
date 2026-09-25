@@ -12,6 +12,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
+import nl.melonstudios.create.recipe.server.DrainEmptyingRecipes;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -42,6 +43,12 @@ public class TileEntityItemDrain extends TileEntityOptimizedBase implements ITop
         if (!this.draining.isEmpty()) {
             this.markDirty();
             if (this.roll == 30) {
+                DrainEmptyingRecipes.Recipe emptying = DrainEmptyingRecipes.getRecipeForInput(this.draining);
+                if (emptying != null) {
+                    this.tank.fillInternal(emptying.fluid.copy(), true);
+                    this.draining = emptying.container.copy();
+                    this.world.playSound(null, this.pos, emptying.fluid.getFluid().getEmptySound(emptying.fluid), SoundCategory.BLOCKS, 1.0F, 1.0F);
+                } else {
                 IFluidHandlerItem handler = FluidUtil.getFluidHandler(this.draining);
                 if (handler != null) {
                     FluidStack drained = handler.drain(this.tank.getCapacity() - this.tank.getFluidAmount(), false);
@@ -61,6 +68,7 @@ public class TileEntityItemDrain extends TileEntityOptimizedBase implements ITop
                         this.draining = handler.getContainer();
                     } else this.roll++;
                 } else this.roll++;
+                }
                 this.sync();
             } else if (this.roll > 60) {
                 if (this.rollingDirection != null) {

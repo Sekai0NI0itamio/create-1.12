@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "bottom=false": { "model": "create:brass_scaffolding" },
+    "bottom=true": { "model": "create:brass_scaffolding_bottom" }
+  }
+}
