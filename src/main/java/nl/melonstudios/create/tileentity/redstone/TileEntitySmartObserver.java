@@ -65,8 +65,9 @@ public class TileEntitySmartObserver extends TileEntityOptimizedBase {
                         CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite());
                 if (tank != null) {
                     StringBuilder sb = new StringBuilder(signature + "|f");
-                    for (int i = 0; i < tank.getTanks(); i++) {
-                        net.minecraftforge.fluids.FluidStack fluid = tank.getFluidInTank(i);
+                    net.minecraftforge.fluids.capability.IFluidTankProperties[] tanks = tank.getTankProperties();
+                    for (int i = 0; i < tanks.length; i++) {
+                        net.minecraftforge.fluids.FluidStack fluid = tanks[i].getContents();
                         sb.append('#').append(fluid == null ? 0 : (fluid.amount + "@"
                                 + fluid.getFluid().getName()));
                         if (fluid != null && fluid.amount > 0) stocked = true;

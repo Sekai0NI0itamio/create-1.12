@@ -57,7 +57,7 @@ public class TileEntityThresholdSwitch extends TileEntityOptimizedBase {
         return this.poweredAfterDelay;
     }
 
-    public boolean getState() {
+    public boolean getRedstoneState() {
         return this.redstoneState;
     }
 

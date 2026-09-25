@@ -107,6 +107,10 @@ public class TileEntityTableCloth extends TileEntityOptimizedBase {
     }
 
     @Override
+    public void tick() {
+    }
+
+    @Override
     public void tickLazy() {
     }
 }

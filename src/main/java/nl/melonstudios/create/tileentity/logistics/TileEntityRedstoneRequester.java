@@ -174,11 +174,13 @@ public class TileEntityRedstoneRequester extends TileEntityOptimizedBase {
 
     @Override
     public void writePacket(TrackedByteBuf buf) throws IOException {
-        ByteBufUtils.writeTag(buf, this.writePacket());
+        io.netty.buffer.ByteBuf temp = io.netty.buffer.Unpooled.buffer();
+        net.minecraftforge.fml.common.network.ByteBufUtils.writeTag(temp, this.writePacket());
+        buf.writeBytes(temp);
     }
 
     @Override
     public void readPacket(ByteBuf buf) throws IOException {
-        this.readPacket(ByteBufUtils.readTag(buf));
+        this.readPacket(net.minecraftforge.fml.common.network.ByteBufUtils.readTag(buf));
     }
 }

@@ -103,6 +103,10 @@ public class TileEntityFactoryBoard extends TileEntityOptimizedBase {
     }
 
     @Override
+    public void tick() {
+    }
+
+    @Override
     public void tickLazy() {
     }
 }
