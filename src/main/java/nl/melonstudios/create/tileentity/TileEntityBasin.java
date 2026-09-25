@@ -106,6 +106,23 @@ public class TileEntityBasin extends TileEntityOptimizedBase implements ITileEnt
         this.itemRotationOld = this.itemRotation;
         this.itemRotation += this.addedItemRotation;
         this.addedItemRotation = 0;
+
+        // Lazy intake runs here because this basin disables lazy ticks.
+        // Collects loose items dropped in from above (belts, chutes, players);
+        // funnels and chutes push through tryInsertItem / the item capability.
+        if (!this.world.isRemote && (this.world.getTotalWorldTime() % 10 == 0)) {
+            List<net.minecraft.entity.item.EntityItem> items = this.world.getEntitiesWithinAABB(
+                    net.minecraft.entity.item.EntityItem.class,
+                    new net.minecraft.util.math.AxisAlignedBB(this.pos.up()),
+                    entityItem -> entityItem.isEntityAlive() && !entityItem.getItem().isEmpty());
+            for (net.minecraft.entity.item.EntityItem entityItem : items) {
+                ItemStack stack = entityItem.getItem();
+                int before = stack.getCount();
+                ItemStack over = this.tryInsertItem(stack);
+                if (over.isEmpty()) entityItem.setDead();
+                else if (over.getCount() != before) entityItem.setItem(over);
+            }
+        }
     }
 
     @Override
@@ -310,6 +327,18 @@ public class TileEntityBasin extends TileEntityOptimizedBase implements ITileEnt
                 this.sync();
                 return copy;
             }
+            return copy;
+        }
+        // Occupied by a different ingredient: behave like the top-open insert
+        // and append a new stack instead of rejecting (reference input
+        // inventory accepts mixed ingredients across its 9 slots).
+        if (this.mayInsertNewItem(copy)) {
+            if (simulate) {
+                copy.splitStack(this.getSlotLimit(slot));
+                return copy;
+            }
+            this.inventory.add(copy.splitStack(this.getSlotLimit(slot)));
+            this.sync();
         }
         return copy;
     }

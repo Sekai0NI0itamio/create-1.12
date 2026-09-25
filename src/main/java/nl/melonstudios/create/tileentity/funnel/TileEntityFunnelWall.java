@@ -10,7 +10,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.block.actor.BlockBeltBase;
 import nl.melonstudios.create.block.state.EnumFunnelState;
@@ -136,34 +135,52 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
      * - No pull when the funnel faces along the belt movement (items pass under).
      *   Perpendicular and blocking (facing against movement) funnels pull.
      * - Pickup at the segment center: funnelEntry = segment + .5, i.e. the mouth
-     *   slot reaching leftPos == 1.0 (positive flow) / rightPos == 0.0 (negative
-     *   flow). Uses a one-tick crossing window instead of exact double equality.
-     * - Brass exact-amount shortfall pulls nothing; target-full pulls nothing.
+     *   slot where the entry half reaches 1.0 (positive flow) / 0.0 (negative
+     *   flow). Both the approaching window (funnel ticks before the belt) and
+     *   the just-crossed window (funnel ticks after the belt moved the stack
+     *   into the exit half) are accepted, so the pull does not depend on TE
+     *   tick order; either way the stack renders at the segment center.
+     * - Filter mismatch pulls nothing; brass exact-amount shortfall pulls
+     *   nothing; target-full pulls nothing and sets no cooldown.
+     * - Reads the belt halves directly, so diagonal segments (which expose no
+     *   IDepot presented item) work too. Remainder is restored to the half it
+     *   came from, so leftovers keep riding instead of teleporting.
      * - Flap + sound on transfer, 8-tick cooldown (reference defaultExtractionTimer = 8).
      *
      * @return true if items moved (cooldown set, caller must return).
      */
     private boolean tryPullFromBelt(TileEntityBeltBase belt, IItemHandler inventory) {
         if (inventory == null || inventory.getSlots() <= 0) return false;
-        if (belt.getSpeed() == 0.0F) return false;
-        if (!(belt instanceof IDepot)) return false;
-        if (!belt.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) return false;
-        IItemHandler beltCap = belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        if (beltCap == null || beltCap.getSlots() <= 0) return false;
+        float speed = belt.getSpeed();
+        if (speed == 0.0F) return false;
+        IBlockState beltState = this.world.getBlockState(belt.getPos());
+        if (!(beltState.getBlock() instanceof BlockBeltBase)) return false;
+        if (!((BlockBeltBase) beltState.getBlock()).isFunctional(beltState)) return false;
 
         EnumFacing movement = this.getBeltMovementFacing(belt);
         if (movement != null && this.getFacing(this.getBlockMetadata()) == movement) return false;
 
-        ItemStack peek = beltCap.getStackInSlot(0);
+        double step = Math.abs((double) speed) / 240.0;
+        double eps = 1.0E-4;
+        boolean positive = belt.getFlag();
+        boolean fromLeft;
+        if (positive) {
+            if (!belt.left.isEmpty() && belt.leftPos >= 1.0 - step - eps) {
+                fromLeft = true;
+            } else if (!belt.right.isEmpty() && belt.rightPos >= -eps && belt.rightPos <= step + eps) {
+                fromLeft = false;
+            } else return false;
+        } else {
+            if (!belt.right.isEmpty() && belt.rightPos <= 0.0 + step + eps) {
+                fromLeft = false;
+            } else if (!belt.left.isEmpty() && belt.leftPos >= 1.0 - step - eps
+                    && belt.leftPos <= 1.0 + step + eps) {
+                fromLeft = true;
+            } else return false;
+        }
+
+        ItemStack peek = (fromLeft ? belt.left : belt.right).copy();
         if (peek.isEmpty()) return false;
-
-        boolean flag = belt.getFlag();
-        double step = Math.abs(belt.getSpeed()) / 240.0;
-        boolean atMouth = flag
-                ? belt.leftPos >= 1.0 - step - 1.0E-4
-                : belt.rightPos <= 0.0 + step + 1.0E-4;
-        if (!atMouth) return false;
-
         if (this.getFilter() != null && !this.getFilter().matches(peek)) return false;
 
         int amount = Math.max(this.getExtractionAmount(), 1);
@@ -179,22 +196,47 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
         if (sim.getCount() >= take) return false;
         int moved = take - sim.getCount();
 
-        ItemStack extracted = ((IDepot) belt).takePresented(moved);
+        ItemStack extracted;
+        if (fromLeft) {
+            extracted = belt.left.splitStack(moved);
+            if (belt.left.isEmpty()) {
+                belt.left = ItemStack.EMPTY;
+                belt.leftPosOld = belt.leftPos = 0.5;
+            }
+        } else {
+            extracted = belt.right.splitStack(moved);
+            if (belt.right.isEmpty()) {
+                belt.right = ItemStack.EMPTY;
+                belt.rightPosOld = belt.rightPos = 0.5;
+            }
+        }
+        belt.sync();
         if (extracted.isEmpty()) return false;
         ItemStack leftover = extracted.copy();
         for (int i = 0; i < inventory.getSlots() && !leftover.isEmpty(); i++) {
             leftover = inventory.insertItem(i, leftover, false);
         }
         if (!leftover.isEmpty()) {
-            leftover = belt.tryInsertItem(leftover);
-            if (!leftover.isEmpty() && !this.world.isRemote) {
-                EntityItem entity = new EntityItem(this.world,
-                        belt.getPos().getX() + 0.5, belt.getPos().getY() + 0.85, belt.getPos().getZ() + 0.5,
-                        leftover.copy()
-                );
-                entity.motionX = entity.motionY = entity.motionZ = 0.0;
-                this.world.spawnEntity(entity);
+            if (fromLeft) {
+                if (belt.left.isEmpty()) {
+                    belt.left = leftover.copy();
+                } else if (ItemStack.areItemsEqual(belt.left, leftover)
+                        && ItemStack.areItemStackTagsEqual(belt.left, leftover)) {
+                    belt.left.grow(leftover.getCount());
+                } else {
+                    belt.left = leftover.copy();
+                }
+            } else {
+                if (belt.right.isEmpty()) {
+                    belt.right = leftover.copy();
+                } else if (ItemStack.areItemsEqual(belt.right, leftover)
+                        && ItemStack.areItemStackTagsEqual(belt.right, leftover)) {
+                    belt.right.grow(leftover.getCount());
+                } else {
+                    belt.right = leftover.copy();
+                }
             }
+            belt.sync();
         }
         this.onTransfer();
         this.cooldown = 8;
@@ -224,12 +266,13 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                 }
                 DEPOT depot = (DEPOT) this.depot;
                 ItemStack presented = depot.getPresentedItem();
-                if (presented.isEmpty() || (this.getFilter() != null && this.getFilter().matches(presented))) return;
+                if (presented.isEmpty() || (this.getFilter() != null && !this.getFilter().matches(presented))) return;
                 ItemStack copy = presented.copy();
                 for (int i = 0; i < inventory.getSlots(); i++) {
                     copy = inventory.insertItem(i, copy, false);
                     if (copy.isEmpty()) break;
                 }
+                if (copy.getCount() >= presented.getCount()) return;
                 depot.setPresentedItem(copy.isEmpty() ? ItemStack.EMPTY : copy);
                 this.onTransfer();
                 this.cooldown = 8;
@@ -243,7 +286,7 @@ public class TileEntityFunnelWall extends TileEntityFunnelBase implements ITicka
                         this.world.removeEntity(entity);
                         continue;
                     }
-                    if (this.getFilter() != null && this.getFilter().matches(stack)) continue;
+                    if (this.getFilter() != null && !this.getFilter().matches(stack)) continue;
                     ItemStack copy = stack.copy();
                     for (int i = 0; i < inventory.getSlots(); i++) {
                         copy = inventory.insertItem(i, copy, false);

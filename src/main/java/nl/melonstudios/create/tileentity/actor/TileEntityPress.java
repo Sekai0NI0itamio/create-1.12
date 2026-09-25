@@ -9,12 +9,16 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.init.RecipeInit;
 import nl.melonstudios.create.init.SoundInit;
@@ -121,6 +125,42 @@ public class TileEntityPress extends TileEntityKinetic implements IHaltBeltConte
                     }
                 }
             } else {
+                TileEntity teBelow = this.world.getTileEntity(this.pos.down(2));
+                if (teBelow instanceof TileEntityBeltBase) {
+                    // Reference BeltPressingCallbacks: items riding a belt under the
+                    // press are processed in place at the cycle midpoint. The belt
+                    // slot is read/rewritten through its item capability so slow
+                    // belts carry the pressed result onwards.
+                    TileEntityBeltBase belt = (TileEntityBeltBase) teBelow;
+                    IItemHandler cap = belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                    ItemStack peek = cap != null ? cap.getStackInSlot(0) : ItemStack.EMPTY;
+                    if (!peek.isEmpty() && this.isPressable(peek)) {
+                        shouldMove = true;
+                        if (this.lastProgress < 1000 && this.progress >= 1000) {
+                            ItemStack taken = cap.extractItem(0, 1, false);
+                            if (!taken.isEmpty()) {
+                                ItemStack result = this.pressResultFor(taken);
+                                this.squishParticles(
+                                        taken,
+                                        this.pos.getX() + 0.5,
+                                        this.pos.getY() - 2 + 0.75,
+                                        this.pos.getZ() + 0.5,
+                                        null
+                                );
+                                if (!result.isEmpty()) {
+                                    ItemStack leftover = cap.insertItem(0, result, false);
+                                    if (!leftover.isEmpty() && !this.world.isRemote) {
+                                        BlockPos bp = belt.getPos();
+                                        StackUtil.spawnItemNoVelocity(this.world,
+                                                bp.getX() + 0.5, bp.getY() + 1.0, bp.getZ() + 0.5,
+                                                leftover);
+                                    }
+                                }
+                                flag = true;
+                            }
+                        }
+                    }
+                } else {
                 List<EntityItem> entityItems = this.world.getEntitiesWithinAABB(
                         EntityItem.class,
                         new AxisAlignedBB(this.pos.down()),
@@ -144,7 +184,13 @@ public class TileEntityPress extends TileEntityKinetic implements IHaltBeltConte
                             }
                             break;
                         }
+                        if (this.tryPressWorldSequenced(entityItem, stack)) {
+                            shouldMove = true;
+                            if (this.lastProgress < 1000 && this.progress >= 1000) flag = true;
+                            break;
+                        }
                     }
+                }
                 }
             }
         }
@@ -163,6 +209,85 @@ public class TileEntityPress extends TileEntityKinetic implements IHaltBeltConte
                 }
             }
         }
+    }
+
+    private boolean isPressable(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        boolean client = this.world.isRemote;
+        if (PressingRecipes.getRecipeForInput(stack, client) != null) return true;
+        if (SequenceRecipe.isInSequence(stack)) {
+            SequenceStep next = SequenceRecipe.getNextStep(stack);
+            return next != null && "pressing".equals(next.name);
+        }
+        String recipeID = SequencedRecipes.getRecipeForInput(stack, client);
+        if (recipeID != null) {
+            SequenceRecipe recipe = RecipeInit.getSequenceRecipes(client).getRecipe(recipeID);
+            return recipe != null && "pressing".equals(recipe.getFirstStep().name);
+        }
+        return false;
+    }
+
+    private ItemStack pressResultFor(ItemStack single) {
+        boolean client = this.world.isRemote;
+        PressingRecipe recipe = PressingRecipes.getRecipeForInput(single, client);
+        if (recipe != null) return recipe.result.copy();
+        if (SequenceRecipe.isInSequence(single)) {
+            SequenceStep next = SequenceRecipe.getNextStep(single);
+            if (next != null && "pressing".equals(next.name)) {
+                return SequenceRecipe.advance(single).copy();
+            }
+            return ItemStack.EMPTY;
+        }
+        String recipeID = SequencedRecipes.getRecipeForInput(single, client);
+        SequenceRecipe seq = recipeID != null ? RecipeInit.getSequenceRecipes(client).getRecipe(recipeID) : null;
+        if (seq != null && "pressing".equals(seq.getFirstStep().name)) {
+            ItemStack processing = seq.processing.copy();
+            SequenceRecipe.initialize(processing, recipeID);
+            return SequenceRecipe.advance(processing);
+        }
+        return ItemStack.EMPTY;
+    }
+
+    private boolean tryPressWorldSequenced(EntityItem entityItem, ItemStack stack) {
+        boolean client = this.world.isRemote;
+        String recipeID = SequencedRecipes.getRecipeForInput(stack, client);
+        SequenceRecipe recipe = recipeID != null ? RecipeInit.getSequenceRecipes(client).getRecipe(recipeID) : null;
+        if (recipe != null && "pressing".equals(recipe.getFirstStep().name)) {
+            if (this.lastProgress < 1000 && this.progress >= 1000) {
+                this.squishParticles(stack, entityItem.posX, entityItem.posY, entityItem.posZ, null);
+                stack.shrink(1);
+                ItemStack processing = recipe.processing.copy();
+                SequenceRecipe.initialize(processing, recipeID);
+                processing = SequenceRecipe.advance(processing);
+                if (stack.isEmpty()) entityItem.setItem(processing);
+                else {
+                    entityItem.setItem(stack);
+                    if (!this.world.isRemote) {
+                        StackUtil.spawnItemNoVelocity(this.world, entityItem.posX, entityItem.posY, entityItem.posZ, processing);
+                    }
+                }
+            }
+            return true;
+        }
+        if (SequenceRecipe.isInSequence(stack)) {
+            SequenceStep next = SequenceRecipe.getNextStep(stack);
+            if (next != null && "pressing".equals(next.name)) {
+                if (this.lastProgress < 1000 && this.progress >= 1000) {
+                    this.squishParticles(stack, entityItem.posX, entityItem.posY, entityItem.posZ, null);
+                    ItemStack advanced = SequenceRecipe.advance(stack).copy();
+                    stack.shrink(1);
+                    if (stack.isEmpty()) entityItem.setItem(advanced);
+                    else {
+                        entityItem.setItem(stack);
+                        if (!this.world.isRemote) {
+                            StackUtil.spawnItemNoVelocity(this.world, entityItem.posX, entityItem.posY, entityItem.posZ, advanced);
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     private void squishParticles(ItemStack stack, double x, double y, double z, @Nullable IDepot depot) {

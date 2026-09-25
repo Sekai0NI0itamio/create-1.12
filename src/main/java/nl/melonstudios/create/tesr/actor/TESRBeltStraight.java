@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,6 +27,11 @@ public class TESRBeltStraight extends TESRBeltBase<TileEntityBeltStraight> {
         super.render(te, pt, alpha);
 
         RenderUtils.prepare(0, 0, 0);
+        // super.render() draws carried items via RenderItem, which leaves a
+        // different texture bound. Rebind the block atlas here or the
+        // belt_scroll sprite UVs below sample the wrong atlas and the belt
+        // surface renders as a black strip.
+        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
         IBlockState state = te.getState();
         EnumBeltPart part = state.getValue(BlockBeltStraight.PART);

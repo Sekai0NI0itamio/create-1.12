@@ -45,6 +45,12 @@ public class TileEntityMixer extends TileEntityKinetic implements ISpeedRequirem
 
         TileEntityBasin basin = this.getBasin();
         if (basin == null) this.currentRecipe = null;
+        if (this.currentRecipe == null && basin != null && Math.abs(this.getSpeed()) > 0) {
+            // Basin contents change without notifying the mixer (no basin
+            // checker on 1.12), so re-search while idle instead of waiting
+            // for the next lazy tick.
+            this.searchRecipe(basin);
+        }
         if (this.currentRecipe != null) {
             MixingRecipe recipe = RecipeInit.getMixingRecipes(this.world.isRemote).getRecipe(this.currentRecipe);
             if (recipe == null || !recipe.matches(basin)) {
@@ -87,7 +93,11 @@ public class TileEntityMixer extends TileEntityKinetic implements ISpeedRequirem
         }
     }
     private void searchRecipe(TileEntityBasin basin) {
-        this.currentRecipe = MixingRecipes.getRecipeForInput(basin, this.world.isRemote);
+        String found = MixingRecipes.getRecipeForInput(basin, this.world.isRemote);
+        if (found == null ? this.currentRecipe != null : !found.equals(this.currentRecipe)) {
+            this.currentRecipe = found;
+            this.sync();
+        }
     }
 
     private void recipeFX(TileEntityBasin basin, double x, double y, double z) {

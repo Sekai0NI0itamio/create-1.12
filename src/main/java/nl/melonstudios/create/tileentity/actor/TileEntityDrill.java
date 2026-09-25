@@ -4,17 +4,21 @@ import com.melonstudios.melonlib.misc.AABB;
 import com.melonstudios.melonlib.misc.StackUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.block.actor.BlockDrill;
 import nl.melonstudios.create.kinetics.contraption.ContraptionInventory;
 import nl.melonstudios.create.kinetics.contraption.IContraptionActor;
 import nl.melonstudios.create.kinetics.contraption.accessor.IContraptionAccessor;
 import nl.melonstudios.create.tileentity.TileEntityBreakBlockBase;
+import nl.melonstudios.create.tileentity.TileEntityChute;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
@@ -125,5 +129,48 @@ public class TileEntityDrill extends TileEntityBreakBlockBase implements IContra
             world.sendBlockBreakProgress(this.breakerId, this.breakingPos, this.destroyProgress);
         }
         return true;
+    }
+
+    @Override
+    public void onBlockBroken(IBlockState stateToBreak) {
+        // Reference DrillBlockEntity.optimiseCobbleGen: stationary drill drops
+        // are offered to the inventory below the broken block (belt, hopper,
+        // depot, basin...) and to a chute above it before falling loose.
+        if (this.world.isRemote || this.breakingPos == null) {
+            super.onBlockBroken(stateToBreak);
+            return;
+        }
+        NonNullList<ItemStack> drops = NonNullList.create();
+        stateToBreak.getBlock().getDrops(drops, this.world, this.breakingPos, stateToBreak, 0);
+        List<ItemStack> leftovers = new ArrayList<>();
+        for (ItemStack stack : drops) {
+            if (stack.isEmpty()) continue;
+            ItemStack rest = this.insertIntoBreakOutput(stack);
+            if (!rest.isEmpty()) leftovers.add(rest);
+        }
+        if (!leftovers.isEmpty()) {
+            StackUtil.dropItemsAt(this.world, this.breakingPos, leftovers.toArray(new ItemStack[0]));
+        }
+        this.world.destroyBlock(this.breakingPos, false);
+    }
+
+    private ItemStack insertIntoBreakOutput(ItemStack stack) {
+        ItemStack rest = stack.copy();
+        TileEntity below = this.world.getTileEntity(this.breakingPos.down());
+        if (below != null && below.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
+            IItemHandler handler = below.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+            if (handler != null) {
+                for (int i = 0; i < handler.getSlots() && !rest.isEmpty(); i++) {
+                    rest = handler.insertItem(i, rest, false);
+                }
+            }
+        }
+        if (!rest.isEmpty()) {
+            TileEntity above = this.world.getTileEntity(this.breakingPos.up());
+            if (above instanceof TileEntityChute) {
+                rest = ((TileEntityChute) above).insertItem(0, rest, false);
+            }
+        }
+        return rest;
     }
 }

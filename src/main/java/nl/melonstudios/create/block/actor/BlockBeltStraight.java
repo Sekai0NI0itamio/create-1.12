@@ -2,14 +2,19 @@ package nl.melonstudios.create.block.actor;
 
 import com.melonstudios.melonlib.misc.AABB;
 import com.melonstudios.melonlib.misc.BlockStateProperties;
+import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -17,8 +22,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import nl.melonstudios.create.block.BlockKineticRotatedPillarBase;
 import nl.melonstudios.create.block.state.EnumBeltPart;
 import nl.melonstudios.create.extensions.IExtensionBlock;
+import nl.melonstudios.create.init.BlockInit;
 import nl.melonstudios.create.tileentity.actor.TileEntityBeltBase;
 import nl.melonstudios.create.tileentity.actor.TileEntityBeltStraight;
 
@@ -101,6 +108,13 @@ public class BlockBeltStraight extends BlockBeltBase implements IExtensionBlock 
         super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
 
         if (entityIn.onGround && entityIn.isEntityAlive() && !entityIn.isSneaking() && !(entityIn instanceof EntityItem)) {
+            // Reference BeltMovementHandler.canBeTransported + transportEntity:
+            // flying players ride nothing, non-player living are slowed while
+            // riding so they do not outrun the belt.
+            if (entityIn instanceof EntityPlayer && ((EntityPlayer) entityIn).capabilities.isFlying) return;
+            if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
+                ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10, 1, false, false));
+            }
             if (entityIn.posY > 0.7 + pos.getY() && entityIn.posY < 0.8 + pos.getY()) {
                 TileEntity te = worldIn.getTileEntity(pos);
                 if (te instanceof TileEntityBeltBase) {
@@ -118,6 +132,28 @@ public class BlockBeltStraight extends BlockBeltBase implements IExtensionBlock 
         }
     }
 
+    /**
+     * Reference BeltBlock.onRemove replaces a cascaded PULLEY segment with its
+     * shaft block (axis kept) instead of air, so the kinetic network keeps its
+     * support bracket. The neighbour TE's shaft-item refund is suppressed via
+     * dropShaftOnDestroy to avoid duplicating block + item.
+     */
+    private void removeChainedSegment(World world, BlockPos off) {
+        IBlockState old = world.getBlockState(off);
+        if (old.getBlock() != this) return;
+        if (old.getValue(PART) == EnumBeltPart.PULLEY) {
+            TileEntity te = world.getTileEntity(off);
+            if (te instanceof TileEntityBeltBase) {
+                ((TileEntityBeltBase) te).dropShaftOnDestroy = false;
+            }
+            world.setBlockState(off, BlockInit.SHAFT.getDefaultState()
+                    .withProperty(BlockKineticRotatedPillarBase.AXIS, this.getRotationAxis(old)), 3);
+        } else {
+            world.setBlockState(off, Blocks.AIR.getDefaultState(), 3);
+        }
+        world.playEvent(2001, off, Block.getIdFromState(old));
+    }
+
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         super.breakBlock(worldIn, pos, state);
@@ -126,18 +162,10 @@ public class BlockBeltStraight extends BlockBeltBase implements IExtensionBlock 
 
         if (state.getValue(VERTICAL)) {
             if (part != EnumBeltPart.END) {
-                BlockPos off = pos.up();
-                IBlockState old = worldIn.getBlockState(off);
-                if (old.getBlock() == this) {
-                    worldIn.setBlockState(off, Blocks.AIR.getDefaultState());
-                }
+                this.removeChainedSegment(worldIn, pos.up());
             }
             if (part != EnumBeltPart.START) {
-                BlockPos off = pos.down();
-                IBlockState old = worldIn.getBlockState(off);
-                if (old.getBlock() == this) {
-                    worldIn.setBlockState(off, Blocks.AIR.getDefaultState());
-                }
+                this.removeChainedSegment(worldIn, pos.down());
             }
         } else {
             EnumFacing.Axis axis = state.getValue(AXIS);
@@ -145,17 +173,23 @@ public class BlockBeltStraight extends BlockBeltBase implements IExtensionBlock 
             EnumFacing n = EnumFacing.getFacingFromAxis(EnumFacing.AxisDirection.NEGATIVE, axis);
 
             if (part != EnumBeltPart.END) {
-                BlockPos off = pos.offset(p);
-                IBlockState old = worldIn.getBlockState(off);
-                if (old.getBlock() == this) {
-                    worldIn.setBlockState(off, Blocks.AIR.getDefaultState());
-                }
+                this.removeChainedSegment(worldIn, pos.offset(p));
             }
             if (part != EnumBeltPart.START) {
-                BlockPos off = pos.offset(n);
-                IBlockState old = worldIn.getBlockState(off);
-                if (old.getBlock() == this) {
-                    worldIn.setBlockState(off, Blocks.AIR.getDefaultState());
+                this.removeChainedSegment(worldIn, pos.offset(n));
+            }
+        }
+        // Reference initBelt: chains shorter than 2 segments cannot exist.
+        // Pulley-to-shaft splits above can orphan singletons; pop them.
+        for (EnumFacing side : EnumFacing.VALUES) {
+            BlockPos npos = pos.offset(side);
+            if (worldIn.getBlockState(npos).getBlock() != this) {
+                continue;
+            }
+            List<BlockPos> chain = BeltSlicer.getChain(worldIn, npos);
+            if (chain.size() < 2) {
+                for (BlockPos p : chain) {
+                    worldIn.destroyBlock(p, true);
                 }
             }
         }

@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -131,29 +133,37 @@ public abstract class BlockBeltBase extends BlockKineticBase implements ITileEnt
         // Vertical belts cannot transport (reference BeltBlock.canTransportObjects
         // rejects VERTICAL/SIDEWAYS; caps are likewise gated in hasCapability).
         if (!this.isFunctional(state)) return;
-        if (entityIn.onGround && entityIn.isEntityAlive() && !worldIn.isRemote) {
+        if (entityIn.isEntityAlive() && !worldIn.isRemote && entityIn instanceof EntityItem) {
+            // Reference BeltBlock.entityInside picks items up while they fall
+            // onto the belt and only ignores upward motion; requiring onGround
+            // let tossed items land beside the belt and never board.
+            if (entityIn.motionY > 0.0) return;
             if (MathHelper.floor(entityIn.posX) == pos.getX() &&
                     MathHelper.floor(entityIn.posY) == pos.getY() &&
                     MathHelper.floor(entityIn.posZ) == pos.getZ()) {
                 TileEntity te = worldIn.getTileEntity(pos);
-                if (te instanceof TileEntityBeltBase && entityIn instanceof EntityItem) {
+                if (te instanceof TileEntityBeltBase) {
                     TileEntityBeltBase belt = (TileEntityBeltBase) te;
                     EntityItem item = (EntityItem) entityIn;
 
                     if (belt.getSpeed() != 0.0F) {
                         if (belt.getFlag()) {
                             if (belt.left.isEmpty()) {
-                                item.setDead();
-                                belt.left = item.getItem().copy();
+                                ItemStack[] split = TileEntityBeltBase.splitCappedHead(item.getItem());
+                                belt.left = split[0];
                                 belt.leftPos = 0.5;
                                 belt.sync();
+                                if (split[1].isEmpty()) item.setDead();
+                                else item.setItem(split[1]);
                             }
                         } else {
                             if (belt.right.isEmpty()) {
-                                item.setDead();
-                                belt.right = item.getItem().copy();
+                                ItemStack[] split = TileEntityBeltBase.splitCappedHead(item.getItem());
+                                belt.right = split[0];
                                 belt.rightPos = 0.5;
                                 belt.sync();
+                                if (split[1].isEmpty()) item.setDead();
+                                else item.setItem(split[1]);
                             }
                         }
                     }
@@ -183,10 +193,12 @@ public abstract class BlockBeltBase extends BlockKineticBase implements ITileEnt
             }
             if (facing == EnumFacing.UP && held.isEmpty()) {
                 if (!worldIn.isRemote) {
+                    boolean took = false;
                     if (!belt.left.isEmpty()) {
                         ItemStack stack = belt.left.copy();
                         belt.left = ItemStack.EMPTY;
                         belt.sync();
+                        took = true;
                         if (!playerIn.addItemStackToInventory(stack) && !stack.isEmpty()) {
                             StackUtil.spawnItemWithVelocity(worldIn, playerIn.posX, playerIn.posY + 0.5, playerIn.posZ,
                                     stack.copy(), 0.0, 0.2, 0.0);
@@ -196,10 +208,17 @@ public abstract class BlockBeltBase extends BlockKineticBase implements ITileEnt
                         ItemStack stack = belt.right.copy();
                         belt.right = ItemStack.EMPTY;
                         belt.sync();
+                        took = true;
                         if (!playerIn.addItemStackToInventory(stack) && !stack.isEmpty()) {
                             StackUtil.spawnItemWithVelocity(worldIn, playerIn.posX, playerIn.posY + 0.5, playerIn.posZ,
                                     stack.copy(), 0.0, 0.2, 0.0);
                         }
+                    }
+                    // Reference BeltBlock.use hand branch plays the pickup
+                    // sound on a successful take.
+                    if (took) {
+                        worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
+                                0.2F, 1.0F + worldIn.rand.nextFloat());
                     }
                 }
                 return true;

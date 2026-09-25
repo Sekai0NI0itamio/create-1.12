@@ -108,6 +108,11 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
 
         this.leftPosOld = this.leftPos;
         this.rightPosOld = this.rightPos;
+        // Reference BeltBlock.canTransportObjects rejects VERTICAL/SIDEWAYS belts:
+        // non-functional segments never move their contents (capability and
+        // entity pickup are likewise gated), so freeze here instead of sliding
+        // items sideways along the transport axis.
+        if (!this.block().isFunctional(this.getState())) return;
         // Reference BeltBlockEntity.getBeltMovementSpeed() is speed/480 blocks per tick.
         // One belt segment holds two half-slots (left 0..1, right 0..1), i.e. 2.0
         // position units per block, so the per-tick increment is speed/240.
@@ -248,10 +253,17 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
     @Override
     public void destroy() {
         StackUtil.dropItemsAt(this.world, this.pos, this.left, this.right);
-        if (this.getState().getValue(BlockBeltBase.PART) != EnumBeltPart.MIDDLE) {
+        // Reference BeltBlock.getDrops refunds the pulley shaft for PART != MIDDLE.
+        // dropShaftOnDestroy is cleared by BlockBeltStraight.breakBlock when a
+        // cascaded PULLEY neighbour is converted back into a shaft block, so the
+        // shaft survives as a block instead of duplicating as block + item.
+        if (this.dropShaftOnDestroy && this.getState().getValue(BlockBeltBase.PART) != EnumBeltPart.MIDDLE) {
             StackUtil.dropItemsAt(this.world, this.pos, new ItemStack(BlockInit.SHAFT)); //TODO: simply have it place the original shaft
         }
     }
+
+    /** Set false by the breakBlock cascade before converting a pulley to a shaft block. */
+    public boolean dropShaftOnDestroy = true;
 
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
@@ -358,22 +370,46 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
         return this.getSpeed() > 0.0F != this.flipped();
     }
 
+    /**
+     * Reference ItemHandlerBeltSegment.insertItem caps every insertion at the
+     * item's max stack size (ItemHelper.limitCountToMaxStackSize) and returns
+     * the remainder. Splits the capped head off stack (never mutates it).
+     */
+    public static ItemStack[] splitCappedHead(ItemStack stack) {
+        int max = Math.min(stack.getMaxStackSize(), 64);
+        if (stack.getCount() <= max) return new ItemStack[]{stack.copy(), ItemStack.EMPTY};
+        ItemStack head = stack.copy();
+        head.setCount(max);
+        ItemStack rest = stack.copy();
+        rest.setCount(stack.getCount() - max);
+        return new ItemStack[]{head, rest};
+    }
+
+    /** Input-end face for side-gated insertion (reference canInsertFrom diode). */
+    protected EnumFacing getInputSide() {
+        return EnumFacing.getFacingFromAxis(this.getFlag() ? EnumFacing.AxisDirection.NEGATIVE : EnumFacing.AxisDirection.POSITIVE,
+                this.block().getTransportAxis(this.getState()));
+    }
+
     @Override
     public ItemStack tryInsertItem(ItemStack stack) {
+        if (stack.isEmpty()) return ItemStack.EMPTY;
         if (this.block().isFunctional(this.getState()) && this.getSpeed() != 0.0F) {
             if (this.getFlag()) {
                 if (this.left.isEmpty()) {
-                    this.left = stack.copy();
+                    ItemStack[] split = splitCappedHead(stack);
+                    this.left = split[0];
                     this.leftPosOld = this.leftPos = 0.5;
                     this.sync();
-                    return ItemStack.EMPTY;
+                    return split[1];
                 }
             } else {
                 if (this.right.isEmpty()) {
-                    this.right = stack.copy();
+                    ItemStack[] split = splitCappedHead(stack);
+                    this.right = split[0];
                     this.rightPosOld = this.rightPos = 0.5;
                     this.sync();
-                    return ItemStack.EMPTY;
+                    return split[1];
                 }
             }
         }
@@ -392,27 +428,43 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
 
     @Override
     public ItemStack tryInsertItem(ItemStack stack, @Nullable EnumFacing side) {
-        if (this.getSpeed() != 0.0F && side != null && this.block().isFunctional(this.getState())) {
-            if (EnumFacing.getFacingFromAxis(this.getFlag() ? EnumFacing.AxisDirection.NEGATIVE : EnumFacing.AxisDirection.POSITIVE,
-                    this.block().getTransportAxis(this.getState())) == side) {
+        if (stack.isEmpty()) return ItemStack.EMPTY;
+        // Reference BeltBlockEntity.canInsertFrom rejects insertion from the
+        // output end only (side.getOpposite() == movement facing). Null/UP is
+        // a top drop (centre slot); the input-end face feeds the belt end;
+        // off-axis faces (perpendicular/DOWN) ride on top like a drop. Only
+        // the output end is refused instead of falling back to a top insert,
+        // which used to defeat the diode.
+        if (side == null || side == EnumFacing.UP) return this.tryInsertItem(stack);
+        if (this.getSpeed() != 0.0F && this.block().isFunctional(this.getState())) {
+            EnumFacing.Axis transportAxis = this.block().getTransportAxis(this.getState());
+            if (this.getInputSide() == side) {
                 if (this.getFlag()) {
                     if (this.left.isEmpty()) {
-                        this.left = stack.copy();
+                        ItemStack[] split = splitCappedHead(stack);
+                        this.left = split[0];
                         this.leftPosOld = this.leftPos = 0.0;
                         this.sync();
-                        return ItemStack.EMPTY;
+                        return split[1];
                     }
+                    return stack;
                 } else {
                     if (this.right.isEmpty()) {
-                        this.right = stack.copy();
+                        ItemStack[] split = splitCappedHead(stack);
+                        this.right = split[0];
                         this.rightPosOld = this.rightPos = 1.0;
                         this.sync();
-                        return ItemStack.EMPTY;
+                        return split[1];
                     }
+                    return stack;
                 }
+            } else if (side.getAxis() != transportAxis) {
+                // Perpendicular/DOWN faces are not on the diode axis, so the
+                // reference accepts them as plain top drops.
+                return this.tryInsertItem(stack);
             }
         }
-        return this.tryInsertItem(stack);
+        return stack;
     }
 
     protected BlockPos getOffsetPosition(BlockPos pos, EnumFacing side) {
@@ -427,6 +479,18 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
     }
 
     protected boolean allowItemToPass(ItemStack stack) {
+        if (this.world != null && !stack.isEmpty()) {
+            TileEntity above = this.world.getTileEntity(this.pos.up());
+            if (above instanceof TileEntityPress
+                    && ((TileEntityPress) above).shouldHaltItem(stack)) {
+                return false;
+            }
+            TileEntity below = this.world.getTileEntity(this.pos.down(2));
+            if (below instanceof TileEntityPress
+                    && ((TileEntityPress) below).shouldHaltItem(stack)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -451,7 +515,8 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
 
         @Override
         public ItemStack getStackInSlot(int slot) {
-            if (self().getSpeed() == 0.0F) return ItemStack.EMPTY;
+            // Reference ItemHandlerBeltSegment.getStackInSlot has no speed
+            // gate: stopped-belt contents stay visible/extractable.
             return this.flag() ? self().left : self().right;
         }
 
@@ -459,19 +524,24 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             if (self().getSpeed() == 0.0F) return stack;
             if (stack.isEmpty()) return ItemStack.EMPTY;
+            if (!self().block().isFunctional(self().getState())) return stack;
             if (this.flag()) {
                 if (self().left.isEmpty()) {
-                    if (simulate) return ItemStack.EMPTY;
-                    self().left = stack.copy();
+                    ItemStack[] split = splitCappedHead(stack);
+                    if (simulate) return split[1];
+                    self().left = split[0];
+                    self().leftPosOld = self().leftPos = 0.5;
                     self().sync();
-                    return ItemStack.EMPTY;
+                    return split[1];
                 }
             } else {
                 if (self().right.isEmpty()) {
-                    if (simulate) return ItemStack.EMPTY;
-                    self().right = stack.copy();
+                    ItemStack[] split = splitCappedHead(stack);
+                    if (simulate) return split[1];
+                    self().right = split[0];
+                    self().rightPosOld = self().rightPos = 0.5;
                     self().sync();
-                    return ItemStack.EMPTY;
+                    return split[1];
                 }
             }
             return stack;
@@ -479,16 +549,12 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (self().getSpeed() == 0.0F || amount <= 0) return ItemStack.EMPTY;
+            // Reference ItemHandlerBeltSegment reads and takes from the same
+            // stack at this offset; the halves were flipped here (peek left,
+            // take right), corrupting capability-based extraction. Like the
+            // reference, extraction stays available while the belt is stopped.
+            if (amount <= 0) return ItemStack.EMPTY;
             if (this.flag()) {
-                if (self().right.isEmpty()) return ItemStack.EMPTY;
-                ItemStack copy = self().right.copy();
-                ItemStack ret = copy.splitStack(amount);
-                if (simulate) return ret;
-                self().right = copy;
-                self().sync();
-                return ret;
-            } else {
                 if (self().left.isEmpty()) return ItemStack.EMPTY;
                 ItemStack copy = self().left.copy();
                 ItemStack ret = copy.splitStack(amount);
@@ -496,12 +562,20 @@ public abstract class TileEntityBeltBase extends TileEntityKinetic implements IT
                 self().left = copy;
                 self().sync();
                 return ret;
+            } else {
+                if (self().right.isEmpty()) return ItemStack.EMPTY;
+                ItemStack copy = self().right.copy();
+                ItemStack ret = copy.splitStack(amount);
+                if (simulate) return ret;
+                self().right = copy;
+                self().sync();
+                return ret;
             }
         }
 
         @Override
         public int getSlotLimit(int slot) {
-            return 64;
+            return Math.min(this.getStackInSlot(slot).getMaxStackSize(), 64);
         }
     }
 }

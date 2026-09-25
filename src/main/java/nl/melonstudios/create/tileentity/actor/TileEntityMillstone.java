@@ -3,9 +3,11 @@ package nl.melonstudios.create.tileentity.actor;
 import com.melonstudios.melonlib.misc.StackUtil;
 import com.melonstudios.melonlib.network.TrackedByteBuf;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -14,12 +16,14 @@ import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.recipe.PulverizationRecipe;
 import nl.melonstudios.create.recipe.server.MillingRecipes;
 import nl.melonstudios.create.tileentity.TileEntityKinetic;
+import nl.melonstudios.create.tileentity.marker.ITopOpenInventory;
 import nl.melonstudios.create.util.Utils;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.util.List;
 
-public class TileEntityMillstone extends TileEntityKinetic implements IItemHandler {
+public class TileEntityMillstone extends TileEntityKinetic implements IItemHandler, ITopOpenInventory {
     public ItemStack input = ItemStack.EMPTY;
     public final ItemStack[] output = new ItemStack[] {
             ItemStack.EMPTY,
@@ -126,6 +130,67 @@ public class TileEntityMillstone extends TileEntityKinetic implements IItemHandl
     }
 
     @Override
+    public void tickLazy() {
+        super.tickLazy();
+        // Reference DirectBeltInputBehaviour covers belts/funnels/chutes; loose
+        // items dropped onto the millstone from above are collected here.
+        if (this.world.isRemote) return;
+        List<EntityItem> items = this.world.getEntitiesWithinAABB(EntityItem.class,
+                new AxisAlignedBB(this.pos.up()),
+                entityItem -> entityItem.isEntityAlive() && !entityItem.getItem().isEmpty());
+        for (EntityItem entityItem : items) {
+            ItemStack stack = entityItem.getItem();
+            ItemStack over = this.tryInsertItem(stack);
+            if (over.isEmpty()) entityItem.setDead();
+            else if (over.getCount() != stack.getCount()) entityItem.setItem(over);
+            if (!this.input.isEmpty() && this.input.getCount() >= 64) break;
+        }
+    }
+
+    private boolean canMill(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        if (this.lastMillingRecipe != null && this.lastMillingRecipe.input.test(stack)) return true;
+        return MillingRecipes.instance.getRecipeForInput(stack) != null;
+    }
+
+    @Override
+    public ItemStack tryInsertItem(ItemStack stack) {
+        if (stack.isEmpty() || !this.canMill(stack)) return stack;
+        if (this.input.isEmpty()) {
+            int take = Math.min(stack.getCount(), 64);
+            this.input = stack.copy();
+            this.input.setCount(take);
+            stack.shrink(take);
+            this.sync();
+            return stack.isEmpty() ? ItemStack.EMPTY : stack;
+        }
+        if (ItemStack.areItemsEqual(this.input, stack) && ItemStack.areItemStackTagsEqual(this.input, stack)) {
+            int space = 64 - this.input.getCount();
+            if (space <= 0) return stack;
+            int move = Math.min(space, stack.getCount());
+            this.input.grow(move);
+            stack.shrink(move);
+            this.sync();
+        }
+        return stack.isEmpty() ? ItemStack.EMPTY : stack;
+    }
+
+    @Override
+    public boolean isInsertionSlotEmpty(ItemStack stack) {
+        if (stack.isEmpty()) return this.input.isEmpty();
+        if (!this.canMill(stack)) return false;
+        if (this.input.isEmpty()) return true;
+        return ItemStack.areItemsEqual(this.input, stack)
+                && ItemStack.areItemStackTagsEqual(this.input, stack)
+                && this.input.getCount() < 64;
+    }
+
+    @Override
+    public ItemStack tryInsertItem(ItemStack stack, @Nullable EnumFacing side) {
+        return this.tryInsertItem(stack);
+    }
+
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         NBTTagCompound nbt = super.writeToNBT(compound);
 
@@ -200,11 +265,31 @@ public class TileEntityMillstone extends TileEntityKinetic implements IItemHandl
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (slot != 0 || stack.isEmpty() || !this.input.isEmpty() || MillingRecipes.instance.getRecipeForInput(stack) == null) return stack;
-        if (simulate) return ItemStack.EMPTY;
-        this.input = stack.copy();
+        if (slot != 0 || stack.isEmpty() || !this.canMill(stack)) return stack;
+        if (!this.input.isEmpty()
+                && !(ItemStack.areItemsEqual(this.input, stack) && ItemStack.areItemStackTagsEqual(this.input, stack))) {
+            return stack;
+        }
+        int present = this.input.isEmpty() ? 0 : this.input.getCount();
+        int space = 64 - present;
+        if (space <= 0) return stack;
+        int move = Math.min(space, stack.getCount());
+        if (simulate) {
+            ItemStack ret = stack.copy();
+            ret.shrink(move);
+            return ret.isEmpty() ? ItemStack.EMPTY : ret;
+        }
+        if (this.input.isEmpty()) {
+            this.input = stack.copy();
+            this.input.setCount(move);
+        } else {
+            this.input.grow(move);
+        }
         this.sync();
-        return ItemStack.EMPTY;
+        if (move == stack.getCount()) return ItemStack.EMPTY;
+        ItemStack ret = stack.copy();
+        ret.shrink(move);
+        return ret;
     }
 
     @Override

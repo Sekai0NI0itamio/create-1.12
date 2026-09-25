@@ -78,10 +78,11 @@ public class TileEntityBeltStraight extends TileEntityBeltBase implements IDepot
     @Override
     public ItemStack getPresentedItem() {
         if (this.getSpeed() == 0.0F) return ItemStack.EMPTY;
+        double step = Math.abs(this.getSpeed()) / 240.0 + 1.0E-4;
         if (this.getFlag()) {
-            return this.leftPos == 1.0 ? this.left : ItemStack.EMPTY;
+            return this.leftPos >= 1.0 - step ? this.left : ItemStack.EMPTY;
         } else {
-            return this.rightPos == 0.0 ? this.right : ItemStack.EMPTY;
+            return this.rightPos <= 0.0 + step ? this.right : ItemStack.EMPTY;
         }
     }
 
@@ -139,8 +140,22 @@ public class TileEntityBeltStraight extends TileEntityBeltBase implements IDepot
 
     @Override
     public ItemStack takePresented(int count) {
-        if (this.getSpeed() == 0.0F) return ItemStack.EMPTY;
-        this.sync();
-        return this.getFlag() ? this.left.splitStack(count) : this.right.splitStack(count);
+        if (this.getSpeed() == 0.0F || count <= 0) return ItemStack.EMPTY;
+        // Reference funnels/processing only act on items within ~.55 of the
+        // segment centre (BeltInventory.applyToEachWithin(index + .5, .55)).
+        // The centre crossing is leftPos == 1.0 (positive flow) /
+        // rightPos == 0.0 (negative flow); taking mid-transit items anywhere
+        // else vacuumed the belt from any IDepot caller. A one-tick window
+        // matches TileEntityFunnelWall's atMouth check.
+        double step = Math.abs(this.getSpeed()) / 240.0 + 1.0E-4;
+        if (this.getFlag()) {
+            if (this.leftPos < 1.0 - step) return ItemStack.EMPTY;
+            this.sync();
+            return this.left.splitStack(count);
+        } else {
+            if (this.rightPos > 0.0 + step) return ItemStack.EMPTY;
+            this.sync();
+            return this.right.splitStack(count);
+        }
     }
 }

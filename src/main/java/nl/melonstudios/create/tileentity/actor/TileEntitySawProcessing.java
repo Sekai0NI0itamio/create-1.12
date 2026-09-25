@@ -147,6 +147,25 @@ public class TileEntitySawProcessing extends TileEntityKinetic implements ITileE
         if (this.world.isRemote) return;
         EnumFacing side = this.getProcessingDirection();
         BlockPos drop = this.pos.offset(side);
+        TileEntity te = this.world.getTileEntity(drop);
+        if (te instanceof ITopOpenInventory) {
+            this.outputQueue = ((ITopOpenInventory)te).tryInsertItem(this.outputQueue, side.getOpposite());
+            this.sync();
+            if (this.outputQueue.isEmpty()) return;
+        } else if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
+            // Reference saw exports into the downstream inventory (belt funnel
+            // target, chest, chute, basin...) before resorting to loose drops.
+            IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+            if (handler != null) {
+                ItemStack rest = this.outputQueue.copy();
+                for (int i = 0; i < handler.getSlots() && !rest.isEmpty(); i++) {
+                    rest = handler.insertItem(i, rest, false);
+                }
+                this.outputQueue = rest;
+                this.sync();
+                if (this.outputQueue.isEmpty()) return;
+            }
+        }
         if (this.world.getBlockState(drop).getBlock().isReplaceable(this.world, drop)) {
             EntityItem entity = new EntityItem(this.world,
                     this.pos.getX() + 0.5 + side.getFrontOffsetX() * 0.65,
@@ -161,13 +180,8 @@ public class TileEntitySawProcessing extends TileEntityKinetic implements ITileE
             this.world.spawnEntity(entity);
             this.outputQueue = ItemStack.EMPTY;
             this.sync();
-        } else {
-            TileEntity te = this.world.getTileEntity(drop);
-            if (te instanceof ITopOpenInventory) {
-                this.outputQueue = ((ITopOpenInventory)te).tryInsertItem(this.outputQueue, side.getOpposite());
-                this.sync();
-            }
         }
+        // Blocked and no inventory accepted the result: hold it and retry next tick.
     }
     public EnumFacing getProcessingDirection() {
         boolean x = this.getBlockMetadata() == 4;
@@ -187,6 +201,41 @@ public class TileEntitySawProcessing extends TileEntityKinetic implements ITileE
                 EntityItem select = items.get(0);
                 this.handleSteppedOn(select);
             }
+            if (this.currentlyProcessing.isEmpty() && !this.world.isRemote) {
+                this.pullFromUpstreamBelt();
+            }
+        }
+    }
+
+    private void pullFromUpstreamBelt() {
+        // Reference DirectBeltInputBehaviour: belts (and belt funnels) feed the
+        // saw. The backport belt keeps riders in its own slots, so an idle saw
+        // draws one item from the belt segment feeding it (opposite of the
+        // ejection direction, plus the segment below for saws mounted over belts).
+        EnumFacing back = this.getProcessingDirection().getOpposite();
+        BlockPos[] candidates = new BlockPos[] {
+                this.pos.offset(back),
+                this.pos.offset(this.getProcessingDirection()),
+                this.pos.down(),
+        };
+        for (BlockPos pos : candidates) {
+            TileEntity te = this.world.getTileEntity(pos);
+            if (!(te instanceof TileEntityBeltBase)) continue;
+            if (!te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) continue;
+            IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+            if (handler == null) continue;
+            ItemStack sim = handler.extractItem(0, 1, true);
+            if (sim.isEmpty() || !this.isInsertionSlotEmpty(sim)) continue;
+            ItemStack taken = handler.extractItem(0, 1, false);
+            if (taken.isEmpty()) continue;
+            ItemStack leftover = this.tryInsertItem(taken);
+            if (!leftover.isEmpty()) {
+                ItemStack back2 = handler.insertItem(0, leftover, false);
+                if (!back2.isEmpty()) {
+                    StackUtil.dropItemsAt(this.world, pos, back2);
+                }
+            }
+            return;
         }
     }
 
