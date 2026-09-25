@@ -110,9 +110,9 @@ public class TileEntityThresholdSwitch extends TileEntityOptimizedBase {
                         CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite());
                 if (tank != null) {
                     found = true;
-                    for (int i = 0; i < tank.getTanks(); i++) {
-                        FluidStack fluid = tank.getFluidInTank(i);
-                        int space = tank.getTankCapacity(i);
+                    for (net.minecraftforge.fluids.capability.IFluidTankProperties props : tank.getTankProperties()) {
+                        FluidStack fluid = props.getContents();
+                        int space = props.getCapacity();
                         if (space == 0) continue;
                         max += space;
                         if (fluid != null) level += fluid.amount;
