@@ -445,6 +445,14 @@ tile.create.fluid_valve.name=Fluid Valve
 tile.create.mechanical_arm.name=Mechanical Arm
 tile.create.chain_drive.name=Chain Drive
 tile.create.chain_conveyor.name=Chain Conveyor
+tile.create.brass_tunnel.name=Brass Tunnel
+tile.create.creative_crate.name=Creative Crate
+tile.create.item_hatch.name=Item Hatch
+tile.create.frogport.name=Frogport
+tile.create.packager_link.name=Packager Link
+tile.create.redstone_requester.name=Redstone Requester
+tile.create.table_cloth.name=Table Cloth
+tile.create.factory_board.name=Factory Board
 
 item.create.chromatic_compound.name=Chromatic Compound
 item.create.shadow_steel.name=Shadow Steel

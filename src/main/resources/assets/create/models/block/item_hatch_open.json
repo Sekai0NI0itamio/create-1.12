@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "create:block/hatch_open",
+    "down": "create:block/hatch_open",
+    "up": "create:block/hatch_open",
+    "north": "create:block/hatch_open",
+    "south": "create:block/hatch_open",
+    "east": "create:block/hatch_open",
+    "west": "create:block/hatch_open"
+  }
+}

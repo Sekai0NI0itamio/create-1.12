@@ -22,6 +22,14 @@ import nl.melonstudios.create.block.generator.*;
 import nl.melonstudios.create.block.logistics.BlockPackager;
 import nl.melonstudios.create.block.logistics.BlockStockTicker;
 import nl.melonstudios.create.block.logistics.BlockVault;
+import nl.melonstudios.create.block.logistics.BlockBrassTunnel;
+import nl.melonstudios.create.block.logistics.BlockCreativeCrate;
+import nl.melonstudios.create.block.logistics.BlockItemHatch;
+import nl.melonstudios.create.block.logistics.BlockFrogport;
+import nl.melonstudios.create.block.logistics.BlockPackagerLink;
+import nl.melonstudios.create.block.logistics.BlockRedstoneRequester;
+import nl.melonstudios.create.block.logistics.BlockTableCloth;
+import nl.melonstudios.create.block.logistics.BlockFactoryBoard;
 import nl.melonstudios.create.block.actor.BlockElevatorContact;
 import nl.melonstudios.create.block.actor.BlockElevatorPulley;
 import nl.melonstudios.create.block.actor.BlockGantryCarriage;
@@ -264,6 +272,25 @@ public final class BlockInit {
             registerBlockWithItem(new BlockChainDrive(Material.IRON, MapColor.GRAY));
     public static final BlockChainConveyor CHAIN_CONVEYOR = (BlockChainConveyor)
             registerBlockWithItem(new BlockChainConveyor());
+    public static final BlockBrassTunnel BRASS_TUNNEL = (BlockBrassTunnel)
+            registerBlockWithItem(new BlockBrassTunnel()
+            .setRegistryName("brass_tunnel").setUnlocalizedName("create.brass_tunnel"));
+    public static final BlockCreativeCrate CREATIVE_CRATE = (BlockCreativeCrate)
+            registerBlockWithItem(new BlockCreativeCrate());
+    public static final BlockItemHatch ITEM_HATCH = (BlockItemHatch)
+            registerBlockWithItem(new BlockItemHatch());
+    public static final BlockFrogport FROGPORT = (BlockFrogport)
+            registerBlockWithItem(new BlockFrogport());
+    public static final BlockPackagerLink PACKAGER_LINK = (BlockPackagerLink)
+            registerBlockWithItem(new BlockPackagerLink());
+    public static final BlockRedstoneRequester REDSTONE_REQUESTER = (BlockRedstoneRequester)
+            registerBlockWithItem(new BlockRedstoneRequester());
+    public static final BlockTableCloth TABLE_CLOTH = (BlockTableCloth)
+            registerBlockWithItem(new BlockTableCloth()
+            .setRegistryName("table_cloth").setUnlocalizedName("create.table_cloth"));
+    public static final BlockFactoryBoard FACTORY_BOARD = (BlockFactoryBoard)
+            registerBlockWithItem(new BlockFactoryBoard()
+            .setRegistryName("factory_board").setUnlocalizedName("create.factory_board"));
 
     public static final BlockTrainTrack TRAIN_TRACK = (BlockTrainTrack)
             registerBlockWithItem(new BlockTrainTrack()

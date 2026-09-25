@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "create:brass_tunnel"
+    },
+    "axis=z": {
+      "model": "create:brass_tunnel",
+      "y": 90
+    }
+  }
+}

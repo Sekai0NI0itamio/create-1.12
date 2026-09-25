@@ -1,0 +1,78 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "face": "create:block/stock_link",
+  "particle": "create:block/stock_link"
+ },
+ "elements": [
+  {
+   "name": "Link",
+   "from": [
+    3,
+    2,
+    3
+   ],
+   "to": [
+    13,
+    12,
+    13
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      3,
+      2,
+      13,
+      12
+     ],
+     "texture": "#face"
+    },
+    "south": {
+     "uv": [
+      3,
+      2,
+      13,
+      12
+     ],
+     "texture": "#face"
+    },
+    "east": {
+     "uv": [
+      3,
+      2,
+      13,
+      12
+     ],
+     "texture": "#face"
+    },
+    "west": {
+     "uv": [
+      3,
+      2,
+      13,
+      12
+     ],
+     "texture": "#face"
+    },
+    "up": {
+     "uv": [
+      3,
+      3,
+      13,
+      13
+     ],
+     "texture": "#face"
+    },
+    "down": {
+     "uv": [
+      3,
+      3,
+      13,
+      13
+     ],
+     "texture": "#face"
+    }
+   }
+  }
+ ]
+}

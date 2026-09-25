@@ -1,0 +1,78 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "face": "create:block/redstone_requester_powered",
+  "particle": "create:block/redstone_requester_powered"
+ },
+ "elements": [
+  {
+   "name": "Requester",
+   "from": [
+    2,
+    0,
+    2
+   ],
+   "to": [
+    14,
+    12,
+    14
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      2,
+      0,
+      14,
+      12
+     ],
+     "texture": "#face"
+    },
+    "south": {
+     "uv": [
+      2,
+      0,
+      14,
+      12
+     ],
+     "texture": "#face"
+    },
+    "east": {
+     "uv": [
+      2,
+      0,
+      14,
+      12
+     ],
+     "texture": "#face"
+    },
+    "west": {
+     "uv": [
+      2,
+      0,
+      14,
+      12
+     ],
+     "texture": "#face"
+    },
+    "up": {
+     "uv": [
+      2,
+      2,
+      14,
+      14
+     ],
+     "texture": "#face"
+    },
+    "down": {
+     "uv": [
+      2,
+      2,
+      14,
+      14
+     ],
+     "texture": "#face"
+    }
+   }
+  }
+ ]
+}
