@@ -6,6 +6,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -58,7 +60,7 @@ public class BlockGlassDoor extends BlockDoor {
 
     @Override
     @SuppressWarnings("deprecation")
-    public MapColor getMapColor(IBlockState state) {
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         switch (this.style) {
             case "brass": return MapColor.GOLD;
             case "copper": return MapColor.ADOBE;

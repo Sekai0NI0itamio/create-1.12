@@ -16,6 +16,9 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import nl.melonstudios.create.block.actor.BlockBeltBase;
 import nl.melonstudios.create.block.logistics.BlockAndesiteTunnel;
 import nl.melonstudios.create.init.SoundInit;
+import com.melonstudios.melonlib.network.TrackedByteBuf;
+import io.netty.buffer.ByteBuf;
+import java.io.IOException;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 import nl.melonstudios.create.tileentity.actor.TileEntityBeltBase;
 import nl.melonstudios.create.tileentity.marker.ITopOpenInventory;
@@ -504,4 +507,16 @@ public class TileEntityAndesiteTunnel extends TileEntityOptimizedBase implements
     }
 
     //endregion
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        io.netty.buffer.ByteBuf temp = io.netty.buffer.Unpooled.buffer();
+        net.minecraftforge.fml.common.network.ByteBufUtils.writeTag(temp, this.writePacket());
+        buf.writeBytes(temp);
+    }
+
+    @Override
+    public void readPacket(ByteBuf buf) throws IOException {
+        this.readPacket(net.minecraftforge.fml.common.network.ByteBufUtils.readTag(buf));
+    }
 }

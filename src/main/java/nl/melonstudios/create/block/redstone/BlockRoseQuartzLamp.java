@@ -114,7 +114,7 @@ public class BlockRoseQuartzLamp extends Block implements IWrenchable {
             BlockPos current = frontier.remove();
             for (EnumFacing side : EnumFacing.VALUES) {
                 BlockPos next = current.offset(side);
-                if (next.manhattanDistance(origin) > 16) continue;
+                if (Math.abs(next.getX() - origin.getX()) + Math.abs(next.getY() - origin.getY()) + Math.abs(next.getZ() - origin.getZ()) > 16) continue;
                 if (!visited.add(next)) continue;
                 IBlockState nextState = world.getBlockState(next);
                 if (nextState.getBlock() != this) continue;

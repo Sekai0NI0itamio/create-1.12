@@ -38,7 +38,7 @@ public class BlockValveHandle extends BlockHandCrank {
     public final EnumDyeColor color;
 
     public BlockValveHandle(@Nullable EnumDyeColor color) {
-        super(color == null ? MapColor.WOOD : color.getMapColor(), SoundType.WOOD);
+        super(color == null ? MapColor.WOOD : MapColor.getBlockColor(color), SoundType.WOOD);
         this.color = color;
         String name = color == null ? "copper_valve_handle" : color.getName() + "_valve_handle";
         this.setRegistryName(name);

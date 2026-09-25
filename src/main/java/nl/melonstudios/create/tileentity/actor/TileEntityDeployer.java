@@ -26,6 +26,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import nl.melonstudios.create.block.actor.BlockDeployer;
 import nl.melonstudios.create.init.RecipeInit;
+import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.item.ItemSandpaper;
 import nl.melonstudios.create.kinetics.contraption.ContraptionInventory;

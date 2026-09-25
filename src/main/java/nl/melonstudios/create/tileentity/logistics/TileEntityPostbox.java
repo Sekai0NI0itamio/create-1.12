@@ -11,6 +11,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.block.logistics.BlockPostbox;
+import com.melonstudios.melonlib.network.TrackedByteBuf;
+import io.netty.buffer.ByteBuf;
+import java.io.IOException;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 import nl.melonstudios.create.util.Utils;
 
@@ -163,5 +166,17 @@ public class TileEntityPostbox extends TileEntityOptimizedBase {
             return (T) this.handler;
         }
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        io.netty.buffer.ByteBuf temp = io.netty.buffer.Unpooled.buffer();
+        net.minecraftforge.fml.common.network.ByteBufUtils.writeTag(temp, this.writePacket());
+        buf.writeBytes(temp);
+    }
+
+    @Override
+    public void readPacket(ByteBuf buf) throws IOException {
+        this.readPacket(net.minecraftforge.fml.common.network.ByteBufUtils.readTag(buf));
     }
 }

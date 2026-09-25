@@ -48,11 +48,7 @@ public class ItemMinecartCoupling extends Item {
         return tag != null && tag.hasUniqueId("FirstCart");
     }
 
-    @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, Entity target, EnumHand hand) {
-        if (!(target instanceof EntityMinecart)) {
-            return false;
-        }
+    public boolean interactWithCart(ItemStack stack, EntityPlayer player, EntityMinecart target, EnumHand hand) {
         if (player.world.isRemote) {
             return true;
         }

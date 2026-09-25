@@ -44,8 +44,16 @@ public class TileEntityAdjustableChainGearshift extends TileEntityChainDrive {
     /** Called by the block on neighbor changes and by the lazy tick. */
     public void pollSignal() {
         if (this.world == null || this.world.isRemote) return;
-        int power = this.world.getRedstonePowerFromNeighbors(this.pos);
+        int power = this.maxNeighborPower();
         if (power != this.signal) this.signalChanged = true;
+    }
+
+    private int maxNeighborPower() {
+        int power = 0;
+        for (net.minecraft.util.EnumFacing side : net.minecraft.util.EnumFacing.VALUES) {
+            power = Math.max(power, this.world.getRedstonePower(this.pos, side));
+        }
+        return power;
     }
 
     @Override
@@ -60,7 +68,7 @@ public class TileEntityAdjustableChainGearshift extends TileEntityChainDrive {
         if (this.world == null || this.world.isRemote) return;
         if (this.signalChanged) {
             this.signalChanged = false;
-            this.analogSignalChanged(this.world.getRedstonePowerFromNeighbors(this.pos));
+            this.analogSignalChanged(this.maxNeighborPower());
         }
     }
 

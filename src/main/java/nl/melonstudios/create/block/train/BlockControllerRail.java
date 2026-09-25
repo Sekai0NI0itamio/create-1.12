@@ -103,7 +103,7 @@ public class BlockControllerRail extends BlockRailBase implements IWrenchable {
         if (world.isRemote) return;
         IBlockState state = world.getBlockState(pos);
         if (!(state.getBlock() instanceof BlockControllerRail)) return;
-        int power = world.getRedstonePowerFromNeighbors(pos);
+        int power = world.getStrongPower(pos);
         if (power > 0) {
             Vec3i drive = driveVector(state);
             double accel = 0.02 + 0.01 * power;

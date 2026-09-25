@@ -113,15 +113,16 @@ public class TileEntitySpout extends TileEntityKinetic implements IHaltBeltConte
     }
 
     private void finishFill() {
-        FluidStack inTank = this.tank.getFluid();
-        SpoutFillingRecipes.Recipe filling = inTank == null ? null
-                : SpoutFillingRecipes.getRecipeForInput(this.filling, inTank);
+        FluidStack tankFluid = this.tank.getFluid();
+        SpoutFillingRecipes.Recipe filling = tankFluid == null ? null
+                : SpoutFillingRecipes.getRecipeForInput(this.filling, tankFluid);
         if (filling != null && !this.world.isRemote) {
             int need = filling.fluidAmount > 0 ? filling.fluidAmount : 250;
-            if (inTank.amount >= need) {
+            if (tankFluid.amount >= need) {
                 this.tank.drainInternal(need, true);
                 this.filling = filling.result.copy();
-                this.world.playSound(null, this.pos, SoundInit.spout, SoundCategory.BLOCKS, 0.8F, 1.0F, false);
+                this.world.playSound(null, this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D,
+                        SoundInit.spout, SoundCategory.BLOCKS, 0.8F, 1.0F);
                 this.sync();
             }
             return;

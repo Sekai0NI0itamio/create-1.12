@@ -63,11 +63,12 @@ public class ItemBlueprint extends Item {
         for (int i = 0; i < 9; i++) {
             ItemStack s = player.inventory.getStackInSlot(i);
             if (s.isEmpty() || s == stack) continue;
-            NBTTagCompound entry = s.copy();
-            entry.setCount(1);
+            ItemStack single = s.copy();
+            single.setCount(1);
+            NBTTagCompound entry = single.writeToNBT(new NBTTagCompound());
             NBTTagCompound wrapped = new NBTTagCompound();
             wrapped.setInteger("Slot", i);
-            wrapped.setTag("Stack", entry.writeToNBT(new NBTTagCompound()));
+            wrapped.setTag("Stack", entry);
             grid.appendTag(wrapped);
         }
         tag.setTag("Ingredients", grid);

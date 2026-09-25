@@ -125,7 +125,7 @@ public class BlockPostbox extends Block implements ITileEntityProvider {
 
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        return this.color.getMapColor();
+        return MapColor.getBlockColor(this.color);
     }
 
     @Override

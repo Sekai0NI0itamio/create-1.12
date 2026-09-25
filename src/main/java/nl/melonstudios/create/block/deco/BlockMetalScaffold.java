@@ -132,7 +132,7 @@ public class BlockMetalScaffold extends Block {
 
     @Override
     @SuppressWarnings("deprecation")
-    public MapColor getMapColor(IBlockState state) {
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         switch (this.metal) {
             case "brass": return MapColor.GOLD;
             case "copper": return MapColor.ADOBE;

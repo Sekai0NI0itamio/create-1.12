@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -46,6 +47,7 @@ import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.init.OreDictInit;
 import nl.melonstudios.create.init.PonderInit;
 import nl.melonstudios.create.item.ItemGoggles;
+import nl.melonstudios.create.item.ItemMinecartCoupling;
 import nl.melonstudios.create.kinetics.KNManager;
 import nl.melonstudios.create.kinetics.contraption.Contraption;
 import nl.melonstudios.create.kinetics.contraption.ContraptionRendering;
@@ -336,6 +338,21 @@ public class CreateLegacyEventHandler {
                 }
             }
             tooltips.addAll(builder.build());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getTarget() instanceof EntityMinecart)) {
+            return;
+        }
+        ItemStack held = event.getItemStack();
+        if (held.isEmpty() || !(held.getItem() instanceof ItemMinecartCoupling)) {
+            return;
+        }
+        if (((ItemMinecartCoupling) held.getItem()).interactWithCart(held, event.getEntityPlayer(),
+                (EntityMinecart) event.getTarget(), event.getHand())) {
+            event.setCanceled(true);
         }
     }
 }

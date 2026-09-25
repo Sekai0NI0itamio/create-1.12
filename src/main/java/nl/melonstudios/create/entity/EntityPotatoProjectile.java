@@ -4,7 +4,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -124,7 +126,7 @@ public class EntityPotatoProjectile extends EntityThrowable {
             this.world.playSound(null, this.posX, this.posY, this.posZ,
                     SoundInit.potato_hit, this.getSoundCategory(), 0.7F, 1.2F);
             this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, this.posX, this.posY, this.posZ,
-                    4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    0.0D, 0.0D, 0.0D, Item.getIdFromItem(this.ammo.isEmpty() ? Items.POTATO : this.ammo.getItem()));
         }
         this.setDead();
     }
