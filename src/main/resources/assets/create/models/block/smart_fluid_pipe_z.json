@@ -1,0 +1,217 @@
+{
+ "credit": "Create 1.12 backport, smart pipe pole along Z",
+ "textures": {
+  "particle": "create:block/smart_pipe_1",
+  "glass": "create:block/smart_pipe_1",
+  "collar": "create:block/pipes"
+ },
+ "elements": [
+  {
+   "name": "pole_z",
+   "from": [
+    4,
+    4,
+    0
+   ],
+   "to": [
+    12,
+    12,
+    16
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      4,
+      4,
+      12,
+      12
+     ],
+     "texture": "#glass"
+    },
+    "south": {
+     "uv": [
+      4,
+      4,
+      12,
+      12
+     ],
+     "texture": "#glass"
+    },
+    "east": {
+     "uv": [
+      0,
+      4,
+      16,
+      12
+     ],
+     "texture": "#glass"
+    },
+    "west": {
+     "uv": [
+      0,
+      4,
+      16,
+      12
+     ],
+     "texture": "#glass"
+    },
+    "up": {
+     "uv": [
+      4,
+      0,
+      12,
+      16
+     ],
+     "texture": "#glass"
+    },
+    "down": {
+     "uv": [
+      4,
+      0,
+      12,
+      16
+     ],
+     "texture": "#glass"
+    }
+   }
+  },
+  {
+   "name": "collar_north",
+   "from": [
+    3,
+    3,
+    0
+   ],
+   "to": [
+    13,
+    13,
+    2
+   ],
+   "faces": {
+    "down": {
+     "uv": [
+      3,
+      0,
+      13,
+      2
+     ],
+     "texture": "#collar"
+    },
+    "up": {
+     "uv": [
+      3,
+      0,
+      13,
+      2
+     ],
+     "texture": "#collar"
+    },
+    "north": {
+     "uv": [
+      3,
+      3,
+      13,
+      13
+     ],
+     "texture": "#collar"
+    },
+    "south": {
+     "uv": [
+      3,
+      3,
+      13,
+      13
+     ],
+     "texture": "#collar"
+    },
+    "east": {
+     "uv": [
+      0,
+      3,
+      2,
+      13
+     ],
+     "texture": "#collar"
+    },
+    "west": {
+     "uv": [
+      0,
+      3,
+      2,
+      13
+     ],
+     "texture": "#collar"
+    }
+   }
+  },
+  {
+   "name": "collar_south",
+   "from": [
+    3,
+    3,
+    14
+   ],
+   "to": [
+    13,
+    13,
+    16
+   ],
+   "faces": {
+    "down": {
+     "uv": [
+      3,
+      14,
+      13,
+      16
+     ],
+     "texture": "#collar"
+    },
+    "up": {
+     "uv": [
+      3,
+      14,
+      13,
+      16
+     ],
+     "texture": "#collar"
+    },
+    "north": {
+     "uv": [
+      3,
+      3,
+      13,
+      13
+     ],
+     "texture": "#collar"
+    },
+    "south": {
+     "uv": [
+      3,
+      3,
+      13,
+      13
+     ],
+     "texture": "#collar"
+    },
+    "east": {
+     "uv": [
+      14,
+      3,
+      16,
+      13
+     ],
+     "texture": "#collar"
+    },
+    "west": {
+     "uv": [
+      14,
+      3,
+      16,
+      13
+     ],
+     "texture": "#collar"
+    }
+   }
+  }
+ ]
+}

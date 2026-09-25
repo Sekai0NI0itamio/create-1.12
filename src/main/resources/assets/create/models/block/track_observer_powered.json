@@ -1,0 +1,23 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "side": "create:block/observer_box_powered",
+  "top": "create:block/train_observer_top",
+  "particle": "create:block/observer_box_powered"
+ },
+ "elements": [
+  {
+   "name": "Box",
+   "from": [ 0, 0, 0 ],
+   "to": [ 16, 13, 16 ],
+   "faces": {
+    "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#side" },
+    "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#side" },
+    "east": { "uv": [ 0, 0, 16, 16 ], "texture": "#side" },
+    "west": { "uv": [ 0, 0, 16, 16 ], "texture": "#side" },
+    "up": { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
+    "down": { "uv": [ 0, 0, 16, 16 ], "texture": "#side" }
+   }
+  }
+ ]
+}

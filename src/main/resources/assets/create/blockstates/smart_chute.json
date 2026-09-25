@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "variant=normal,powered=false": { "model": "create:smart_chute" },
+    "variant=normal,powered=true": { "model": "create:smart_chute_powered" },
+    "variant=window,powered=false": { "model": "create:smart_chute" },
+    "variant=window,powered=true": { "model": "create:smart_chute_powered" },
+    "variant=fat,powered=false": { "model": "create:smart_chute" },
+    "variant=fat,powered=true": { "model": "create:smart_chute_powered" }
+  }
+}

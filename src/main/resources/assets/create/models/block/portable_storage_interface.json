@@ -1,0 +1,21 @@
+{
+  "textures": {
+    "particle": "create:block/portable_storage_interface",
+    "face": "create:block/portable_storage_interface",
+    "casing": "create:block/andesite_casing_short"
+  },
+  "elements": [
+    {
+      "from": [0, 2, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 14], "texture": "#casing"},
+        "east": {"uv": [0, 0, 16, 14], "texture": "#casing"},
+        "south": {"uv": [0, 0, 16, 14], "texture": "#casing"},
+        "west": {"uv": [0, 0, 16, 14], "texture": "#casing"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#face"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#casing"}
+      }
+    }
+  ]
+}

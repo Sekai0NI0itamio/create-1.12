@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "backwards=false,shape=ascending_east": { "model": "create:controller_rail_raised", "y": 90 },
+    "backwards=false,shape=ascending_north": { "model": "create:controller_rail_raised" },
+    "backwards=false,shape=ascending_south": { "model": "create:controller_rail_raised", "y": 180 },
+    "backwards=false,shape=ascending_west": { "model": "create:controller_rail_raised", "y": 270 },
+    "backwards=false,shape=east_west": { "model": "create:controller_rail", "y": 90 },
+    "backwards=false,shape=north_south": { "model": "create:controller_rail" },
+    "backwards=true,shape=ascending_east": { "model": "create:controller_rail_raised", "y": 270 },
+    "backwards=true,shape=ascending_north": { "model": "create:controller_rail_raised", "y": 180 },
+    "backwards=true,shape=ascending_south": { "model": "create:controller_rail_raised" },
+    "backwards=true,shape=ascending_west": { "model": "create:controller_rail_raised", "y": 90 },
+    "backwards=true,shape=east_west": { "model": "create:controller_rail", "y": 270 },
+    "backwards=true,shape=north_south": { "model": "create:controller_rail", "y": 180 }
+  }
+}

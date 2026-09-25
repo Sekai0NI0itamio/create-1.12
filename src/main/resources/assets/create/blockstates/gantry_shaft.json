@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "create:gantry_shaft"
+    },
+    "axis=x": {
+      "model": "create:gantry_shaft",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z": {
+      "model": "create:gantry_shaft",
+      "x": 90
+    }
+  }
+}

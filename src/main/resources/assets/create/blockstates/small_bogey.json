@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "axis=x": { "model": "create:small_bogey" },
+    "axis=z": { "model": "create:small_bogey", "y": 90 }
+  }
+}

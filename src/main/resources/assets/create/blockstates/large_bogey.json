@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "axis=x": { "model": "create:large_bogey" },
+    "axis=z": { "model": "create:large_bogey", "y": 90 }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=up,powered=false": {
+      "model": "create:redstone_contact"
+    },
+    "facing=down,powered=false": {
+      "model": "create:redstone_contact",
+      "x": 180
+    },
+    "facing=north,powered=false": {
+      "model": "create:redstone_contact",
+      "x": 90
+    },
+    "facing=east,powered=false": {
+      "model": "create:redstone_contact",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,powered=false": {
+      "model": "create:redstone_contact",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west,powered=false": {
+      "model": "create:redstone_contact",
+      "x": 90,
+      "y": 270
+    },
+    "facing=up,powered=true": {
+      "model": "create:redstone_contact_powered"
+    },
+    "facing=down,powered=true": {
+      "model": "create:redstone_contact_powered",
+      "x": 180
+    },
+    "facing=north,powered=true": {
+      "model": "create:redstone_contact_powered",
+      "x": 90
+    },
+    "facing=east,powered=true": {
+      "model": "create:redstone_contact_powered",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,powered=true": {
+      "model": "create:redstone_contact_powered",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west,powered=true": {
+      "model": "create:redstone_contact_powered",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

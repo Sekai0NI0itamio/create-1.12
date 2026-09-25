@@ -1,0 +1,21 @@
+{
+	"textures": {
+		"casing": "create:block/adjustable_chain_gearshift",
+		"particle": "create:block/adjustable_chain_gearshift"
+	},
+	"elements": [
+		{
+			"name": "drive",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#casing"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#casing"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#casing"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#casing"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#casing"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#casing"}
+			}
+		}
+	]
+}

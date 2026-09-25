@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "backwards=false,powered=false,shape=east_west": { "model": "create:cart_assembler", "y": 90 },
+    "backwards=false,powered=false,shape=north_south": { "model": "create:cart_assembler" },
+    "backwards=false,powered=true,shape=east_west": { "model": "create:cart_assembler_on", "y": 90 },
+    "backwards=false,powered=true,shape=north_south": { "model": "create:cart_assembler_on" },
+    "backwards=true,powered=false,shape=east_west": { "model": "create:cart_assembler", "y": 270 },
+    "backwards=true,powered=false,shape=north_south": { "model": "create:cart_assembler", "y": 180 },
+    "backwards=true,powered=true,shape=east_west": { "model": "create:cart_assembler_on", "y": 270 },
+    "backwards=true,powered=true,shape=north_south": { "model": "create:cart_assembler_on", "y": 180 }
+  }
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "create:block/andesite_encased_cogwheel",
+	"textures": {
+		"casing": "create:block/brass_encased_cogwheel_side",
+		"particle": "create:block/brass_encased_cogwheel_side"
+	}
+}

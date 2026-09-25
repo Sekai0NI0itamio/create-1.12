@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=north,size=large,wall=false": { "model": "create:steam_whistle" },
+    "facing=north,size=large,wall=true": { "model": "create:steam_whistle" },
+    "facing=north,size=medium,wall=false": { "model": "create:steam_whistle" },
+    "facing=north,size=medium,wall=true": { "model": "create:steam_whistle" },
+    "facing=north,size=small,wall=false": { "model": "create:steam_whistle" },
+    "facing=north,size=small,wall=true": { "model": "create:steam_whistle" },
+    "facing=east,size=large,wall=false": { "model": "create:steam_whistle", "y": 90 },
+    "facing=east,size=large,wall=true": { "model": "create:steam_whistle", "y": 90 },
+    "facing=east,size=medium,wall=false": { "model": "create:steam_whistle", "y": 90 },
+    "facing=east,size=medium,wall=true": { "model": "create:steam_whistle", "y": 90 },
+    "facing=east,size=small,wall=false": { "model": "create:steam_whistle", "y": 90 },
+    "facing=east,size=small,wall=true": { "model": "create:steam_whistle", "y": 90 },
+    "facing=south,size=large,wall=false": { "model": "create:steam_whistle", "y": 180 },
+    "facing=south,size=large,wall=true": { "model": "create:steam_whistle", "y": 180 },
+    "facing=south,size=medium,wall=false": { "model": "create:steam_whistle", "y": 180 },
+    "facing=south,size=medium,wall=true": { "model": "create:steam_whistle", "y": 180 },
+    "facing=south,size=small,wall=false": { "model": "create:steam_whistle", "y": 180 },
+    "facing=south,size=small,wall=true": { "model": "create:steam_whistle", "y": 180 },
+    "facing=west,size=large,wall=false": { "model": "create:steam_whistle", "y": 270 },
+    "facing=west,size=large,wall=true": { "model": "create:steam_whistle", "y": 270 },
+    "facing=west,size=medium,wall=false": { "model": "create:steam_whistle", "y": 270 },
+    "facing=west,size=medium,wall=true": { "model": "create:steam_whistle", "y": 270 },
+    "facing=west,size=small,wall=false": { "model": "create:steam_whistle", "y": 270 },
+    "facing=west,size=small,wall=true": { "model": "create:steam_whistle", "y": 270 }
+  }
+}

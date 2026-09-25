@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "shape=double,size=large": { "model": "create:steam_whistle_extension_double" },
+    "shape=double,size=medium": { "model": "create:steam_whistle_extension_double" },
+    "shape=double,size=small": { "model": "create:steam_whistle_extension_double" },
+    "shape=single,size=large": { "model": "create:steam_whistle_extension" },
+    "shape=single,size=medium": { "model": "create:steam_whistle_extension" },
+    "shape=single,size=small": { "model": "create:steam_whistle_extension" }
+  }
+}

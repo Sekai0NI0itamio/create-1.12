@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=up": { "model": "create:smart_fluid_pipe_y" },
+    "facing=down": { "model": "create:smart_fluid_pipe_y" },
+    "facing=north": { "model": "create:smart_fluid_pipe_z" },
+    "facing=south": { "model": "create:smart_fluid_pipe_z" },
+    "facing=east": { "model": "create:smart_fluid_pipe_x" },
+    "facing=west": { "model": "create:smart_fluid_pipe_x" }
+  }
+}

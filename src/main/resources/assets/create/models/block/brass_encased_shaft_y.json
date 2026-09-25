@@ -1,0 +1,7 @@
+{
+	"parent": "create:block/encased_shaft_y",
+	"textures": {
+		"casing": "create:block/casing/casing_brass",
+		"particle": "create:block/casing/casing_brass"
+	}
+}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "axis=x": { "model": "create:minecart_anchor" },
+    "axis=z": { "model": "create:minecart_anchor", "y": 90 }
+  }
+}

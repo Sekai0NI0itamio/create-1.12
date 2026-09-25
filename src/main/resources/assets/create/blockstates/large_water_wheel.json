@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "create:water_wheel"
+    },
+    "facing=down": {
+      "model": "create:water_wheel"
+    },
+    "facing=north": {
+      "model": "create:water_wheel",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "create:water_wheel",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "create:water_wheel",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "create:water_wheel",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
@@ -19,6 +20,7 @@ import nl.melonstudios.create.block.BlockChainConveyor;
 import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
+import nl.melonstudios.create.block.train.*;
 import nl.melonstudios.create.block.redstone.*;
 import nl.melonstudios.create.block.train.BlockTrainSignal;
 import nl.melonstudios.create.block.logistics.BlockPackager;
@@ -321,6 +323,107 @@ public final class BlockInit {
     public static final BlockTrainTrack TRAIN_TRACK = (BlockTrainTrack)
             registerBlockWithItem(new BlockTrainTrack()
             .setRegistryName("train_track").setUnlocalizedName("create.train_track"));
+
+    public static final BlockEncasedShaft ANDESITE_ENCASED_SHAFT = (BlockEncasedShaft)
+            registerBlockWithItem(new BlockEncasedShaft(MapColor.STONE, SoundType.STONE, "andesite"));
+    public static final BlockEncasedShaft BRASS_ENCASED_SHAFT = (BlockEncasedShaft)
+            registerBlockWithItem(new BlockEncasedShaft(MapColor.IRON, SoundType.METAL, "brass"));
+    public static final BlockEncasedCogwheel ANDESITE_ENCASED_COGWHEEL = (BlockEncasedCogwheel)
+            registerBlockWithItem(new BlockEncasedCogwheel(MapColor.STONE, SoundType.STONE, false, "andesite"));
+    public static final BlockEncasedCogwheel ANDESITE_ENCASED_LARGE_COGWHEEL = (BlockEncasedCogwheel)
+            registerBlockWithItem(new BlockEncasedCogwheel(MapColor.STONE, SoundType.STONE, true, "andesite"));
+    public static final BlockEncasedCogwheel BRASS_ENCASED_COGWHEEL = (BlockEncasedCogwheel)
+            registerBlockWithItem(new BlockEncasedCogwheel(MapColor.IRON, SoundType.METAL, false, "brass"));
+    public static final BlockEncasedCogwheel BRASS_ENCASED_LARGE_COGWHEEL = (BlockEncasedCogwheel)
+            registerBlockWithItem(new BlockEncasedCogwheel(MapColor.IRON, SoundType.METAL, true, "brass"));
+    public static final BlockLargeWaterWheel LARGE_WATER_WHEEL = (BlockLargeWaterWheel)
+            registerBlockWithItem(new BlockLargeWaterWheel(MapColor.WOOD, SoundType.WOOD));
+    public static final BlockAdjustableChainGearshift ADJUSTABLE_CHAIN_GEARSHIFT = (BlockAdjustableChainGearshift)
+            registerBlockWithItem(new BlockAdjustableChainGearshift(Material.IRON, MapColor.GRAY));
+    public static final BlockSmartChute SMART_CHUTE = (BlockSmartChute)
+            registerBlockWithItem(new BlockSmartChute());
+    public static final BlockSmartFluidPipe SMART_FLUID_PIPE = (BlockSmartFluidPipe)
+            registerBlockWithItem(new BlockSmartFluidPipe());
+    public static final BlockValveHandle COPPER_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(null));
+    public static final BlockValveHandle WHITE_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.WHITE));
+    public static final BlockValveHandle ORANGE_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.ORANGE));
+    public static final BlockValveHandle MAGENTA_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.MAGENTA));
+    public static final BlockValveHandle LIGHT_BLUE_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.LIGHT_BLUE));
+    public static final BlockValveHandle YELLOW_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.YELLOW));
+    public static final BlockValveHandle LIME_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.LIME));
+    public static final BlockValveHandle PINK_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.PINK));
+    public static final BlockValveHandle GRAY_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.GRAY));
+    public static final BlockValveHandle SILVER_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.SILVER));
+    public static final BlockValveHandle CYAN_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.CYAN));
+    public static final BlockValveHandle PURPLE_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.PURPLE));
+    public static final BlockValveHandle BLUE_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.BLUE));
+    public static final BlockValveHandle BROWN_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.BROWN));
+    public static final BlockValveHandle GREEN_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.GREEN));
+    public static final BlockValveHandle RED_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.RED));
+    public static final BlockValveHandle BLACK_VALVE_HANDLE = (BlockValveHandle)
+            registerBlockWithItem(new BlockValveHandle(EnumDyeColor.BLACK));
+    public static final BlockSteamWhistle STEAM_WHISTLE = (BlockSteamWhistle)
+            registerBlockWithItem(new BlockSteamWhistle());
+    public static final BlockSteamWhistleExtension STEAM_WHISTLE_EXTENSION = (BlockSteamWhistleExtension)
+            registerBlockWithItem(new BlockSteamWhistleExtension());
+    public static final BlockSmallBogey SMALL_BOGEY = (BlockSmallBogey)
+            registerBlockWithItem(new BlockSmallBogey());
+    public static final BlockLargeBogey LARGE_BOGEY = (BlockLargeBogey)
+            registerBlockWithItem(new BlockLargeBogey());
+    public static final BlockTrainControls TRAIN_CONTROLS = (BlockTrainControls)
+            registerBlockWithItem(new BlockTrainControls());
+    public static final BlockTrackObserver TRACK_OBSERVER = (BlockTrackObserver)
+            registerBlockWithItem(new BlockTrackObserver());
+    public static final BlockCartAssembler CART_ASSEMBLER = (BlockCartAssembler)
+            registerBlockWithItem(new BlockCartAssembler());
+    public static final BlockMinecartAnchor MINECART_ANCHOR = (BlockMinecartAnchor)
+            registerBlockWithItem(new BlockMinecartAnchor());
+    public static final BlockControllerRail CONTROLLER_RAIL = (BlockControllerRail)
+            registerBlockWithItem(new BlockControllerRail());
+    public static final BlockFakeTrack FAKE_TRACK = (BlockFakeTrack)
+            registerBlockWithItem(new BlockFakeTrack());
+    public static final BlockRailwayCasing RAILWAY_CASING = (BlockRailwayCasing)
+            registerBlockWithItem(new BlockRailwayCasing());
+    public static final BlockClockworkBearing CLOCKWORK_BEARING = (BlockClockworkBearing)
+            registerBlockWithItem(new BlockClockworkBearing());
+    public static final BlockMechanicalHarvester MECHANICAL_HARVESTER = (BlockMechanicalHarvester)
+            registerBlockWithItem(new BlockMechanicalHarvester());
+    public static final BlockMechanicalPlough MECHANICAL_PLOUGH = (BlockMechanicalPlough)
+            registerBlockWithItem(new BlockMechanicalPlough());
+    public static final BlockMechanicalRoller MECHANICAL_ROLLER = (BlockMechanicalRoller)
+            registerBlockWithItem(new BlockMechanicalRoller());
+    public static final BlockSticker STICKER = (BlockSticker)
+            registerBlockWithItem(new BlockSticker());
+    public static final BlockRedstoneContact REDSTONE_CONTACT = (BlockRedstoneContact)
+            registerBlockWithItem(new BlockRedstoneContact());
+    public static final BlockPortableStorageInterface PORTABLE_STORAGE_INTERFACE = (BlockPortableStorageInterface)
+            registerBlockWithItem(new BlockPortableStorageInterface());
+    public static final BlockGantryShaft GANTRY_SHAFT = (BlockGantryShaft)
+            registerBlockWithItem(new BlockGantryShaft());
+    public static final BlockLitBlazeBurner LIT_BLAZE_BURNER = (BlockLitBlazeBurner)
+            registerBlockWithItem(new BlockLitBlazeBurner());
+    public static final BlockCopperBacktank COPPER_BACKTANK = (BlockCopperBacktank)
+            registerBlockWithItem(new BlockCopperBacktank());
+    public static final BlockNetheriteBacktank NETHERITE_BACKTANK = (BlockNetheriteBacktank)
+            registerBlockWithItem(new BlockNetheriteBacktank());
+    public static final BlockCardboard CARDBOARD_BLOCK = (BlockCardboard)
+            registerBlockWithItem(new BlockCardboard());
 
     public static final BlockBogey BOGEY = (BlockBogey)
             registerBlockWithItem(new BlockBogey()

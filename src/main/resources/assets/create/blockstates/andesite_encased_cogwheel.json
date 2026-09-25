@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "create:andesite_encased_cogwheel"
+    },
+    "axis=x": {
+      "model": "create:andesite_encased_cogwheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z": {
+      "model": "create:andesite_encased_cogwheel",
+      "x": 90
+    }
+  }
+}

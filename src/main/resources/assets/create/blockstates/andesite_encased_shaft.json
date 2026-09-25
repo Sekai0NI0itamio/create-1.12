@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "create:encased_shaft_y"
+    },
+    "axis=x": {
+      "model": "create:encased_shaft_x"
+    },
+    "axis=z": {
+      "model": "create:encased_shaft_z"
+    }
+  }
+}

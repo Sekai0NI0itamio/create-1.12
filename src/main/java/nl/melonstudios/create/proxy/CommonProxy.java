@@ -49,6 +49,9 @@ import nl.melonstudios.create.tileentity.redstone.TileEntityThresholdSwitch;
 import nl.melonstudios.create.tileentity.train.TileEntityBogey;
 import nl.melonstudios.create.tileentity.train.TileEntityStation;
 import nl.melonstudios.create.tileentity.train.TileEntityTrainSignal;
+import nl.melonstudios.create.tileentity.train.TileEntitySteamWhistle;
+import nl.melonstudios.create.tileentity.train.TileEntityTrainControls;
+import nl.melonstudios.create.tileentity.train.TileEntityTrackObserver;
 
 public class CommonProxy {
     public Side getSide() {
@@ -126,6 +129,19 @@ public class CommonProxy {
         this.registerTE(TileEntityRedstoneRequester.class, "redstone_requester");
         this.registerTE(TileEntityTableCloth.class, "table_cloth");
         this.registerTE(TileEntityFactoryBoard.class, "factory_board");
+        this.registerTE(TileEntityLargeWaterWheel.class, "large_water_wheel");
+        this.registerTE(TileEntityAdjustableChainGearshift.class, "adjustable_chain_gearshift");
+        this.registerTE(TileEntitySmartChute.class, "smart_chute");
+        this.registerTE(TileEntitySmartFluidPipe.class, "smart_fluid_pipe");
+        this.registerTE(TileEntityValveHandle.class, "valve_handle");
+        this.registerTE(TileEntitySteamWhistle.class, "steam_whistle");
+        this.registerTE(TileEntityTrainControls.class, "train_controls");
+        this.registerTE(TileEntityTrackObserver.class, "track_observer");
+        this.registerTE(TileEntityClockworkBearing.class, "clockwork_bearing");
+        this.registerTE(TileEntityRoller.class, "mechanical_roller");
+        this.registerTE(TileEntitySticker.class, "sticker");
+        this.registerTE(TileEntityCopperBacktank.class, "copper_backtank");
+        this.registerTE(TileEntityNetheriteBacktank.class, "netherite_backtank");
         this.registerTE(TileEntityToolbox.class, "toolbox");
         this.registerTE(TileEntityClipboard.class, "clipboard");
         this.registerTE(TileEntityAnalogLever.class, "analog_lever");

@@ -1,0 +1,22 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "t": "create:block/bogey_top",
+  "particle": "create:block/bogey_top"
+ },
+ "elements": [
+  {
+   "name": "Box",
+   "from": [ 1, 0, 1 ],
+   "to": [ 15, 16, 15 ],
+   "faces": {
+    "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#t" },
+    "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#t" },
+    "east": { "uv": [ 0, 0, 16, 16 ], "texture": "#t" },
+    "west": { "uv": [ 0, 0, 16, 16 ], "texture": "#t" },
+    "up": { "uv": [ 0, 0, 16, 16 ], "texture": "#t" },
+    "down": { "uv": [ 0, 0, 16, 16 ], "texture": "#t" }
+   }
+  }
+ ]
+}
