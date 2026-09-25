@@ -151,7 +151,7 @@ public class BlockBeltStraight extends BlockBeltBase implements IExtensionBlock 
         } else {
             world.setBlockState(off, Blocks.AIR.getDefaultState(), 3);
         }
-        world.playEvent(2001, off, Block.getIdFromState(old));
+        world.playEvent(2001, off, Block.getStateId(old));
     }
 
     @Override
