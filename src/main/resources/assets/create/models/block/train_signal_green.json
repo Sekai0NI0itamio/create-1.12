@@ -1,0 +1,12 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "particle": "create:block/signal_box",
+  "down": "create:block/signal_box_top",
+  "up": "create:block/signal_box_top",
+  "north": "create:block/signal_glow_3",
+  "south": "create:block/signal_box",
+  "east": "create:block/signal_box",
+  "west": "create:block/signal_box"
+ }
+}

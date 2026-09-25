@@ -1,0 +1,48 @@
+{
+ "variants": {
+  "facing=down,powered=false": {
+   "model": "create:desk_bell",
+   "x": 90
+  },
+  "facing=down,powered=true": {
+   "model": "create:desk_bell_pressed",
+   "x": 90
+  },
+  "facing=up,powered=false": {
+   "model": "create:desk_bell"
+  },
+  "facing=up,powered=true": {
+   "model": "create:desk_bell_pressed"
+  },
+  "facing=north,powered=false": {
+   "model": "create:desk_bell"
+  },
+  "facing=north,powered=true": {
+   "model": "create:desk_bell_pressed"
+  },
+  "facing=south,powered=false": {
+   "model": "create:desk_bell",
+   "y": 180
+  },
+  "facing=south,powered=true": {
+   "model": "create:desk_bell_pressed",
+   "y": 180
+  },
+  "facing=west,powered=false": {
+   "model": "create:desk_bell",
+   "y": 270
+  },
+  "facing=west,powered=true": {
+   "model": "create:desk_bell_pressed",
+   "y": 270
+  },
+  "facing=east,powered=false": {
+   "model": "create:desk_bell",
+   "y": 90
+  },
+  "facing=east,powered=true": {
+   "model": "create:desk_bell_pressed",
+   "y": 90
+  }
+ }
+}

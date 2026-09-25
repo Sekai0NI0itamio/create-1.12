@@ -1,0 +1,28 @@
+{
+ "variants": {
+  "activate=false,powered=false,powering=false": {
+   "model": "create:rose_quartz_lamp_off"
+  },
+  "activate=true,powered=false,powering=false": {
+   "model": "create:rose_quartz_lamp_off"
+  },
+  "activate=false,powered=true,powering=false": {
+   "model": "create:rose_quartz_lamp_mid"
+  },
+  "activate=true,powered=true,powering=false": {
+   "model": "create:rose_quartz_lamp_mid"
+  },
+  "activate=false,powered=false,powering=true": {
+   "model": "create:rose_quartz_lamp_on"
+  },
+  "activate=true,powered=false,powering=true": {
+   "model": "create:rose_quartz_lamp_on"
+  },
+  "activate=false,powered=true,powering=true": {
+   "model": "create:rose_quartz_lamp_on"
+  },
+  "activate=true,powered=true,powering=true": {
+   "model": "create:rose_quartz_lamp_on"
+  }
+ }
+}

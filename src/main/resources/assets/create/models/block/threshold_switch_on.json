@@ -1,0 +1,12 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "down": "create:block/smart_observer_top",
+  "up": "create:block/smart_observer_top",
+  "north": "create:block/threshold_switch_back",
+  "south": "create:block/threshold_switch_front",
+  "west": "create:block/threshold_switch/level_5",
+  "east": "create:block/threshold_switch/level_5",
+  "particle": "create:block/threshold_switch_front"
+ }
+}

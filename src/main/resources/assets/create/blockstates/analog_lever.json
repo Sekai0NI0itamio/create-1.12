@@ -1,0 +1,26 @@
+{
+ "variants": {
+  "facing=down": {
+   "model": "create:analog_lever",
+   "x": 180
+  },
+  "facing=up": {
+   "model": "create:analog_lever"
+  },
+  "facing=north": {
+   "model": "create:analog_lever"
+  },
+  "facing=south": {
+   "model": "create:analog_lever",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "create:analog_lever",
+   "y": 270
+  },
+  "facing=east": {
+   "model": "create:analog_lever",
+   "y": 90
+  }
+ }
+}

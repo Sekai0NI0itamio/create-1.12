@@ -13,6 +13,7 @@ import nl.melonstudios.create.block.deco.BlockWindowIron;
 import nl.melonstudios.create.block.deco.BlockWindowWood;
 import nl.melonstudios.create.block.state.EnumOrestoneVariant;
 import nl.melonstudios.create.item.*;
+import nl.melonstudios.create.item.train.ItemTrainSchedule;
 import nl.melonstudios.create.util.FunnelSets;
 import nl.melonstudios.create.util.ModTabs;
 
@@ -74,6 +75,28 @@ public final class ItemInit {
     public static final ItemCardboardSword CARDBOARD_SWORD = registerItem(new ItemCardboardSword());
     public static final ItemRedSandpaper RED_SANDPAPER = registerItem(new ItemRedSandpaper());
     public static final ItemRawZinc RAW_ZINC = registerItem(new ItemRawZinc());
+    public static final ItemPotatoCannon POTATO_CANNON = (ItemPotatoCannon)
+            registerItem(new ItemPotatoCannon()
+            .setRegistryName("potato_cannon").setUnlocalizedName("create.potato_cannon"));
+    public static final ItemZapperWorldshaper WORLDSHAPER = (ItemZapperWorldshaper)
+            registerItem(new ItemZapperWorldshaper()
+            .setRegistryName("handheld_worldshaper").setUnlocalizedName("create.handheld_worldshaper"));
+    public static final ItemClipboard CLIPBOARD = (ItemClipboard)
+            registerItem(new ItemClipboard()
+            .setRegistryName("clipboard").setUnlocalizedName("create.clipboard"));
+    public static final ItemSymmetryWand SYMMETRY_WAND = (ItemSymmetryWand)
+            registerItem(new ItemSymmetryWand()
+            .setRegistryName("wand_of_symmetry").setUnlocalizedName("create.wand_of_symmetry"));
+    public static final ItemExtendoGrip EXTENDO_GRIP = (ItemExtendoGrip)
+            registerItem(new ItemExtendoGrip()
+            .setRegistryName("extendo_grip").setUnlocalizedName("create.extendo_grip"));
+    public static final ItemHat HAT = (ItemHat)
+            registerItem(new ItemHat()
+            .setRegistryName("hat").setUnlocalizedName("create.hat"));
+    public static final ItemBlueprint BLUEPRINT = (ItemBlueprint)
+            registerItem(new ItemBlueprint()
+            .setRegistryName("crafting_blueprint").setUnlocalizedName("create.crafting_blueprint"));
+    public static final ItemTrainSchedule SCHEDULE = registerItem(new ItemTrainSchedule());
 
     private static <T extends Item> T registerItem(T item) {
         ITEMS.add(item);
@@ -115,6 +138,14 @@ public final class ItemInit {
         CreateLegacy.proxy.setItemModel(CARDBOARD_SWORD);
         CreateLegacy.proxy.setItemModel(RED_SANDPAPER);
         CreateLegacy.proxy.setItemModel(RAW_ZINC);
+        CreateLegacy.proxy.setItemModel(POTATO_CANNON);
+        CreateLegacy.proxy.setItemModel(CLIPBOARD);
+        CreateLegacy.proxy.setItemModel(EXTENDO_GRIP);
+        CreateLegacy.proxy.setItemModel(HAT, 0, "hat/conductor");
+        CreateLegacy.proxy.setItemModel(HAT, 1, "hat/engineer");
+        CreateLegacy.proxy.setItemModel(BLUEPRINT, 0, "blueprint");
+        CreateLegacy.proxy.setItemModel(SYMMETRY_WAND, 0, "symmetry_wand");
+        CreateLegacy.proxy.setItemModel(SCHEDULE);
 
         // blocks
         CreateLegacy.proxy.setItemModel(BlockInit.ORE, 0, "ore_copper");

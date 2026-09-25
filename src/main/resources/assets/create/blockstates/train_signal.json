@@ -1,0 +1,13 @@
+{
+ "variants": {
+  "signal=red": {
+   "model": "create:train_signal_red"
+  },
+  "signal=yellow": {
+   "model": "create:train_signal_yellow"
+  },
+  "signal=green": {
+   "model": "create:train_signal_green"
+  }
+ }
+}

@@ -5,11 +5,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleBreaking;
 import net.minecraft.client.particle.ParticleRedstone;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -138,6 +140,8 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityPouf.class, RenderNone::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityContraptionBearing.class, RenderContraptionBearing::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityContraptionPiston.class, RenderNone::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityPotatoProjectile.class,
+                manager -> new RenderSnowball<EntityPotatoProjectile>(manager, Items.POTATO, Minecraft.getMinecraft().getRenderItem()));
     }
 
     @Override

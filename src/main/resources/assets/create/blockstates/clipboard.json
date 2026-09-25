@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "written=false": {
+      "model": "create:clipboard_blank"
+    },
+    "written=true": {
+      "model": "create:clipboard_filled"
+    }
+  }
+}

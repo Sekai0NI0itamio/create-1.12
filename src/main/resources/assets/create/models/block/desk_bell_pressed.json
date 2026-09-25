@@ -1,0 +1,48 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "bell": "create:block/desk_bell",
+  "particle": "create:block/desk_bell"
+ },
+ "elements": [
+  {
+   "name": "Base",
+   "from": [3, 0, 3],
+   "to": [13, 3, 13],
+   "faces": {
+    "north": {"uv": [0, 0, 10, 3], "texture": "#bell"},
+    "south": {"uv": [0, 0, 10, 3], "texture": "#bell"},
+    "east": {"uv": [0, 0, 10, 3], "texture": "#bell"},
+    "west": {"uv": [0, 0, 10, 3], "texture": "#bell"},
+    "up": {"uv": [0, 0, 10, 10], "texture": "#bell"},
+    "down": {"uv": [0, 0, 10, 10], "texture": "#bell"}
+   }
+  },
+  {
+   "name": "DomePressed",
+   "from": [4, 3, 4],
+   "to": [12, 6, 12],
+   "faces": {
+    "north": {"uv": [0, 3, 8, 6], "texture": "#bell"},
+    "south": {"uv": [0, 3, 8, 6], "texture": "#bell"},
+    "east": {"uv": [0, 3, 8, 6], "texture": "#bell"},
+    "west": {"uv": [0, 3, 8, 6], "texture": "#bell"},
+    "up": {"uv": [0, 3, 8, 11], "texture": "#bell"},
+    "down": {"uv": [0, 3, 8, 11], "texture": "#bell"}
+   }
+  },
+  {
+   "name": "PlungerDown",
+   "from": [7, 6, 7],
+   "to": [9, 7, 9],
+   "faces": {
+    "north": {"uv": [8, 9, 10, 10], "texture": "#bell"},
+    "south": {"uv": [8, 9, 10, 10], "texture": "#bell"},
+    "east": {"uv": [8, 9, 10, 10], "texture": "#bell"},
+    "west": {"uv": [8, 9, 10, 10], "texture": "#bell"},
+    "up": {"uv": [8, 9, 10, 10], "texture": "#bell"},
+    "down": {"uv": [8, 9, 10, 10], "texture": "#bell"}
+   }
+  }
+ ]
+}

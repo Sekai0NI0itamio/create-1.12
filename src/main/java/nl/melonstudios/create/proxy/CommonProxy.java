@@ -42,8 +42,13 @@ import nl.melonstudios.create.tileentity.logistics.TileEntityTableCloth;
 import nl.melonstudios.create.tileentity.logistics.TileEntityFactoryBoard;
 import nl.melonstudios.create.tileentity.redstone.TileEntityDisplayLink;
 import nl.melonstudios.create.tileentity.redstone.TileEntityRedstoneLinker;
+import nl.melonstudios.create.tileentity.redstone.TileEntityAnalogLever;
+import nl.melonstudios.create.tileentity.redstone.TileEntityDeskBell;
+import nl.melonstudios.create.tileentity.redstone.TileEntitySmartObserver;
+import nl.melonstudios.create.tileentity.redstone.TileEntityThresholdSwitch;
 import nl.melonstudios.create.tileentity.train.TileEntityBogey;
 import nl.melonstudios.create.tileentity.train.TileEntityStation;
+import nl.melonstudios.create.tileentity.train.TileEntityTrainSignal;
 
 public class CommonProxy {
     public Side getSide() {
@@ -121,6 +126,13 @@ public class CommonProxy {
         this.registerTE(TileEntityRedstoneRequester.class, "redstone_requester");
         this.registerTE(TileEntityTableCloth.class, "table_cloth");
         this.registerTE(TileEntityFactoryBoard.class, "factory_board");
+        this.registerTE(TileEntityToolbox.class, "toolbox");
+        this.registerTE(TileEntityClipboard.class, "clipboard");
+        this.registerTE(TileEntityAnalogLever.class, "analog_lever");
+        this.registerTE(TileEntityDeskBell.class, "desk_bell");
+        this.registerTE(TileEntitySmartObserver.class, "smart_observer");
+        this.registerTE(TileEntityThresholdSwitch.class, "threshold_switch");
+        this.registerTE(TileEntityTrainSignal.class, "train_signal");
         this.registerTE(TileEntityPortableFluidInterface.class, "portable_fluid_interface");
         this.registerTE(TileEntitySteamEngine.class, "steam_engine");
         this.registerTE(TileEntitySpeedController.class, "speed_controller");

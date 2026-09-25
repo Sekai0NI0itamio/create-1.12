@@ -19,6 +19,8 @@ import nl.melonstudios.create.block.BlockChainConveyor;
 import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
+import nl.melonstudios.create.block.redstone.*;
+import nl.melonstudios.create.block.train.BlockTrainSignal;
 import nl.melonstudios.create.block.logistics.BlockPackager;
 import nl.melonstudios.create.block.logistics.BlockStockTicker;
 import nl.melonstudios.create.block.logistics.BlockVault;
@@ -291,6 +293,30 @@ public final class BlockInit {
     public static final BlockFactoryBoard FACTORY_BOARD = (BlockFactoryBoard)
             registerBlockWithItem(new BlockFactoryBoard()
             .setRegistryName("factory_board").setUnlocalizedName("create.factory_board"));
+    public static final BlockToolbox TOOLBOX = (BlockToolbox)
+            registerBlockWithItem(new BlockToolbox()
+            .setRegistryName("toolbox").setUnlocalizedName("create.toolbox"));
+    public static final BlockPeculiarBell PECULIAR_BELL = (BlockPeculiarBell)
+            registerBlockWithItem(new BlockPeculiarBell()
+            .setRegistryName("peculiar_bell").setUnlocalizedName("create.peculiar_bell"));
+    public static final BlockHauntedBell HAUNTED_BELL = (BlockHauntedBell)
+            registerBlockWithItem(new BlockHauntedBell()
+            .setRegistryName("haunted_bell").setUnlocalizedName("create.haunted_bell"));
+    public static final BlockClipboard CLIPBOARD = (BlockClipboard)
+            registerBlock(new BlockClipboard()
+            .setRegistryName("clipboard").setUnlocalizedName("create.clipboard"));
+    public static final BlockAnalogLever ANALOG_LEVER = (BlockAnalogLever)
+            registerBlockWithItem(new BlockAnalogLever());
+    public static final BlockDeskBell DESK_BELL = (BlockDeskBell)
+            registerBlockWithItem(new BlockDeskBell());
+    public static final BlockSmartObserver SMART_OBSERVER = (BlockSmartObserver)
+            registerBlockWithItem(new BlockSmartObserver());
+    public static final BlockThresholdSwitch THRESHOLD_SWITCH = (BlockThresholdSwitch)
+            registerBlockWithItem(new BlockThresholdSwitch());
+    public static final BlockRoseQuartzLamp ROSE_QUARTZ_LAMP = (BlockRoseQuartzLamp)
+            registerBlockWithItem(new BlockRoseQuartzLamp());
+    public static final BlockTrainSignal TRAIN_SIGNAL = (BlockTrainSignal)
+            registerBlockWithItem(new BlockTrainSignal());
 
     public static final BlockTrainTrack TRAIN_TRACK = (BlockTrainTrack)
             registerBlockWithItem(new BlockTrainTrack()

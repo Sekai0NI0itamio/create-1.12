@@ -1,0 +1,35 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "base": "create:block/analog_lever",
+  "particle": "create:block/analog_lever"
+ },
+ "elements": [
+  {
+   "name": "Plate",
+   "from": [5, 0, 4],
+   "to": [11, 3, 12],
+   "faces": {
+    "north": {"uv": [0, 0, 6, 3], "texture": "#base"},
+    "south": {"uv": [0, 0, 6, 3], "texture": "#base"},
+    "east": {"uv": [0, 0, 8, 3], "texture": "#base"},
+    "west": {"uv": [0, 0, 8, 3], "texture": "#base"},
+    "up": {"uv": [0, 0, 6, 8], "texture": "#base"},
+    "down": {"uv": [0, 0, 6, 8], "texture": "#base"}
+   }
+  },
+  {
+   "name": "Stem",
+   "from": [7, 3, 7],
+   "to": [9, 8, 9],
+   "faces": {
+    "north": {"uv": [6, 3, 8, 8], "texture": "#base"},
+    "south": {"uv": [6, 3, 8, 8], "texture": "#base"},
+    "east": {"uv": [6, 3, 8, 8], "texture": "#base"},
+    "west": {"uv": [6, 3, 8, 8], "texture": "#base"},
+    "up": {"uv": [6, 3, 8, 5], "texture": "#base"},
+    "down": {"uv": [6, 3, 8, 5], "texture": "#base"}
+   }
+  }
+ ]
+}

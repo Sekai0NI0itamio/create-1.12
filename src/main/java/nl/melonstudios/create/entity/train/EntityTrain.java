@@ -32,6 +32,10 @@ import java.util.UUID;
 public class EntityTrain extends EntityMinecartEmpty {
     public UUID trainId = UUID.randomUUID();
     public List<BlockPos> schedule = new ArrayList<>();
+    /** Per-stop dwell ticks, parallel to {@link #schedule}; empty means legacy data. */
+    public List<Integer> scheduleDwell = new ArrayList<>();
+    /** Per-stop wait condition ({@link TrainScheduleData#COND_NONE}/{@link TrainScheduleData#COND_TIMED}), parallel to {@link #schedule}. */
+    public List<Integer> scheduleCondition = new ArrayList<>();
     public int stopIndex;
     public int dwellTicks;
     public boolean running;
@@ -61,11 +65,43 @@ public class EntityTrain extends EntityMinecartEmpty {
         this.schedule.add(station.toImmutable());
     }
 
+    /**
+     * Load an extended schedule (stops plus per-stop dwell and wait
+     * condition, as written by the schedule item). Additive: replaces only
+     * the schedule fields, never movement state.
+     */
+    public void applyScheduleData(List<BlockPos> stops, List<Integer> dwells, List<Integer> conds) {
+        this.schedule.clear();
+        this.schedule.addAll(TrainScheduleData.copyStops(stops));
+        this.scheduleDwell.clear();
+        this.scheduleCondition.clear();
+        for (int i = 0; i < stops.size(); i++) {
+            this.scheduleDwell.add(dwells != null && dwells.size() > i ? dwells.get(i) : TrainScheduleData.DWELL_DEFAULT);
+            this.scheduleCondition.add(conds != null && conds.size() > i ? conds.get(i) : TrainScheduleData.COND_TIMED);
+        }
+        this.stopIndex = 0;
+        this.dwellTicks = this.getDwellForStop(0);
+    }
+
+    /** Dwell waited at a stop; missing data falls back to the legacy default. */
+    public int getDwellForStop(int index) {
+        int dwell = (index >= 0 && index < this.scheduleDwell.size())
+                ? this.scheduleDwell.get(index) : DWELL_DEFAULT;
+        int cond = this.getConditionForStop(index);
+        return TrainScheduleData.effectiveDwell(dwell, cond);
+    }
+
+    /** Wait condition at a stop; missing data means a legacy timed stop. */
+    public int getConditionForStop(int index) {
+        if (index >= 0 && index < this.scheduleCondition.size()) return this.scheduleCondition.get(index);
+        return TrainScheduleData.COND_TIMED;
+    }
+
     public void start() {
         if (!this.schedule.isEmpty()) {
             this.running = true;
             this.stopIndex = 0;
-            this.dwellTicks = DWELL_DEFAULT;
+            this.dwellTicks = this.getDwellForStop(0);
             this.derailed = false;
             this.offRailTicks = 0;
             this.endStopTicks = 0;
@@ -133,7 +169,7 @@ public class EntityTrain extends EntityMinecartEmpty {
             this.endStopTicks = 0;
             if (--this.dwellTicks <= 0) {
                 this.stopIndex++;
-                this.dwellTicks = DWELL_DEFAULT;
+                this.dwellTicks = this.getDwellForStop(this.stopIndex % this.schedule.size());
             }
             return;
         }
@@ -224,6 +260,15 @@ public class EntityTrain extends EntityMinecartEmpty {
         for (int i = 0; i < this.schedule.size(); i++) {
             nbt.setLong("Stop" + i, this.schedule.get(i).toLong());
         }
+        // Extended schedule data; always written, read back with guards below.
+        int[] dwellArray = new int[this.schedule.size()];
+        int[] condArray = new int[this.schedule.size()];
+        for (int i = 0; i < this.schedule.size(); i++) {
+            dwellArray[i] = i < this.scheduleDwell.size() ? this.scheduleDwell.get(i) : DWELL_DEFAULT;
+            condArray[i] = i < this.scheduleCondition.size() ? this.scheduleCondition.get(i) : TrainScheduleData.COND_TIMED;
+        }
+        nbt.setIntArray("SchedDwell", dwellArray);
+        nbt.setIntArray("SchedCond", condArray);
         nbt.setDouble("RailSpeed", this.railSpeed);
         nbt.setDouble("Odo", this.odometer);
         nbt.setBoolean("Derailed", this.derailed);
@@ -243,6 +288,21 @@ public class EntityTrain extends EntityMinecartEmpty {
         int n = nbt.getInteger("Stops");
         for (int i = 0; i < n; i++) {
             this.schedule.add(BlockPos.fromLong(nbt.getLong("Stop" + i)));
+        }
+        // Backward-compatible guards: legacy trains predate these keys.
+        this.scheduleDwell.clear();
+        this.scheduleCondition.clear();
+        if (nbt.hasKey("SchedDwell")) {
+            int[] dwellArray = nbt.getIntArray("SchedDwell");
+            for (int i = 0; i < n; i++) {
+                this.scheduleDwell.add(i < dwellArray.length ? dwellArray[i] : DWELL_DEFAULT);
+            }
+        }
+        if (nbt.hasKey("SchedCond")) {
+            int[] condArray = nbt.getIntArray("SchedCond");
+            for (int i = 0; i < n; i++) {
+                this.scheduleCondition.add(i < condArray.length ? condArray[i] : TrainScheduleData.COND_TIMED);
+            }
         }
         if (nbt.hasKey("RailSpeed")) this.railSpeed = nbt.getDouble("RailSpeed");
         if (nbt.hasKey("Odo")) this.odometer = nbt.getDouble("Odo");

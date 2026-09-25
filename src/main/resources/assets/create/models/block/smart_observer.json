@@ -1,0 +1,12 @@
+{
+ "parent": "minecraft:block/cube",
+ "textures": {
+  "down": "create:block/smart_observer_bottom",
+  "up": "create:block/smart_observer_top",
+  "north": "create:block/smart_observer_front",
+  "south": "create:block/smart_observer",
+  "west": "create:block/smart_observer_side",
+  "east": "create:block/smart_observer_side",
+  "particle": "create:block/smart_observer"
+ }
+}
