@@ -12,6 +12,10 @@ import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.init.ItemInit;
 import nl.melonstudios.create.init.SoundInit;
 import nl.melonstudios.create.item.ItemPackage;
+import com.melonstudios.melonlib.network.TrackedByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import java.io.IOException;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 
 import javax.annotation.Nonnull;
@@ -227,5 +231,15 @@ public class TileEntityFrogport extends TileEntityOptimizedBase {
         public int getSlotLimit(int slot) {
             return 1;
         }
+    }
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        ByteBufUtils.writeTag(buf, this.writePacket());
+    }
+
+    @Override
+    public void readPacket(ByteBuf buf) throws IOException {
+        this.readPacket(ByteBufUtils.readTag(buf));
     }
 }

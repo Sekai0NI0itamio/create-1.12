@@ -10,6 +10,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import nl.melonstudios.create.init.SoundInit;
+import com.melonstudios.melonlib.network.TrackedByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import java.io.IOException;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 
 import java.util.ArrayList;
@@ -166,5 +170,15 @@ public class TileEntityRedstoneRequester extends TileEntityOptimizedBase {
     public void readPacket(NBTTagCompound nbt) {
         this.address = nbt.getString("Address");
         this.lastSuccess = nbt.getBoolean("Success");
+    }
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        ByteBufUtils.writeTag(buf, this.writePacket());
+    }
+
+    @Override
+    public void readPacket(ByteBuf buf) throws IOException {
+        this.readPacket(ByteBufUtils.readTag(buf));
     }
 }

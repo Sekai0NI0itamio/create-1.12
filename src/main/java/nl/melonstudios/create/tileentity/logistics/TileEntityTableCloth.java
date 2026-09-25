@@ -105,4 +105,8 @@ public class TileEntityTableCloth extends TileEntityOptimizedBase {
             } else displayed[i] = ItemStack.EMPTY;
         }
     }
+
+    @Override
+    public void tickLazy() {
+    }
 }

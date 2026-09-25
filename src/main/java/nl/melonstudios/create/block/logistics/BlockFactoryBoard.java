@@ -135,7 +135,7 @@ public class BlockFactoryBoard extends Block implements ITileEntityProvider {
             ItemStack held = playerIn.getHeldItem(hand);
             if (playerIn.isSneaking()) {
                 te.clear();
-                worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
+                worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
                 te.sync();
                 this.refreshPower(worldIn, pos, state);
                 return true;
@@ -144,7 +144,7 @@ public class BlockFactoryBoard extends Block implements ITileEntityProvider {
             ItemStack ghost = held.copy();
             ghost.setCount(1);
             te.pinGhost(ghost);
-            worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
+            worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
             te.sync();
             this.refreshPower(worldIn, pos, state);
             return true;

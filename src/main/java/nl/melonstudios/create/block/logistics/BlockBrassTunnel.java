@@ -57,7 +57,7 @@ public class BlockBrassTunnel extends Block implements ITileEntityProvider, IWre
     public static final AxisAlignedBB BOX = AABB.create(0, 0, 0, 16, 12, 16);
 
     public BlockBrassTunnel() {
-        super(Material.IRON, MapColor.gold);
+        super(Material.IRON, MapColor.GOLD);
         this.blockSoundType = SoundType.METAL;
 
         this.setHardness(3.0F);

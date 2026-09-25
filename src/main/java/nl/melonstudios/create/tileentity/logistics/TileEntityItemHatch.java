@@ -3,6 +3,10 @@ package nl.melonstudios.create.tileentity.logistics;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.ItemHandlerHelper;
+import com.melonstudios.melonlib.network.TrackedByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import java.io.IOException;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 
 import javax.annotation.Nonnull;
@@ -67,5 +71,33 @@ public class TileEntityItemHatch extends TileEntityOptimizedBase {
         } else {
             this.filter = ItemStack.EMPTY;
         }
+    }
+
+    @Override
+    public NBTTagCompound writePacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        if (!this.filter.isEmpty()) {
+            nbt.setTag("Filter", this.filter.writeToNBT(new NBTTagCompound()));
+        }
+        return nbt;
+    }
+
+    @Override
+    public void readPacket(NBTTagCompound nbt) {
+        if (nbt.hasKey("Filter", 10)) {
+            this.filter = new ItemStack(nbt.getCompoundTag("Filter"));
+        } else {
+            this.filter = ItemStack.EMPTY;
+        }
+    }
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        ByteBufUtils.writeTag(buf, this.writePacket());
+    }
+
+    @Override
+    public void readPacket(ByteBuf buf) throws IOException {
+        this.readPacket(ByteBufUtils.readTag(buf));
     }
 }

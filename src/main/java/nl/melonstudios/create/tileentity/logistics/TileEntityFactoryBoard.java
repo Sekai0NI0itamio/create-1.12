@@ -101,4 +101,8 @@ public class TileEntityFactoryBoard extends TileEntityOptimizedBase {
             } else filters[i] = ItemStack.EMPTY;
         }
     }
+
+    @Override
+    public void tickLazy() {
+    }
 }

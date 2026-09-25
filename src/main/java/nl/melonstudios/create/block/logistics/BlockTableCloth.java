@@ -100,7 +100,7 @@ public class BlockTableCloth extends Block implements ITileEntityProvider {
                 ItemStack taken = te.takeLast();
                 if (taken.isEmpty()) return false;
                 playerIn.inventory.addItemStackToInventory(taken);
-                worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
+                worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
                 te.sync();
                 return true;
             }
@@ -109,7 +109,7 @@ public class BlockTableCloth extends Block implements ITileEntityProvider {
             shown.setCount(1);
             te.addShown(shown);
             if (!playerIn.isCreative()) held.shrink(1);
-            worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
+            worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 0.5F, 1.0F);
             te.sync();
             return true;
         }));

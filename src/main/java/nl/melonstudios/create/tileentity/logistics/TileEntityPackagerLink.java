@@ -5,6 +5,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import com.melonstudios.melonlib.network.TrackedByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import java.io.IOException;
 import nl.melonstudios.create.tileentity.TileEntityOptimizedBase;
 
 import javax.annotation.Nullable;
@@ -102,5 +106,15 @@ public class TileEntityPackagerLink extends TileEntityOptimizedBase {
     public void readPacket(NBTTagCompound nbt) {
         this.address = nbt.getString("Address");
         this.linked = nbt.getBoolean("Linked");
+    }
+
+    @Override
+    public void writePacket(TrackedByteBuf buf) throws IOException {
+        ByteBufUtils.writeTag(buf, this.writePacket());
+    }
+
+    @Override
+    public void readPacket(ByteBuf buf) throws IOException {
+        this.readPacket(ByteBufUtils.readTag(buf));
     }
 }
