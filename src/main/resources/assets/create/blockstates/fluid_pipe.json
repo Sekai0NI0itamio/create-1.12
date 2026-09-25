@@ -1,0 +1,17 @@
+{
+  "multipart": [
+    { "apply": { "model": "create:fluid_pipe_core" } },
+    { "when": { "down": true }, "apply": { "model": "create:fluid_pipe_arm_down" } },
+    { "when": { "up": true }, "apply": { "model": "create:fluid_pipe_arm_up" } },
+    { "when": { "north": true }, "apply": { "model": "create:fluid_pipe_arm_north" } },
+    { "when": { "south": true }, "apply": { "model": "create:fluid_pipe_arm_south" } },
+    { "when": { "west": true }, "apply": { "model": "create:fluid_pipe_arm_west" } },
+    { "when": { "east": true }, "apply": { "model": "create:fluid_pipe_arm_east" } },
+    { "when": { "rim_down": true }, "apply": { "model": "create:fluid_pipe_rim_down" } },
+    { "when": { "rim_up": true }, "apply": { "model": "create:fluid_pipe_rim_up" } },
+    { "when": { "rim_north": true }, "apply": { "model": "create:fluid_pipe_rim_north" } },
+    { "when": { "rim_south": true }, "apply": { "model": "create:fluid_pipe_rim_south" } },
+    { "when": { "rim_west": true }, "apply": { "model": "create:fluid_pipe_rim_west" } },
+    { "when": { "rim_east": true }, "apply": { "model": "create:fluid_pipe_rim_east" } }
+  ]
+}

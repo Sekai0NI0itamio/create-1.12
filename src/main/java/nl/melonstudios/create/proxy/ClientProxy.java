@@ -119,6 +119,8 @@ public class ClientProxy extends CommonProxy {
         this.registerTESR(TileEntityItemDrain.class, "item_drain", new TESRItemDrain());
         this.registerTESR(TileEntityFluidTank.class, "fluid_tank", new TESRFluidTank());
         this.registerTESR(TileEntitySpout.class, "spout", new TESRSpout());
+        this.registerTESR(TileEntityMechanicalPump.class, "mechanical_pump", new TESRMechanicalPump());
+        this.registerTESR(TileEntityFluidValve.class, "fluid_valve", new TESRFluidValve());
         this.registerTESR(TileEntityFunnelWall.class, "funnel_wall", null);
         this.registerTESR(TileEntityFunnelWallAdvanced.class, "funnel_wall_advanced", new TESRFunnelWallAdvanced());
         this.registerTESR(TileEntityFunnelDown.class, "funnel_down", null);

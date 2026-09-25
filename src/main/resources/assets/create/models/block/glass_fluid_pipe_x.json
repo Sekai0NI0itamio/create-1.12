@@ -1,0 +1,49 @@
+{
+  "credit": "Create 1.12 backport, glass pipe pole along X",
+  "textures": {
+    "particle": "create:block/glass_fluid_pipe",
+    "glass": "create:block/glass_fluid_pipe",
+    "collar": "create:block/pipes"
+  },
+  "elements": [
+    {
+      "name": "pole_x",
+      "from": [0, 4, 4],
+      "to": [16, 12, 12],
+      "faces": {
+        "north": {"uv": [0, 4, 16, 12], "texture": "#glass"},
+        "south": {"uv": [0, 4, 16, 12], "texture": "#glass"},
+        "east": {"uv": [4, 4, 12, 12], "texture": "#glass"},
+        "west": {"uv": [4, 4, 12, 12], "texture": "#glass"},
+        "up": {"uv": [0, 4, 16, 12], "texture": "#glass"},
+        "down": {"uv": [0, 4, 16, 12], "texture": "#glass"}
+      }
+    },
+    {
+      "name": "collar_west",
+      "from": [0, 3, 3],
+      "to": [2, 13, 13],
+      "faces": {
+        "down": {"uv": [0, 3, 2, 13], "texture": "#collar"},
+        "up": {"uv": [0, 3, 2, 13], "texture": "#collar"},
+        "north": {"uv": [0, 3, 2, 13], "texture": "#collar"},
+        "south": {"uv": [0, 3, 2, 13], "texture": "#collar"},
+        "east": {"uv": [3, 3, 13, 13], "texture": "#collar"},
+        "west": {"uv": [3, 3, 13, 13], "texture": "#collar"}
+      }
+    },
+    {
+      "name": "collar_east",
+      "from": [14, 3, 3],
+      "to": [16, 13, 13],
+      "faces": {
+        "down": {"uv": [14, 3, 16, 13], "texture": "#collar"},
+        "up": {"uv": [14, 3, 16, 13], "texture": "#collar"},
+        "north": {"uv": [14, 3, 16, 13], "texture": "#collar"},
+        "south": {"uv": [14, 3, 16, 13], "texture": "#collar"},
+        "east": {"uv": [3, 3, 13, 13], "texture": "#collar"},
+        "west": {"uv": [3, 3, 13, 13], "texture": "#collar"}
+      }
+    }
+  ]
+}

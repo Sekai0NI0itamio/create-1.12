@@ -437,6 +437,11 @@ tile.create.toggle_latch_powered.name=Powered Toggle Latch
 tile.create.window_wood.name=Wooden Window
 
 tile.create.vault.name=Item Vault
+tile.create.fluid_pipe.name=Fluid Pipe
+tile.create.glass_fluid_pipe.name=Glass Fluid Pipe
+tile.create.encased_fluid_pipe.name=Encased Fluid Pipe
+tile.create.mechanical_pump.name=Mechanical Pump
+tile.create.fluid_valve.name=Fluid Valve
 
 item.create.chromatic_compound.name=Chromatic Compound
 item.create.shadow_steel.name=Shadow Steel

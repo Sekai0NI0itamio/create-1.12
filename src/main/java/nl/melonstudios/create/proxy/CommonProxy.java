@@ -24,6 +24,7 @@ import nl.melonstudios.create.recipe.server.SmokingRecipes;
 import nl.melonstudios.create.recipe.server.SplashingRecipes;
 import nl.melonstudios.create.tileentity.*;
 import nl.melonstudios.create.tileentity.actor.*;
+import nl.melonstudios.create.tileentity.fluid.*;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWall;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelWallAdvanced;
 import nl.melonstudios.create.tileentity.funnel.TileEntityFunnelDown;
@@ -98,6 +99,9 @@ public class CommonProxy {
         this.registerTE(TileEntityFluidTank.class, "fluid_tank");
         this.registerTE(TileEntitySpout.class, "spout");
         this.registerTE(TileEntityHosePulley.class, "hose_pulley");
+        this.registerTE(TileEntityFluidPipe.class, "fluid_pipe");
+        this.registerTE(TileEntityMechanicalPump.class, "mechanical_pump");
+        this.registerTE(TileEntityFluidValve.class, "fluid_valve");
         this.registerTE(TileEntityPortableFluidInterface.class, "portable_fluid_interface");
         this.registerTE(TileEntitySteamEngine.class, "steam_engine");
         this.registerTE(TileEntitySpeedController.class, "speed_controller");

@@ -176,6 +176,7 @@ public class CreateLegacyEventHandler {
         event.registerStress(BlockInit.CRAFTER, 2.0F);
         event.registerStress(BlockInit.MECHANICAL_PISTON, 4.0F);
         event.registerStress(BlockInit.MECHANICAL_PISTON_STICKY, 4.0F);
+        event.registerStress(BlockInit.MECHANICAL_PUMP, 4.0F);
         event.registerStress(BlockInit.CRUSHING_WHEEL, 8.0F);
         event.registerStress(BlockInit.ENCASED_FAN, 2.0F);
         event.registerStress(BlockInit.SPOUT, 4.0F);

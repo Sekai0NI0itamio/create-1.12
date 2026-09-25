@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=x": { "model": "create:glass_fluid_pipe_x" },
+    "axis=y": { "model": "create:glass_fluid_pipe_y" },
+    "axis=z": { "model": "create:glass_fluid_pipe_z" }
+  }
+}

@@ -13,6 +13,7 @@ import nl.melonstudios.create.CreateLegacy;
 import nl.melonstudios.create.block.*;
 import nl.melonstudios.create.block.actor.*;
 import nl.melonstudios.create.block.deco.*;
+import nl.melonstudios.create.block.fluid.*;
 import nl.melonstudios.create.block.funnel.BlockFunnelDown;
 import nl.melonstudios.create.block.funnel.BlockFunnelWall;
 import nl.melonstudios.create.block.generator.*;
@@ -244,6 +245,17 @@ public final class BlockInit {
     public static final BlockSchematicannon SCHEMATICANNON = (BlockSchematicannon)
             registerBlockWithItem(new BlockSchematicannon()
             .setRegistryName("schematicannon").setUnlocalizedName("create.schematicannon"));
+
+    public static final BlockFluidPipe FLUID_PIPE = (BlockFluidPipe)
+            registerBlockWithItem(new BlockFluidPipe());
+    public static final BlockGlassFluidPipe GLASS_FLUID_PIPE = (BlockGlassFluidPipe)
+            registerBlockWithItem(new BlockGlassFluidPipe());
+    public static final BlockEncasedFluidPipe ENCASED_FLUID_PIPE = (BlockEncasedFluidPipe)
+            registerBlockWithItem(new BlockEncasedFluidPipe());
+    public static final BlockMechanicalPump MECHANICAL_PUMP = (BlockMechanicalPump)
+            registerBlockWithItem(new BlockMechanicalPump());
+    public static final BlockFluidValve FLUID_VALVE = (BlockFluidValve)
+            registerBlockWithItem(new BlockFluidValve());
 
     public static final BlockTrainTrack TRAIN_TRACK = (BlockTrainTrack)
             registerBlockWithItem(new BlockTrainTrack()

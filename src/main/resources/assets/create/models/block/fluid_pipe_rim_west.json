@@ -1,0 +1,22 @@
+{
+  "credit": "Create 1.12 backport, pipe end-cap rim west",
+  "textures": {
+    "particle": "create:block/pipes",
+    "pipe": "create:block/pipes"
+  },
+  "elements": [
+    {
+      "name": "rim_west",
+      "from": [0, 3, 3],
+      "to": [2, 13, 13],
+      "faces": {
+        "west": {"uv": [3, 3, 13, 13], "texture": "#pipe"},
+        "east": {"uv": [3, 3, 13, 13], "texture": "#pipe"},
+        "north": {"uv": [0, 3, 2, 13], "texture": "#pipe"},
+        "south": {"uv": [0, 3, 2, 13], "texture": "#pipe"},
+        "up": {"uv": [0, 3, 2, 13], "texture": "#pipe"},
+        "down": {"uv": [0, 3, 2, 13], "texture": "#pipe"}
+      }
+    }
+  ]
+}

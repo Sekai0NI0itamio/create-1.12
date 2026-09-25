@@ -1,0 +1,20 @@
+{
+  "credit": "Create 1.12 backport, pipe arm up",
+  "textures": {
+    "particle": "create:block/pipes",
+    "pipe": "create:block/pipes"
+  },
+  "elements": [
+    {
+      "name": "arm_up",
+      "from": [4, 12, 4],
+      "to": [12, 16, 12],
+      "faces": {
+        "north": {"uv": [4, 12, 12, 16], "texture": "#pipe"},
+        "south": {"uv": [4, 12, 12, 16], "texture": "#pipe"},
+        "east": {"uv": [4, 12, 12, 16], "texture": "#pipe"},
+        "west": {"uv": [4, 12, 12, 16], "texture": "#pipe"}
+      }
+    }
+  ]
+}
