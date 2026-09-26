@@ -34,7 +34,7 @@ public class ItemSceneWand extends Item {
         this.setRegistryName("scene_wand");
         this.setUnlocalizedName("create.scene_wand");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

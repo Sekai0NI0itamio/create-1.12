@@ -65,7 +65,7 @@ public class BlockFramedGlass extends BlockGlass implements IMetaName {
         this.setSoundType(SoundType.GLASS);
         this.setHarvestLevel("pickaxe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     @Override

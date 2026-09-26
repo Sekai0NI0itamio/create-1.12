@@ -16,7 +16,7 @@ import nl.melonstudios.create.util.CreateTagHelper;
 public class ItemWrench extends Item {
     public ItemWrench() {
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

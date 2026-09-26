@@ -54,7 +54,7 @@ public class BlockCopycatPanel extends Block implements ITileEntityProvider {
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class BlockDeskBell extends Block implements ITileEntityProvider, IWrench
         this.setHardness(2.0F);
         this.setResistance(4.0F);
         this.setHarvestLevel("pickaxe", 1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("desk_bell");
         this.setUnlocalizedName("create.desk_bell");
         this.setDefaultState(this.blockState.getBaseState()

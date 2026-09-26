@@ -36,7 +36,7 @@ public class BlockCartAssembler extends BlockRailBase implements IWrenchable {
         this.setHardness(0.8F);
         this.setResistance(0.8F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("cart_assembler");
         this.setUnlocalizedName("create.cart_assembler");
         this.setDefaultState(this.blockState.getBaseState()

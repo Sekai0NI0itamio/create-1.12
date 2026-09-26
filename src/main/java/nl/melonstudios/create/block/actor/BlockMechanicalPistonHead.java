@@ -38,7 +38,7 @@ public class BlockMechanicalPistonHead extends Block {
                 .withProperty(STICKY, false)
         );
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

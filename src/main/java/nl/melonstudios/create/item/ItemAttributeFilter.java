@@ -28,7 +28,7 @@ public class ItemAttributeFilter extends Item {
         this.setRegistryName("attribute_filter");
         this.setUnlocalizedName("create.attribute_filter");
         this.setMaxStackSize(64);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

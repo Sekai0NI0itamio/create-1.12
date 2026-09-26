@@ -30,7 +30,7 @@ public class ItemEmptySchematic extends Item {
         this.setRegistryName("empty_schematic");
         this.setUnlocalizedName("create.empty_schematic");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

@@ -70,7 +70,7 @@ public class BlockSmartChute extends Block implements ITileEntityProvider, IWren
 
         this.setRegistryName("smart_chute");
         this.setUnlocalizedName("create.smart_chute");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(VARIANT, EnumChuteVariant.NORMAL)
                 .withProperty(POWERED, false));

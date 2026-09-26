@@ -31,7 +31,7 @@ public class ItemCopperDivingHelmet extends ItemArmor {
         this.setRegistryName("copper_diving_helmet");
         this.setUnlocalizedName("create.copper_diving_helmet");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

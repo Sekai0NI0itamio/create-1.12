@@ -23,7 +23,7 @@ public class ItemBuildersTea extends ItemFood {
         this.setMaxStackSize(16);
         this.setAlwaysEdible();
         this.setPotionEffect(new PotionEffect(MobEffects.HASTE, 3 * 60 * 20, 0), 1.0F);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

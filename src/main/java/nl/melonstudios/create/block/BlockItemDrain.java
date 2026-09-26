@@ -35,7 +35,7 @@ public class BlockItemDrain extends Block implements ITileEntityProvider {
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(3.0F);
         this.setResistance(BlockProperties.IRON_RESISTANCE);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     //region this is not a full block

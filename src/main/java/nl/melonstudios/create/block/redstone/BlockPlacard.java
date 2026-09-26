@@ -49,7 +49,7 @@ public class BlockPlacard extends Block implements ITileEntityProvider, IWrencha
         this.setHardness(1.0F);
         this.setResistance(3.0F);
         this.setHarvestLevel("axe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("placard");
         this.setUnlocalizedName("create.placard");
         this.setDefaultState(this.blockState.getBaseState()

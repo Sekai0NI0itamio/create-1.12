@@ -13,7 +13,7 @@ import nl.melonstudios.create.init.ItemInit;
 
 public class ItemTreeFertilizer extends Item {
     public ItemTreeFertilizer() {
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

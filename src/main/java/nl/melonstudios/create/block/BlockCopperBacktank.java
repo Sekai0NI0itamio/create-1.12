@@ -31,7 +31,7 @@ public class BlockCopperBacktank extends Block implements ITileEntityProvider {
         this.setHardness(3.0F);
         this.setResistance(BlockProperties.IRON_RESISTANCE);
         this.setHarvestLevel("pickaxe", 1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("copper_backtank");
         this.setUnlocalizedName("create.copper_backtank");
     }

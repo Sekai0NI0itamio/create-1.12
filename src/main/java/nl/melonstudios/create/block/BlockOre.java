@@ -64,7 +64,7 @@ public final class BlockOre extends Block implements IMetaName {
         this.setHarvestLevel("pickaxe", 1, this.getStateFromMeta(0));
         this.setHarvestLevel("pickaxe", 2, this.getStateFromMeta(1));
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

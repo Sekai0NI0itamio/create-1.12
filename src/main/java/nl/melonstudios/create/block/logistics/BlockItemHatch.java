@@ -71,7 +71,7 @@ public class BlockItemHatch extends Block implements ITileEntityProvider {
                 .withProperty(FACING, EnumFacing.NORTH)
                 .withProperty(OPEN, false));
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

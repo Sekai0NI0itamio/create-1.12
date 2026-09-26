@@ -65,7 +65,7 @@ public class BlockWindowIron extends BlockGlass implements IMetaName {
         this.setResistance(1.5F);
         this.setSoundType(SoundType.GLASS);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     @Override

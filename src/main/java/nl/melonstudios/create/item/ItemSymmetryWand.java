@@ -36,7 +36,7 @@ public class ItemSymmetryWand extends Item {
 
     public ItemSymmetryWand() {
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     public static NBTTagCompound mirrorTag(ItemStack stack) {

@@ -18,7 +18,7 @@ public class BlockCardboard extends Block {
         this.setSoundType(SoundType.CLOTH);
         this.setHardness(BlockProperties.WOOL_HARDNESS);
         this.setResistance(BlockProperties.WOOL_RESISTANCE);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("cardboard_block");
         this.setUnlocalizedName("create.cardboard_block");
     }

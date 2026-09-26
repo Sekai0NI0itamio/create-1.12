@@ -16,7 +16,7 @@ public class ItemBlockSail extends ItemBlock {
         this.setRegistryName("sail");
         this.setUnlocalizedName("create.sail");
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

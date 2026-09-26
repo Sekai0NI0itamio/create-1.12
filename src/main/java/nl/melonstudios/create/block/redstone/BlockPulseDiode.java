@@ -46,7 +46,7 @@ public abstract class BlockPulseDiode extends Block implements ITileEntityProvid
         this.setHardness(0.5F);
         this.setResistance(2.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(FACING, EnumFacing.NORTH)
                 .withProperty(POWERING, false)

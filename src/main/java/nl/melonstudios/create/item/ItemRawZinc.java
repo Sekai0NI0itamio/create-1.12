@@ -11,6 +11,6 @@ public class ItemRawZinc extends Item {
     public ItemRawZinc() {
         this.setRegistryName("raw_zinc");
         this.setUnlocalizedName("create.raw_zinc");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 }

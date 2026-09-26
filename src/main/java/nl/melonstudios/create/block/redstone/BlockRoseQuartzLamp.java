@@ -44,7 +44,7 @@ public class BlockRoseQuartzLamp extends Block implements IWrenchable {
         this.setHardness(1.5F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("rose_quartz_lamp");
         this.setUnlocalizedName("create.rose_quartz_lamp");
         this.setDefaultState(this.blockState.getBaseState()

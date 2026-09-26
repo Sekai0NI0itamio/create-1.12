@@ -42,7 +42,7 @@ public class BlockAdjustableChainGearshift extends BlockChainDrive {
 
         this.setHarvestLevel("axe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
 
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(AXIS, EnumFacing.Axis.Y)

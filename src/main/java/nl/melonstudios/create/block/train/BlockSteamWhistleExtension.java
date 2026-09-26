@@ -43,7 +43,7 @@ public class BlockSteamWhistleExtension extends Block implements IWrenchable {
         this.setHardness(1.5F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("steam_whistle_extension");
         this.setUnlocalizedName("create.steam_whistle_extension");
         this.setDefaultState(this.blockState.getBaseState()

@@ -16,7 +16,7 @@ public class ItemRefinedRadiance extends ItemNoGravity {
     public ItemRefinedRadiance() {
         this.setRegistryName("refined_radiance");
         this.setUnlocalizedName("create.refined_radiance");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

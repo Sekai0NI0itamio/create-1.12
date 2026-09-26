@@ -40,7 +40,7 @@ public class BlockToolbox extends Block implements ITileEntityProvider {
         this.blockSoundType = SoundType.WOOD;
         this.setHardness(BlockProperties.WOOD_HARDNESS);
         this.setResistance(BlockProperties.WOOD_RESISTANCE);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

@@ -36,7 +36,7 @@ public class BlockTrackObserver extends Block implements ITileEntityProvider, IW
         this.setHardness(2.0F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("track_observer");
         this.setUnlocalizedName("create.track_observer");
         this.setDefaultState(this.blockState.getBaseState().withProperty(POWERED, false));

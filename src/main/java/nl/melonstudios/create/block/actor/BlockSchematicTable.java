@@ -50,7 +50,7 @@ public class BlockSchematicTable extends Block implements ITileEntityProvider, I
         this.setHardness(2.0F);
         this.setResistance(4.0F);
         this.setHarvestLevel("axe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("schematic_table");
         this.setUnlocalizedName("create.schematic_table");
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));

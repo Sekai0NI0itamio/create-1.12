@@ -24,7 +24,7 @@ public class ItemCopperDivingBoots extends ItemArmor {
         this.setRegistryName("copper_diving_boots");
         this.setUnlocalizedName("create.copper_diving_boots");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

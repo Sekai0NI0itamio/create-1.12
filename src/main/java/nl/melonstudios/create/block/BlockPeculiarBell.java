@@ -35,7 +35,7 @@ public class BlockPeculiarBell extends Block {
         this.blockSoundType = SoundType.METAL;
         this.setHardness(BlockProperties.IRON_HARDNESS);
         this.setResistance(BlockProperties.IRON_HARDNESS);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     /** Reference playSound volume 2.0, pitch 0.94. */

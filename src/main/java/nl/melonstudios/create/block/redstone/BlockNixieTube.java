@@ -33,7 +33,7 @@ public class BlockNixieTube extends Block implements IWrenchable {
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 1);
         this.setLightLevel(5.0F / 15.0F);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(FACING, EnumFacing.NORTH)
                 .withProperty(CEILING, false));

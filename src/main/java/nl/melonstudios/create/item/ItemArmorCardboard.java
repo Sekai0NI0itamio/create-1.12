@@ -14,7 +14,7 @@ public class ItemArmorCardboard extends ItemArmor {
         super(CreateEnums.ARMOR_MATERIAL_CARDBOARD, 0, slot);
         this.setRegistryName(part + "_cardboard");
         this.setUnlocalizedName("create." + part + "_cardboard");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Nullable

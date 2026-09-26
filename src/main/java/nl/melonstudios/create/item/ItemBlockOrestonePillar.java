@@ -12,7 +12,7 @@ public class ItemBlockOrestonePillar extends ItemBlock {
         super(BlockInit.ORESTONE_PILLAR_Y);
 
         this.setRegistryName("orestone_pillar");
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
@@ -29,6 +29,6 @@ public class ItemBlockOrestonePillar extends ItemBlock {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return ItemInit.TAB_CREATE_DECORATIONS;
+        return CreateTabs.TAB_CREATE_DECORATIONS;
     }
 }

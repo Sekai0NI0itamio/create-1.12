@@ -24,7 +24,7 @@ public class BlockFakeTrack extends Block {
         this.blockSoundType = SoundType.METAL;
         this.setHardness(0.0F);
         this.setResistance(0.0F);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("fake_track");
         this.setUnlocalizedName("create.fake_track");
     }

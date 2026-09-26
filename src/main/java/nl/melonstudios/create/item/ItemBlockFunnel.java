@@ -31,7 +31,7 @@ public class ItemBlockFunnel extends Item implements IBypassBlockUse {
         this.setRegistryName("funnel_" + set);
         String modid = Loader.instance().activeModContainer().getModId();
         this.setUnlocalizedName(modid + ".funnel_" + set);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class BlockChassisRadial extends BlockRotatedPillar implements IExtension
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.Y));
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

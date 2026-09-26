@@ -32,7 +32,7 @@ public class ItemBeltConnector extends Item {
     public ItemBeltConnector() {
         super();
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

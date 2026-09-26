@@ -37,7 +37,7 @@ public class BlockMechanicalPlough extends BlockHorizontal implements ITileEntit
         this.setHardness(BlockProperties.STONE_HARDNESS);
         this.setResistance(BlockProperties.STONE_RESISTANCE);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("mechanical_plough");
         this.setUnlocalizedName("create.mechanical_plough");
     }

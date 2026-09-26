@@ -30,7 +30,7 @@ public class ItemLinkedController extends Item {
         this.setRegistryName("linked_controller");
         this.setUnlocalizedName("create.linked_controller");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

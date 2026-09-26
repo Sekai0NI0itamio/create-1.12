@@ -51,7 +51,7 @@ public class BlockFactoryBoard extends Block implements ITileEntityProvider {
         this.setHardness(3.0F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(FACING, EnumFacing.NORTH)
                 .withProperty(POWERED, false));

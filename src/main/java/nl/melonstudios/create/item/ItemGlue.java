@@ -33,7 +33,7 @@ public class ItemGlue extends Item implements IBypassBlockUse {
         this.setMaxDamage(Math.min(durability, 99));
         this.setMaxStackSize(1);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

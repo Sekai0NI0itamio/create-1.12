@@ -46,7 +46,7 @@ public class BlockAnalogLever extends Block implements ITileEntityProvider, IWre
         this.blockSoundType = SoundType.WOOD;
         this.setHardness(0.5F);
         this.setResistance(2.0F);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("analog_lever");
         this.setUnlocalizedName("create.analog_lever");
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));

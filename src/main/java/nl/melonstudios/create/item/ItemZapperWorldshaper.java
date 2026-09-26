@@ -58,7 +58,7 @@ public class ItemZapperWorldshaper extends Item {
 
     public ItemZapperWorldshaper() {
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     private static NBTTagCompound tag(ItemStack stack) {

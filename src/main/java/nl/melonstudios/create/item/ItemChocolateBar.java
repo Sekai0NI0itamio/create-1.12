@@ -9,6 +9,6 @@ public class ItemChocolateBar extends ItemFood {
         super(6, 0.3F, false);
         this.setRegistryName("bar_of_chocolate");
         this.setUnlocalizedName("create.bar_of_chocolate");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 }

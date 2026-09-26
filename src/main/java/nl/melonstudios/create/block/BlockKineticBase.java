@@ -41,7 +41,7 @@ public abstract class BlockKineticBase extends Block implements IRotate, IGoggle
 
         this.setHarvestLevel("pickaxe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

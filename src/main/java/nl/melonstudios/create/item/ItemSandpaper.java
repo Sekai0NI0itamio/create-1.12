@@ -32,7 +32,7 @@ public class ItemSandpaper extends Item {
         this.setUnlocalizedName(unlocalizedName);
         this.setMaxDamage(8);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

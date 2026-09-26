@@ -65,6 +65,7 @@ public final class BlockInit {
     public static void load() {}
 
     public static final ArrayList<Block> BLOCKS = new ArrayList<>();
+    public static final ArrayList<Item> ITEM_BLOCKS = new ArrayList<>();
 
     public static final BlockRender RENDER = registerBlock(new BlockRender());
 
@@ -118,7 +119,7 @@ public final class BlockInit {
     //there is probably a better way to do this... oh well I'm not rewriting it all again
     public static final ItemBlockSail SAIL_ITEM = new ItemBlockSail(SAIL_DOWN);
     static {
-        ItemInit.ITEMS.add(SAIL_ITEM);
+        ITEM_BLOCKS.add(SAIL_ITEM);
         GameData.getBlockItemMap().forcePut(SAIL_DOWN, SAIL_ITEM);
         GameData.getBlockItemMap().forcePut(SAIL_UP, SAIL_ITEM);
         GameData.getBlockItemMap().forcePut(SAIL_NORTH, SAIL_ITEM);
@@ -639,7 +640,7 @@ public final class BlockInit {
     }
     private static <T extends Block> T registerBlockWithItem(@Nonnull T block, @Nonnull Item item) {
         BLOCKS.add(block);
-        ItemInit.ITEMS.add(item);
+        ITEM_BLOCKS.add(item);
         return block;
     }
     private static <T extends Block> T registerBlockWithItem(@Nonnull T block, boolean variants) {

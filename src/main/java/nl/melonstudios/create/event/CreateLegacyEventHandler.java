@@ -81,6 +81,7 @@ public class CreateLegacyEventHandler {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(ItemInit.ITEMS.toArray(new Item[0]));
+        event.getRegistry().registerAll(BlockInit.ITEM_BLOCKS.toArray(new Item[0]));
         OreDictInit.init();
     }
     @SubscribeEvent

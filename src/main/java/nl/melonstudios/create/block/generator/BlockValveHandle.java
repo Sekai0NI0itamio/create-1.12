@@ -43,7 +43,7 @@ public class BlockValveHandle extends BlockHandCrank {
         String name = color == null ? "copper_valve_handle" : color.getName() + "_valve_handle";
         this.setRegistryName(name);
         this.setUnlocalizedName("create." + name);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     /** Texture file stem for this handle's head, e.g. {@code light_gray}. */

@@ -1,7 +1,6 @@
 package nl.melonstudios.create.init;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.relauncher.Side;
@@ -15,7 +14,6 @@ import nl.melonstudios.create.block.state.EnumOrestoneVariant;
 import nl.melonstudios.create.item.*;
 import nl.melonstudios.create.item.train.ItemTrainSchedule;
 import nl.melonstudios.create.util.FunnelSets;
-import nl.melonstudios.create.util.ModTabs;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -25,8 +23,6 @@ import java.util.ArrayList;
 public final class ItemInit {
     public static void load() {}
 
-    public static final CreativeTabs TAB_CREATE = new ModTabs("create", () -> new ItemStack(BlockInit.COG_SMALL));
-    public static final CreativeTabs TAB_CREATE_DECORATIONS = new ModTabs("create.decorations", () -> new ItemStack(BlockInit.WINDOW_IRON));
 
     public static final ArrayList<Item> ITEMS = new ArrayList<>();
 
@@ -46,7 +42,7 @@ public final class ItemInit {
             registerItem(new ItemGlue(99)
             .setRegistryName("superglue").setUnlocalizedName("create.superglue"));
     public static final Item CRAFTER_COVER = registerItem(new Item()
-            .setMaxStackSize(64).setCreativeTab(TAB_CREATE)
+            .setMaxStackSize(64).setCreativeTab(CreateTabs.TAB_CREATE)
             .setRegistryName("crafter_cover").setUnlocalizedName("create.crafter_cover"));
     public static final ItemArmorCardboard HELMET_CARDBOARD = registerItem(new ItemArmorCardboard(EntityEquipmentSlot.HEAD, "helmet"));
     public static final ItemArmorCardboard CHESTPLATE_CARDBOARD = registerItem(new ItemArmorCardboard(EntityEquipmentSlot.CHEST, "chestplate"));
@@ -56,10 +52,10 @@ public final class ItemInit {
     public static final ItemSceneWand SCENE_WAND = registerItem(new ItemSceneWand());
     public static final ItemSchematic SCHEMATIC = (ItemSchematic)
             registerItem(new ItemSchematic()
-            .setRegistryName("schematic").setUnlocalizedName("create.schematic").setCreativeTab(TAB_CREATE));
+            .setRegistryName("schematic").setUnlocalizedName("create.schematic").setCreativeTab(CreateTabs.TAB_CREATE));
     public static final ItemPackage PACKAGE = (ItemPackage)
             registerItem(new ItemPackage()
-            .setRegistryName("package").setUnlocalizedName("create.package").setCreativeTab(TAB_CREATE));
+            .setRegistryName("package").setUnlocalizedName("create.package").setCreativeTab(CreateTabs.TAB_CREATE));
 
     public static final ItemBlockFunnel FUNNEL_ANDESITE = registerItem(new ItemBlockFunnel("andesite"));
     public static final ItemBlockFunnel FUNNEL_BRASS = registerItem(new ItemBlockFunnel("brass"));
@@ -82,8 +78,7 @@ public final class ItemInit {
             registerItem(new ItemZapperWorldshaper()
             .setRegistryName("handheld_worldshaper").setUnlocalizedName("create.handheld_worldshaper"));
     public static final ItemClipboard CLIPBOARD = (ItemClipboard)
-            registerItem(new ItemClipboard()
-            .setRegistryName("clipboard").setUnlocalizedName("create.clipboard"));
+            registerItem(new ItemClipboard());
     public static final ItemSymmetryWand SYMMETRY_WAND = (ItemSymmetryWand)
             registerItem(new ItemSymmetryWand()
             .setRegistryName("wand_of_symmetry").setUnlocalizedName("create.wand_of_symmetry"));

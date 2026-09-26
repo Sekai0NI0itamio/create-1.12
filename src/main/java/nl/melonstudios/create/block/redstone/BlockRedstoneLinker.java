@@ -53,7 +53,7 @@ public class BlockRedstoneLinker extends Block implements ITileEntityProvider, I
                 .withProperty(POWERED, false)
         );
 
-        //this.setCreativeTab(ItemInit.TAB_CREATE);
+        //this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

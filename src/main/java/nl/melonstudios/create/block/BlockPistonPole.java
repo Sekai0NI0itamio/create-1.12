@@ -33,7 +33,7 @@ public class BlockPistonPole extends Block {
 
         this.setHarvestLevel("axe", -1);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     //region this is not a full block

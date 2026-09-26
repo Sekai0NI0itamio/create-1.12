@@ -37,7 +37,7 @@ public class ItemHat extends ItemArmor {
         super(MATERIAL_HAT, 0, EntityEquipmentSlot.HEAD);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

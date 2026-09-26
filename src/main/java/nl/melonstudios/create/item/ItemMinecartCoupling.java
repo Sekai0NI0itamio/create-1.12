@@ -31,7 +31,7 @@ public class ItemMinecartCoupling extends Item {
         this.setRegistryName("minecart_coupling");
         this.setUnlocalizedName("create.minecart_coupling");
         this.setMaxStackSize(16);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

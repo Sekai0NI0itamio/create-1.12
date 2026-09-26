@@ -71,7 +71,7 @@ public class BlockCopycatStep extends Block implements ITileEntityProvider {
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(FACING, EnumFacing.NORTH)
                 .withProperty(HALF, StepHalf.BOTTOM));
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     @Override

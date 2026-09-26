@@ -37,7 +37,7 @@ public class ItemCardboardSword extends ItemSword {
         super(CARDBOARD);
         this.setRegistryName("cardboard_sword");
         this.setUnlocalizedName("create.cardboard_sword");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

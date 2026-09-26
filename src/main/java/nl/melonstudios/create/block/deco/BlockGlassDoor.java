@@ -51,7 +51,7 @@ public class BlockGlassDoor extends BlockDoor {
         this.setHardness(3.0F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     public String getStyle() {

@@ -17,7 +17,7 @@ public class ItemShadowSteel extends ItemNoGravity {
     public ItemShadowSteel() {
         this.setRegistryName("shadow_steel");
         this.setUnlocalizedName("create.shadow_steel");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

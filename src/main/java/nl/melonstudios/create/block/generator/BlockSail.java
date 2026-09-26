@@ -81,7 +81,7 @@ public class BlockSail extends BlockColored implements IExtensionBlock, ISail, I
         this.setHardness(BlockProperties.WOOD_HARDNESS);
         this.setResistance(BlockProperties.WOOD_RESISTANCE);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

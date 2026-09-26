@@ -28,7 +28,7 @@ public class ItemSchematicAndQuill extends Item {
         this.setRegistryName("schematic_and_quill");
         this.setUnlocalizedName("create.schematic_and_quill");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

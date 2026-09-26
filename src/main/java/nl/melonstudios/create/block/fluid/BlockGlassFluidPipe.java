@@ -56,7 +56,7 @@ public class BlockGlassFluidPipe extends Block implements IFluidPipeConnectable,
         this.setHardness(3.0F);
         this.setResistance(BlockProperties.IRON_RESISTANCE);
         this.setHarvestLevel("pickaxe", 1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("glass_fluid_pipe");
         this.setUnlocalizedName("create.glass_fluid_pipe");
         this.setDefaultState(this.blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.Y));

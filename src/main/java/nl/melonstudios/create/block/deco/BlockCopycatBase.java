@@ -39,7 +39,7 @@ public class BlockCopycatBase extends Block implements ITileEntityProvider {
         this.setHardness(1.5F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     @Override

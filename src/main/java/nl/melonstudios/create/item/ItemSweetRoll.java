@@ -9,6 +9,6 @@ public class ItemSweetRoll extends ItemFood {
         super(6, 0.8F, false);
         this.setRegistryName("sweet_roll");
         this.setUnlocalizedName("create.sweet_roll");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 }

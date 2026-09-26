@@ -51,7 +51,7 @@ public class BlockPouf extends BlockColored implements IMetaName {
         this.setResistance(2.0F);
         this.setHarvestLevel("axe", 0);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
 
         this.fullBlock = false;
         this.translucent = true;

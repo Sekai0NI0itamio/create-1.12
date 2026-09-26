@@ -49,7 +49,7 @@ public class BlockPortableStorageInterface extends BlockDirectional implements I
         this.setHardness(BlockProperties.STONE_HARDNESS);
         this.setResistance(BlockProperties.STONE_RESISTANCE);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("portable_storage_interface");
         this.setUnlocalizedName("create.portable_storage_interface");
     }

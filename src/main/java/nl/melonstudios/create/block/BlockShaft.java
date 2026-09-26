@@ -18,7 +18,7 @@ public class BlockShaft extends BlockSimpleShaftBase {
 
         this.setHarvestLevel("pickaxe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     public static boolean isShaft(IBlockState state) {

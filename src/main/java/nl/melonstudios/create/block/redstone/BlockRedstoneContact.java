@@ -52,7 +52,7 @@ public class BlockRedstoneContact extends BlockDirectional implements IWrenchabl
         this.setHardness(BlockProperties.STONE_HARDNESS);
         this.setResistance(BlockProperties.STONE_RESISTANCE);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("redstone_contact");
         this.setUnlocalizedName("create.redstone_contact");
     }

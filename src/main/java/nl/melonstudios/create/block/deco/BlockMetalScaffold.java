@@ -56,7 +56,7 @@ public class BlockMetalScaffold extends Block {
         this.setResistance(4.0F);
         this.setHarvestLevel("pickaxe", 0);
         this.setDefaultState(this.blockState.getBaseState().withProperty(BOTTOM, false));
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     public String getMetal() {

@@ -35,7 +35,7 @@ public class BlockControllerRail extends BlockRailBase implements IWrenchable {
         this.setHardness(0.7F);
         this.setResistance(0.7F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("controller_rail");
         this.setUnlocalizedName("create.controller_rail");
         this.setDefaultState(this.blockState.getBaseState()

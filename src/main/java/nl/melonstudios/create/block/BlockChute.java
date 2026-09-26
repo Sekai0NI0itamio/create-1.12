@@ -47,7 +47,7 @@ public class BlockChute extends Block implements ITileEntityProvider, IWrenchabl
         this.setResistance(BlockProperties.IRON_RESISTANCE);
         this.setHarvestLevel("pickaxe", 1);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

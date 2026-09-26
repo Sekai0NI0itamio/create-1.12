@@ -31,7 +31,7 @@ public class ItemShoppingList extends Item {
         this.setRegistryName("shopping_list");
         this.setUnlocalizedName("create.shopping_list");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

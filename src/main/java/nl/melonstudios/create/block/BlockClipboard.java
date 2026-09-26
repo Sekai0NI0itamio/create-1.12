@@ -42,7 +42,7 @@ public class BlockClipboard extends Block implements ITileEntityProvider {
         this.setHardness(BlockProperties.WOOD_HARDNESS);
         this.setResistance(BlockProperties.WOOD_RESISTANCE);
         this.setDefaultState(this.blockState.getBaseState().withProperty(WRITTEN, false));
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

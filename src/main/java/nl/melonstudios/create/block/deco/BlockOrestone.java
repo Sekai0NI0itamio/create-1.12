@@ -34,7 +34,7 @@ public class BlockOrestone extends Block implements IMetaName {
         this.setHardness(BlockProperties.STONE_HARDNESS);
         this.setResistance(BlockProperties.STONE_RESISTANCE);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE_DECORATIONS);
+        this.setCreativeTab(CreateTabs.TAB_CREATE_DECORATIONS);
     }
 
     @Override

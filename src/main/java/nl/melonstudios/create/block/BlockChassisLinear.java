@@ -51,7 +51,7 @@ public class BlockChassisLinear extends BlockRotatedPillar implements IExtension
                 .withProperty(AXIS, EnumFacing.Axis.Y)
                 .withProperty(SECONDARY, false));
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

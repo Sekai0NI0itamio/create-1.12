@@ -28,7 +28,7 @@ public class ItemChromaticCompound extends ItemNoGravity {
         this.setRegistryName("chromatic_compound");
         this.setUnlocalizedName("create.chromatic_compound");
         this.setMaxStackSize(16);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     public static int getLight(ItemStack stack) {

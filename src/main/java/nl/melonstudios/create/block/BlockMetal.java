@@ -64,7 +64,7 @@ public final class BlockMetal extends Block implements IMetaName {
         this.setHarvestLevel("pickaxe", 2, this.getStateFromMeta(2));
         this.setHarvestLevel("pickaxe", 2, this.getStateFromMeta(3));
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
 
         this.setHardness(BlockProperties.IRON_HARDNESS);
         this.setResistance(BlockProperties.IRON_RESISTANCE);

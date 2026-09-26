@@ -77,7 +77,7 @@ public class BlockBlazeBurner extends Block implements IHeatProvider, IMetaName,
 
         this.setHarvestLevel("pickaxe", 1);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

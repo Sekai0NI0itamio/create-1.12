@@ -43,7 +43,7 @@ public class BlockLargeWaterWheel extends BlockKineticDirectionalBase implements
 
         this.setHarvestLevel("axe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

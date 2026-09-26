@@ -41,7 +41,7 @@ public class ItemMinecartContraption extends Item {
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

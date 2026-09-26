@@ -49,7 +49,7 @@ public class BlockLecternController extends Block implements ITileEntityProvider
         this.setHardness(2.0F);
         this.setResistance(4.0F);
         this.setHarvestLevel("axe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("lectern_controller");
         this.setUnlocalizedName("create.lectern_controller");
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));

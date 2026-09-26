@@ -35,7 +35,7 @@ public class ItemClipboard extends ItemBlock {
         super(BlockInit.CLIPBOARD);
         this.setRegistryName("clipboard");
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     public static NBTTagList entriesOf(ItemStack stack) {

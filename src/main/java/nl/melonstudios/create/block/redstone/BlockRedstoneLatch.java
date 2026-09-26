@@ -34,7 +34,7 @@ public class BlockRedstoneLatch extends BlockRedstoneDiode {
                 .withProperty(RESET, false)
         );
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

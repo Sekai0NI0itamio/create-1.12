@@ -25,7 +25,7 @@ public class BlockLitBlazeBurner extends Block implements IHeatProvider {
         this.setHardness(3.0F);
         this.setResistance(BlockProperties.IRON_RESISTANCE);
         this.setHarvestLevel("pickaxe", 1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("lit_blaze_burner");
         this.setUnlocalizedName("create.lit_blaze_burner");
     }

@@ -43,7 +43,7 @@ public class BlockVault extends Block implements ITileEntityProvider, IWrenchabl
                 .withProperty(AXIS, EnumFacing.Axis.X)
                 .withProperty(LARGE, false));
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

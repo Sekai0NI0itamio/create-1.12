@@ -53,7 +53,7 @@ public class BlockSteamWhistle extends Block implements ITileEntityProvider, IWr
         this.setHardness(1.5F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("steam_whistle");
         this.setUnlocalizedName("create.steam_whistle");
         this.setDefaultState(this.blockState.getBaseState()

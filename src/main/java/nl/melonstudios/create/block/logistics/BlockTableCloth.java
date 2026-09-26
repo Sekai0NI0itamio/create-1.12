@@ -44,7 +44,7 @@ public class BlockTableCloth extends Block implements ITileEntityProvider {
         this.blockSoundType = SoundType.CLOTH;
         this.setHardness(0.2F);
         this.setResistance(1.0F);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

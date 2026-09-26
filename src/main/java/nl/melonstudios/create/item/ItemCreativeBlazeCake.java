@@ -13,7 +13,7 @@ public class ItemCreativeBlazeCake extends Item {
     public ItemCreativeBlazeCake() {
         this.setRegistryName("creative_blaze_cake");
         this.setUnlocalizedName("create.creative_blaze_cake");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

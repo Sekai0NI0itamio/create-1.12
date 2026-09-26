@@ -36,7 +36,7 @@ public class BlockMinecartAnchor extends Block implements IWrenchable {
         this.setHardness(2.0F);
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("minecart_anchor");
         this.setUnlocalizedName("create.minecart_anchor");
         this.setDefaultState(this.blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.Z));

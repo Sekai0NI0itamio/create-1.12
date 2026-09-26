@@ -68,7 +68,7 @@ public class BlockSmartFluidPipe extends Block implements IFluidPipeConnectable 
         this.setHarvestLevel("pickaxe", 1);
         this.setRegistryName("smart_fluid_pipe");
         this.setUnlocalizedName("create.smart_fluid_pipe");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(BlockKineticDirectionalBase.FACING, EnumFacing.NORTH));
     }

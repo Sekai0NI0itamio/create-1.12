@@ -42,7 +42,7 @@ public class BlockCreativeCrate extends Block implements ITileEntityProvider, IW
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Nullable

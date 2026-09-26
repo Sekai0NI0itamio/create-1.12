@@ -33,7 +33,7 @@ import java.util.List;
 public class ItemBlueprint extends Item {
     public ItemBlueprint() {
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     public static boolean isWritten(ItemStack stack) {

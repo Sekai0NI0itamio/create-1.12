@@ -64,7 +64,7 @@ public class BlockBrassTunnel extends Block implements ITileEntityProvider, IWre
         this.setResistance(6.0F);
         this.setHarvestLevel("pickaxe", 1);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setDefaultState(this.getDefaultState().withProperty(AXIS, EnumFacing.Axis.X));
     }
 

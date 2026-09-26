@@ -26,7 +26,7 @@ public class ItemGoggles extends ItemArmor {
         this.setMaxStackSize(1);
         this.setMaxDamage(0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override
@@ -52,6 +52,6 @@ public class ItemGoggles extends ItemArmor {
 
     @Override
     protected boolean isInCreativeTab(CreativeTabs targetTab) {
-        return targetTab == CreativeTabs.SEARCH || targetTab == ItemInit.TAB_CREATE;
+        return targetTab == CreativeTabs.SEARCH || targetTab == CreateTabs.TAB_CREATE;
     }
 }

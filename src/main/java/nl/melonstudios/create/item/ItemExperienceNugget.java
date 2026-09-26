@@ -22,7 +22,7 @@ public class ItemExperienceNugget extends Item {
     public ItemExperienceNugget() {
         this.setRegistryName("experience_nugget");
         this.setUnlocalizedName("create.experience_nugget");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

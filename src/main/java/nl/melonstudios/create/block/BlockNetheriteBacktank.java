@@ -24,7 +24,7 @@ public class BlockNetheriteBacktank extends Block implements ITileEntityProvider
         this.setHardness(5.0F);
         this.setResistance(1200.0F);
         this.setHarvestLevel("pickaxe", 2);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
         this.setRegistryName("netherite_backtank");
         this.setUnlocalizedName("create.netherite_backtank");
     }

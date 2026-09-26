@@ -37,7 +37,7 @@ public class ItemPotatoCannon extends Item {
         // Reference MAX_DAMAGE = 100.
         this.setMaxDamage(100);
         this.setMaxStackSize(1);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     /** damage, reloadTicks, velocityMult, knockback, effectId (see EntityPotatoProjectile). */

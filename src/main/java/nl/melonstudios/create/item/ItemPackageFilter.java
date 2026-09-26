@@ -26,7 +26,7 @@ public class ItemPackageFilter extends Item {
         this.setRegistryName("package_filter");
         this.setUnlocalizedName("create.package_filter");
         this.setMaxStackSize(64);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

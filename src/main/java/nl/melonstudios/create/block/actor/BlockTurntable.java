@@ -32,7 +32,7 @@ public class BlockTurntable extends BlockKineticBase implements ITileEntityProvi
         super(Material.ROCK, blockMapColorIn);
         this.blockSoundType = soundType;
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     protected static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);

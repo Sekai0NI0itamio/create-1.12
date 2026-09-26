@@ -52,7 +52,7 @@ public class BlockPortableFluidInterface extends BlockDirectional implements ITi
 
         this.setHarvestLevel("pickaxe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override

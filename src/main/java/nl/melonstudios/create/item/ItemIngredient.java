@@ -14,7 +14,7 @@ public final class ItemIngredient extends Item {
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     public static final String[] NAME_LOOKUP = {
@@ -34,7 +34,7 @@ public final class ItemIngredient extends Item {
 
     @Override
     protected boolean isInCreativeTab(CreativeTabs targetTab) {
-        return targetTab == ItemInit.TAB_CREATE || targetTab == CreativeTabs.SEARCH;
+        return targetTab == CreateTabs.TAB_CREATE || targetTab == CreativeTabs.SEARCH;
     }
 
     @Override

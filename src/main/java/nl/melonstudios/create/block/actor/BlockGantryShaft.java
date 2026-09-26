@@ -16,6 +16,6 @@ public class BlockGantryShaft extends BlockShaftBase {
         super(Material.ROCK, MapColor.STONE);
         this.setRegistryName("gantry_shaft");
         this.setUnlocalizedName("create.gantry_shaft");
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 }

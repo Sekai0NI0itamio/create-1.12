@@ -17,7 +17,7 @@ public class ItemAssembly extends Item {
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
         this.setMaxDamage(0);
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ItemAssembly extends Item {
 
     @Override
     protected boolean isInCreativeTab(CreativeTabs targetTab) {
-        return targetTab == ItemInit.TAB_CREATE || targetTab == CreativeTabs.SEARCH;
+        return targetTab == CreateTabs.TAB_CREATE || targetTab == CreativeTabs.SEARCH;
     }
 
     @Override

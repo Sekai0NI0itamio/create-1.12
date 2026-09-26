@@ -30,7 +30,7 @@ public class BlockEncasedShaft extends BlockEncasedShaftBase implements ITileEnt
 
         this.setHarvestLevel("pickaxe", 0);
 
-        this.setCreativeTab(ItemInit.TAB_CREATE);
+        this.setCreativeTab(CreateTabs.TAB_CREATE);
     }
 
     @Nullable
