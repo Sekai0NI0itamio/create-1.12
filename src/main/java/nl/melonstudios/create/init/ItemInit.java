@@ -1,5 +1,6 @@
 package nl.melonstudios.create.init;
 
+import nl.melonstudios.create.init.CreateTabs;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;

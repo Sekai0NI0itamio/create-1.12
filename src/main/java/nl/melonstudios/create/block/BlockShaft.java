@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block;
 
+import nl.melonstudios.create.init.CreateTabs;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

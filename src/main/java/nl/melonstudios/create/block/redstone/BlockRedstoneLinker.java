@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.redstone;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.misc.BlockStateProperties;
 import net.minecraft.block.*;
 import net.minecraft.block.material.MapColor;

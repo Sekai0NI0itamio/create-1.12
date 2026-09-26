@@ -1,5 +1,6 @@
 package nl.melonstudios.create.item;
 
+import nl.melonstudios.create.init.CreateTabs;
 import net.minecraft.item.ItemFood;
 import nl.melonstudios.create.init.ItemInit;
 

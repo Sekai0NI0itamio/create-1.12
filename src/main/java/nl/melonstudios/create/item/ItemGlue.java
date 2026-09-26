@@ -1,5 +1,6 @@
 package nl.melonstudios.create.item;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.misc.Localizer;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;

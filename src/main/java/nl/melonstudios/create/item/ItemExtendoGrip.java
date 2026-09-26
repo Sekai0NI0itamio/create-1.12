@@ -1,5 +1,6 @@
 package nl.melonstudios.create.item;
 
+import nl.melonstudios.create.init.CreateTabs;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;

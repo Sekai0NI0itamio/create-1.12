@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.actor;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.item.IMetaName;
 import com.melonstudios.melonlib.misc.AABB;
 import net.minecraft.block.BlockHorizontal;

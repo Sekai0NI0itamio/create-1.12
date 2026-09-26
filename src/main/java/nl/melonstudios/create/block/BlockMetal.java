@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.item.IMetaName;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;

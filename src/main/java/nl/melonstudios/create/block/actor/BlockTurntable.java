@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.actor;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.misc.Localizer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;

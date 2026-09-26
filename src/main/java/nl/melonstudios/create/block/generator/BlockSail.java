@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.generator;
 
+import nl.melonstudios.create.init.CreateTabs;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.SoundType;

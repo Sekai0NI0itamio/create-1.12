@@ -1,5 +1,6 @@
 package nl.melonstudios.create.item;
 
+import nl.melonstudios.create.init.CreateTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;

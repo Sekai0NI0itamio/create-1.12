@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.fluid;
 
+import nl.melonstudios.create.init.CreateTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;

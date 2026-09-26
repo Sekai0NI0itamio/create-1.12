@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.redstone;
 
+import nl.melonstudios.create.init.CreateTabs;
 import net.minecraft.block.BlockRedstoneDiode;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.properties.PropertyBool;

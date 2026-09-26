@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.deco;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.misc.AABB;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;

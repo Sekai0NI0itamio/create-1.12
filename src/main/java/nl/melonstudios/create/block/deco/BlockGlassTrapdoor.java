@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.deco;
 
+import nl.melonstudios.create.init.CreateTabs;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.SoundType;

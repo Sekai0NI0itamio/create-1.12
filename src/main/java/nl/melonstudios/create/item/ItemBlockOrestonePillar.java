@@ -1,5 +1,6 @@
 package nl.melonstudios.create.item;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.item.IMetaName;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;

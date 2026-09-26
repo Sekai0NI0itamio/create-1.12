@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.logistics;
 
+import nl.melonstudios.create.init.CreateTabs;
 import com.melonstudios.melonlib.misc.AABB;
 import com.melonstudios.melonlib.misc.BlockStateProperties;
 import com.melonstudios.melonlib.misc.StackUtil;

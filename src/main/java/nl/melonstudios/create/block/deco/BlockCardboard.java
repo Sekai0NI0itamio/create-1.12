@@ -1,5 +1,6 @@
 package nl.melonstudios.create.block.deco;
 
+import nl.melonstudios.create.init.CreateTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
